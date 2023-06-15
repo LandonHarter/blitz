@@ -6,4 +6,12 @@
     color: #eeeeee;
 }
 
+:root {
+    --bg: #33314b;
+}
+
+body {
+    background-color: var(--bg);
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Mouse+Memoirs&display=swap');

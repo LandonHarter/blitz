@@ -7,10 +7,11 @@ import Image from "next/image";
 import { useState } from "react";
 import { signInWithGithub, signInWithGoogle, signInWithMicrosoft } from "@/backend/firebase/login";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import Loading from "@components/loading/loading";
 
 export default function Header() {
     const [showLogin, setShowLogin] = useState(false);
-    const { currentUser, signedIn } = useCurrentUser();
+    const { currentUser, signedIn, loading } = useCurrentUser();
 
     const LoginModal = () => {
         return(
@@ -43,6 +44,10 @@ export default function Header() {
             </>
         )
     };
+
+    if (loading) {
+        return(<Loading />);
+    }
 
     return(
         <div className={styles.header}>

@@ -1,7 +1,7 @@
 import { auth } from '@/backend/firebase/init';
 import { User, getUserData } from '@/backend/firebase/user';
-import { onAuthStateChanged } from 'firebase/auth';
 import { useState, useEffect } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 export default function useCurrentUser() {
     const [currentUser, setCurrentUser] = useState<User>({
@@ -12,9 +12,10 @@ export default function useCurrentUser() {
         empty: true
     });
     const [signedIn, setSignedIn] = useState<boolean>(false);
+    const [user, loading, error] = useAuthState(auth);
 
     useEffect(() => {
-        onAuthStateChanged(auth, async (user) => {
+        (async () => {
             if (user) {
                 setCurrentUser(await getUserData(user.uid));
                 setSignedIn(true);
@@ -29,10 +30,10 @@ export default function useCurrentUser() {
                 });
                 setSignedIn(false);
             }
-        });
-    }, []);
+        })();
+    }, [user]);
 
 
-    return { currentUser, signedIn };
+    return { currentUser, signedIn, loading };
 }
   
