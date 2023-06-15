@@ -1,0 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+
+    font-family: 'PT Sans', sans-serif;
+    color: #eeeeee;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Mouse+Memoirs&display=swap');

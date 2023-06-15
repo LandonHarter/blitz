@@ -1,5 +1,9 @@
-import styles from './page.module.css'
+import styles from './page.module.css';
 
 export default function Home() {
-  return (<></>);
+  return (
+    <div>
+      <div className={styles.page_background} />
+    </div>
+  );
 }

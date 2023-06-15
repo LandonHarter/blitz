@@ -1,0 +1,10 @@
+.page_background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+
+    background-color: #33314b;
+}
