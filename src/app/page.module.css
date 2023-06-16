@@ -1,0 +1,43 @@
+.hero_section_1 {
+    width: 100vw;
+    height: calc(100vh - 110px);
+    
+    background-color: var(--bg-dark);
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.hero_section_1_left {
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero_section_1_left h1 {
+    font-size: 80px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    max-width: 70%;
+    text-align: center;
+    transform: translateY(-100px);
+}
+
+.hero_section_1_left h1 span {
+    background: linear-gradient(45deg, #ff2930, #ff9d82);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero_section_1_right {
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

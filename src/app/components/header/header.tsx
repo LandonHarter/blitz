@@ -5,12 +5,13 @@ import styles from "./header.module.css";
 
 import Image from "next/image";
 import { useState } from "react";
-import { signInWithGithub, signInWithGoogle, signInWithMicrosoft } from "@/backend/firebase/login";
-import useCurrentUser from "@/hooks/useCurrentUser";
+import { signInWithGithub, signInWithGoogle, signInWithMicrosoft, signOut } from "@baas/login";
+import useCurrentUser from "@hooks/useCurrentUser";
 import Loading from "@components/loading/loading";
 
 export default function Header() {
     const [showLogin, setShowLogin] = useState(false);
+    const [avatarDropdown, setAvatarDropdown] = useState(false);
     const { currentUser, signedIn, loading } = useCurrentUser();
 
     const LoginModal = () => {
@@ -45,6 +46,41 @@ export default function Header() {
         )
     };
 
+    const Avatar = () => {
+        return(
+            <div className={styles.avatar_container}>
+                <Image src={currentUser.pfp} alt="avatar" className={styles.avatar_image} width={42} height={42} onClick={() => {
+                    setAvatarDropdown(!avatarDropdown);
+                }} />
+
+                {avatarDropdown &&
+                    <div className={styles.avatar_dropdown}>
+                        <Link href={`/profile/${currentUser.uid}`} className={styles.avatar_dropdown_option} onClick={() => {
+                            setAvatarDropdown(false);
+                        }}>
+                            <Image src='/images/icons/user.png' alt='user' width={25} height={25} />
+                            <p>PROFILE</p>
+                        </Link>
+                        <Link href='/settings' className={styles.avatar_dropdown_option} onClick={() => {
+                            setAvatarDropdown(false);
+                        }}>
+                            <Image src='/images/icons/settings.png' alt='user' width={25} height={25} />
+                            <p>SETTINGS</p>
+                        </Link>
+                        <div className={styles.avatar_dropdown_option} onClick={() => {
+                            signOut();
+                            window.location.href = "/";
+                            setAvatarDropdown(false);
+                        }}>
+                            <Image src='/images/icons/logout.png' alt='user' width={25} height={25} />
+                            <p style={{color: "red"}}>SIGN OUT</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        );
+    }
+
     if (loading) {
         return(<Loading />);
     }
@@ -59,12 +95,17 @@ export default function Header() {
                     </Link>
                 </div>
                 <div className={styles.header_nav_right}>
+                    <div className={styles.nav_links}>
+                        <Link href='/join' className={styles.nav_link}>Join</Link>
+                        <Link href='/create' className={styles.nav_link}>Create</Link>
+                        <Link href='/host' className={styles.nav_link}>Host</Link>
+                    </div>
                     {!signedIn ? 
                         <div>
                             <button className={styles.signin_button} onClick={() => setShowLogin(true)}>Log In</button>
                         </div> : 
                         <div>
-                            <h1>{currentUser.name}</h1>
+                            <Avatar />
                         </div>
                     }
                 </div>

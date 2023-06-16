@@ -2,12 +2,13 @@
     margin: 0;
     padding: 0;
 
-    font-family: 'PT Sans', sans-serif;
+    font-family: 'Cubano';
     color: #eeeeee;
 }
 
 :root {
     --bg: #33314b;
+    --bg-dark: #232133;
 }
 
 body {
@@ -15,3 +16,9 @@ body {
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Mouse+Memoirs&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mouse+Memoirs&display=swap');
+
+@font-face {
+    font-family: 'Cubano';
+    src: url('/fonts/Cubano.ttf');
+}

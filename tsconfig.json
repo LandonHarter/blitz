@@ -24,6 +24,8 @@
       "@components/*": ["./src/app/components/*"],
       "@backend/*": ["./src/app/backend/*"],
       "@baas/*": ["./src/app/backend/firebase/*"],
+      "@live/*": ["./src/app/backend/live/*"],
+      "@hooks/*": ["./src/app/hooks/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
