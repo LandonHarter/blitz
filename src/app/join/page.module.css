@@ -44,3 +44,24 @@
 .join_button:active {
     transform: scale(0.98);
 }
+
+.join_button_joining {
+    width: 320px;
+    margin: 10px;
+    padding: 10px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #ff6b6b;
+    color: white;
+    cursor: pointer;
+    transition: 0.1s ease-in-out;
+    filter: opacity(0.5);
+}
+
+.popup_error {
+    text-align: center;
+    color: black;
+    margin-bottom: 50px;
+    letter-spacing: 2px;
+}
