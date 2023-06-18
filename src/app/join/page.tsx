@@ -20,6 +20,9 @@ export default function JoinPage() {
     const [errorOpen, setErrorOpen] = useState(false);
     const [error, setError] = useState("");
 
+    const [infoOpen, setInfoOpen] = useState(false);
+    const [info, setInfo] = useState("");
+
     return(
         <div className={styles.background}>
             <div className={styles.content}>
@@ -47,13 +50,18 @@ export default function JoinPage() {
                 }} disabled={joining}>{joining ? 'Joining...' : 'Join'}</button>
                 <button className={styles.join_button} onClick={async () => {
                     const gameCode = await createGame();
-                    console.log(`game code ${gameCode} is created`);
+                    setInfo(`Created Game ${gameCode}`);
+                    setInfoOpen(true);
                 }}>Create Game</button>
             </div>
 
             <Popup open={errorOpen} setOpen={setErrorOpen} exitButton>
                 <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom:25 }} />
                 <h1 className={styles.popup_error}>{error}</h1>
+            </Popup>
+
+            <Popup open={infoOpen} setOpen={setInfoOpen} exitButton>    
+                <h1 className={styles.popup_error}>{info}</h1>
             </Popup>
         </div>
     );
