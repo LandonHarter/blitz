@@ -46,7 +46,6 @@ export default function LiveGamePage() {
             setInGame(userInGame);
 
             if (userInGame) {
-                //setUsers(await getUsersInGame(id));
                 await subscribeToGame(id, onGameUpdate, onUserJoin, onUserLeave);
                 setLoadingData(false);
             }

@@ -1,0 +1,18 @@
+.create_button {
+    width: 300px;
+    height: 50px;
+    background-color: #1E90FF;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.popup_content {
+    font-size: 40px;
+    color: black;
+}
