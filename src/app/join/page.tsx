@@ -14,7 +14,7 @@ import Loading from '@/components/loading/loading';
 export default function JoinPage() {
     const router = useRouter();
     const joinInput = useRef<HTMLInputElement>(null);
-    const { currentUser, signedIn, loading } = useCurrentUser();
+    const { currentUser, signedIn, userLoading } = useCurrentUser();
 
     const [joining, setJoining] = useState(false);
 
@@ -24,7 +24,7 @@ export default function JoinPage() {
     const [infoOpen, setInfoOpen] = useState(false);
     const [info, setInfo] = useState("");
 
-    if (loading) {
+    if (userLoading) {
         return(<Loading />);
     } else if (!signedIn) {
         return(<h1>You need to be signed in to join a game</h1>);

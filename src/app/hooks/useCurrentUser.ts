@@ -12,6 +12,7 @@ export default function useCurrentUser() {
         empty: true
     });
     const [signedIn, setSignedIn] = useState<boolean>(false);
+    const [userLoading, setUserLoading] = useState<boolean>(true);
     const [user, loading, error] = useAuthState(auth);
 
     useEffect(() => {
@@ -19,6 +20,7 @@ export default function useCurrentUser() {
             if (user) {
                 setCurrentUser(await getUserData(user.uid));
                 setSignedIn(true);
+                setUserLoading(false);
             }
             else {
                 setCurrentUser({
@@ -30,10 +32,14 @@ export default function useCurrentUser() {
                 });
                 setSignedIn(false);
             }
+
+            if (error) {
+                setUserLoading(false);
+            }
         })();
-    }, [user]);
+    }, [user, error]);
 
 
-    return { currentUser, signedIn, loading };
+    return { currentUser: currentUser, signedIn: signedIn, userLoading: userLoading };
 }
   

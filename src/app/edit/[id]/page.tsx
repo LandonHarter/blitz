@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 import styles from './page.module.css';
-import { Question } from '@backend/live/quiz';
+import { Question, QuestionType } from '@backend/live/quiz';
 import generateId from '@/backend/id';
 import Loading from '@/components/loading/loading';
 import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
@@ -42,6 +42,7 @@ export default function EditPage() {
             const quizQuestions = quizData.questions;
             for (let i = 0; i < quizData.numQuestions; i++) {
                 const question = quizQuestions[i];
+                const type = question.type;
                 const options = question.options;
                 const option1 = options[0];
                 const option2 = options[1];
@@ -51,6 +52,7 @@ export default function EditPage() {
                 const questionElement:Question = {
                     id: question.id,
                     question: question.question,
+                    type: QuestionType[type as keyof typeof QuestionType],
                     options: [
                         {
                             option: option1.option,
@@ -118,6 +120,7 @@ export default function EditPage() {
         };
         const question = {
             id: generateId(),
+            type: QuestionType.MultipleChoice,
             question: questionText,
             options: [option1, option2, option3, option4],
         };

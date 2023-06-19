@@ -3,6 +3,7 @@ import { get, onChildAdded, onChildRemoved, onValue, ref, remove, set, update } 
 import { User } from "@baas/user";
 import { GameUser } from "./user";
 import generateId from "@backend/id";
+import { EventType } from "@backend/live/events/event";
 
 export const createGame = async (hostId:string) => {
     const gameCode = generateGameCode();
@@ -70,7 +71,8 @@ export const subscribeToGame = (gameCode:string, gameEvents:Function, userJoin:F
 
     onChildAdded(gameRef, (snapshot) => {
         gameEvents({
-            eventName: snapshot.val().eventName,
+            eventType: EventType[snapshot.val().eventType as keyof typeof EventType],
+            eventData: snapshot.val().eventData,
         });
     });
 
@@ -96,6 +98,7 @@ export const getGameData = async (gameCode:string) => {
 
     const data:GameData = {
         host: gameData.host,
+        quizId: gameData.gameQuizId,
     };
 
     return data;
@@ -120,7 +123,8 @@ export const getUsersInGame = async (gameCode:string) => {
 export const pushGameEvent = async (gameCode:string, event:GameEvent) => {
     const eventsRef = ref(realtimeDb, `live-games/${gameCode}/events/${generateId()}`);
     await set(eventsRef, {
-        eventName: event.eventName,
+        eventType: event.eventType.toString(),
+        eventData: event.eventData,
     });
 };
 
@@ -131,7 +135,8 @@ export const startGame = async (id:string) => {
     });
 
     await pushGameEvent(id, {
-        eventName: 'start-game'
+        eventType: EventType.StartGame,
+        eventData: {},
     });
 };
 
@@ -146,8 +151,10 @@ const generateGameCode = () => {
 
 export interface GameData {
     host:string;
+    quizId:string;
 }
 
 export interface GameEvent {
-    eventName:string;
+    eventType:EventType;
+    eventData:any;
 }

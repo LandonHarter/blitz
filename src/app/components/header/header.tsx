@@ -12,7 +12,7 @@ import Loading from "@components/loading/loading";
 export default function Header() {
     const [showLogin, setShowLogin] = useState(false);
     const [avatarDropdown, setAvatarDropdown] = useState(false);
-    const { currentUser, signedIn, loading } = useCurrentUser();
+    const { currentUser, signedIn, userLoading } = useCurrentUser();
 
     const LoginModal = () => {
         return(
@@ -81,7 +81,7 @@ export default function Header() {
         );
     }
 
-    if (loading) {
+    if (userLoading) {
         return(<Loading />);
     }
 

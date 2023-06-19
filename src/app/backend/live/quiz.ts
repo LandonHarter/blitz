@@ -7,6 +7,7 @@ export interface Quiz {
 
 export interface Question {
     question: string;
+    type: QuestionType;
     options: QuestionOption[];
     id: string;
 }
@@ -15,4 +16,8 @@ export interface QuestionOption {
     option: string;
     correct: boolean;
     id: string;
+}
+
+export enum QuestionType {
+    MultipleChoice = "MultipleChoice",
 }

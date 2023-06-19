@@ -15,7 +15,7 @@ export default function CreatePage() {
     const [popup, setPopup] = useState(false);
     const [popupInfo, setPopupInfo] = useState('');
     const [loadingMenu, setLoadingMenu] = useState(false);
-    const { currentUser, signedIn, loading } = useCurrentUser();
+    const { currentUser, signedIn, userLoading } = useCurrentUser();
 
     const createQuiz = async () => {
         const newQuizRef = doc(collection(firestore, 'quizzes'));
@@ -41,7 +41,7 @@ export default function CreatePage() {
         return newQuizId;
     };
 
-    if (loadingMenu || loading) {
+    if (loadingMenu || userLoading) {
         return(<Loading />);
     } else if (!signedIn) {
         return(<h1>Not signed in</h1>);
