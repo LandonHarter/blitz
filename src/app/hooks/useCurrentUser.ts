@@ -40,6 +40,6 @@ export default function useCurrentUser() {
     }, [user, error]);
 
 
-    return { currentUser: currentUser, signedIn: signedIn, userLoading: userLoading };
+    return { currentUser: currentUser, signedIn: signedIn, userLoading: loading };
 }
   
