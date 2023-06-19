@@ -9,6 +9,7 @@ import { createGame, joinGame } from '@/backend/live/game';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Popup from '@/components/popup/popup';
+import Loading from '@/components/loading/loading';
 
 export default function JoinPage() {
     const router = useRouter();
@@ -22,6 +23,12 @@ export default function JoinPage() {
 
     const [infoOpen, setInfoOpen] = useState(false);
     const [info, setInfo] = useState("");
+
+    if (loading) {
+        return(<Loading />);
+    } else if (!signedIn) {
+        return(<h1>You need to be signed in to join a game</h1>);
+    }
 
     return(
         <div className={styles.background}>
@@ -49,7 +56,7 @@ export default function JoinPage() {
                     setJoining(false);
                 }} disabled={joining}>{joining ? 'Joining...' : 'Join'}</button>
                 <button className={styles.join_button} onClick={async () => {
-                    const gameCode = await createGame();
+                    const gameCode = await createGame(currentUser.uid);
                     setInfo(`Created Game ${gameCode}`);
                     setInfoOpen(true);
                 }}>Create Game</button>

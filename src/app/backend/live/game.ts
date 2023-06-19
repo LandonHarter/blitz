@@ -1,14 +1,17 @@
 import { realtimeDb } from "@baas/init";
-import { get, onChildAdded, onChildRemoved, onValue, ref, remove, set } from "firebase/database";
+import { get, onChildAdded, onChildRemoved, onValue, ref, remove, set, update } from "firebase/database";
 import { User } from "@baas/user";
 import { GameUser } from "./user";
+import generateId from "@backend/id";
 
-export const createGame = async () => {
+export const createGame = async (hostId:string) => {
     const gameCode = generateGameCode();
     const gameRef = ref(realtimeDb, `live-games/${gameCode}`);
 
     await set(gameRef, {
-        gameQuizId: '',
+        gameQuizId: '7LhuCJXQTMyjWvbyo6gp',
+        host: hostId,
+        started: false,
     });
 
     return gameCode;
@@ -23,6 +26,11 @@ export const joinGame = async (gameCode:string, user:User) => {
         return {
             success: false,
             error: 'Game does not exist',
+        };
+    } else if (gameSnapshot.val().started) {
+        return {
+            success: false,
+            error: 'Game already started',
         };
     }
 
@@ -58,10 +66,12 @@ export const leaveGame = async (gameCode:string, user:User) => {
 
 export const subscribeToGame = (gameCode:string, gameEvents:Function, userJoin:Function, userLeave:Function) => {
     const usersRef = ref(realtimeDb, `live-games/${gameCode}/users/`);
-    const gameRef = ref(realtimeDb, `live-games/${gameCode}/`);
+    const gameRef = ref(realtimeDb, `live-games/${gameCode}/events/`);
 
-    onValue(gameRef, (snapshot) => {
-        gameEvents(snapshot);
+    onChildAdded(gameRef, (snapshot) => {
+        gameEvents({
+            eventName: snapshot.val().eventName,
+        });
     });
 
     onChildAdded(usersRef, (snapshot) => {
@@ -79,6 +89,18 @@ export const subscribeToGame = (gameCode:string, gameEvents:Function, userJoin:F
     });
 }
 
+export const getGameData = async (gameCode:string) => {
+    const gameRef = ref(realtimeDb, `live-games/${gameCode}/`);
+    const gameSnapshot = await get(gameRef);
+    const gameData = gameSnapshot.val();
+
+    const data:GameData = {
+        host: gameData.host,
+    };
+
+    return data;
+};
+
 export const getUsersInGame = async (gameCode:string) => {
     const usersRef = ref(realtimeDb, `live-games/${gameCode}/users/`);
     const usersSnapshot = await get(usersRef);
@@ -95,6 +117,24 @@ export const getUsersInGame = async (gameCode:string) => {
     return usersArray;
 }
 
+export const pushGameEvent = async (gameCode:string, event:GameEvent) => {
+    const eventsRef = ref(realtimeDb, `live-games/${gameCode}/events/${generateId()}`);
+    await set(eventsRef, {
+        eventName: event.eventName,
+    });
+};
+
+export const startGame = async (id:string) => {
+    const gameRef = ref(realtimeDb, `live-games/${id}/`);
+    await update(gameRef, {
+        started: true,
+    });
+
+    await pushGameEvent(id, {
+        eventName: 'start-game'
+    });
+};
+
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const generateGameCode = () => {
     let gameCode = "";
@@ -103,3 +143,11 @@ const generateGameCode = () => {
     }
     return gameCode;
 };
+
+export interface GameData {
+    host:string;
+}
+
+export interface GameEvent {
+    eventName:string;
+}

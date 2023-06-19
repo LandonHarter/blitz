@@ -4,7 +4,7 @@ import { useState } from 'react';
 import styles from './page.module.css';
 import Popup from '@/components/popup/popup';
 import Loading from '@/components/loading/loading';
-import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { arrayUnion, collection, doc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
 import { firestore } from '@baas/init';
 import { useRouter } from 'next/navigation';
 import useCurrentUser from '@hooks/useCurrentUser';
@@ -30,6 +30,12 @@ export default function CreatePage() {
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
             owner: currentUser.uid
+        });
+
+        const userRef = doc(collection(firestore, 'users', currentUser.uid));
+
+        await updateDoc(userRef, {
+             quizzes: arrayUnion(newQuizId)
         });
 
         return newQuizId;

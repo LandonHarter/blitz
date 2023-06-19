@@ -9,7 +9,7 @@ import { realtimeDb } from "@baas/init";
 
 import styles from './page.module.css';
 import { GameUser } from "@/backend/live/user";
-import { getUsersInGame, leaveGame, subscribeToGame } from "@/backend/live/game";
+import { GameEvent, getGameData, getUsersInGame, leaveGame, pushGameEvent, startGame, subscribeToGame } from "@/backend/live/game";
 
 export default function LiveGamePage() {
     const router = useRouter();
@@ -20,9 +20,14 @@ export default function LiveGamePage() {
 
     const [loadingData, setLoadingData] = useState(true);
     const [users, setUsers] = useState<GameUser[]>([]);
+    const [isHost, setIsHost] = useState(false);
 
-    const onGameUpdate = (snapshot:DataSnapshot) => {
+    const [gameStarted, setGameStarted] = useState(false);
 
+    const onGameEvent = (event:GameEvent) => {
+        if (event.eventName === 'start-game') {
+            setGameStarted(true);
+        }
     };
 
     const onUserJoin = (user:GameUser) => {
@@ -46,7 +51,10 @@ export default function LiveGamePage() {
             setInGame(userInGame);
 
             if (userInGame) {
-                await subscribeToGame(id, onGameUpdate, onUserJoin, onUserLeave);
+                await subscribeToGame(id, onGameEvent, onUserJoin, onUserLeave);
+                const gameData = await getGameData(id);
+                setIsHost(gameData.host === currentUser.uid);
+
                 setLoadingData(false);
             }
         })();
@@ -67,6 +75,9 @@ export default function LiveGamePage() {
                     <p key={i} style={{fontFamily:'PT Sans, sans-serif'}}>{user.name}</p>
                 );
             })}
+            {isHost && <button onClick={async () => {
+                await startGame(id);
+            }} className={styles.leave_button}>Start Game</button>}
             <button className={styles.leave_button} onClick={async () => {
                 await leaveGame(id, currentUser);
                 router.push('/join');
