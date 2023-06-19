@@ -4,6 +4,7 @@ import { User } from "@baas/user";
 import { GameUser } from "./user";
 import generateId from "@backend/id";
 import { EventType } from "@backend/live/events/event";
+import { AnalyticsEventType, pushAnalyticsEvent } from "../firebase/analytics";
 
 export const createGame = async (hostId:string) => {
     const gameCode = generateGameCode();
@@ -13,6 +14,10 @@ export const createGame = async (hostId:string) => {
         gameQuizId: '7LhuCJXQTMyjWvbyo6gp',
         host: hostId,
         started: false,
+    });
+    await pushAnalyticsEvent({
+        type: AnalyticsEventType.CreateGame,
+        data: {},
     });
 
     return gameCode;
