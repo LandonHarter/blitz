@@ -1,4 +1,3 @@
-import { analytics } from "@baas/init";
 import { getAnalytics, logEvent } from "firebase/analytics";
 
 export const pushAnalyticsEvent = async (event: AnalyticsEvent) => {
