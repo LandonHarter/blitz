@@ -9,7 +9,8 @@ export default function useCurrentUser() {
         email: "",
         pfp: "/images/avatar.png",
         uid: "",
-        empty: true
+        empty: true,
+        quizzes: [],
     });
     const [signedIn, setSignedIn] = useState<boolean>(false);
     const [userLoading, setUserLoading] = useState<boolean>(true);
@@ -28,7 +29,8 @@ export default function useCurrentUser() {
                     email: "",
                     pfp: "/images/avatar.png",
                     uid: "",
-                    empty: true
+                    empty: true,
+                    quizzes: [],
                 });
                 setSignedIn(false);
             }

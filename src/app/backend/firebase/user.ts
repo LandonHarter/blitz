@@ -8,6 +8,7 @@ export interface User {
     pfp:string;
     uid:string;
     empty:boolean;
+    quizzes:string[];
 
 }
 
@@ -21,7 +22,8 @@ export async function getUserData(userId:string) {
             email: userData.data().email,
             pfp: userData.data().pfp,
             uid: userData.data().uid,
-            empty: false
+            empty: false,
+            quizzes: userData.data().quizzes,
         };
 
         return Promise.resolve(newUser);
