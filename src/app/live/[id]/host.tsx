@@ -9,6 +9,7 @@ import { collection, doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
 import MCQuestion from './question/mcq/question';
 import { EventType } from '@/backend/live/events/event';
+import generateId from '@/backend/id';
 
 export default function HostDashboard(props: { gameId: string, quizId: string, gameStarted: boolean }) {
     const [questions, setQuestions] = useState<Question[]>([]);
@@ -73,7 +74,8 @@ export default function HostDashboard(props: { gameId: string, quizId: string, g
                             question: questions[0].question,
                             type: questions[0].type.toString(),
                             options: questions[0].options 
-                        }
+                        },
+                        eventId: generateId()
                     });
                 }} className={styles.start_button}>Start Game</button>
             </div>
@@ -97,7 +99,8 @@ export default function HostDashboard(props: { gameId: string, quizId: string, g
                         question: questions[nextQuestionIndex].question,
                         type: questions[nextQuestionIndex].type.toString(),
                         options: questions[nextQuestionIndex].options 
-                    }
+                    },
+                    eventId: generateId()
                 });
             }}>Next Question</button>
         </div>

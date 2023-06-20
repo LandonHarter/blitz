@@ -4,11 +4,12 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 import styles from './page.module.css';
-import { Question, QuestionType } from '@backend/live/quiz';
+import { Question, QuestionOption, QuestionType } from '@backend/live/quiz';
 import generateId from '@/backend/id';
 import Loading from '@/components/loading/loading';
 import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
-import { firestore } from '@/backend/firebase/init';
+import { auth, firestore } from '@/backend/firebase/init';
+import useCurrentUser from '@hooks/useCurrentUser';
 
 export default function EditPage() {
     const id = usePathname().split('/')[2];
@@ -21,8 +22,14 @@ export default function EditPage() {
     const option4Input = useRef<HTMLInputElement>(null);
     const correctOptionCheckbox = useRef<HTMLSelectElement>(null);
 
+    const { currentUser, signedIn, userLoading } = useCurrentUser();
+
+    const [owner, setOwner] = useState<string>('');
     const [questions, setQuestions] = useState<Question[]>([]);
     const [loadingMenu, setLoadingMenu] = useState<boolean>(true);
+
+    const [questionsDropdownOpen, setQuestionsDropdownOpen] = useState<boolean>(true);
+    const dropdownTriangleSize = 25;
 
     useEffect(() => {
         setLoadingMenu(true);
@@ -33,6 +40,11 @@ export default function EditPage() {
             if (!quizSnapshot.exists()) {
                 alert('Quiz does not exist');
                 router.push('/');
+                return;
+            }
+
+            if (!signedIn || (signedIn && currentUser.uid !== quizSnapshot.data()?.owner)) {
+                router.push(`/quiz/${id}`);
                 return;
             }
 
@@ -81,9 +93,22 @@ export default function EditPage() {
             }
 
             setQuestions(questionsArray);
+            setOwner(quizSnapshot.data()?.owner);
             setLoadingMenu(false);
         })();
     }, []);
+
+    useEffect(() => {
+        if (!signedIn) {
+            router.push(`/quiz/${id}`);
+        }
+
+        if (owner !== null) {
+            if (owner !== currentUser.uid) {
+                router.push(`/quiz/${id}`);
+            }
+        }
+    }, [signedIn]);
 
     const createQuestion = () => {
         const questionText = questionInput.current?.value;
@@ -137,6 +162,7 @@ export default function EditPage() {
 
     const updateQuiz = async () => {
         const questionRef = doc(collection(firestore, 'quizzes'), id);
+        console.log(auth.currentUser?.uid);
         await updateDoc(questionRef, {
             questions: questions,
             numQuestions: questions.length,
@@ -148,7 +174,7 @@ export default function EditPage() {
     }
 
     return(
-        <div>
+        <div className={styles.edit_container}>
             <div className={styles.question_form}>
                 <input ref={questionInput} type="text" placeholder="Question" />
                 <input ref={option1Input} type="text" placeholder="Option 1" />
@@ -171,20 +197,34 @@ export default function EditPage() {
                 }}>Update Quiz</button>
             </div>
 
-            {questions.map((question, index) => {
-                return(
-                    <div key={index}>
-                        <p>{question.question}</p>
-                        <ul>
-                            {question.options.map((option, index) => {
-                                return(
-                                    <li key={option.id}>{option.option} {option.correct && '(Correct Answer)'}</li>
-                                );
-                            })}
-                        </ul>
-                    </div>
-                );
-            })}
+            <div className={styles.questions}>
+                <div className={styles.questions_dropdown} onClick={() => {
+                    setQuestionsDropdownOpen(!questionsDropdownOpen);
+                }}>
+                    <svg height="25" width="25" className={`${styles.dropdown_triangle} ${questionsDropdownOpen && styles.dropdown_triangle_active}`}>
+                        <polygon points={`0,0 ${dropdownTriangleSize/2},${dropdownTriangleSize} ${dropdownTriangleSize},0`} style={{ fill: 'white' }} />
+                    </svg>
+                    <h1 style={{ marginLeft:20 }}>Questions ({questions.length})</h1>
+                </div>
+
+                {questionsDropdownOpen && questions.map((question, index) => {
+                    return(
+                        <div key={index} className={styles.question}>
+                            <h1>{question.question}</h1>
+
+                            <div className={styles.question_options}>
+                                {question.options.map((option, index) => {
+                                    return(
+                                        <div key={option.id} className={`${styles.question_option} ${option.correct && styles.question_option_correct}`}>
+                                            <p>{option.option}</p>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    );
+                })}
+            </div> 
         </div>
     );
 }

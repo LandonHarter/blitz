@@ -31,6 +31,11 @@ export default function LiveGamePage() {
     const [quizId, setQuizId] = useState<string>('');
 
     const [currentNumAnswers, setCurrentNumAnswers] = useState<number>(0);
+    const [lastEvent, setLastEvent] = useState<GameEvent>({
+        eventType: EventType.None,
+        eventData: {},
+        eventId: ''
+    });
 
     const onGameEvent = (event:GameEvent) => {
         if (event.eventType === EventType.StartGame) {
@@ -46,6 +51,8 @@ export default function LiveGamePage() {
         } else if (event.eventType === EventType.SubmitAnswer) {
             setCurrentNumAnswers((prevNum) => prevNum + 1);
         }
+
+        setLastEvent(event);
     };
 
     const onUserJoin = (user:GameUser) => {
@@ -111,7 +118,7 @@ export default function LiveGamePage() {
 
     return(
         <div>
-            <MCQuestion question={currentQuestion} questionNumber={1} currentNumAnswers={currentNumAnswers} gameId={id} />
+            <MCQuestion question={currentQuestion} questionNumber={1} currentNumAnswers={currentNumAnswers} gameId={id} lastEvent={lastEvent} />
         </div>
     );
 }

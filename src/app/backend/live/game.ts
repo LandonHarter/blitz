@@ -130,6 +130,7 @@ export const pushGameEvent = async (gameCode:string, event:GameEvent) => {
     await set(eventsRef, {
         eventType: event.eventType.toString(),
         eventData: event.eventData,
+        eventId: event.eventId,
     });
 };
 
@@ -142,6 +143,7 @@ export const startGame = async (id:string) => {
     await pushGameEvent(id, {
         eventType: EventType.StartGame,
         eventData: {},
+        eventId: generateId(),
     });
 };
 
@@ -162,4 +164,5 @@ export interface GameData {
 export interface GameEvent {
     eventType:EventType;
     eventData:any;
+    eventId:string;
 }
