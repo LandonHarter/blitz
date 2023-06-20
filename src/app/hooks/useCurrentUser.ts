@@ -1,5 +1,6 @@
 import { auth } from '@/backend/firebase/init';
 import { User, getUserData } from '@/backend/firebase/user';
+import { onAuthStateChanged } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -39,9 +40,13 @@ export default function useCurrentUser() {
                 setUserLoading(false);
             }
         })();
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) setUserLoading(false);
+        });
     }, [user, error]);
 
 
-    return { currentUser: currentUser, signedIn: signedIn, userLoading: loading };
+    return { currentUser: currentUser, signedIn: signedIn, userLoading: userLoading };
 }
   
