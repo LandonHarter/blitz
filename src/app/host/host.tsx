@@ -1,13 +1,13 @@
 'use client'
 
-import { pushGameEvent, startGame } from '@/backend/live/game';
+import { pushGameEvent, startGame, deleteGame } from '@/backend/live/game';
 import { Question, QuestionOption, QuestionType } from '@/backend/live/quiz';
 import { useEffect, useState } from 'react';
 
 import styles from './host.module.css';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
-import MCQuestion from './question/mcq/question';
+import MCQuestion from '../live/[id]/question/mcq/question';
 import { EventType } from '@/backend/live/events/event';
 import generateId from '@/backend/id';
 
@@ -87,7 +87,12 @@ export default function HostDashboard(props: { gameId: string, quizId: string, g
             <button className={styles.start_button} onClick={async () => {
                 const nextQuestionIndex = currentQuestionIndex + 1;
                 if (nextQuestionIndex >= questions.length) {
-                    alert('end of game');
+                    await pushGameEvent(props.gameId, {
+                        eventType: EventType.EndGame,
+                        eventData: {},
+                        eventId: generateId()
+                    });
+                    await deleteGame(props.gameId);
                     return;
                 }
 

@@ -11,7 +11,7 @@ import styles from './page.module.css';
 import { GameUser } from "@/backend/live/user";
 import { GameEvent, getGameData, getUsersInGame, leaveGame, pushGameEvent, startGame, subscribeToGame } from "@/backend/live/game";
 import { EventType } from "@/backend/live/events/event";
-import HostDashboard from "./host";
+import HostDashboard from "../../host/host";
 import MCQuestion from "./question/mcq/question";
 import { Question, QuestionType } from "@/backend/live/quiz";
 
@@ -24,11 +24,10 @@ export default function LiveGamePage() {
 
     const [loadingData, setLoadingData] = useState(true);
     const [users, setUsers] = useState<GameUser[]>([]);
-    const [isHost, setIsHost] = useState(false);
 
     const [gameStarted, setGameStarted] = useState(false);
+    const [gameEnded, setGameEnded] = useState(false);
     const [currentQuestion, setCurrentQuestion] = useState<Question>();
-    const [quizId, setQuizId] = useState<string>('');
 
     const [currentNumAnswers, setCurrentNumAnswers] = useState<number>(0);
     const [lastEvent, setLastEvent] = useState<GameEvent>({
@@ -50,6 +49,8 @@ export default function LiveGamePage() {
             });
         } else if (event.eventType === EventType.SubmitAnswer) {
             setCurrentNumAnswers((prevNum) => prevNum + 1);
+        } else if (event.eventType === EventType.EndGame) {
+            setGameEnded(true);
         }
 
         setLastEvent(event);
@@ -78,9 +79,6 @@ export default function LiveGamePage() {
             if (userInGame) {
                 await subscribeToGame(id, onGameEvent, onUserJoin, onUserLeave);
                 const gameData = await getGameData(id);
-                setIsHost(gameData.host === currentUser.uid);
-                setQuizId(gameData.quizId);
-
                 setLoadingData(false);
             }
         })();
@@ -92,10 +90,6 @@ export default function LiveGamePage() {
         return(<h1>You need to be signed in to join a game</h1>)
     } else if (!inGame) {
         return(<h1>You are not in this game</h1>);
-    }
-
-    if (isHost) {
-        return(<HostDashboard gameId={id} quizId={quizId} gameStarted={gameStarted} />);
     }
 
     if (!gameStarted) {
@@ -111,6 +105,12 @@ export default function LiveGamePage() {
                     router.push('/join');
                 }}>Leave</button>
             </div>
+        );
+    }
+
+    if (gameEnded) {
+        return(
+            <h1>Game Ended!!!</h1>
         );
     }
 

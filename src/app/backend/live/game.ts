@@ -147,6 +147,11 @@ export const startGame = async (id:string) => {
     });
 };
 
+export const deleteGame = async (id:string) => {
+    const gameRef = ref(realtimeDb, `live-games/${id}/`);
+    await remove(gameRef);
+}
+
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const generateGameCode = () => {
     let gameCode = "";
