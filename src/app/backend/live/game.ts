@@ -7,8 +7,7 @@ import { EventType } from "@backend/live/events/event";
 import { AnalyticsEventType, pushAnalyticsEvent } from "../firebase/analytics";
 import { collection, getDoc, doc } from "firebase/firestore";
 
-export const createGame = async (hostId:string) => {
-    const setId = '7LhuCJXQTMyjWvbyo6gp';
+export const createGame = async (hostId:string, setId:string) => {
     const setData = await getDoc(doc(collection(firestore, 'sets'), setId));
     if (!setData.exists()) {
         return {

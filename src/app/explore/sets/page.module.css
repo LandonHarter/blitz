@@ -25,18 +25,14 @@
     transform-origin: center;
     transition: all 0.4s ease-in-out;
     overflow: hidden;
-    cursor: pointer;
 }
 
-.set_card:hover {
-    transform: scale(1.02);
-}
-  
 .set_card h2 {
     margin: 0 0 18px 0;
     font-size: 1.9rem;
     letter-spacing: 0.06em;
     color: var(--title-color);
+    cursor: pointer;
     transition: color 0.3s ease-out;
 }
 
@@ -66,4 +62,39 @@
 
 .article_body {
     padding: 24px;
+}
+
+.card_footer {
+    width: calc(100% - 48px);
+    height: 100%;
+    margin-bottom: 10px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 24px;
+}
+
+.card_footer button {
+    width: 100px;
+    height: 30px;
+
+    background-color: #50C878;
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.card_footer button:hover {
+    transform: scale(1.05);
+}
+
+.popup_error {
+    text-align: center;
+    color: black;
+    margin-bottom: 50px;
+    letter-spacing: 2px;
 }
