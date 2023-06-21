@@ -11,7 +11,7 @@ export default function useCurrentUser() {
         pfp: "/images/avatar.png",
         uid: "",
         empty: true,
-        quizzes: [],
+        sets: [],
     });
     const [signedIn, setSignedIn] = useState<boolean>(false);
     const [userLoading, setUserLoading] = useState<boolean>(true);
@@ -31,7 +31,7 @@ export default function useCurrentUser() {
                     pfp: "/images/avatar.png",
                     uid: "",
                     empty: true,
-                    quizzes: [],
+                    sets: [],
                 });
                 setSignedIn(false);
             }

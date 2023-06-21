@@ -13,7 +13,7 @@ import { GameEvent, getGameData, getUsersInGame, leaveGame, pushGameEvent, start
 import { EventType } from "@/backend/live/events/event";
 import HostDashboard from "../../host/host";
 import MCQuestion from "./question/mcq/question";
-import { Question, QuestionType } from "@/backend/live/quiz";
+import { Question, QuestionType } from "@/backend/live/set";
 
 export default function LiveGamePage() {
     const router = useRouter();

@@ -1,7 +1,7 @@
 'use client'
 
 import { pushGameEvent, startGame, deleteGame } from '@/backend/live/game';
-import { Question, QuestionOption, QuestionType } from '@/backend/live/quiz';
+import { Question, QuestionOption, QuestionType } from '@/backend/live/set';
 import { useEffect, useState } from 'react';
 
 import styles from './host.module.css';
@@ -11,7 +11,7 @@ import MCQuestion from '../live/[id]/question/mcq/question';
 import { EventType } from '@/backend/live/events/event';
 import generateId from '@/backend/id';
 
-export default function HostDashboard(props: { gameId: string, quizId: string, gameStarted: boolean }) {
+export default function HostDashboard(props: { gameId: string, setId: string, gameStarted: boolean }) {
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
 
@@ -22,7 +22,7 @@ export default function HostDashboard(props: { gameId: string, quizId: string, g
 
     useEffect(() => {
         (async () => {
-            const questionsRef = doc(collection(firestore, 'quizzes'), props.quizId);
+            const questionsRef = doc(collection(firestore, 'sets'), props.setId);
             const snapshot = await getDoc(questionsRef);
 
             if (!snapshot.exists()) {

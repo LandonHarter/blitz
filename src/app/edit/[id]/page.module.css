@@ -117,6 +117,9 @@
 
     display: flex;
     align-items: center;
+
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
 }
 
 .question_option p {

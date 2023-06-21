@@ -1,4 +1,4 @@
-export interface Quiz {
+export interface Set {
     id: string;
     owner: string;
     name: string;

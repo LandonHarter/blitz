@@ -1,0 +1,69 @@
+/* https://codepen.io/utilitybend/pen/bGvjLba?editors=1100 */
+
+.sets {
+    width: 100vw;
+    height: fit-content;
+
+    display: grid;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.set_card {
+    --img-scale: 1.001;
+    --title-color: white;
+    --link-icon-translate: -20px;
+    --link-icon-opacity: 0;
+
+    position: relative;
+    border-radius: 16px;
+    box-shadow: none;
+    background: var(--bg-dark);
+    transform-origin: center;
+    transition: all 0.4s ease-in-out;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.set_card:hover {
+    transform: scale(1.02);
+}
+  
+.set_card h2 {
+    margin: 0 0 18px 0;
+    font-size: 1.9rem;
+    letter-spacing: 0.06em;
+    color: var(--title-color);
+    transition: color 0.3s ease-out;
+}
+
+.set_card p {
+    font-family: 'PT  Sans', sans-serif;
+}
+  
+.article_wrapper figure {
+    margin: 0;
+    padding: 0;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+
+    max-width: 100%;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+  
+.set_card img {
+    max-width: 100%;
+    transform-origin: center;
+    transform: scale(var(--img-scale));
+    transition: transform 0.4s ease-in-out;
+}
+
+.article_body {
+    padding: 24px;
+}

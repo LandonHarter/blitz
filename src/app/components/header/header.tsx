@@ -4,14 +4,22 @@ import Link from "next/link";
 import styles from "./header.module.css";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { signInWithGithub, signInWithGoogle, signInWithMicrosoft, signOut } from "@baas/login";
 import useCurrentUser from "@hooks/useCurrentUser";
 import Loading from "@components/loading/loading";
+import useOutsideClick from "@/hooks/useOutsideClick";
 
 export default function Header() {
     const [showLogin, setShowLogin] = useState(false);
     const [avatarDropdown, setAvatarDropdown] = useState(false);
+
+    const avatarDropdownRef = useRef(null);
+    const loginModalRef = useRef(null);
+
+    useOutsideClick(avatarDropdownRef, () => setAvatarDropdown(false));
+    useOutsideClick(loginModalRef, () => setShowLogin(false));
+
     const { currentUser, signedIn, userLoading } = useCurrentUser();
 
     const LoginModal = () => {
@@ -19,7 +27,7 @@ export default function Header() {
             <>
                 {showLogin && 
                     <div className={styles.login_modal_background}>
-                        <div className={styles.login_modal}>
+                        <div className={styles.login_modal} ref={loginModalRef}>
                             <div className={styles.login_modal_content}>
                                 <h1 className={styles.login_modal_title}>Login</h1>
                                 <p className={styles.login_modal_subtitle}>Sign in to start creating!</p>
@@ -48,18 +56,24 @@ export default function Header() {
 
     const Avatar = () => {
         return(
-            <div className={styles.avatar_container}>
+            <div>
                 <Image src={currentUser.pfp} alt="avatar" className={styles.avatar_image} width={42} height={42} onClick={() => {
                     setAvatarDropdown(!avatarDropdown);
                 }} />
 
                 {avatarDropdown &&
-                    <div className={styles.avatar_dropdown}>
+                    <div className={styles.avatar_dropdown} ref={avatarDropdownRef}>
                         <Link href={`/profile/${currentUser.uid}`} className={styles.avatar_dropdown_option} onClick={() => {
                             setAvatarDropdown(false);
                         }}>
                             <Image src='/images/icons/user.png' alt='user' width={25} height={25} />
                             <p>PROFILE</p>
+                        </Link>
+                        <Link href='/my-sets' className={styles.avatar_dropdown_option} onClick={() => {
+                            setAvatarDropdown(false);
+                        }}>
+                            <Image src='/images/icons/mysets.png' alt='user' width={25} height={25} />
+                            <p>MY SETS</p>
                         </Link>
                         <Link href='/settings' className={styles.avatar_dropdown_option} onClick={() => {
                             setAvatarDropdown(false);
@@ -98,7 +112,7 @@ export default function Header() {
                     <div className={styles.nav_links}>
                         <Link href='/join' className={styles.nav_link}>Join</Link>
                         <Link href='/create' className={styles.nav_link}>Create</Link>
-                        <Link href='/host' className={styles.nav_link}>Host</Link>
+                        <Link href='/explore/sets' className={styles.nav_link}>Explore</Link>
                     </div>
                     {!signedIn ? 
                         <div>

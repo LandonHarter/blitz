@@ -1,17 +1,39 @@
-import { realtimeDb } from "@baas/init";
+import { firestore, realtimeDb } from "@baas/init";
 import { get, onChildAdded, onChildRemoved, onValue, ref, remove, set, update } from "firebase/database";
 import { User } from "@baas/user";
 import { GameUser } from "./user";
 import generateId from "@backend/id";
 import { EventType } from "@backend/live/events/event";
 import { AnalyticsEventType, pushAnalyticsEvent } from "../firebase/analytics";
+import { collection, getDoc, doc } from "firebase/firestore";
 
 export const createGame = async (hostId:string) => {
+    const setId = '7LhuCJXQTMyjWvbyo6gp';
+    const setData = await getDoc(doc(collection(firestore, 'sets'), setId));
+    if (!setData.exists()) {
+        return {
+            success: false,
+            error: 'Set does not exist',
+            gameCode: '',
+        };
+    }
+
+    const publicSet = setData.data().public;
+    if (!publicSet) {
+        if (setData.data().owner !== hostId) {
+            return {
+                success: false,
+                error: 'Set is not public',
+                gameCode: '',
+            };
+        }
+    }
+
     const gameCode = generateGameCode();
     const gameRef = ref(realtimeDb, `live-games/${gameCode}`);
 
     await set(gameRef, {
-        gameQuizId: '7LhuCJXQTMyjWvbyo6gp',
+        gameSetId: setId,
         host: hostId,
         started: false,
     });
@@ -20,7 +42,11 @@ export const createGame = async (hostId:string) => {
         data: {},
     });
 
-    return gameCode;
+    return {
+        success: true,
+        error: '',
+        gameCode: gameCode,
+    };
 };
 
 export const joinGame = async (gameCode:string, user:User) => {
@@ -103,7 +129,7 @@ export const getGameData = async (gameCode:string) => {
 
     const data:GameData = {
         host: gameData.host,
-        quizId: gameData.gameQuizId,
+        setId: gameData.gameSetId,
     };
 
     return data;
@@ -163,7 +189,7 @@ const generateGameCode = () => {
 
 export interface GameData {
     host:string;
-    quizId:string;
+    setId:string;
 }
 
 export interface GameEvent {

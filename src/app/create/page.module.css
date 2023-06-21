@@ -1,3 +1,15 @@
+.set_options {
+    width: 100vw;
+    height: calc(100vh - 500px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin: 15px;
+}
+
 .create_button {
     width: 300px;
     height: 50px;
@@ -10,9 +22,206 @@
     margin-top: 20px;
     margin-bottom: 20px;
     cursor: pointer;
+    margin: 5px;
 }
 
 .popup_content {
     font-size: 40px;
     color: black;
+}
+
+.name_input {
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 20px;
+    padding-left: 10px;
+    color: black;
+    outline: none;
+    margin: 5px;
+}
+
+.description_input {
+    width: 300px;
+    height: 100px;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px;
+    color: black;
+    outline: none;
+    margin: 5px;
+    resize: none;
+}
+
+.image_input {
+    display: none;
+}
+
+.image_input_content {
+    cursor: pointer;
+    margin: 10px;
+}
+
+.image_input_button {
+    width: fit-content;
+    height: fit-content;
+    padding: 15px;
+
+    background-color: #1E90FF;
+    border-radius: 10px;
+}
+
+.image_input_button h1 {
+    font-size: 18px;
+}
+
+/* https://codepen.io/bradyhullopeter/pen/bGrjzJy */
+
+.mcui_checkbox,
+.mcui_radio {
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  padding: 0.6em 0;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.mcui_checkbox input[type=checkbox],
+.mcui_checkbox input[type=radio],
+.mcui_radio input[type=checkbox],
+.mcui_radio input[type=radio] {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+.mcui_checkbox input[type=checkbox] + div,
+.mcui_checkbox input[type=radio] + div,
+.mcui_radio input[type=checkbox] + div,
+.mcui_radio input[type=radio] + div {
+  border: 2px solid #8d9aa9;
+  height: 1.5em;
+  width: 1.5em;
+  box-sizing: border-box;
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+}
+.mcui_checkbox input[type=checkbox] ~ div:last-child,
+.mcui_checkbox input[type=radio] ~ div:last-child,
+.mcui_radio input[type=checkbox] ~ div:last-child,
+.mcui_radio input[type=radio] ~ div:last-child {
+  padding-left: 0.5em;
+}
+.mcui_checkbox input[type=radio] + div,
+.mcui_radio input[type=radio] + div {
+  border-radius: 50%;
+}
+.mcui_checkbox input[type=radio] + div::after,
+.mcui_radio input[type=radio] + div::after {
+  content: "";
+  position: absolute;
+  left: 25%;
+  top: 25%;
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  transform: scale(0.5);
+  opacity: 0;
+  background: black;
+  transition: all 107ms cubic-bezier(0.65, 0.25, 0.56, 0.96);
+}
+.mcui_checkbox input[type=checkbox]:focus + div,
+.mcui_checkbox input[type=radio]:focus + div,
+.mcui_checkbox input[type=checkbox]:active + div,
+.mcui_checkbox input[type=radio]:active + div,
+.mcui_radio input[type=checkbox]:focus + div,
+.mcui_radio input[type=radio]:focus + div,
+.mcui_radio input[type=checkbox]:active + div,
+.mcui_radio input[type=radio]:active + div {
+  outline: 2px dashed #8d9aa9;
+  outline-offset: 2px;
+}
+.mcui_checkbox input[type=checkbox]:checked + div,
+.mcui_radio input[type=checkbox]:checked + div {
+  border-color: white;
+  transition: border-color 107ms cubic-bezier(0.65, 0.25, 0.56, 0.96);
+}
+.mcui_checkbox input[type=checkbox]:checked + div .mcui_check,
+.mcui_radio input[type=checkbox]:checked + div .mcui_check {
+  opacity: 1;
+  transition: opacity 107ms cubic-bezier(0.65, 0.25, 0.56, 0.96);
+}
+.mcui_checkbox input[type=checkbox]:checked + div .mcui_check polyline,
+.mcui_radio input[type=checkbox]:checked + div .mcui_check polyline {
+  -webkit-animation: dash-check 107ms cubic-bezier(0.65, 0.25, 0.56, 0.96) forwards;
+          animation: dash-check 107ms cubic-bezier(0.65, 0.25, 0.56, 0.96) forwards;
+}
+.mcui_checkbox input[type=radio]:checked + div,
+.mcui_radio input[type=radio]:checked + div {
+  border-color: black;
+}
+.mcui_checkbox input[type=radio]:checked + div::after,
+.mcui_radio input[type=radio]:checked + div::after {
+  opacity: 1;
+  transform: scale(1);
+}
+.mcui_checkbox input[type=checkbox]:indeterminate + div::after,
+.mcui_radio input[type=checkbox]:indeterminate + div::after {
+  content: "";
+  height: 4px;
+  width: 60%;
+  left: 20%;
+  top: calc(50% - 2px);
+  position: absolute;
+  background: #8d9aa9;
+  border-radius: 1px;
+}
+.mcui_checkbox input[type=checkbox]:disabled ~ div,
+.mcui_checkbox input[type=radio]:disabled ~ div,
+.mcui_radio input[type=checkbox]:disabled ~ div,
+.mcui_radio input[type=radio]:disabled ~ div {
+  color: #8d9aa9;
+  cursor: not-allowed;
+}
+.mcui_checkbox input[type=checkbox]:enabled ~ div,
+.mcui_checkbox input[type=radio]:enabled ~ div,
+.mcui_radio input[type=checkbox]:enabled ~ div,
+.mcui_radio input[type=radio]:enabled ~ div {
+  cursor: default;
+}
+
+.mcui_check {
+  height: 100%;
+  width: 100%;
+  transform: scale(1);
+  color: black;
+  opacity: 0;
+}
+.mcui_check polyline {
+  fill: none;
+  transform-origin: 50% 50%;
+  stroke-width: 5px;
+  stroke-dasharray: 22.7713679002;
+  stroke: currentcolor;
+}
+
+@supports (display: grid) {
+  .mcui_check polyline {
+    stroke-dashoffset: 22.7713679002;
+  }
+}
+@-webkit-keyframes dash-check {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes dash-check {
+  to {
+    stroke-dashoffset: 0;
+  }
 }

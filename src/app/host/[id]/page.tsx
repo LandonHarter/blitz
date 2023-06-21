@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { GameEvent } from '@/backend/live/game';
-import { Question, QuestionType } from '@/backend/live/quiz';
+import { Question, QuestionType } from '@/backend/live/set';
 import { EventType } from '@/backend/live/events/event';
 import { GameUser } from '@/backend/live/user';
 import { getGameData, subscribeToGame } from '@/backend/live/game';
@@ -27,7 +27,7 @@ export default function HostPage() {
     const [currentQuestion, setCurrentQuestion] = useState<Question>();
     const [currentNumAnswers, setCurrentNumAnswers] = useState<number>(0);
 
-    const [quizId, setQuizId] = useState<string>('');
+    const [setId, setSetId] = useState<string>('');
 
     const onGameEvent = (event:GameEvent) => {
         if (event.eventType === EventType.StartGame) {
@@ -67,7 +67,7 @@ export default function HostPage() {
                 return;
             }
 
-            setQuizId(gameData.quizId);
+            setSetId(gameData.setId);
             setLoadingData(false);
         })();
     }, [currentUser, gameId, signedIn]);
@@ -75,6 +75,6 @@ export default function HostPage() {
     if (loadingData || !signedIn || currentUser === null || gameId === undefined) return (<Loading />);
     
     return (
-        <HostDashboard gameId={gameId} quizId={quizId} gameStarted={gameStarted} />
+        <HostDashboard gameId={gameId} setId={setId} gameStarted={gameStarted} />
     );
 }

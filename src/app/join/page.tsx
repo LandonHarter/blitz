@@ -56,8 +56,17 @@ export default function JoinPage() {
                     setJoining(false);
                 }} disabled={joining}>{joining ? 'Joining...' : 'Join'}</button>
                 <button className={styles.join_button} onClick={async () => {
-                    const gameCode = await createGame(currentUser.uid);
-                    router.push(`/host/${gameCode}`);
+                    const {
+                        success,
+                        error,
+                        gameCode
+                    } = await createGame(currentUser.uid);
+                    
+                    if (success) router.push(`/host/${gameCode}`);
+                    else {
+                        setError(error);
+                        setErrorOpen(true);
+                    }
                 }}>Create Game</button>
             </div>
 

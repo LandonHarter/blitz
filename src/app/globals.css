@@ -13,6 +13,13 @@
 
 body {
     background-color: var(--bg);
+
+    overflow-x: hidden
+}
+
+input, textarea {
+    font-family: 'PT Sans', sans-serif;
+    font-weight: bold;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Mouse+Memoirs&display=swap');

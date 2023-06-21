@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 import styles from './page.module.css';
-import { Question, QuestionOption, QuestionType } from '@backend/live/quiz';
+import { Question, QuestionOption, QuestionType } from '@/backend/live/set';
 import generateId from '@/backend/id';
 import Loading from '@/components/loading/loading';
 import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
@@ -24,7 +24,7 @@ export default function EditPage() {
 
     const { currentUser, signedIn, userLoading } = useCurrentUser();
 
-    const [owner, setOwner] = useState<string>('');
+    const [owner, setOwner] = useState<string|null>(null);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [loadingMenu, setLoadingMenu] = useState<boolean>(true);
 
@@ -32,28 +32,41 @@ export default function EditPage() {
     const dropdownTriangleSize = 25;
 
     useEffect(() => {
+        if (userLoading) return;
+
+        if (!signedIn) {
+            router.push(`/set/${id}`);
+        }
+
+        if (owner !== null) {
+            if (owner !== currentUser.uid) {
+                router.push(`/set/${id}`);
+                return;
+            }
+        }
+
         setLoadingMenu(true);
         (async () => {
-            const quizRef = doc(collection(firestore, 'quizzes'), id);
-            const quizSnapshot = await getDoc(quizRef);
+            const setRef = doc(collection(firestore, 'sets'), id);
+            const setSnapshot = await getDoc(setRef);
 
-            if (!quizSnapshot.exists()) {
-                alert('Quiz does not exist');
+            if (!setSnapshot.exists()) {
+                alert('Set does not exist');
                 router.push('/');
                 return;
             }
 
-            if (!signedIn || (signedIn && currentUser.uid !== quizSnapshot.data()?.owner)) {
-                router.push(`/quiz/${id}`);
+            if (!signedIn || (signedIn && currentUser.uid !== setSnapshot.data()?.owner)) {
+                router.push(`/set/${id}`);
                 return;
             }
 
             const questionsArray:Question[] = [];
 
-            const quizData = quizSnapshot.data();
-            const quizQuestions = quizData.questions;
-            for (let i = 0; i < quizData.numQuestions; i++) {
-                const question = quizQuestions[i];
+            const setData = setSnapshot.data();
+            const setQuestionsArray = setData.questions;
+            for (let i = 0; i < setData.numQuestions; i++) {
+                const question = setQuestionsArray[i];
                 const type = question.type;
                 const options = question.options;
                 const option1 = options[0];
@@ -93,22 +106,10 @@ export default function EditPage() {
             }
 
             setQuestions(questionsArray);
-            setOwner(quizSnapshot.data()?.owner);
+            setOwner(setSnapshot.data()?.owner);
             setLoadingMenu(false);
         })();
-    }, []);
-
-    useEffect(() => {
-        if (!signedIn) {
-            router.push(`/quiz/${id}`);
-        }
-
-        if (owner !== null) {
-            if (owner !== currentUser.uid) {
-                router.push(`/quiz/${id}`);
-            }
-        }
-    }, [signedIn]);
+    }, [userLoading]);
 
     const createQuestion = () => {
         const questionText = questionInput.current?.value;
@@ -160,8 +161,8 @@ export default function EditPage() {
         correctOptionCheckbox.current!.value = 'Option 1';
     };
 
-    const updateQuiz = async () => {
-        const questionRef = doc(collection(firestore, 'quizzes'), id);
+    const updateSet = async () => {
+        const questionRef = doc(collection(firestore, 'sets'), id);
         console.log(auth.currentUser?.uid);
         await updateDoc(questionRef, {
             questions: questions,
@@ -192,9 +193,9 @@ export default function EditPage() {
                 }}>Create Question</button>
                 <button onClick={async () => {
                     setLoadingMenu(true);
-                    await updateQuiz();
+                    await updateSet();
                     setLoadingMenu(false);
-                }}>Update Quiz</button>
+                }}>Update Set</button>
             </div>
 
             <div className={styles.questions}>
@@ -215,7 +216,10 @@ export default function EditPage() {
                             <div className={styles.question_options}>
                                 {question.options.map((option, index) => {
                                     return(
-                                        <div key={option.id} className={`${styles.question_option} ${option.correct && styles.question_option_correct}`}>
+                                        <div key={option.id} className={`${styles.question_option} ${option.correct && styles.question_option_correct}`} onClick={() => {
+                                            option.correct = !option.correct;
+                                            setQuestions([...questions]);
+                                        }}>
                                             <p>{option.option}</p>
                                         </div>
                                     );

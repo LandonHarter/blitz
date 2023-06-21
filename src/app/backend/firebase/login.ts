@@ -53,7 +53,7 @@ const setUserData = async (credentials:UserCredential) => {
         pfp: user.photoURL ?? "/images/avatar.png",
         uid: user.uid,
         empty: false,
-        quizzes: [],
+        sets: [],
     };
     
     const userRef = doc(collection(firestore, 'users'), user.uid);
