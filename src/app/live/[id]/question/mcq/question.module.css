@@ -29,6 +29,11 @@
     align-items: center;
 }
 
+.mcq_option_correct {
+    border: 2px solid #d3d3d3;
+    background-color: #4CAF50;
+}
+
 .mcq_option_title {
     margin-left: 10px;
 }

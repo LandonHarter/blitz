@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import Popup from "@/components/popup/popup";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import Image from "next/image";
+import Waiting from "@/live/[id]/waiting/waiting";
 
 export default function ExploreSetsPage() {
     const router = useRouter();
@@ -117,13 +118,13 @@ export default function ExploreSetsPage() {
                                             gameCode
                                         } = await createGame(currentUser.uid, set.id);
                                         
-                                        if (success) router.push(`/host/${gameCode}`);
-                                        else {
+                                        if (success) {
+                                            router.push(`/host/${gameCode}`);
+                                        } else {
                                             setError(error);
                                             setErrorOpen(true);
+                                            setLoading(false);
                                         }
-
-                                        setLoading(false);
                                     }}>Host Live</button>
                                 </div>
                             </div>

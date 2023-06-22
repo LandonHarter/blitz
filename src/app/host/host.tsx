@@ -1,6 +1,7 @@
 'use client'
 
-import { pushGameEvent, startGame, deleteGame } from '@/backend/live/game';
+import { pushGameEvent, startGame, deleteGame, subscribeToGame, GameEvent } from '@/backend/live/game';
+import { GameUser } from '@/backend/live/user';
 import { Question, QuestionOption, QuestionType } from '@/backend/live/set';
 import { useEffect, useState } from 'react';
 
@@ -15,10 +16,38 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
 
+    const [numPlayers, setNumPlayers] = useState<number>(0);
+    const [numAnswers, setNumAnswers] = useState<number>(0);
+
     const [error, setError] = useState({
         error: false,
         message: ''
     });
+
+    const onGameEvent = async (event:GameEvent) => {
+        if (event.eventType === EventType.SubmitAnswer) {
+            setNumAnswers((prevNumAnswers) => prevNumAnswers + 1);
+
+            console.log(`numAnswers: ${numAnswers} numPlayers: ${numPlayers}`);
+
+            if (numAnswers === numPlayers) {
+                await pushGameEvent(props.gameId, {
+                    eventType: EventType.RevealAnswer,
+                    eventData: {},
+                    eventId: generateId()
+                });
+            }
+        }
+    };
+
+    const onUserJoin = (user:GameUser) => {
+        setNumPlayers((prevNumPlayers) => prevNumPlayers + 1);
+    };
+
+    const onUserLeave = (user:GameUser) => {
+        setNumPlayers((prevNumPlayers) => prevNumPlayers - 1);
+    };
+    
 
     useEffect(() => {
         (async () => {
@@ -58,6 +87,7 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
                 });
             }
 
+            await subscribeToGame(props.gameId, onGameEvent, onUserJoin, onUserLeave);
             setQuestions(questionsArray);
         })();
     }, []);
@@ -96,6 +126,7 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
                     return;
                 }
 
+                setNumAnswers(0);
                 setCurrentQuestionIndex(nextQuestionIndex);
                 await pushGameEvent(props.gameId, {
                     eventType: EventType.NextQuestion,

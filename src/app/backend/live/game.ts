@@ -125,10 +125,13 @@ export const getGameData = async (gameCode:string) => {
     const gameRef = ref(realtimeDb, `live-games/${gameCode}/`);
     const gameSnapshot = await get(gameRef);
     const gameData = gameSnapshot.val();
+    const usersRef = ref(realtimeDb, `live-games/${gameCode}/users/`);
+    const usersSnapshot = await get(usersRef);
 
     const data:GameData = {
         host: gameData.host,
         setId: gameData.gameSetId,
+        numPlayers: usersSnapshot.size,
     };
 
     return data;
@@ -189,6 +192,7 @@ const generateGameCode = () => {
 export interface GameData {
     host:string;
     setId:string;
+    numPlayers:number;
 }
 
 export interface GameEvent {

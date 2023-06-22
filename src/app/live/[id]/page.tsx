@@ -14,6 +14,7 @@ import { EventType } from "@/backend/live/events/event";
 import HostDashboard from "../../host/host";
 import MCQuestion from "./question/mcq/question";
 import { Question, QuestionType } from "@/backend/live/set";
+import Waiting from "./waiting/waiting";
 
 export default function LiveGamePage() {
     const router = useRouter();
@@ -27,7 +28,11 @@ export default function LiveGamePage() {
 
     const [gameStarted, setGameStarted] = useState(false);
     const [gameEnded, setGameEnded] = useState(false);
+    const [numPlayers, setNumPlayers] = useState<number>(0);
     const [currentQuestion, setCurrentQuestion] = useState<Question>();
+    const [currentQuestionNumber, setCurrentQuestionNumber] = useState<number>(0);
+    const [submittedAnswer, setSubmittedAnswer] = useState<boolean>(false);
+    const [revealAnswer, setRevealAnswer] = useState<boolean>(false);
 
     const [currentNumAnswers, setCurrentNumAnswers] = useState<number>(0);
     const [lastEvent, setLastEvent] = useState<GameEvent>({
@@ -41,14 +46,19 @@ export default function LiveGamePage() {
             setGameStarted(true);
         } else if (event.eventType === EventType.NextQuestion) {
             setCurrentNumAnswers(0);
+            setSubmittedAnswer(false);
+            setRevealAnswer(false);
             setCurrentQuestion({
                 id: event.eventData.questionId,
                 question: event.eventData.question,
                 type: QuestionType[event.eventData.type as keyof typeof QuestionType],
                 options: event.eventData.options
             });
+            setCurrentQuestionNumber((prevNum) => prevNum + 1); 
         } else if (event.eventType === EventType.SubmitAnswer) {
             setCurrentNumAnswers((prevNum) => prevNum + 1);
+        } else if (event.eventType === EventType.RevealAnswer) {
+            setRevealAnswer(true);
         } else if (event.eventType === EventType.EndGame) {
             setGameEnded(true);
         }
@@ -61,10 +71,12 @@ export default function LiveGamePage() {
             name: user.name,
             uid: user.uid
         }]);
+        setNumPlayers((prevNum) => prevNum + 1);
     };
 
     const onUserLeave = (user:GameUser) => {
         setUsers((prevUsers) => prevUsers.filter(u => u.uid !== user.uid));
+        setNumPlayers((prevNum) => prevNum - 1);
     };
 
     useEffect(() => {
@@ -79,6 +91,8 @@ export default function LiveGamePage() {
             if (userInGame) {
                 await subscribeToGame(id, onGameEvent, onUserJoin, onUserLeave);
                 const gameData = await getGameData(id);
+                
+                setNumPlayers(gameData.numPlayers);
                 setLoadingData(false);
             }
         })();
@@ -116,9 +130,17 @@ export default function LiveGamePage() {
 
     if (currentQuestion === undefined) return(<Loading />);
 
+    if (submittedAnswer && !revealAnswer) {
+        return(
+            <Waiting>
+                <h1>{currentNumAnswers}/{numPlayers} answered</h1>
+            </Waiting>
+        );
+    }
+
     return(
         <div>
-            <MCQuestion question={currentQuestion} questionNumber={1} currentNumAnswers={currentNumAnswers} gameId={id} lastEvent={lastEvent} />
+            <MCQuestion question={currentQuestion} questionNumber={currentQuestionNumber} currentNumAnswers={currentNumAnswers} gameId={id} lastEvent={lastEvent} setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
         </div>
     );
 }

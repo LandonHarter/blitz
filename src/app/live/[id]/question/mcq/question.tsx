@@ -8,7 +8,7 @@ import { GameEvent, pushGameEvent } from '@/backend/live/game';
 import { EventType } from '@/backend/live/events/event';
 import generateId from '@/backend/id';
 
-export default function MCQuestion(props:{ question:Question, questionNumber:number, currentNumAnswers:number, gameId:string, lastEvent:GameEvent }) {
+export default function MCQuestion(props:{ question:Question, questionNumber:number, currentNumAnswers:number, gameId:string, lastEvent:GameEvent, setSubmitted:Function, revealAnswer:boolean }) {
     const question = props.question;
 
     const [selectedOption, setSelectedOption] = useState<number>(-1);
@@ -18,6 +18,24 @@ export default function MCQuestion(props:{ question:Question, questionNumber:num
             setSelectedOption(-1);
         }
     }, [props.lastEvent]);
+
+    if (props.revealAnswer) {
+        return(
+            <div className={styles.question_background}>
+                <h1 className={styles.question_title}>{question.question}, {props.currentNumAnswers} submitted</h1>
+
+                <div className={styles.question_options}>
+                    {question.options.map((option, index) => {
+                        return(
+                            <div key={index} className={`${styles.mcq_option} ${option.correct && styles.mcq_option_correct}`}>
+                                <h1 className={styles.mcq_option_title}>{option.option}</h1>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    }
 
     return(
         <div className={styles.question_background}>
@@ -36,6 +54,7 @@ export default function MCQuestion(props:{ question:Question, questionNumber:num
                 })}
             </div>
             <button className={styles.submit_button} onClick={async () => {
+                props.setSubmitted(true);
                 await pushGameEvent(props.gameId, {
                     eventType: EventType.SubmitAnswer,
                     eventData: {},
