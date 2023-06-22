@@ -51,9 +51,8 @@ export default function JoinPage() {
                     } else {
                         setError(error);
                         setErrorOpen(true);
+                        setJoining(false);
                     }
-
-                    setJoining(false);
                 }} disabled={joining}>{joining ? 'Joining...' : 'Join'}</button>
             </div>
 

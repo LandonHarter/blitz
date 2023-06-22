@@ -100,7 +100,6 @@ export default function CreatePage() {
                     setLoadingMenu(true);
                     const setId = await createSet();
                     router.push(`/edit/${setId}`);
-                    setLoadingMenu(false);
                 }}>Create Set</button>
             </div>
 
