@@ -108,6 +108,14 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
                         eventId: generateId()
                     });
                 }} className={styles.start_button}>Start Game</button>
+                <button onClick={async () => {
+                    await pushGameEvent(props.gameId, {
+                        eventType: EventType.EndGame,
+                        eventData: {},
+                        eventId: generateId()
+                    });
+                    await deleteGame(props.gameId);
+                }} className={styles.start_button}>End Game</button>
             </div>
         );
     }

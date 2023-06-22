@@ -7,7 +7,6 @@
     color: white;
     font-size: 20px;
     font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px;
     cursor: pointer;
 }

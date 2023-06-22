@@ -49,8 +49,9 @@ export const createGame = async (hostId:string, setId:string) => {
 };
 
 export const joinGame = async (gameCode:string, user:User) => {
-    const gameRef = ref(realtimeDb, `live-games/${gameCode}`);
-    const usersRef = ref(realtimeDb, `live-games/${gameCode}/users/${user.uid}`);
+    const formattedGameCode = gameCode.toUpperCase();
+    const gameRef = ref(realtimeDb, `live-games/${formattedGameCode}`);
+    const usersRef = ref(realtimeDb, `live-games/${formattedGameCode}/users/${user.uid}`);
 
     const gameSnapshot = await get(gameRef);
     if (!gameSnapshot.exists()) {

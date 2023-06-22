@@ -111,7 +111,7 @@ export default function LiveGamePage() {
             <div>
                 {users.map((user, i) => {
                     return(
-                        <p key={i} style={{fontFamily:'PT Sans, sans-serif'}}>{user.name}</p>
+                        <p key={i} style={{fontFamily:'SF Pro Display'}}>{user.name}</p>
                     );
                 })}
                 <button className={styles.leave_button} onClick={async () => {
