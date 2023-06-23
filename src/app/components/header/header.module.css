@@ -78,6 +78,19 @@
     z-index: 1000;
 }
 
+.login_modal_visible {
+    visibility: visible;
+    animation: appear 0.15s ease-in-out;
+}
+
+.login_modal_hidden_animation {
+    animation: disappear 0.15s ease-in-out;
+}
+
+.login_modal_hidden {
+    visibility: hidden;
+}
+
 .login_modal {
     width: 450px;
     height: 550px;
@@ -184,6 +197,19 @@
     z-index: 5;
 }
 
+.avatar_dropdown_visible {
+    visibility: visible;
+    animation: appear 0.15s ease-in-out;
+}
+
+.avatar_dropdown_hidden_animation {
+    animation: disappear 0.15s ease-in-out;
+}
+
+.avatar_dropdown_hidden {
+    visibility: hidden;
+}
+
 .avatar_dropdown_option {
     width: 200px;
     height: 50px;
@@ -206,7 +232,7 @@
 .avatar_dropdown_option p {
     margin: 0 5px;
     margin-right: 15px;
-    color: #1E266D;
+    color: var(--text-color);
     font-size: 20px;
 }
 
@@ -233,9 +259,27 @@
 
     font-family: 'SF Pro Display';
     font-weight: bold;
-    color: #1E266D;
+    color: var(--text-color);
 }
 
 .nav_link:hover {
     color: var(--primary-color);
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes disappear {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }

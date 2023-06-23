@@ -24,6 +24,19 @@
     align-items: center;
 }
 
+.popup_visible {
+    visibility: visible;
+    animation: appear 0.1s ease-in-out;
+}
+
+.popup_hidden_animation {
+    animation: disappear 0.1s ease-in-out;
+}
+
+.popup_hidden {
+    visibility: hidden;
+}
+
 .popup_exit {
     align-self: flex-end;
     margin-top: -10px;
@@ -34,4 +47,22 @@
     font-size: 40px;
 
     cursor: pointer;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes disappear {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
