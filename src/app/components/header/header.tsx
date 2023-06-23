@@ -56,7 +56,7 @@ export default function Header() {
 
     const Avatar = () => {
         return(
-            <div>
+            <div className={styles.avatar_container}>
                 <Image src={currentUser.pfp} alt="avatar" className={styles.avatar_image} width={42} height={42} onClick={() => {
                     setAvatarDropdown(!avatarDropdown);
                 }} />
@@ -104,16 +104,15 @@ export default function Header() {
             <div className={styles.header_nav}>
                 <div className={styles.header_nav_left}>
                     <Link href='/' className={styles.header_logo}>
-                        <Image src='/icon.png' alt="logo" width={40} height={40} />
-                        <h1>BLITZ!</h1>
+                        <Image style={{ aspectRatio:'1331/750' }} src='/bigicon.png' alt="logo" width={166} height={94} />
                     </Link>
-                </div>
-                <div className={styles.header_nav_right}>
                     <div className={styles.nav_links}>
                         <Link href='/join' className={styles.nav_link}>Join</Link>
                         <Link href='/create' className={styles.nav_link}>Create</Link>
                         <Link href='/explore/sets' className={styles.nav_link}>Explore</Link>
                     </div>
+                </div>
+                <div className={styles.header_nav_right}>
                     {!signedIn ? 
                         <div>
                             <button className={styles.signin_button} onClick={() => setShowLogin(true)}>Log In</button>

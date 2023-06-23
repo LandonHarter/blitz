@@ -12,6 +12,7 @@ import Popup from "@/components/popup/popup";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import Image from "next/image";
 import Waiting from "@/live/[id]/waiting/waiting";
+import Link from "next/link";
 
 export default function ExploreSetsPage() {
     const router = useRouter();
@@ -101,9 +102,8 @@ export default function ExploreSetsPage() {
                                     
                                 </figure>
                                 <div className={styles.article_body}>
-                                    <h2 onClick={() => {
-                                        router.push(`/set/${set.id}`);
-                                    }}>{set.name}</h2>
+                                    <Link href={`/set/${set.id}`} className={styles.link_decoration}><h2 onClick={() => {
+                                    }}>{set.name}</h2></Link>
                                     <p>{set.description}</p>
                                 </div>
                                 <div className={styles.card_footer}>

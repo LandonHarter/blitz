@@ -23,6 +23,7 @@
     margin-bottom: 20px;
     cursor: pointer;
     margin: 5px;
+    letter-spacing: 1.5px;
 }
 
 .popup_content {
@@ -38,6 +39,7 @@
     padding-left: 10px;
     color: black;
     outline: none;
+    border: none;
     margin: 5px;
 }
 
@@ -49,6 +51,7 @@
     padding: 10px;
     color: black;
     outline: none;
+    border: none;
     margin: 5px;
     resize: none;
 }
@@ -69,6 +72,8 @@
 
     background-color: #1E90FF;
     border-radius: 10px;
+
+    letter-spacing: 1.5px;
 }
 
 .image_input_button h1 {
@@ -103,7 +108,7 @@
 .mcui_checkbox input[type=radio] + div,
 .mcui_radio input[type=checkbox] + div,
 .mcui_radio input[type=radio] + div {
-  border: 2px solid #8d9aa9;
+  border: 2px solid black;
   height: 1.5em;
   width: 1.5em;
   box-sizing: border-box;
@@ -135,20 +140,10 @@
   background: black;
   transition: all 107ms cubic-bezier(0.65, 0.25, 0.56, 0.96);
 }
-.mcui_checkbox input[type=checkbox]:focus + div,
-.mcui_checkbox input[type=radio]:focus + div,
-.mcui_checkbox input[type=checkbox]:active + div,
-.mcui_checkbox input[type=radio]:active + div,
-.mcui_radio input[type=checkbox]:focus + div,
-.mcui_radio input[type=radio]:focus + div,
-.mcui_radio input[type=checkbox]:active + div,
-.mcui_radio input[type=radio]:active + div {
-  outline: 2px dashed #8d9aa9;
-  outline-offset: 2px;
-}
+
 .mcui_checkbox input[type=checkbox]:checked + div,
 .mcui_radio input[type=checkbox]:checked + div {
-  border-color: white;
+  border-color: black;
   transition: border-color 107ms cubic-bezier(0.65, 0.25, 0.56, 0.96);
 }
 .mcui_checkbox input[type=checkbox]:checked + div .mcui_check,
@@ -178,14 +173,14 @@
   left: 20%;
   top: calc(50% - 2px);
   position: absolute;
-  background: #8d9aa9;
+  background: black;
   border-radius: 1px;
 }
 .mcui_checkbox input[type=checkbox]:disabled ~ div,
 .mcui_checkbox input[type=radio]:disabled ~ div,
 .mcui_radio input[type=checkbox]:disabled ~ div,
 .mcui_radio input[type=radio]:disabled ~ div {
-  color: #8d9aa9;
+  color: black;
   cursor: not-allowed;
 }
 .mcui_checkbox input[type=checkbox]:enabled ~ div,
@@ -207,7 +202,7 @@
   transform-origin: 50% 50%;
   stroke-width: 5px;
   stroke-dasharray: 22.7713679002;
-  stroke: currentcolor;
+  stroke: black;
 }
 
 @supports (display: grid) {

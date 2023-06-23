@@ -101,7 +101,7 @@ export default function CreatePage() {
                         <polyline points="7.57 15.87 12.62 21.07 23.43 9.93" />
                     </svg>
                     </div>
-                    <div>Public</div>
+                    <div style={{ color: 'black' }}>Public</div>
                 </label>
 
                 <button className={styles.create_button} onClick={async () => {

@@ -12,9 +12,13 @@
     gap: 24px;
 }
 
+.sets p, .sets h2 {
+    color: black;
+}
+
 .set_card {
     --img-scale: 1.001;
-    --title-color: white;
+    --title-color: black;
     --link-icon-translate: -20px;
     --link-icon-opacity: 0;
 
@@ -97,4 +101,8 @@
     color: black;
     margin-bottom: 50px;
     letter-spacing: 2px;
+}
+
+.link_decoration {
+    text-decoration: none;
 }

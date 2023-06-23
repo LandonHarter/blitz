@@ -7,8 +7,10 @@
 }
 
 :root {
-    --bg: #33314b;
-    --bg-dark: #232133;
+    --bg: #F2F9FF;
+    --bg-dark: #e5e9ec;
+    --primary-color: #3440ad;
+    --secondary-color: #ff6b6b;
 }
 
 body {
