@@ -1,0 +1,114 @@
+.footer {
+    width: 100vw;
+    height: fit-content;
+
+    background-color: var(--text-color);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    bottom: 0;
+}
+
+.footer_sections {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    margin-top: 80px;
+}
+
+.company_details {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0 80px;
+}
+
+.company_details_content {
+    font-family: 'SF Pro Display';
+    width: 250px;
+
+    margin-top: 15px;
+    margin-left: 10px;
+
+    color: #8c92c5;
+    line-height: 22px;
+}
+
+.footer_section_column {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0 80px;
+}
+
+.footer_section_column h1 {
+    font-family: 'SF Pro Display';
+    font-size: 20px;
+    font-weight: 600;
+
+    color: #8c92c5;
+    margin-bottom: 20px;
+}
+
+.footer_section_column_list {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer_section_column_link {
+    text-decoration: none;
+    font-family: 'SF Pro Display';
+    font-size: 16px;
+    font-weight: 400;
+    margin: 8px 0;
+    color: #c0c4ee;
+}
+
+.footer_divider {
+    width: 90vw;
+    height: 2px;
+
+    border-radius: 10px;
+    margin-top: 80px;
+    margin-bottom: 20px;
+
+    background-color: #8c92c559;
+}
+
+.footer_copyright {
+    width: 90vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 40px;
+}
+
+.footer_copyright p {
+    font-family: 'SF Pro Display';
+    font-size: 14px;
+    font-weight: 500;
+
+    color: #8c92c5; 
+}
+
+.footer_copyright a {
+    text-decoration: none;
+    font-family: 'SF Pro Display';
+    font-size: 14px;
+    font-weight: 500;
+
+    margin: 0 10px;
+
+    color: #8c92c5; 
+}
+
+.footer_copyright a:hover {
+    text-decoration: underline;
+}
