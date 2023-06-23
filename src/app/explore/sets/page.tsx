@@ -86,6 +86,10 @@ export default function ExploreSetsPage() {
         return(<Loading />);
     }
 
+    if (sets.length === 0) {
+        return(<h1>No sets available</h1>);
+    }
+
     return(
         <div>
             <div className={styles.sets}>

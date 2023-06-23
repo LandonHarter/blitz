@@ -8,7 +8,8 @@ import { arrayUnion, collection, doc, serverTimestamp, setDoc, updateDoc } from 
 import { firestore, storage } from '@baas/init';
 import { useRouter } from 'next/navigation';
 import useCurrentUser from '@hooks/useCurrentUser';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytes, uploadString } from 'firebase/storage';
+import FileResizer from 'react-image-file-resizer';
 
 export default function CreatePage() {
     const router = useRouter();
@@ -29,8 +30,15 @@ export default function CreatePage() {
 
         let imageUrl = '/images/missingimage.jpg';
         if (imageField) {
+            const imageUri = await new Promise<string>((resolve) => {
+                FileResizer.imageFileResizer(imageField, 500, 500, 'JPEG', 100, 0, (uri) => {
+                    // @ts-ignore
+                    resolve(uri);
+                });
+            });
+
             const imageRef = ref(storage, `set-images/${newSetId}`);
-            await uploadBytes(imageRef, imageField);
+            await uploadString(imageRef, imageUri, 'data_url');
             imageUrl = await getDownloadURL(imageRef);
         }
 
