@@ -118,15 +118,17 @@ export default function CreatePage() {
                         </div>
                     </div>
                     <div className={styles.form_picture}>
-                        <label htmlFor='set-thumbnail'>
-                            <img src={imagePath || '/images/missingimage.jpg'} alt='avatar' />
-                        </label>
-                        <input type='file' id='set-thumbnail' accept='image/*' style={{ display: 'none' }} onChange={(e) => {
-                            if (e.target.files && e.target.files[0]) {
-                                setImageField(e.target.files[0]);
-                                setImagePath(URL.createObjectURL(e.target.files[0]));
-                            }
-                        }} />
+                        <div className={styles.file_input_wrapper} style={{backgroundImage:`url("${imagePath}")`}}>
+                            <input id='file-input' type="file" className={styles.picture_input_field} accept=".png,.jpg,.jpeg" onChange={(e) => {
+                                    if (e.target.files && e.target.files[0]) {
+                                        setImageField(e.target.files[0]);
+                                        setImagePath(URL.createObjectURL(e.target.files[0]));
+                                    }
+                            }} />
+                            <label htmlFor='file-input' className={styles.picture_overlay}>
+                                <p>Choose Image</p>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
@@ -149,7 +151,7 @@ export default function CreatePage() {
                 </div>
 
                 <button className={`${styles.provider_button} ${styles.quizlet_button}`}>
-                    <Image src='/images/providers/quizlet.png' alt='quizlet' width={60} height={60} />
+                    <Image src='/images/providers/quizlet.png' alt='quizlet' width={35} height={35} />
                     Import from Quizlet
                 </button>
                 <button className={`${styles.provider_button} ${styles.kahoot_button}`}>

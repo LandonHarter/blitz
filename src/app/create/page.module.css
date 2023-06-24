@@ -294,19 +294,52 @@
 }
 
 .form_picture {
+  height: 300px;
+
   margin: 0 75px;
 }
 
-.form_picture label {
+.file_input_wrapper {
+  width: 300px;
+  height: 300px;
+
   border-radius: 100%;
+
+  border: 1px solid #ccc;
+  display: inline-block;
+  cursor: pointer;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.form_picture img {
-  aspect-ratio: 1;
-  width: 300px;
+.picture_input_field {
+  display: none;
+}
 
+.picture_overlay {
+  display: none;
+  position: relative;
+  top: 0;
+  left: 0;
+  aspect-ratio: 1;
+  width: 300px !important;
+  height: 300px;
   border-radius: 100%;
+  opacity: 0.8;
+  background-color: #353535;
   cursor: pointer;
+}
+
+.picture_overlay p {
+  font-size: 24px;
+}
+
+.file_input_wrapper:hover .picture_overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .create_button {
@@ -380,7 +413,7 @@
 }
 
 .quizlet_button img {
-  margin-right: 3px;
+  margin-right: 10px;
 }
 
 .kahoot_button {
