@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import useCurrentUser from '@hooks/useCurrentUser';
 import { getDownloadURL, ref, uploadBytes, uploadString } from 'firebase/storage';
 import FileResizer from 'react-image-file-resizer';
+import Image from 'next/image';
 
 export default function CreatePage() {
     const router = useRouter();
@@ -22,9 +23,29 @@ export default function CreatePage() {
     const [nameField, setNameField] = useState('');
     const [descriptionField, setDescriptionField] = useState('');
     const [imageField, setImageField] = useState<Blob|null>(null);
-    const [isPublic, setIsPublic] = useState(false);
+    const [imagePath, setImagePath] = useState<string|null>('/images/missingimage.jpg');
 
     const createSet = async () => {
+        if (nameField.length < 1 || descriptionField.length < 1) {
+            setPopupInfo('Please fill out all fields');
+            setPopup(true);
+            setLoadingMenu(false);
+            return {
+                success: false,
+                id: ''
+            };
+        }
+
+        if (nameField.length > 24 || descriptionField.length > 75) {
+            setPopupInfo('Please shorten your name or description');
+            setPopup(true);
+            setLoadingMenu(false);
+            return {
+                success: false,
+                id: ''
+            };
+        }
+
         const newSetRef = doc(collection(firestore, 'sets'));
         const newSetId = newSetRef.id;
 
@@ -51,7 +72,7 @@ export default function CreatePage() {
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
             owner: currentUser.uid,
-            public: isPublic,
+            public: false,
             likes: 0,
             image: imageUrl,
             description: descriptionField
@@ -63,7 +84,10 @@ export default function CreatePage() {
              sets: arrayUnion(newSetId)
         });
 
-        return newSetId;
+        return {
+            success: true,
+            id: newSetId
+        };
     };
 
     if (loadingMenu || userLoading) {
@@ -74,44 +98,72 @@ export default function CreatePage() {
 
     return(
         <div>
-            <div className={styles.set_options}>
-                <input type='text' placeholder='Name' className={styles.name_input} value={nameField} onChange={(e) => {
-                    setNameField(e.target.value);
-                }} />
-                <textarea placeholder='Description' className={styles.description_input} value={descriptionField} maxLength={75} onChange={(e) => {
-                    setDescriptionField(e.target.value);
-                }} />
+            <div className={styles.create_form}>
+                <h1 className={styles.form_title}>Create New Set</h1>
+                <div className={styles.form_tick} />
 
-                <label htmlFor='image-input' className={styles.image_input_content}>
-                    <div className={styles.image_input_button}><h1>Choose Image</h1></div>
-                </label>
-                <input id='image-input' type='file' className={styles.image_input} onChange={(e) => {
-                    if (e.target.files && e.target.files[0]) {
-                        setImageField(e.target.files[0]);
-                    }
-                }} />
-
-                <label className={styles.mcui_checkbox}>
-                    <input type="checkbox" checked={isPublic} onChange={(e) => {
-                        setIsPublic(e.target.checked);
-                    }} />
-                    <div>
-                    <svg className={styles.mcui_check} viewBox="-2 -2 35 35" aria-hidden="true">
-                        <title>checkmark-circle</title>
-                        <polyline points="7.57 15.87 12.62 21.07 23.43 9.93" />
-                    </svg>
+                <div className={styles.form_content}>
+                    <div className={styles.form_inputs}>
+                        <div className={styles.name_input}>
+                            <input type="text" id="name-input" className={styles.name_input_field} placeholder="Set name" value={nameField} onChange={(e) => {
+                                setNameField(e.target.value);
+                            }} maxLength={24} />
+                            <label htmlFor="name-input" className={styles.name_input_label}>Name</label>
+                        </div>
+                        <div className={styles.description_input}>
+                            <textarea id="description-input" className={styles.description_input_field} placeholder="Set description" value={descriptionField} onChange={(e) => {
+                                setDescriptionField(e.target.value);
+                            }} style={{ resize: 'none' }} maxLength={75} />
+                            <label htmlFor="description-input" className={styles.description_input_label}>Description</label>
+                        </div>
                     </div>
-                    <div style={{ color: 'black' }}>Public</div>
-                </label>
+                    <div className={styles.form_picture}>
+                        <label htmlFor='set-thumbnail'>
+                            <img src={imagePath || '/images/missingimage.jpg'} alt='avatar' />
+                        </label>
+                        <input type='file' id='set-thumbnail' accept='image/*' style={{ display: 'none' }} onChange={(e) => {
+                            if (e.target.files && e.target.files[0]) {
+                                setImageField(e.target.files[0]);
+                                setImagePath(URL.createObjectURL(e.target.files[0]));
+                            }
+                        }} />
+                    </div>
+                </div>
 
                 <button className={styles.create_button} onClick={async () => {
                     setLoadingMenu(true);
-                    const setId = await createSet();
-                    router.push(`/edit/${setId}`);
+                    const {
+                        success,
+                        id: newSetId
+                    } = await createSet();
+
+                    if (success) {
+                        router.push(`/edit/${newSetId}`);
+                    }
                 }}>Create Set</button>
+
+                <div className={styles.or_container}>
+                    <div className={styles.small_divider} />
+                    <p>or</p>
+                    <div className={styles.small_divider} />
+                </div>
+
+                <button className={`${styles.provider_button} ${styles.quizlet_button}`}>
+                    <Image src='/images/providers/quizlet.png' alt='quizlet' width={60} height={60} />
+                    Import from Quizlet
+                </button>
+                <button className={`${styles.provider_button} ${styles.kahoot_button}`}>
+                    <Image src='/images/providers/kahoot.png' alt='kahoot' width={35} height={35} />
+                    Import from Kahoot
+                </button>
+                <button className={`${styles.provider_button} ${styles.ai_button}`}>
+                    <Image src='/images/icons/robot.png' alt='robot' width={40} height={40} />
+                    Create from AI
+                </button>
             </div>
 
             <Popup open={popup} setOpen={setPopup} exitButton >
+                <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom:25 }} />
                 <p className={styles.popup_content}>{popupInfo}</p>
             </Popup>
         </div>

@@ -203,9 +203,9 @@ export default function EditPage() {
                     setQuestionsDropdownOpen(!questionsDropdownOpen);
                 }}>
                     <svg height="25" width="25" className={`${styles.dropdown_triangle} ${questionsDropdownOpen && styles.dropdown_triangle_active}`}>
-                        <polygon points={`0,0 ${dropdownTriangleSize/2},${dropdownTriangleSize} ${dropdownTriangleSize},0`} style={{ fill: 'white' }} />
+                        <polygon points={`0,0 ${dropdownTriangleSize/2},${dropdownTriangleSize} ${dropdownTriangleSize},0`} style={{ fill: '#353535' }} />
                     </svg>
-                    <h1 style={{ marginLeft:20 }}>Questions ({questions.length})</h1>
+                    <h1 style={{ marginLeft:20, color:'#353535' }}>Questions ({questions.length})</h1>
                 </div>
 
                 {questionsDropdownOpen && questions.map((question, index) => {

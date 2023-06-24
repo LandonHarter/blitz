@@ -58,7 +58,6 @@
 
 .dropdown_triangle {
     transform: rotate(-90deg);
-
     transition: 0.2s;
 }
 
@@ -93,6 +92,7 @@
 
 .question h1 {
     font-family: 'SF Pro Display';
+    color: #353535;
     font-size: 24px;
     margin: 0 10px;
 }
@@ -124,9 +124,14 @@
 
 .question_option p {
     margin: 0 10px;
+    color: #353535;
 }
 
 .question_option_correct {
     background-color: #4CAF50;
     border: 2px solid #d3d3d3;
+}
+
+.question_option_correct p {
+    color: white !important;
 }

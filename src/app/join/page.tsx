@@ -47,7 +47,7 @@ export default function JoinPage() {
 
                     const { success, error } = await joinGame(joinInput.current.value, currentUser);
                     if (success) {
-                        router.push(`/live/${joinInput.current.value}`);
+                        router.push(`/live/${joinInput.current.value.toUpperCase()}`);
                     } else {
                         setError(error);
                         setErrorOpen(true);
