@@ -1,0 +1,48 @@
+.loading_background {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--bg);
+}
+
+.loading_background h1 {
+    font-size: 50px;
+    color: #353535;
+}
+
+.robot {
+    aspect-ratio: 1;
+    width: 250px;
+
+    fill: transparent;
+    stroke: #353535;
+}
+
+.robot path {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 0;
+
+    animation: robot-draw 2s ease-in-out infinite;
+}
+
+@keyframes robot-draw {
+    0% {
+        stroke-dashoffset: 100;
+    }
+    10% {
+        fill: transparent;
+    }
+    100% {
+        stroke-dashoffset: 0;
+        fill: #353535;
+    }
+}

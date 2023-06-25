@@ -1,0 +1,48 @@
+.tabbar_container {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tabbar {
+    width: fit-content;
+    height: 50px;
+
+    background-color: var(--bg-dark);
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab {
+    width: 100px;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    
+    cursor: pointer;
+}
+
+.tab_active {
+    background-color: var(--primary-color);
+}
+
+.tab_active h1 {
+    color: #fff !important;
+    font-size: 24px;
+    font-family: 'SF Pro Display';
+}
+
+.tab h1 {
+    color: #353535;
+    font-size: 24px;
+    font-family: 'SF Pro Display';
+}

@@ -439,3 +439,136 @@
     font-size: 30px;
     margin-bottom: 50px;
 }
+
+.ai_popup_content {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ai_prompt_field {
+  width: 350px;
+  height: 90px;
+
+  margin: 20px 0;
+  padding: 5px 10px;
+
+  outline: none;
+  border-radius: 10px;
+  border: solid 1px #B0BEC5;
+  color: #353535;
+  font-family: 'SF Pro Display';
+  font-size: 24px;
+  font-weight: 400;
+
+  resize: none;
+}
+
+.ai_generate_button {
+  color: #FDFDFD;
+  font-size: 24px;
+
+  border-radius: 10px;
+  border: none;
+  background-color: var(--secondary-color);
+
+  margin: 15px 0;
+  padding: 10px 50px;
+
+  cursor: pointer;
+}
+
+.ai_generate_button_disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.quantity {
+  position: relative;
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+.number_input::-webkit-inner-spin-button,
+.number_input::-webkit-outer-spin-button
+{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number_input
+{
+  -moz-appearance: textfield;
+  color: #353535;
+  font-family: 'SF Pro Display';
+}
+
+.quantity input {
+  width: 45px;
+  height: 42px;
+  line-height: 1.65;
+  float: left;
+  display: block;
+  padding: 0;
+  margin: 0;
+  padding-left: 20px;
+  border: 1px solid #353535;
+}
+
+.quantity input:focus {
+  outline: 0;
+}
+
+.quantity_nav {
+  float: left;
+  position: relative;
+  height: 42px;
+}
+
+.quantity_button {
+  position: relative;
+  cursor: pointer;
+  border-left: 1px solid #353535;
+  width: 20px;
+  text-align: center;
+  color: #333;
+  font-size: 13px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+  line-height: 1.7;
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.quantity_button.quantity_up {
+  position: absolute;
+  height: 50%;
+  top: 0;
+  border-bottom: 1px solid #353535;
+}
+
+.quantity_button.quantity_down {
+  position: absolute;
+  bottom: -1px;
+  height: 50%;
+}
+
+.question_num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.question_num h1 {
+  color: #353535;
+  font-family: 'SF Pro Display';
+  font-size: 24px;
+  margin-left: 10px;
+  transform: translateY(7px);
+}
