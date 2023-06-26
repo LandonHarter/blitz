@@ -15,18 +15,20 @@ export const generateQuiz = async (prompt:string, numQuestions:number, callback:
     const aiPrompt = generateQuizPrompt(prompt, numQuestions);
 
     await setDoc(aiRef, {prompt: aiPrompt});
-    onSnapshot(aiRef, (doc) => {
+    const unsub = onSnapshot(aiRef, (doc) => {
         if (!doc.exists()) return;
         if (!doc.data()?.status) return;
 
         if (doc.data()?.status.state === 'COMPLETED') {
             callback(AIState.COMPLETED, doc.data()?.response, null);
             deleteDoc(aiRef);
+            unsub();
         } else if (doc.data()?.status.state === 'PROCESSING') {
             callback(AIState.PROCESSING, null, 'Processing...');
         } else if (doc.data()?.status.state === 'ERRORED') {
             callback(AIState.ERROR, null, doc.data()?.status.error);
             deleteDoc(aiRef);
+            unsub();
         }
     });
 };
@@ -35,18 +37,20 @@ export const summarizeText = async (text:string, callback:Function) => {
     const aiRef = doc(collection(firestore, 'ai-summarize'));
     await setDoc(aiRef, {text: text});
 
-    onSnapshot(aiRef, (doc) => {
+    const unsub = onSnapshot(aiRef, (doc) => {
         if (!doc.exists()) return;
         if (!doc.data()?.status) return;
 
         if (doc.data()?.status.state === 'COMPLETED') {
             callback(AIState.COMPLETED, doc.data()?.summary, null);
             deleteDoc(aiRef);
+            unsub();
         } else if (doc.data()?.status.state === 'PROCESSING') {
             callback(AIState.PROCESSING, null, 'Processing...');
         } else if (doc.data()?.status.state === 'ERRORED') {
             callback(AIState.ERROR, null, doc.data()?.status.error);
             deleteDoc(aiRef);
+            unsub();
         }
     });
 };
