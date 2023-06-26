@@ -49,12 +49,12 @@ export const summarizeText = async (text:string, callback:Function) => {
 
         if (doc.data().status.state === 'COMPLETED') {
             callback(AIState.COMPLETED, doc.data().summary, null);
-            //deleteDoc(aiRef);
+            deleteDoc(aiRef);
         } else if (doc.data().status.state === 'PROCESSING') {
             callback(AIState.PROCESSING, null, 'Processing...');
         } else if (doc.data().status.state === 'ERRORED') {
             callback(AIState.ERROR, null, doc.data().status.error);
-            //deleteDoc(aiRef);
+            deleteDoc(aiRef);
         }
     });
 };
