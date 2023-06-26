@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Popup from '@/components/popup/popup';
 import Loading from '@/components/loading/loading';
+import NeedSignin from '@/components/require-signin/needsignin';
 
 export default function JoinPage() {
     const router = useRouter();
@@ -27,7 +28,7 @@ export default function JoinPage() {
     if (userLoading) {
         return(<Loading />);
     } else if (!signedIn) {
-        return(<h1>You need to be signed in to join a game</h1>);
+        return(<NeedSignin />);
     }
 
     return(

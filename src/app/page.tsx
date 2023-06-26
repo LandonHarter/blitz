@@ -2,6 +2,7 @@
 
 import { auth } from './backend/firebase/init';
 import Footer from './components/footer/footer';
+import NeedSignin from './components/require-signin/needsignin';
 import styles from './page.module.css';
 import Link from 'next/link';
 
@@ -88,7 +89,7 @@ export default function Home() {
             </div>
           </div>
       </div>
-
+    
       <Footer />
     </div>
   );

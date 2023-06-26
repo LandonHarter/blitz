@@ -15,6 +15,7 @@ import HostDashboard from "../../host/host";
 import MCQuestion from "./question/mcq/question";
 import { Question, QuestionType } from "@/backend/live/set";
 import Waiting from "./waiting/waiting";
+import NeedSignin from "@/components/require-signin/needsignin";
 
 export default function LiveGamePage() {
     const router = useRouter();
@@ -101,7 +102,7 @@ export default function LiveGamePage() {
     if (userLoading || loadingData) {
         return(<Loading />);
     } else if (!signedIn) {
-        return(<h1>You need to be signed in to join a game</h1>)
+        return(<NeedSignin />)
     } else if (!inGame) {
         return(<h1>You are not in this game</h1>);
     }

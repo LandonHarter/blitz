@@ -249,6 +249,9 @@
 .nav_links {
     margin-left: 50px;
     margin-right: 100px;
+
+    display: flex;
+    align-items: center;
 }
 
 .nav_link {
@@ -262,8 +265,42 @@
     color: var(--text-color);
 }
 
-.nav_link:hover {
+.nav_link:hover, .nav_link:hover .link_text {
     color: var(--primary-color);
+}
+
+.nav_link_content p {
+    font-family: 'SF Pro Display';
+    font-weight: bold;  
+    color: var(--text-color);
+    transition: 0.15s ease-in-out;
+    font-size: 25px;
+}
+
+.nav_link_content {
+    width: fit-content;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.badge {
+    width: fit-content;
+    height: fit-content;
+
+    margin-left: 10px;
+
+    border-radius: 100px;
+    background-color: var(--primary-color);
+}
+
+.badge p {
+    color: white;
+    font-size: 15px;
+    font-family: 'SF Pro Display';
+    font-weight: bold;
+    padding: 5px 10px;
 }
 
 @keyframes appear {

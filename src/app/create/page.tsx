@@ -17,6 +17,7 @@ import { generateQuiz } from '@/backend/ai/generate';
 import { AIState } from '@/backend/ai/AIState';
 import AILoading from '@/components/ai-loading/loading';
 import { parseAi } from '@/backend/ai/convert';
+import NeedSignin from '@/components/require-signin/needsignin';
 
 export default function CreatePage() {
     const router = useRouter();
@@ -171,7 +172,7 @@ export default function CreatePage() {
     if (loadingMenu || userLoading) {
         return(<Loading />);
     } else if (!signedIn) {
-        return(<h1>Not signed in</h1>);
+        return(<NeedSignin />);
     } else if (aiLoading) {
         return(<AILoading />);
     }

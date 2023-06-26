@@ -22,15 +22,15 @@ export default function Footer() {
                         <Link href='/' className={styles.footer_section_column_link}>Home</Link>
                         <Link href='/join' className={styles.footer_section_column_link}>Join</Link>
                         <Link href='/explore/sets' className={styles.footer_section_column_link}>Explore</Link>
-                        <Link href='/about' className={styles.footer_section_column_link}>About</Link>
+                        <Link href='/ai' className={styles.footer_section_column_link}>AI</Link>
                     </ul>
                 </div>
                 <div className={styles.footer_section_column}>
-                    <h1>Title</h1>
+                    <h1>Company</h1>
 
                     <ul className={styles.footer_section_column_list}>
-                        <Link href={''} className={styles.footer_section_column_link}>Link</Link>
-                        <Link href={''} className={styles.footer_section_column_link}>Link</Link>
+                        <Link href={'/about'} className={styles.footer_section_column_link}>About</Link>
+                        <Link href={'/contact'} className={styles.footer_section_column_link}>Contact</Link>
                         <Link href={''} className={styles.footer_section_column_link}>Link</Link>
                         <Link href={''} className={styles.footer_section_column_link}>Link</Link>
                     </ul>

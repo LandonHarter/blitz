@@ -1,0 +1,83 @@
+.page_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+  
+.title {
+    font-size: 60px;
+    font-family: 'SF Pro Display';
+    font-weight: 700;
+    color: var(--text-color);
+  
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  
+.tick {
+    width: 60px;
+    height: 15px;
+    background-color: var(--secondary-color);
+    border-radius: 30px;
+  
+    margin-bottom: 50px;
+}
+
+.ai_options {
+    width: 1425px;
+    height: fit-content;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.ai_card {
+    width: 375px;
+    height: fit-content;
+    padding: 30px;
+
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: 0.15s ease-in-out;
+
+    margin: 20px;
+
+    text-decoration: none;
+}
+
+.ai_card:hover {
+    transform: scale(1.025);
+}
+
+.ai_card_top {
+    display: flex;
+    align-items: center;
+}
+
+.ai_card_top img {
+    border-radius: 10px;
+    margin-right: 15px;
+}
+
+.ai_card_top h1 {
+    font-size: 40px;
+    font-family: 'SF Pro Display';
+    font-weight: 700;
+    color: var(--text-color);
+
+    text-decoration: none;
+}
+
+.ai_card p {
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'SF Pro Display';
+    font-weight: 400;
+    color: var(--text-color);
+    margin-top: 10px;
+}

@@ -11,13 +11,20 @@ import { firestore } from '@/backend/firebase/init';
 import MCQuestion from '../live/[id]/question/mcq/question';
 import { EventType } from '@/backend/live/events/event';
 import generateId from '@/backend/id';
+import useCurrentUser from '@/hooks/useCurrentUser';
+import NeedSignin from '@/components/require-signin/needsignin';
+import { useRouter } from 'next/router';
 
 export default function HostDashboard(props: { gameId: string, setId: string, gameStarted: boolean }) {
+    const router = useRouter();
+
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
 
     const [numPlayers, setNumPlayers] = useState<number>(0);
     const [numAnswers, setNumAnswers] = useState<number>(0);
+
+    const { currentUser, signedIn, userLoading } = useCurrentUser();
 
     const [error, setError] = useState({
         error: false,
@@ -27,8 +34,6 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
     const onGameEvent = async (event:GameEvent) => {
         if (event.eventType === EventType.SubmitAnswer) {
             setNumAnswers((prevNumAnswers) => prevNumAnswers + 1);
-
-            console.log(`numAnswers: ${numAnswers} numPlayers: ${numPlayers}`);
 
             if (numAnswers === numPlayers) {
                 await pushGameEvent(props.gameId, {
@@ -63,6 +68,15 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
             }
 
             const data = snapshot.data();
+
+            if (signedIn) {
+                const owner = data.owner;
+                if (owner !== currentUser.uid) {
+                    router.push('/');
+                    return;
+                }
+            }
+
             const questions = data.questions;
             const numQuestions = data.numQuestions;
 
@@ -91,6 +105,10 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
             setQuestions(questionsArray);
         })();
     }, []);
+
+    if (!signedIn) {
+        return(<NeedSignin />);
+    }
 
     if (!props.gameStarted) {
         return(

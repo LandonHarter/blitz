@@ -120,6 +120,9 @@ export default function Header() {
                         <Link href='/join' className={styles.nav_link}>Join</Link>
                         <Link href='/create' className={styles.nav_link}>Create</Link>
                         <Link href='/explore/sets' className={styles.nav_link}>Explore</Link>
+                        <Link href='/ai' className={styles.nav_link}>
+                            <div className={styles.nav_link_content}><p className={styles.link_text}>AI</p> <div className={styles.badge}><p>Beta</p></div></div>
+                        </Link>
                     </div>
                 </div>
                 <div className={styles.header_nav_right}>
