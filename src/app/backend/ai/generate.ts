@@ -16,20 +16,16 @@ export const generateQuiz = async (prompt:string, numQuestions:number, callback:
 
     await setDoc(aiRef, {prompt: aiPrompt});
     onSnapshot(aiRef, (doc) => {
-        if (!doc.exists()) {
-            callback(AIState.ERROR, null, 'No response from AI');
-            return;
-        }
+        if (!doc.exists()) return;
+        if (!doc.data()?.status) return;
 
-        if (!doc.data().status) return;
-
-        if (doc.data().status.state === 'COMPLETED') {
-            callback(AIState.COMPLETED, doc.data().response, null);
+        if (doc.data()?.status.state === 'COMPLETED') {
+            callback(AIState.COMPLETED, doc.data()?.response, null);
             deleteDoc(aiRef);
-        } else if (doc.data().status.state === 'PROCESSING') {
+        } else if (doc.data()?.status.state === 'PROCESSING') {
             callback(AIState.PROCESSING, null, 'Processing...');
-        } else if (doc.data().status.state === 'ERRORED') {
-            callback(AIState.ERROR, null, doc.data().status.error);
+        } else if (doc.data()?.status.state === 'ERRORED') {
+            callback(AIState.ERROR, null, doc.data()?.status.error);
             deleteDoc(aiRef);
         }
     });
@@ -40,20 +36,16 @@ export const summarizeText = async (text:string, callback:Function) => {
     await setDoc(aiRef, {text: text});
 
     onSnapshot(aiRef, (doc) => {
-        if (!doc.exists()) {
-            callback(AIState.ERROR, null, 'No response from AI');
-            return;
-        }
+        if (!doc.exists()) return;
+        if (!doc.data()?.status) return;
 
-        if (!doc.data().status) return;
-
-        if (doc.data().status.state === 'COMPLETED') {
-            callback(AIState.COMPLETED, doc.data().summary, null);
+        if (doc.data()?.status.state === 'COMPLETED') {
+            callback(AIState.COMPLETED, doc.data()?.summary, null);
             deleteDoc(aiRef);
-        } else if (doc.data().status.state === 'PROCESSING') {
+        } else if (doc.data()?.status.state === 'PROCESSING') {
             callback(AIState.PROCESSING, null, 'Processing...');
-        } else if (doc.data().status.state === 'ERRORED') {
-            callback(AIState.ERROR, null, doc.data().status.error);
+        } else if (doc.data()?.status.state === 'ERRORED') {
+            callback(AIState.ERROR, null, doc.data()?.status.error);
             deleteDoc(aiRef);
         }
     });
