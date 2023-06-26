@@ -13,7 +13,7 @@ import { EventType } from '@/backend/live/events/event';
 import generateId from '@/backend/id';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import NeedSignin from '@/components/require-signin/needsignin';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export default function HostDashboard(props: { gameId: string, setId: string, gameStarted: boolean }) {
     const router = useRouter();
@@ -114,6 +114,16 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
         return(
             <div>
                 <button onClick={async () => {
+                    if (questions.length === 0) {
+                        await pushGameEvent(props.gameId, {
+                            eventType: EventType.EndGame,
+                            eventData: {},
+                            eventId: generateId()
+                        });
+                        await deleteGame(props.gameId);
+                        return;
+                    }
+
                     await startGame(props.gameId);
                     await pushGameEvent(props.gameId, {
                         eventType: EventType.NextQuestion,
