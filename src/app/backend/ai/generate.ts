@@ -18,7 +18,6 @@ export const generateQuiz = async (prompt:string, numQuestions:number, callback:
     onSnapshot(aiRef, (doc) => {
         if (!doc.exists()) {
             callback(AIState.ERROR, null, 'No response from AI');
-            deleteDoc(aiRef);
             return;
         }
 
@@ -29,9 +28,33 @@ export const generateQuiz = async (prompt:string, numQuestions:number, callback:
             deleteDoc(aiRef);
         } else if (doc.data().status.state === 'PROCESSING') {
             callback(AIState.PROCESSING, null, 'Processing...');
-        } else if (doc.data().status.state === 'ERROR') {
+        } else if (doc.data().status.state === 'ERRORED') {
             callback(AIState.ERROR, null, doc.data().status.error);
             deleteDoc(aiRef);
+        }
+    });
+};
+
+export const summarizeText = async (text:string, callback:Function) => {
+    const aiRef = doc(collection(firestore, 'ai-summarize'));
+    await setDoc(aiRef, {text: text});
+
+    onSnapshot(aiRef, (doc) => {
+        if (!doc.exists()) {
+            callback(AIState.ERROR, null, 'No response from AI');
+            return;
+        }
+
+        if (!doc.data().status) return;
+
+        if (doc.data().status.state === 'COMPLETED') {
+            callback(AIState.COMPLETED, doc.data().summary, null);
+            //deleteDoc(aiRef);
+        } else if (doc.data().status.state === 'PROCESSING') {
+            callback(AIState.PROCESSING, null, 'Processing...');
+        } else if (doc.data().status.state === 'ERRORED') {
+            callback(AIState.ERROR, null, doc.data().status.error);
+            //deleteDoc(aiRef);
         }
     });
 };

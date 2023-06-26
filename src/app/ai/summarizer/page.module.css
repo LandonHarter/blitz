@@ -1,0 +1,147 @@
+.page_background {
+    width: 100vw;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    color: #353535;
+    font-family: 'SF Pro Display';
+    font-size: 48px;
+    font-weight: bold;
+
+    margin-bottom: 5px;
+    margin-top: 50px;
+}
+
+.subtitle {
+    color: #353535;
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+    font-weight: 400;
+
+    margin-bottom: 15px;
+}
+
+.article_textarea {
+    width: 80vw;
+    height: 50vh;
+  
+    margin: 20px 0;
+    padding: 5px 10px;
+  
+    outline: none;
+    border-radius: 10px;
+    border: solid 1px #B0BEC5;
+    color: #353535;
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+    font-weight: 400;
+  
+    resize: none;
+}
+
+.summarize_button {
+    width: 250px;
+    height: 50px;
+
+    margin: 15px 0;
+    padding: 5px 10px;
+
+    color: var(--bg);
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+    font-weight: 400;
+
+    border-radius: 10px;
+    border: none;
+
+    background-color: var(--primary-color);
+    cursor: pointer;
+    transition: 0.1s ease-in-out;
+}
+
+.summarize_button:hover {
+    filter: brightness(1.1);
+}
+
+.summarize_button:active {
+    transform: scale(0.95);
+}
+
+.button_loading {
+    opacity: 0.5;
+}
+
+.popup_content {
+    text-align: center;
+    color: black;
+    font-size: 30px;
+    margin-bottom: 50px;
+}
+
+.summary_container {
+    width: 80vw;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    margin: 40px 0;
+}
+
+.summary_container h1 {
+    color: #353535;
+    font-size: 32px;
+
+    margin-bottom: 15px;
+}
+
+.summary_container p {
+    color: #353535;
+    font-family: 'SF Pro Display';
+    font-size: 18px;
+    font-weight: 400;
+
+    margin-bottom: 15px;
+}
+
+.loading_skeleton_container {
+    width: 80vw;
+
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 15px;
+}
+
+.loading_skeleton {
+    margin: 4px 0;
+    opacity: 0.7;
+    animation: skeleton_loading 1s ease-in-out infinite alternate;
+
+    border-radius: 4px;
+    height: 0.75rem;
+    width: 100%;
+}
+
+.loading_skeleton_last {
+    margin: 4px 0;
+    opacity: 0.7;
+    animation: skeleton_loading 1s ease-in-out infinite alternate;
+
+    border-radius: 4px;
+    height: 0.75rem;
+    width: 80%;
+}
+
+@keyframes skeleton_loading {
+    0% {
+        background-color: #a3b8c2;
+    }
+    100% {
+        background-color: #a3b8c2c0;
+    }
+}
