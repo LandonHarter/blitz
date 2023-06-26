@@ -1,0 +1,56 @@
+.privacy_container {
+    width: 100vw;
+    height: fit-content;
+    
+    padding: 30px;
+}
+
+.title {
+    font-size: 52px;
+    font-family: 'SF Pro Display';
+    font-weight: 600;
+    color: #353535;
+}
+
+.subtitle {
+    font-size: 24px;
+    font-family: 'SF Pro Display';
+    font-weight: 400;
+    color: #353535;
+
+    margin-left: 5px;
+}
+
+.divider {
+    width: calc(100vw - 60px);
+    height: 2px;
+    background-color: #353535;
+    border-radius: 10px;
+
+    margin-top: 10px;
+}
+
+.privacy {
+    display: flex;
+    flex-direction: column;
+
+    width: 50%;
+}
+
+.privacy p {
+    font-size: 22px;
+    font-family: 'SF Pro Display';
+    font-weight: 600;
+    color: #353535;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 5px;
+}
+
+.section_content {
+    margin-top: 10px !important;
+    margin-bottom: 0 !important;
+    font-weight: 400 !important;
+    font-size: 18px !important;
+}
