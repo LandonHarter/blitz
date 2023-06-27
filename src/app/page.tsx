@@ -5,6 +5,7 @@ import Footer from './components/footer/footer';
 import NeedSignin from './components/require-signin/needsignin';
 import styles from './page.module.css';
 import Link from 'next/link';
+import { HttpsCallableResult, getFunctions, httpsCallable } from "firebase/functions";
 
 export default function Home() {
   return (
@@ -89,6 +90,13 @@ export default function Home() {
             </div>
           </div>
       </div>
+
+      <button onClick={() => {
+        const rephraseFunction = httpsCallable(getFunctions(), 'rephrase');
+        rephraseFunction({text: 'It was not clear exactly when Prigozhin would act, the sources said. But he appears to have decided to move forward with his plan following a June 10 declaration by Russia’s Ministry of Defense that all private military companies, including Wagner, would be forced to sign contracts with Russia’s military beginning in July and essentially be absorbed by the Russian Ministry of Defense.'}).then((result) => {
+          console.log(result);
+        });
+      }}>Rephrase</button>
     
       <Footer />
     </div>

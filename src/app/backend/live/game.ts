@@ -87,13 +87,7 @@ export const joinGame = async (gameCode:string, user:User) => {
 
 export const leaveGame = async (gameCode:string, user:User) => {
     const usersRef = ref(realtimeDb, `live-games/${gameCode}/users/${user.uid}`);
-
-    let i = 0;
-    (await get(ref(realtimeDb, `live-games/${gameCode}/users/`))).forEach(() => { i++ });
     await remove(usersRef);
-    if (i <= 1) {
-        await remove(ref(realtimeDb, `live-games/${gameCode}/`));
-    }
 };
 
 export const subscribeToGame = (gameCode:string, gameEvents:Function, userJoin:Function, userLeave:Function) => {

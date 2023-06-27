@@ -16,6 +16,9 @@ import MCQuestion from "./question/mcq/question";
 import { Question, QuestionType } from "@/backend/live/set";
 import Waiting from "./waiting/waiting";
 import NeedSignin from "@/components/require-signin/needsignin";
+import GameLobby from "./lobby/lobby";
+import GameEnded from "./game-ended/ended";
+import NotInGame from "./not-in-game/notingame";
 
 export default function LiveGamePage() {
     const router = useRouter();
@@ -85,7 +88,11 @@ export default function LiveGamePage() {
         const gameRef = ref(realtimeDb, `live-games/${id}/users/${currentUser.uid}`);
 
         (async () => {
-            const snapshot = await get(gameRef)
+            if (!(await get(ref(realtimeDb, `live-games/${id}`))).exists()) {
+                setLoadingData(false);
+            }
+
+            const snapshot = await get(gameRef);
             const userInGame = snapshot.exists();
             setInGame(userInGame);
 
@@ -104,29 +111,13 @@ export default function LiveGamePage() {
     } else if (!signedIn) {
         return(<NeedSignin />)
     } else if (!inGame) {
-        return(<h1>You are not in this game</h1>);
+        return(<NotInGame />);
     }
 
     if (!gameStarted) {
-        return(
-            <div>
-                {users.map((user, i) => {
-                    return(
-                        <p key={i} style={{fontFamily:'SF Pro Display'}}>{user.name}</p>
-                    );
-                })}
-                <button className={styles.leave_button} onClick={async () => {
-                    await leaveGame(id, currentUser);
-                    router.push('/join');
-                }}>Leave</button>
-            </div>
-        );
-    }
-
-    if (gameEnded) {
-        return(
-            <h1>Game Ended!!!</h1>
-        );
+        return(<GameLobby users={users} currentUser={currentUser} gameId={id} />);
+    } else if (gameEnded) {
+        return(<GameEnded users={users} currentUser={currentUser} gameId={id} />);
     }
 
     if (currentQuestion === undefined) return(<Loading />);
