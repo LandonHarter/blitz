@@ -40,3 +40,7 @@ next-env.d.ts
 
 /functions/lib/
 /functions/node_modules/
+/functions/package-lock.json
+/functions/package.json
+/functions/tsconfig.json
+/functions/.gitignore

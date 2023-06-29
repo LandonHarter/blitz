@@ -10,6 +10,9 @@ import { AIState } from '@/backend/ai/AIState';
 import Popup from '@/components/popup/popup';
 import Image from 'next/image';
 import { parseWorksheet } from '@/backend/ai/convert';
+import useCurrentUser from '@/hooks/useCurrentUser';
+import Loading from '@/components/loading/loading';
+import NeedSignin from '@/components/require-signin/needsignin';
 
 export default function WorksheetCreatorPage() {
     const [title, setTitle] = useState('');
@@ -18,6 +21,10 @@ export default function WorksheetCreatorPage() {
     const [generating, setGenerating] = useState(false);
 
     const [errorOpen, setErrorOpen] = useState(false);
+
+    const { currentUser, userLoading, signedIn } = useCurrentUser();
+    if (userLoading) return(<Loading />);
+    if (!signedIn) return(<NeedSignin />);
 
     if (generating) {
         return(<AILoading />);
