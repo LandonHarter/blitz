@@ -80,3 +80,15 @@ export const parseAi = (response:string, numQuestions:number) => {
         }
     }
 };
+
+export const parseWorksheet = (response:string, numQuestions:number) => {
+    const questions:string[] = [];
+    for (let i = 0; i < numQuestions; i++) {
+        const startingIndex = response.indexOf(`${i + 1}. `);
+        const endingIndex = response.indexOf(`${i + 2}. `);
+        const question = response.slice(startingIndex, endingIndex);
+        questions.push(question.slice(i >= 9 ? 4 : 3).replaceAll('\n', ' '));
+    }
+
+    return questions;
+};

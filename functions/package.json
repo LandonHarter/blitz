@@ -14,9 +14,10 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "firebase-admin": "^11.8.0",
-    "firebase-functions": "^4.3.1",
-    "puppeteer": "^20.7.3"
+    "@pdfme/generator": "^1.2.6",
+    "@pdfme/ui": "^1.2.6",
+    "firebase-admin": "^11.9.0",
+    "firebase-functions": "^4.3.1"
   },
   "devDependencies": {
     "firebase-functions-test": "^3.1.0",

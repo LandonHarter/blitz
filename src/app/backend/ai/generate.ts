@@ -54,3 +54,25 @@ export const summarizeText = async (text:string, callback:Function) => {
         }
     });
 };
+
+export const generateText = async (prompt:string, callback:Function) => {
+    const aiRef = doc(collection(firestore, 'ai-chatbot'));
+
+    await setDoc(aiRef, {prompt: prompt});
+    const unsub = onSnapshot(aiRef, (doc) => {
+        if (!doc.exists()) return;
+        if (!doc.data()?.status) return;
+
+        if (doc.data()?.status.state === 'COMPLETED') {
+            callback(AIState.COMPLETED, doc.data()?.response, null);
+            deleteDoc(aiRef);
+            unsub();
+        } else if (doc.data()?.status.state === 'PROCESSING') {
+            callback(AIState.PROCESSING, null, 'Processing...');
+        } else if (doc.data()?.status.state === 'ERRORED') {
+            callback(AIState.ERROR, null, doc.data()?.status.error);
+            deleteDoc(aiRef);
+            unsub();
+        }
+    });
+};

@@ -31,6 +31,12 @@ export default function AIPage() {
                     image='/images/icons/ai/book.png'
                     link='/ai/summarizer'
                 />
+                <AICard 
+                    title='Worksheet Creator' 
+                    description='Generate a full worksheet with multiple open ended questions. All open and questions are free response and generated using AI.' 
+                    image='/images/icons/ai/worksheet.png'
+                    link='/ai/worksheets'
+                />
             </div>
         </div>
     );

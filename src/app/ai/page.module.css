@@ -36,7 +36,7 @@
 
 .ai_card {
     width: 375px;
-    height: fit-content;
+    height: 166px;
     padding: 30px;
 
     background-color: white;
@@ -65,7 +65,7 @@
 }
 
 .ai_card_top h1 {
-    font-size: 40px;
+    font-size: 34px;
     font-family: 'SF Pro Display';
     font-weight: 700;
     color: var(--text-color);
