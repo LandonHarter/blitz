@@ -1,0 +1,54 @@
+.container {
+    position: fixed;
+    left: 0;
+    top: 134px;
+
+    width: 100vw;
+    height: calc(100vh - 134px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 900;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    transform: translateY(-100px);
+}
+
+.title {
+    font-weight: bold;
+    width: 600px;
+    text-align: center;
+    font-family: 'SF Pro Display';
+    font-size: 60px;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.gohome {
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--bg);
+    margin-top: 15px;
+
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--primary-color);
+
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+.gohome:active {
+    transform: scale(0.95);
+}

@@ -13,6 +13,7 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import Image from "next/image";
 import Waiting from "@/live/[id]/waiting/waiting";
 import Link from "next/link";
+import BasicReturn from "@/components/basic-return/return";
 
 export default function ExploreSetsPage() {
     const router = useRouter();
@@ -88,7 +89,7 @@ export default function ExploreSetsPage() {
     }
 
     if (sets.length === 0) {
-        return(<h1>No sets available</h1>);
+        return(<BasicReturn text="No sets are available" returnLink="/" />);
     }
 
     return(
