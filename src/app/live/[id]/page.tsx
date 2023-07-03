@@ -97,8 +97,20 @@ export default function LiveGamePage() {
             setInGame(userInGame);
 
             if (userInGame) {
-                await subscribeToGame(id, onGameEvent, onUserJoin, onUserLeave);
                 const gameData = await getGameData(id);
+                if (!gameData) {
+                    router.push('/');
+                    return;
+                }
+
+                const { unsubscribeEvent, unsubscribeNewPlayer, unsubscribeLeavePlayer } = await subscribeToGame(id, onGameEvent, onUserJoin, onUserLeave);
+                window.onbeforeunload = async () => {
+                    unsubscribeEvent();
+                    unsubscribeNewPlayer();
+                    unsubscribeLeavePlayer();
+
+                    await leaveGame(id, currentUser);
+                };
                 
                 setNumPlayers(gameData.numPlayers);
                 setLoadingData(false);

@@ -8,12 +8,11 @@ import { useEffect, useState } from 'react';
 import styles from './host.module.css';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
-import MCQuestion from '../live/[id]/question/mcq/question';
 import { EventType } from '@/backend/live/events/event';
 import generateId from '@/backend/id';
 import useCurrentUser from '@/hooks/useCurrentUser';
-import NeedSignin from '@/components/require-signin/needsignin';
 import { useRouter } from 'next/navigation';
+import PreGame from './pre-game/pregame';
 
 export default function HostDashboard(props: { gameId: string, setId: string, gameStarted: boolean }) {
     const router = useRouter();
@@ -21,7 +20,7 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
 
-    const [numPlayers, setNumPlayers] = useState<number>(0);
+    const [players, setPlayers] = useState<GameUser[]>([]);
     const [numAnswers, setNumAnswers] = useState<number>(0);
 
     const { currentUser, signedIn, userLoading } = useCurrentUser();
@@ -35,7 +34,7 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
         if (event.eventType === EventType.SubmitAnswer) {
             setNumAnswers((prevNumAnswers) => prevNumAnswers + 1);
 
-            if (numAnswers === numPlayers) {
+            if (numAnswers === players.length) {
                 await pushGameEvent(props.gameId, {
                     eventType: EventType.RevealAnswer,
                     eventData: {},
@@ -46,11 +45,11 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
     };
 
     const onUserJoin = (user:GameUser) => {
-        setNumPlayers((prevNumPlayers) => prevNumPlayers + 1);
+        setPlayers((prevPlayers) => [...prevPlayers, user]);
     };
 
     const onUserLeave = (user:GameUser) => {
-        setNumPlayers((prevNumPlayers) => prevNumPlayers - 1);
+        setPlayers((prevPlayers) => prevPlayers.filter((player) => player.uid !== user.uid));
     };
     
 
@@ -101,51 +100,56 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
                 });
             }
 
-            await subscribeToGame(props.gameId, onGameEvent, onUserJoin, onUserLeave);
+            const { unsubscribeEvent, unsubscribeNewPlayer, unsubscribeLeavePlayer } = await subscribeToGame(props.gameId, onGameEvent, onUserJoin, onUserLeave);
+
+            const unload = async () => {
+                await unsubscribeEvent();
+                await unsubscribeNewPlayer();
+                await unsubscribeLeavePlayer();
+                await pushGameEvent(props.gameId, {
+                    eventType: EventType.EndGame,
+                    eventData: {},
+                    eventId: generateId()
+                });
+                await deleteGame(props.gameId);
+            };
+            window.onbeforeunload = unload;
+
             setQuestions(questionsArray);
         })();
     }, []);
 
-    if (!signedIn) {
-        return(<NeedSignin />);
-    }
-
     if (!props.gameStarted) {
-        return(
-            <div>
-                <button onClick={async () => {
-                    if (questions.length === 0) {
-                        await pushGameEvent(props.gameId, {
-                            eventType: EventType.EndGame,
-                            eventData: {},
-                            eventId: generateId()
-                        });
-                        await deleteGame(props.gameId);
-                        return;
-                    }
+        return(<PreGame gameId={props.gameId} users={players} start={async () => {
+            if (questions.length === 0) {
+                await pushGameEvent(props.gameId, {
+                    eventType: EventType.EndGame,
+                    eventData: {},
+                    eventId: generateId()
+                });
+                await deleteGame(props.gameId);
+                return;
+            }
 
-                    await startGame(props.gameId);
-                    await pushGameEvent(props.gameId, {
-                        eventType: EventType.NextQuestion,
-                        eventData: {
-                            questionId: questions[0].id,
-                            question: questions[0].question,
-                            type: questions[0].type.toString(),
-                            options: questions[0].options 
-                        },
-                        eventId: generateId()
-                    });
-                }} className={styles.start_button}>Start Game</button>
-                <button onClick={async () => {
-                    await pushGameEvent(props.gameId, {
-                        eventType: EventType.EndGame,
-                        eventData: {},
-                        eventId: generateId()
-                    });
-                    await deleteGame(props.gameId);
-                }} className={styles.start_button}>End Game</button>
-            </div>
-        );
+            await startGame(props.gameId);
+            await pushGameEvent(props.gameId, {
+                eventType: EventType.NextQuestion,
+                eventData: {
+                    questionId: questions[0].id,
+                    question: questions[0].question,
+                    type: questions[0].type.toString(),
+                    options: questions[0].options 
+                },
+                eventId: generateId()
+            });
+        }} end={async () => {
+            await pushGameEvent(props.gameId, {
+                eventType: EventType.EndGame,
+                eventData: {},
+                eventId: generateId()
+            });
+            await deleteGame(props.gameId);
+        }} />);
     }
 
     return(

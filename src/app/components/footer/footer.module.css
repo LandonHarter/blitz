@@ -2,7 +2,7 @@
     width: 100vw;
     height: fit-content;
 
-    background-color: var(--text-color);
+    background-color: #1E266D;
 
     display: flex;
     flex-direction: column;

@@ -6,26 +6,28 @@ import { GameEvent } from '@/backend/live/game';
 import { Question, QuestionType } from '@/backend/live/set';
 import { EventType } from '@/backend/live/events/event';
 import { GameUser } from '@/backend/live/user';
-import { getGameData, subscribeToGame } from '@/backend/live/game';
-import { realtimeDb } from '@baas/init';
-import { get, ref } from 'firebase/database';
+import { getGameData, subscribeToGame, pushGameEvent, deleteGame } from '@/backend/live/game';
+import generateId from '@/backend/id';
 import useCurrentUser from '@/hooks/useCurrentUser';
+
 
 import styles from './page.module.css';
 import Loading from '@/components/loading/loading';
 import HostDashboard from '@/host/host';
 
 export default function HostPage() {
-    const gameId = usePathname().split('/')[2];
+    const pathname = usePathname();
+    const gameId = pathname.split('/')[2];
     const router = useRouter();
 
     const { currentUser, signedIn, userLoading } = useCurrentUser();
     const [users, setUsers] = useState<GameUser[]>([]);
 
+    const [currentQuestion, setCurrentQuestion] = useState<Question|null>(null);
+    const [currentNumAnswers, setCurrentNumAnswers] = useState<number>(0);
+
     const [loadingData, setLoadingData] = useState(true);
     const [gameStarted, setGameStarted] = useState(false);
-    const [currentQuestion, setCurrentQuestion] = useState<Question>();
-    const [currentNumAnswers, setCurrentNumAnswers] = useState<number>(0);
 
     const [setId, setSetId] = useState<string>('');
 
@@ -60,17 +62,40 @@ export default function HostPage() {
         if (!signedIn || currentUser === null || gameId === undefined) return;
 
         (async () => {
-            await subscribeToGame(gameId, onGameEvent, onUserJoin, onUserLeave);
             const gameData = await getGameData(gameId);
+            if (!gameData) {
+                router.push('/');
+                return;
+            }
+
             if (gameData.host !== currentUser.uid) {
                 router.push('/');
                 return;
             }
 
+            const { unsubscribeEvent, unsubscribeNewPlayer, unsubscribeLeavePlayer } = await subscribeToGame(gameId, onGameEvent, onUserJoin, onUserLeave);
+            window.onbeforeunload = async () => {
+                unsubscribeEvent();
+                unsubscribeNewPlayer();
+                unsubscribeLeavePlayer();
+
+                await pushGameEvent(gameId, {
+                    eventType: EventType.EndGame,
+                    eventData: {},
+                    eventId: generateId()
+                });
+                await deleteGame(gameId);
+            };
+
             setSetId(gameData.setId);
             setLoadingData(false);
         })();
     }, [currentUser, gameId, signedIn]);
+
+    const unload = useRef(async () => {});
+    useEffect(() => {
+        unload.current();
+    }, [pathname]);
 
     if (loadingData || !signedIn || currentUser === null || gameId === undefined) return (<Loading />);
     

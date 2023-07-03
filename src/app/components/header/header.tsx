@@ -10,9 +10,13 @@ import useCurrentUser from "@hooks/useCurrentUser";
 import Loading from "@components/loading/loading";
 import useOutsideClick from "@/hooks/useOutsideClick";
 
+import { AnimatePresence } from "framer-motion";
+import AnimationDiv from "@/animation/AnimationDiv";
+import { fade } from "@/animation/animation";
+import Popup from "../popup/popup";
+
 export default function Header() {
     const [showLogin, setShowLogin] = useState(false);
-    const [loginModalVisible, setLoginModalVisible] = useState(false);
 
     const [avatarDropdown, setAvatarDropdown] = useState(false);
     const [avatarDropdownVisible, setAvatarDropdownVisible] = useState(false);
@@ -29,41 +33,6 @@ export default function Header() {
         if (avatarDropdown) setAvatarDropdownVisible(true);
         else setTimeout(() => setAvatarDropdownVisible(false), 100);
     }, [avatarDropdown]);
-
-    useEffect(() => {
-        if (showLogin) setLoginModalVisible(true);
-        else setTimeout(() => setLoginModalVisible(false), 100);
-    }, [showLogin]);
-
-    const LoginModal = () => {
-        return(
-            <>
-                <div className={`${styles.login_modal_background} ${loginModalVisible ? (showLogin ? styles.login_modal_visible : styles.login_modal_hidden_animation) : styles.login_modal_hidden}`}>
-                    <div className={styles.login_modal} ref={loginModalRef}>
-                        <div className={styles.login_modal_content}>
-                            <h1 className={styles.login_modal_title}>Login</h1>
-                            <p className={styles.login_modal_subtitle}>Sign in to start creating!</p>
-
-                            <button className={styles.provider_button} onClick={() => signInWithGoogle().finally(() => setShowLogin(false))}>
-                                <Image src='/images/providers/google.png' alt="google" width={25} height={25} />
-                                Sign in with Google
-                            </button>
-                            <button className={styles.provider_button} onClick={() => signInWithMicrosoft().finally(() => setShowLogin(false))}>
-                                <Image src='/images/providers/microsoft.png' alt="microsoft" width={25} height={25} />
-                                Sign in with Microsoft
-                            </button>
-                            <button className={styles.provider_button} onClick={() => signInWithGithub().finally(() => setShowLogin(false))}>
-                                <Image src='/images/providers/github.png' alt="github" width={25} height={25} />
-                                Sign in with Github
-                            </button>
-                        </div>
-
-                        <p className={styles.login_modal_exit} onClick={() => setShowLogin(false)}>×</p>
-                    </div>
-                </div>
-            </>
-        )
-    };
 
     const Avatar = () => {
         return(
@@ -136,7 +105,24 @@ export default function Header() {
                     }
                 </div>
             </div>
-            <LoginModal />
+            <Popup open={showLogin} setOpen={setShowLogin} exitButton>
+                <h1 className={styles.login_modal_title}>Login</h1>
+                <p className={styles.login_modal_subtitle}>Sign in to start creating!</p>
+
+                <button className={styles.provider_button} onClick={() => signInWithGoogle().finally(() => setShowLogin(false))}>
+                    <Image src='/images/providers/google.png' alt="google" width={25} height={25} />
+                    Sign in with Google
+                </button>
+                <button className={styles.provider_button} onClick={() => signInWithMicrosoft().finally(() => setShowLogin(false))}>
+                    <Image src='/images/providers/microsoft.png' alt="microsoft" width={25} height={25} />
+                    Sign in with Microsoft
+                 </button>
+                <button className={styles.provider_button} onClick={() => signInWithGithub().finally(() => setShowLogin(false))}>
+                    <Image src='/images/providers/github.png' alt="github" width={25} height={25} />
+                    Sign in with Github
+                </button>
+                <div style={{ marginBottom: 30 }} />
+            </Popup>
         </div>
     );
 }

@@ -94,31 +94,38 @@ export const subscribeToGame = (gameCode:string, gameEvents:Function, userJoin:F
     const usersRef = ref(realtimeDb, `live-games/${gameCode}/users/`);
     const gameRef = ref(realtimeDb, `live-games/${gameCode}/events/`);
 
-    onChildAdded(gameRef, (snapshot) => {
+    const unsubscribeEvent = onChildAdded(gameRef, (snapshot) => {
         gameEvents({
             eventType: EventType[snapshot.val().eventType as keyof typeof EventType],
             eventData: snapshot.val().eventData,
         });
     });
 
-    onChildAdded(usersRef, (snapshot) => {
+    const unsubscribeNewPlayer = onChildAdded(usersRef, (snapshot) => {
         userJoin({
             name: snapshot.val().name,
             uid: snapshot.val().uid,
         });
     });
 
-    onChildRemoved(usersRef, (snapshot) => {
+    const unsubscribeLeavePlayer = onChildRemoved(usersRef, (snapshot) => {
         userLeave({
             name: snapshot.val().name,
             uid: snapshot.val().uid,
         });
     });
+
+    return { unsubscribeEvent, unsubscribeNewPlayer, unsubscribeLeavePlayer };
 }
 
 export const getGameData = async (gameCode:string) => {
     const gameRef = ref(realtimeDb, `live-games/${gameCode}/`);
     const gameSnapshot = await get(gameRef);
+
+    if (!gameSnapshot.exists()) {
+        return null;
+    }
+
     const gameData = gameSnapshot.val();
     const usersRef = ref(realtimeDb, `live-games/${gameCode}/users/`);
     const usersSnapshot = await get(usersRef);
