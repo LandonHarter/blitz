@@ -44,8 +44,8 @@
     font-family: 'SF Pro Display';
     font-size: 20px;
 
-    border-radius: 500px;
-    padding: 10px 30px;
+    border-radius: 10px;
+    padding: 10px 20px;
 
     transition: 0.15s ease-in-out;
     cursor: pointer;
@@ -147,19 +147,6 @@
     z-index: 5;
 }
 
-.avatar_dropdown_visible {
-    visibility: visible;
-    animation: appear 0.15s ease-in-out;
-}
-
-.avatar_dropdown_hidden_animation {
-    animation: disappear 0.15s ease-in-out;
-}
-
-.avatar_dropdown_hidden {
-    visibility: hidden;
-}
-
 .avatar_dropdown_option {
     width: 200px;
     height: 50px;
@@ -251,22 +238,4 @@
     font-family: 'SF Pro Display';
     font-weight: bold;
     padding: 5px 10px;
-}
-
-@keyframes appear {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes disappear {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
 }
