@@ -1,15 +1,10 @@
 'use client'
 
 import Footer from '@components/footer/footer';
-import Popup from '@components/popup/popup';
 import styles from './page.module.css';
 import Link from 'next/link';
 
-import { useState } from 'react';
-
 export default function Home() {
-  const [popupVisible, setPopupVisible] = useState(false);
-
   return (
     <div>
       <div className={styles.hero_background_1}>
@@ -94,9 +89,6 @@ export default function Home() {
       </div>
     
       <Footer />
-
-      <button onClick={() => setPopupVisible(true)}>Open Popup</button>
-      <Popup open={popupVisible} setOpen={setPopupVisible} exitButton><></></Popup>
     </div>
   );
 }
