@@ -34,7 +34,7 @@ export default function JoinPage() {
     return(
         <div className={styles.background}>
             <div className={styles.content}>
-                <Image src='/bigicon.png' alt="logo" width={333} height={187.5} />
+                <Image src='/bigicon.png' alt="logo" width={333} height={187.5} priority />
                 <input type="text" ref={joinInput} className={styles.join_input} placeholder="Join Code" maxLength={6} onKeyDown={(e) => {if (!/[a-z]/i.test(e.key)) e.preventDefault()}} />
                 <button className={joining ? styles.join_button_joining : styles.join_button} onClick={async () => {
                     if (joinInput.current === null || currentUser === null) return;

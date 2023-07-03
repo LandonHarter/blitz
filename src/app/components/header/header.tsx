@@ -10,9 +10,6 @@ import useCurrentUser from "@hooks/useCurrentUser";
 import Loading from "@components/loading/loading";
 import useOutsideClick from "@/hooks/useOutsideClick";
 
-import { AnimatePresence } from "framer-motion";
-import AnimationDiv from "@/animation/AnimationDiv";
-import { fade } from "@/animation/animation";
 import Popup from "../popup/popup";
 
 export default function Header() {

@@ -87,6 +87,8 @@ export default function Home() {
             </div>
           </div>
       </div>
+
+      <div style={{ marginBottom: 30 }} />
     
       <Footer />
     </div>
