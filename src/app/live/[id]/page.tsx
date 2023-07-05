@@ -9,7 +9,7 @@ import { realtimeDb } from "@baas/init";
 
 import styles from './page.module.css';
 import { GameUser } from "@/backend/live/user";
-import { GameEvent, getGameData, getUsersInGame, leaveGame, pushGameEvent, startGame, subscribeToGame } from "@/backend/live/game";
+import { GameEvent, getGameData, leaveGame, subscribeToGame } from "@/backend/live/game";
 import { EventType } from "@/backend/live/events/event";
 import HostDashboard from "../../host/host";
 import MCQuestion from "./question/mcq/question";
@@ -37,6 +37,8 @@ export default function LiveGamePage() {
     const [currentQuestionNumber, setCurrentQuestionNumber] = useState<number>(0);
     const [submittedAnswer, setSubmittedAnswer] = useState<boolean>(false);
     const [revealAnswer, setRevealAnswer] = useState<boolean>(false);
+
+    const [handleLeave, setHandleLeave] = useState<() => Promise<void>>(async () => {});
 
     const [currentNumAnswers, setCurrentNumAnswers] = useState<number>(0);
     const [lastEvent, setLastEvent] = useState<GameEvent>({
@@ -109,14 +111,17 @@ export default function LiveGamePage() {
                 }
 
                 const { unsubscribeEvent, unsubscribeNewPlayer, unsubscribeLeavePlayer } = await subscribeToGame(id, onGameEvent, onUserJoin, onUserLeave);
-                window.onbeforeunload = async () => {
+                const leaveHandle = async () => {
                     unsubscribeEvent();
                     unsubscribeNewPlayer();
                     unsubscribeLeavePlayer();
 
                     await leaveGame(id, currentUser);
                 };
-                
+
+                setHandleLeave(() => leaveHandle);
+                window.onbeforeunload = leaveHandle;
+
                 setNumPlayers(gameData.numPlayers);
                 setLoadingData(false);
             }
@@ -132,7 +137,7 @@ export default function LiveGamePage() {
     }
 
     if (!gameStarted) {
-        return(<GameLobby users={users} currentUser={currentUser} gameId={id} />);
+        return(<GameLobby users={users} currentUser={currentUser} gameId={id} leaveHandle={handleLeave} />);
     } else if (gameEnded) {
         return(<GameEnded users={users} currentUser={currentUser} gameId={id} />);
     }

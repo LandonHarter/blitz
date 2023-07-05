@@ -1,0 +1,25 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 80px;
+    margin-bottom: 40px;
+}
+
+.leave_button {
+    background-color: red;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 30px;
+    cursor: pointer;
+}
