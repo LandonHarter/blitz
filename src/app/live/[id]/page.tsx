@@ -69,8 +69,14 @@ export default function LiveGamePage() {
             setGameEnded(true);
         } else if (event.eventType === EventType.KickPlayer) {
             if (currentUser?.uid === event.eventData.uid) {
-                if (window.onbeforeunload !== null) window.onbeforeunload(new BeforeUnloadEvent());
-                router.push('/join');
+                const unload = window.onbeforeunload;
+                if (unload) {
+                    // @ts-ignore
+                    unload.call(null);
+
+                    window.onbeforeunload = null;
+                }
+                window.location.href = '/join';
             }
         }
 
@@ -106,21 +112,18 @@ export default function LiveGamePage() {
             if (userInGame) {
                 const gameData = await getGameData(id);
                 if (!gameData) {
-                    router.push('/');
+                    window.location.href = '/';
                     return;
                 }
 
                 const { unsubscribeEvent, unsubscribeNewPlayer, unsubscribeLeavePlayer } = await subscribeToGame(id, onGameEvent, onUserJoin, onUserLeave);
-                const leaveHandle = async () => {
+                window.onbeforeunload = async () => {
                     unsubscribeEvent();
                     unsubscribeNewPlayer();
                     unsubscribeLeavePlayer();
 
                     await leaveGame(id, currentUser);
                 };
-
-                setHandleLeave(() => leaveHandle);
-                window.onbeforeunload = leaveHandle;
 
                 setNumPlayers(gameData.numPlayers);
                 setLoadingData(false);

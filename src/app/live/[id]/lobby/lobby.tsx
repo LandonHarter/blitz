@@ -16,7 +16,7 @@ export default function GameLobby(props:{ currentUser:User, users:GameUser[], ga
             <h1 className={styles.title}>{getRandomPreGamePhrase()}</h1>
             <motion.button whileTap={{ scale: 0.95 }} className={styles.leave_button} onClick={async () => {
                 await props.leaveHandle();
-                router.push('/join');
+                window.location.href = '/join';
             }}>Leave</motion.button>
         </div>
     );

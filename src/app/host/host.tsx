@@ -149,7 +149,7 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
                 eventId: generateId()
             });
             await deleteGame(props.gameId);
-            router.push('/');
+            window.location.href = '/';
         }} />);
     }
 
