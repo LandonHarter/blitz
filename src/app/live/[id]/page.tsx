@@ -65,6 +65,11 @@ export default function LiveGamePage() {
             setRevealAnswer(true);
         } else if (event.eventType === EventType.EndGame) {
             setGameEnded(true);
+        } else if (event.eventType === EventType.KickPlayer) {
+            if (currentUser?.uid === event.eventData.uid) {
+                if (window.onbeforeunload !== null) window.onbeforeunload(new BeforeUnloadEvent());
+                router.push('/join');
+            }
         }
 
         setLastEvent(event);

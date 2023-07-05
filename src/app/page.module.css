@@ -19,17 +19,19 @@
     width: 550px;
     font-family: 'SF Pro Display';
     font-size: 66px;
+    line-height: 70px;
+    letter-spacing: -2%;
     text-align: center;
     color: var(--text-color);
 }
 
 .hero_subtitle_1 {
     font-family: 'SF Pro Display';
-    font-size: 18px;
+    font-size: 24px;
     text-align: center;
     color: var(--text-color);
 
-    margin-top: 27px;
+    margin-top: 20px;
 }
 
 .hero_gradient_word_1 {
@@ -37,6 +39,7 @@
     background-clip: text;
 
     font-size: 66px;
+    letter-spacing: -2%;
     font-family: 'SF Pro Display';
 
     -webkit-background-clip: text;
@@ -49,7 +52,7 @@
     justify-content: center;
     align-items: center;
 
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 .hero_button_1 {

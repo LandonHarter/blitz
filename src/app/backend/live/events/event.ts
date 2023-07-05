@@ -6,5 +6,6 @@ export enum EventType {
     NextQuestion = "NextQuestion",
     SubmitAnswer = "SubmitAnswer",
     RevealAnswer = "RevealAnswer",
+    KickPlayer = "KickPlayer",
 
 }

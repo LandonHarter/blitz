@@ -182,6 +182,19 @@ export const deleteGame = async (id:string) => {
     await remove(gameRef);
 }
 
+export const kickPlayer = async (gameId:string, gameUser:GameUser) => {
+    const usersRef = ref(realtimeDb, `live-games/${gameId}/users/${gameUser.uid}`);
+    await remove(usersRef);
+
+    await pushGameEvent(gameId, {
+        eventType: EventType.KickPlayer,
+        eventData: {
+            uid: gameUser.uid,
+        },
+        eventId: generateId(),
+    });
+};
+
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const generateGameCode = () => {
     let gameCode = "";

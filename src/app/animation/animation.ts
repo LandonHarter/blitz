@@ -26,6 +26,21 @@ export const dropdown:Animation = {
     }
 };
 
+export const springScale:Animation = {
+    initial: {
+        opacity: 0,
+        scale: 0.8,
+    },
+    animate: {
+        opacity: 1,
+        scale: 1,
+    },
+    exit: {
+        opacity: 0,
+        scale: 0.8,
+    }
+};
+
 export interface Animation {
     initial:any;
     animate:any;
