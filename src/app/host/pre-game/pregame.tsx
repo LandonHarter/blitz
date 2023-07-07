@@ -68,6 +68,7 @@ export default function PreGame(props: { gameId: string, users: GameUser[], star
                     <h1 className={styles.player_name}>Kicking...</h1>
                 :   <>
                         <h1 className={styles.player_name}>{popupUser?.name}</h1>
+                        <p className={styles.player_email}>{popupUser?.email}</p>
                         <motion.button className={styles.kick_player} onClick={async () => {
                             if (!popupUser) return;
 

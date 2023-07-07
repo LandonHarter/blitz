@@ -77,6 +77,9 @@ export const joinGame = async (gameCode:string, user:User) => {
     await set(usersRef, {
         uid: user.uid,
         name: user.name,
+        pfp: user.pfp,
+        email: user.email,
+        points: 0,
     });
 
     return {
@@ -105,6 +108,9 @@ export const subscribeToGame = (gameCode:string, gameEvents:Function, userJoin:F
         userJoin({
             name: snapshot.val().name,
             uid: snapshot.val().uid,
+            pfp: snapshot.val().pfp,
+            email: snapshot.val().email,
+            points: snapshot.val().points,
         });
     });
 
@@ -112,6 +118,9 @@ export const subscribeToGame = (gameCode:string, gameEvents:Function, userJoin:F
         userLeave({
             name: snapshot.val().name,
             uid: snapshot.val().uid,
+            pfp: snapshot.val().pfp,
+            email: snapshot.val().email,
+            points: snapshot.val().points,
         });
     });
 
@@ -149,6 +158,9 @@ export const getUsersInGame = async (gameCode:string) => {
         usersArray.push({
             name: users[key].name,
             uid: users[key].uid,
+            pfp: users[key].pfp,
+            email: users[key].email,
+            points: users[key].points
         });
     }
 

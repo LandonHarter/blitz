@@ -125,6 +125,17 @@
     letter-spacing: 2px;
     text-align: center;
 
+    margin-bottom: 10px;
+}
+
+.player_email {
+    font-size: 22px;
+    width: 100%;
+    color: var(--text-color);
+    letter-spacing: 2px;
+    text-align: center;
+    font-family: 'SF Pro Display';
+
     margin-bottom: 30px;
 }
 

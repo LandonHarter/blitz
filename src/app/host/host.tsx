@@ -13,15 +13,22 @@ import generateId from '@/backend/id';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import { useRouter } from 'next/navigation';
 import PreGame from './pre-game/pregame';
+import HostQuestion from './question/question';
+import HostRevealedQuestion from './question/revealedquestion';
+import HostEndGame from './end/endgame';
 
-export default function HostDashboard(props: { gameId: string, setId: string, gameStarted: boolean }) {
+export default function HostDashboard(props: { gameId: string, setId: string }) {
     const router = useRouter();
 
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+    const [revealedQuestion, setRevealedQuestion] = useState<boolean>(false);
 
     const [players, setPlayers] = useState<GameUser[]>([]);
+    const [playersCopy, setPlayersCopy] = useState<GameUser[]>([]);
     const [numAnswers, setNumAnswers] = useState<number>(0);
+
+    const [gameState, setGameState] = useState<string>('pregame');
 
     const { currentUser, signedIn, userLoading } = useCurrentUser();
 
@@ -33,14 +40,13 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
     const onGameEvent = async (event:GameEvent) => {
         if (event.eventType === EventType.SubmitAnswer) {
             setNumAnswers((prevNumAnswers) => prevNumAnswers + 1);
+        } else if (event.eventType === EventType.StartGame) {
+            setGameState('livegame');
+        } else if (event.eventType === EventType.EndGame) {
+            setGameState('endgame');
+            window.onbeforeunload = null;
 
-            if (numAnswers === players.length) {
-                await pushGameEvent(props.gameId, {
-                    eventType: EventType.RevealAnswer,
-                    eventData: {},
-                    eventId: generateId()
-                });
-            }
+            await deleteGame(props.gameId);
         }
     };
 
@@ -63,6 +69,7 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
                     error: true,
                     message: 'Game does not exist'
                 });
+                window.location.href = '/';
                 return;
             }
 
@@ -71,7 +78,7 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
             if (signedIn) {
                 const owner = data.owner;
                 if (owner !== currentUser.uid) {
-                    router.push('/');
+                    window.location.href = '/';
                     return;
                 }
             }
@@ -119,8 +126,15 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
         })();
     }, []);
 
-    if (!props.gameStarted) {
+    if (gameState === 'endgame') {
+        return(<HostEndGame users={playersCopy} />);
+    }
+
+    if (gameState === 'pregame') {
         return(<PreGame gameId={props.gameId} users={players} start={async () => {
+            setPlayersCopy(players);
+            console.log(players);
+
             if (questions.length === 0) {
                 await pushGameEvent(props.gameId, {
                     eventType: EventType.EndGame,
@@ -153,33 +167,47 @@ export default function HostDashboard(props: { gameId: string, setId: string, ga
         }} />);
     }
 
-    return(
-        <div>
-            <button className={styles.start_button} onClick={async () => {
-                const nextQuestionIndex = currentQuestionIndex + 1;
-                if (nextQuestionIndex >= questions.length) {
+    if (!revealedQuestion) {
+        return(
+            <div>
+                <HostQuestion question={questions[currentQuestionIndex]} submittedAnswers={numAnswers} revealAnswer={async () => {
                     await pushGameEvent(props.gameId, {
-                        eventType: EventType.EndGame,
+                        eventType: EventType.RevealAnswer,
                         eventData: {},
                         eventId: generateId()
                     });
-                    await deleteGame(props.gameId);
-                    return;
-                }
+                    setRevealedQuestion(true);
+                }} />
+            </div>
+        );
+    }
 
-                setNumAnswers(0);
-                setCurrentQuestionIndex(nextQuestionIndex);
+    return(
+        <HostRevealedQuestion question={questions[currentQuestionIndex]} nextQuestion={async () => {
+            const nextQuestionIndex = currentQuestionIndex + 1;
+            if (nextQuestionIndex >= questions.length) {
                 await pushGameEvent(props.gameId, {
-                    eventType: EventType.NextQuestion,
-                    eventData: {
-                        questionId: questions[nextQuestionIndex].id,
-                        question: questions[nextQuestionIndex].question,
-                        type: questions[nextQuestionIndex].type.toString(),
-                        options: questions[nextQuestionIndex].options 
-                    },
+                    eventType: EventType.EndGame,
+                    eventData: {},
                     eventId: generateId()
                 });
-            }}>Next Question</button>
-        </div>
-    );
+                await deleteGame(props.gameId);
+                return;
+            }
+
+            setNumAnswers(0);
+            setCurrentQuestionIndex(nextQuestionIndex);
+            setRevealedQuestion(false);
+            await pushGameEvent(props.gameId, {
+                eventType: EventType.NextQuestion,
+                eventData: {
+                    questionId: questions[nextQuestionIndex].id,
+                    question: questions[nextQuestionIndex].question,
+                    type: questions[nextQuestionIndex].type.toString(),
+                    options: questions[nextQuestionIndex].options 
+                },
+                eventId: generateId()
+            });
+        }} />
+    )
 }

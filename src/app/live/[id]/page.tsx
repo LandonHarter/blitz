@@ -67,6 +67,9 @@ export default function LiveGamePage() {
             setRevealAnswer(true);
         } else if (event.eventType === EventType.EndGame) {
             setGameEnded(true);
+            // @ts-ignore
+            window.onbeforeunload.call(null);
+            window.onbeforeunload = null;
         } else if (event.eventType === EventType.KickPlayer) {
             if (currentUser?.uid === event.eventData.uid) {
                 const unload = window.onbeforeunload;
@@ -86,7 +89,10 @@ export default function LiveGamePage() {
     const onUserJoin = (user:GameUser) => {
         setUsers((prevUsers) => [...prevUsers, {
             name: user.name,
-            uid: user.uid
+            uid: user.uid,
+            pfp: user.pfp,
+            email: user.email,
+            points: user.points
         }]);
         setNumPlayers((prevNum) => prevNum + 1);
     };

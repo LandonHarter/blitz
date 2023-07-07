@@ -13,5 +13,6 @@ export interface AnalyticsEvent {
 export enum AnalyticsEventType {
 
     CreateGame = 'create_game',
+    NextError = 'next_error',
 
 }

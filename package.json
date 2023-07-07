@@ -21,6 +21,7 @@
     "framer-motion": "^10.12.18",
     "next": "13.4.5",
     "react": "18.2.0",
+    "react-confetti": "^6.1.0",
     "react-dom": "18.2.0",
     "react-firebase-hooks": "^5.1.1",
     "react-image-file-resizer": "^0.4.8",
