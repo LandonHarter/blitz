@@ -10,14 +10,14 @@ export default function Home() {
     <div>
       <div className={styles.hero_background_1}>
           <div className={styles.hero_content_1}>
-            <h1 className={styles.hero_title_1}>Fuel your education for <span className={styles.hero_gradient_word_1}>free</span></h1>
+            <h1 className={styles.hero_title_1}>Fuel your <br />education for <span className={styles.hero_gradient_word_1}>free</span></h1>
             <p className={styles.hero_subtitle_1}>For everyone, no matter your level</p>
             <div className={styles.hero_buttons_container_1}>
               <Link href='/explore/sets'><button className={styles.hero_button_1}>Get started</button></Link>
               <Link href='/about'><button className={styles.hero_button_2}>Learn more</button></Link>
             </div>
             <div className={styles.hero_graphic_1}>
-              <svg width="977" height="608" viewBox="0 0 977 608" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+              <svg viewBox="0 0 977 608" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                 <rect x="797" y="228" width="64" height="64" rx="4" fill="#B5F2E3"/>
                 <circle cx="101.5" cy="386.5" r="89.5" fill="#FACFCA"/>
                 <path d="M62.4773 2.7887L6.59841 26.6789C3.71756 27.9106 3.30694 31.8261 5.86959 33.6286L53.6501 67.2369C56.0957 68.9571 59.4952 67.4839 59.9122 64.5231L68.0106 7.02454C68.4451 3.93951 65.3419 1.56397 62.4773 2.7887Z" fill="#F8AEC3"/>

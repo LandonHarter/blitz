@@ -1,6 +1,6 @@
 .hero_background_1 {
     width: 100vw;
-    height: 100vh;
+    height: fit-content;
 
     display: flex;
     justify-content: center;
@@ -12,14 +12,14 @@
     justify-content: flex-start;
     align-items: center;
 
-    margin-top: 115px;
+    margin-top: 80px;
 }
 
 .hero_title_1 {
-    width: 550px;
+    width: 600px;
     font-family: 'SF Pro Display';
     font-size: 66px;
-    line-height: 70px;
+    line-height: 65px;
     letter-spacing: -2%;
     text-align: center;
     color: var(--text-color);
@@ -38,9 +38,9 @@
     background: linear-gradient(45deg, #ff4800 0%, #FFC700 100%);
     background-clip: text;
 
-    font-size: 66px;
+    font-size: 60px;
     letter-spacing: -2%;
-    font-family: 'SF Pro Display';
+    font-family: 'Cubano';
 
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -106,4 +106,16 @@
 .hero_button_2:active {
     transition: 0.05s ease-in-out;
     transform: scale(0.96);
+}
+
+.hero_graphic_1 {
+    width: 977px;
+    height: 608px;
+
+    margin-bottom: 80px;    
+}
+
+.hero_graphic_1 svg {
+    width: 100%;
+    height: 100%;
 }

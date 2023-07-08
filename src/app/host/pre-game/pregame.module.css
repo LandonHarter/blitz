@@ -119,6 +119,7 @@
 
 .player_name {
     font-size: 45px;
+    font-family: 'SF Pro Display';
     width: 100%;
     font-weight: 600;
     color: var(--text-color);
