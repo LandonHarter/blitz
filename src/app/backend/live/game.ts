@@ -167,6 +167,12 @@ export const getUsersInGame = async (gameCode:string) => {
     return usersArray;
 }
 
+export const getNumUsersInGame = async (gameCode:string) => {
+    const usersRef = ref(realtimeDb, `live-games/${gameCode}/users/`);
+    const usersSnapshot = await get(usersRef);
+    return usersSnapshot.size;
+};
+
 export const pushGameEvent = async (gameCode:string, event:GameEvent) => {
     const eventsRef = ref(realtimeDb, `live-games/${gameCode}/events/${generateId()}`);
     await set(eventsRef, {
@@ -204,6 +210,20 @@ export const kickPlayer = async (gameId:string, gameUser:GameUser) => {
             uid: gameUser.uid,
         },
         eventId: generateId(),
+    });
+};
+
+export const awardPoints = async (gameId:string, uid:string, points:number) => {
+    const usersRef = ref(realtimeDb, `live-games/${gameId}/users/${uid}`);
+    const gameUserSnapshot = await get(usersRef);
+    if (!gameUserSnapshot.exists()) {
+        return;
+    }
+
+    const gameUserVal = gameUserSnapshot.val();
+    const currentPoints = gameUserVal.points;
+    await update(usersRef, {
+        points: currentPoints + points,
     });
 };
 

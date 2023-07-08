@@ -3,12 +3,17 @@
 import { motion } from 'framer-motion';
 import styles from './question.module.css';
 import { Question } from '@/backend/live/set';
+import { useEffect } from 'react';
 
 export default function HostQuestion(props: { question:Question, submittedAnswers:number, revealAnswer:() => Promise<void> }) {
-    const timerLength = 10; // Seconds
-    setTimeout(async () => {
-        await props.revealAnswer();
-    }, timerLength * 1000);
+    const timerLength = 15;
+
+    useEffect(() => {
+        setTimeout(async () => {
+            await props.revealAnswer();
+        }, timerLength * 1000);
+    }, [props.question]);
+    
 
     return(
         <div className={styles.question_container}>

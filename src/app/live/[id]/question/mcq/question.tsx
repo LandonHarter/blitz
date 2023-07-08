@@ -4,63 +4,86 @@ import { Question } from '@/backend/live/set';
 import { useEffect, useState } from 'react';
 
 import styles from './question.module.css';
-import { GameEvent, pushGameEvent } from '@/backend/live/game';
+import { GameEvent, awardPoints, pushGameEvent } from '@/backend/live/game';
 import { EventType } from '@/backend/live/events/event';
 import generateId from '@/backend/id';
 
-export default function MCQuestion(props:{ question:Question, questionNumber:number, currentNumAnswers:number, gameId:string, lastEvent:GameEvent, setSubmitted:Function, revealAnswer:boolean }) {
+export default function MCQuestion(props:{ question:Question, uid:string, questionNumber:number, currentNumAnswers:number, gameId:string, lastEvent:GameEvent, setSubmitted:Function, revealAnswer:boolean }) {
     const question = props.question;
 
-    const [selectedOption, setSelectedOption] = useState<number>(-1);
+    const submitAnswer = async (optionIndex:number) => {
+        if (props.revealAnswer) return;
 
-    useEffect(() => {
-        if (props.lastEvent.eventType === EventType.NextQuestion) {
-            setSelectedOption(-1);
+        await pushGameEvent(props.gameId, {
+            eventType: EventType.SubmitAnswer,
+            eventData: {},
+            eventId: generateId()
+        });
+
+        if (question.options[optionIndex].correct) {
+            awardPoints(props.gameId, props.uid, 1000);
         }
-    }, [props.lastEvent]);
+
+        props.setSubmitted(true);
+    };
 
     if (props.revealAnswer) {
         return(
-            <div className={styles.question_background}>
-                <h1 className={styles.question_title}>{question.question}, {props.currentNumAnswers} submitted</h1>
+            <div className={styles.question_container}>
+                <div className={styles.top_bar}>
+                    <h1 className={styles.question_title}>{question.question}</h1>
+                </div>
 
-                <div className={styles.question_options}>
-                    {question.options.map((option, index) => {
-                        return(
-                            <div key={index} className={`${styles.mcq_option} ${option.correct && styles.mcq_option_correct}`}>
-                                <h1 className={styles.mcq_option_title}>{option.option}</h1>
-                            </div>
-                        );
-                    })}
+                <div className={styles.bottom_bar}>
+                    <div className={styles.questions}>
+                        <div className={`${styles.question_box} ${styles.question_red} ${question.options[0].correct ? styles.option_correct : styles.option_incorrect}`}>
+                            <h1 className={styles.question_option}>{question.options[0].option}</h1>
+                        </div>
+                        <div className={`${styles.question_box} ${styles.question_blue} ${question.options[1].correct ? styles.option_correct : styles.option_incorrect}`}>
+                            <h1 className={styles.question_option}>{question.options[1].option}</h1>
+                        </div>
+                        <div className={`${styles.question_box} ${styles.question_green} ${question.options[2].correct ? styles.option_correct : styles.option_incorrect}`}>
+                            <h1 className={styles.question_option}>{question.options[2].option}</h1>
+                        </div>
+                        <div className={`${styles.question_box} ${styles.question_yellow} ${question.options[3].correct ? styles.option_correct : styles.option_incorrect}`}>
+                            <h1 className={styles.question_option}>{question.options[3].option}</h1>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
     }
 
     return(
-        <div className={styles.question_background}>
-            <h1 className={styles.question_title}>{question.question}, {props.currentNumAnswers} submitted</h1>
-
-            <div className={styles.question_options}>
-                {question.options.map((option, index) => {
-                    return(
-                        <div key={index} className={styles.mcq_option}>
-                            <label className={styles.mcq_option_input_label}><input type='radio' name='mcq-option' className={styles.mcq_option_input} onChange={(e) => {
-                                setSelectedOption(index);
-                            }} checked={index === selectedOption} /><span /></label>
-                            <h1 className={styles.mcq_option_title}>{option.option}</h1>
-                        </div>
-                    )
-                })}
+        <div className={styles.question_container}>
+            <div className={styles.top_bar}>
+                <h1 className={styles.question_title}>{question.question}</h1>
             </div>
-            <button className={styles.submit_button} onClick={async () => {
-                props.setSubmitted(true);
-                await pushGameEvent(props.gameId, {
-                    eventType: EventType.SubmitAnswer,
-                    eventData: {},
-                    eventId: generateId()
-                });
-            }}>Submit</button>
+
+            <div className={styles.bottom_bar}>
+                <div className={styles.questions}>
+                    <div className={`${styles.question_box} ${styles.question_red}`} onClick={() => {
+                        submitAnswer(0);
+                    }}>
+                        <h1 className={styles.question_option}>{question.options[0].option}</h1>
+                    </div>
+                    <div className={`${styles.question_box} ${styles.question_blue}`} onClick={() => {
+                        submitAnswer(1);
+                    }}>
+                        <h1 className={styles.question_option}>{question.options[1].option}</h1>
+                    </div>
+                    <div className={`${styles.question_box} ${styles.question_green}`} onClick={() => {
+                        submitAnswer(2);
+                    }}>
+                        <h1 className={styles.question_option}>{question.options[2].option}</h1>
+                    </div>
+                    <div className={`${styles.question_box} ${styles.question_yellow}`} onClick={() => {
+                        submitAnswer(3);
+                    }}>
+                        <h1 className={styles.question_option}>{question.options[3].option}</h1>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

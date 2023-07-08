@@ -158,7 +158,7 @@ export default function LiveGamePage() {
 
     return(
         <div>
-            <MCQuestion question={currentQuestion} questionNumber={currentQuestionNumber} currentNumAnswers={currentNumAnswers} gameId={id} lastEvent={lastEvent} setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
+            <MCQuestion question={currentQuestion} uid={currentUser.uid} questionNumber={currentQuestionNumber} currentNumAnswers={currentNumAnswers} gameId={id} lastEvent={lastEvent} setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
         </div>
     );
 }

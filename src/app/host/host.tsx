@@ -1,6 +1,6 @@
 'use client'
 
-import { pushGameEvent, startGame, deleteGame, subscribeToGame, GameEvent } from '@/backend/live/game';
+import { pushGameEvent, startGame, deleteGame, subscribeToGame, GameEvent, getNumUsersInGame } from '@/backend/live/game';
 import { GameUser } from '@/backend/live/user';
 import { Question, QuestionOption, QuestionType } from '@/backend/live/set';
 import { useEffect, useState } from 'react';
@@ -26,28 +26,37 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
     const [revealedQuestion, setRevealedQuestion] = useState<boolean>(false);
 
     const [players, setPlayers] = useState<GameUser[]>([]);
+    const [numPlayers, setNumPlayers] = useState<number>(0);
     const [playersCopy, setPlayersCopy] = useState<GameUser[]>([]);
     const [numAnswers, setNumAnswers] = useState<number>(0);
 
     const [gameState, setGameState] = useState<string>('pregame');
 
     const { currentUser, signedIn, userLoading } = useCurrentUser();
-
-    const [error, setError] = useState({
-        error: false,
-        message: ''
-    });
-
     const onGameEvent = async (event:GameEvent) => {
         if (event.eventType === EventType.SubmitAnswer) {
+            const newNumAnswers = numAnswers + 1;
+
+            if (newNumAnswers >= numPlayers) {
+                await pushGameEvent(props.gameId, {
+                    eventType: EventType.RevealAnswer,
+                    eventData: {},
+                    eventId: generateId()
+                });
+                setRevealedQuestion(true);
+                setNumAnswers(0);
+
+                return;
+            }
+
             setNumAnswers((prevNumAnswers) => prevNumAnswers + 1);
         } else if (event.eventType === EventType.StartGame) {
             setGameState('livegame-waiting');
+            const numUsers = await getNumUsersInGame(props.gameId);
+            setNumPlayers(numUsers);
         } else if (event.eventType === EventType.EndGame) {
             setGameState('endgame');
             window.onbeforeunload = null;
-
-            await deleteGame(props.gameId);
         } else if (event.eventType === EventType.NextQuestion) {
             setGameState('livegame');
         }
@@ -68,10 +77,6 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
             const snapshot = await getDoc(questionsRef);
 
             if (!snapshot.exists()) {
-                setError({
-                    error: true,
-                    message: 'Game does not exist'
-                });
                 window.location.href = '/';
                 return;
             }
@@ -130,7 +135,7 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
     }, []);
 
     if (gameState === 'endgame') {
-        return(<HostEndGame users={playersCopy} />);
+        return(<HostEndGame users={playersCopy} gameCode={props.gameId} />);
     } else if (gameState === 'pregame') {
         return(<PreGame gameId={props.gameId} users={players} start={async () => {
             setPlayersCopy(players);
@@ -183,6 +188,8 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
                         eventId: generateId()
                     });
                     setRevealedQuestion(true);
+                    const numUsers = await getNumUsersInGame(props.gameId);
+                    setNumPlayers(numUsers);
                 }} />
             </div>
         );
@@ -197,7 +204,6 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
                     eventData: {},
                     eventId: generateId()
                 });
-                await deleteGame(props.gameId);
                 setGameState('endgame');
                 return;
             }

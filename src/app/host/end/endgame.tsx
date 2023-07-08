@@ -6,8 +6,9 @@ import { GameUser } from '@/backend/live/user';
 import styles from './endgame.module.css';
 import ReactConfetti from 'react-confetti';
 import { getRandomEndGamePhraseSeed } from '@/backend/phrase';
+import { getUsersInGame, deleteGame } from '@/backend/live/game';
 
-export default function HostEndGame(props: { users: GameUser[] }) {
+export default function HostEndGame(props: { gameCode:string, users: GameUser[] }) {
     const phrase = getRandomEndGamePhraseSeed(props.users.length);
     const [confettiSize, setConfettiSize] = useState({ width: 0, height: 0 });
 
@@ -16,19 +17,42 @@ export default function HostEndGame(props: { users: GameUser[] }) {
     const leaderboard = useRef<HTMLDivElement>(null);
     const leaderboardInView = useInView(leaderboard, { once: false, margin: '-100px' });
 
-    const sortUsers = () => {
-        let users:any[] = props.users;
-        users.sort((a, b) => {
-            if (a.points > b.points) {
+    const getUpdatedUsers = async () => {
+        const usersInGame:GameUser[] = await getUsersInGame(props.gameCode);
+        const returnUsers:GameUser[] = [];
+        usersInGame.forEach((user) => {
+            if (props.users.find((u) => u.uid === user.uid) !== undefined) {
+                returnUsers.push(user);
+            }
+        });
+
+        return returnUsers;
+    };
+
+    const getUpdatedPoints = async (updatedUsers:GameUser[], user:GameUser) => {
+        const updatedUser = updatedUsers.find((u) => u.uid === user.uid);
+        if (updatedUser === undefined) return 0;
+
+        return updatedUser.points;
+    };
+
+    const sortUsers = async () => {
+        const updatedUsers = await getUpdatedUsers();
+
+        updatedUsers.sort((a, b) => {
+            const aPoints = getUpdatedPoints(updatedUsers, a);
+            const bPoints = getUpdatedPoints(updatedUsers, b);
+
+            if (aPoints > bPoints) {
                 return 1;
-            } else if (a.points < b.points) {
+            } else if (aPoints < bPoints) {
                 return -1;
             } else {
                 return 0;
             }
         });
 
-        setSortedUsers(users);
+        setSortedUsers(updatedUsers);
     }
 
     useEffect(() => {
@@ -37,6 +61,7 @@ export default function HostEndGame(props: { users: GameUser[] }) {
             height: window.innerHeight * 2
         });
         sortUsers();
+        deleteGame(props.gameCode);
     }, []);
 
     return(
@@ -101,7 +126,7 @@ export default function HostEndGame(props: { users: GameUser[] }) {
                                             }} />
                                             <p className={styles.place_name}>{user.name}</p>
                                         </div>
-                                        <p className={styles.points}>{0}</p>
+                                        <p className={styles.points}>{user.points}</p>
                                     </div>
                                 </div>
                             );
