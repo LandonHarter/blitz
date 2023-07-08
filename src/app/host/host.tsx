@@ -16,12 +16,13 @@ import PreGame from './pre-game/pregame';
 import HostQuestion from './question/question';
 import HostRevealedQuestion from './question/revealedquestion';
 import HostEndGame from './end/endgame';
+import HostWaiting from './waiting/waiting';
 
 export default function HostDashboard(props: { gameId: string, setId: string }) {
     const router = useRouter();
 
     const [questions, setQuestions] = useState<Question[]>([]);
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(-1);
     const [revealedQuestion, setRevealedQuestion] = useState<boolean>(false);
 
     const [players, setPlayers] = useState<GameUser[]>([]);
@@ -41,12 +42,14 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
         if (event.eventType === EventType.SubmitAnswer) {
             setNumAnswers((prevNumAnswers) => prevNumAnswers + 1);
         } else if (event.eventType === EventType.StartGame) {
-            setGameState('livegame');
+            setGameState('livegame-waiting');
         } else if (event.eventType === EventType.EndGame) {
             setGameState('endgame');
             window.onbeforeunload = null;
 
             await deleteGame(props.gameId);
+        } else if (event.eventType === EventType.NextQuestion) {
+            setGameState('livegame');
         }
     };
 
@@ -128,12 +131,9 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
 
     if (gameState === 'endgame') {
         return(<HostEndGame users={playersCopy} />);
-    }
-
-    if (gameState === 'pregame') {
+    } else if (gameState === 'pregame') {
         return(<PreGame gameId={props.gameId} users={players} start={async () => {
             setPlayersCopy(players);
-            console.log(players);
 
             if (questions.length === 0) {
                 await pushGameEvent(props.gameId, {
@@ -146,16 +146,6 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
             }
 
             await startGame(props.gameId);
-            await pushGameEvent(props.gameId, {
-                eventType: EventType.NextQuestion,
-                eventData: {
-                    questionId: questions[0].id,
-                    question: questions[0].question,
-                    type: questions[0].type.toString(),
-                    options: questions[0].options 
-                },
-                eventId: generateId()
-            });
         }} end={async () => {
             await pushGameEvent(props.gameId, {
                 eventType: EventType.EndGame,
@@ -165,6 +155,22 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
             await deleteGame(props.gameId);
             window.location.href = '/';
         }} />);
+    } else if (gameState === 'livegame-waiting') {
+        return(<HostWaiting nextQuestion={async () => {
+            const nextQuestionIndex = currentQuestionIndex + 1;
+            setCurrentQuestionIndex(nextQuestionIndex);
+
+            await pushGameEvent(props.gameId, {
+                eventType: EventType.NextQuestion,
+                eventData: {
+                    questionId: questions[nextQuestionIndex].id,
+                    question: questions[nextQuestionIndex].question,
+                    type: questions[nextQuestionIndex].type.toString(),
+                    options: questions[nextQuestionIndex].options 
+                },
+                eventId: generateId()
+            });
+        }} />)
     }
 
     if (!revealedQuestion) {
@@ -192,20 +198,16 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
                     eventId: generateId()
                 });
                 await deleteGame(props.gameId);
+                setGameState('endgame');
                 return;
             }
 
             setNumAnswers(0);
-            setCurrentQuestionIndex(nextQuestionIndex);
             setRevealedQuestion(false);
+            setGameState('livegame-waiting');
             await pushGameEvent(props.gameId, {
-                eventType: EventType.NextQuestion,
-                eventData: {
-                    questionId: questions[nextQuestionIndex].id,
-                    question: questions[nextQuestionIndex].question,
-                    type: questions[nextQuestionIndex].type.toString(),
-                    options: questions[nextQuestionIndex].options 
-                },
+                eventType: EventType.InbetweenQuestions,
+                eventData: {},
                 eventId: generateId()
             });
         }} />

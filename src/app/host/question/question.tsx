@@ -1,6 +1,5 @@
 'use client'
 
-import { useCallback } from 'react';
 import { motion } from 'framer-motion';
 import styles from './question.module.css';
 import { Question } from '@/backend/live/set';
@@ -17,7 +16,7 @@ export default function HostQuestion(props: { question:Question, submittedAnswer
                 <h1 className={styles.question}>{props.question.question}</h1>
             </div>
             <div className={styles.timer}>
-                <motion.div initial={{ scaleX: 1 }} animate={{ scaleX: 0 }} transition={{ duration: timerLength, ease: 'linear' }} className={styles.timer_bar} />
+                <motion.div initial={{ transform: 'scaleX(1)' }} animate={{ transform: 'scaleX(0)' }} transition={{ duration: timerLength, ease: 'linear' }} className={styles.timer_bar} />
             </div>
             <div className={styles.bottom_bar}>
                 <div className={styles.questions}>

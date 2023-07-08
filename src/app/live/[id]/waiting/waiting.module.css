@@ -71,7 +71,53 @@
 	height: 100%;
 	z-index: 2;
 }
+
+.waiting_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100vw;
+    height: 100vh;
+}
+
+.circle {
+    width: 140px;
+    height: 140px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    fill: transparent;
+    stroke: var(--text-color);
+    stroke-width: 5;
+
+    stroke-dasharray: 0 220;
+    stroke-linecap: round;
+    animation: circle-timer 1s ease-in-out infinite;
+    transform: rotate(-90deg) scale(4);
+}
+
+.seconds {
+    color: var(--text-color);
+    font-size: 80px;
+    text-align: center;
+
+    transform: translateY(-120px);
+}
+
 /* Animations */
+@keyframes circle-timer {
+    0% {
+        stroke-dasharray: 0 220;
+    }
+    100% {
+        stroke-dasharray: 220 0;
+    }
+}
+
 @keyframes fill {
 	from {
 		clip-path: var(--polygonB1);

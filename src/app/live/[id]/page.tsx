@@ -19,6 +19,7 @@ import NeedSignin from "@/components/require-signin/needsignin";
 import GameLobby from "./lobby/lobby";
 import GameEnded from "./game-ended/ended";
 import NotInGame from "./not-in-game/notingame";
+import ClientWaiting from "./waiting/startgamewait";
 
 export default function LiveGamePage() {
     const router = useRouter();
@@ -30,8 +31,7 @@ export default function LiveGamePage() {
     const [loadingData, setLoadingData] = useState(true);
     const [users, setUsers] = useState<GameUser[]>([]);
 
-    const [gameStarted, setGameStarted] = useState(false);
-    const [gameEnded, setGameEnded] = useState(false);
+    const [gameState, setGameState] = useState<string>('pregame');
     const [numPlayers, setNumPlayers] = useState<number>(0);
     const [currentQuestion, setCurrentQuestion] = useState<Question>();
     const [currentQuestionNumber, setCurrentQuestionNumber] = useState<number>(0);
@@ -49,8 +49,9 @@ export default function LiveGamePage() {
 
     const onGameEvent = (event:GameEvent) => {
         if (event.eventType === EventType.StartGame) {
-            setGameStarted(true);
+            setGameState('livegame-waiting');
         } else if (event.eventType === EventType.NextQuestion) {
+            setGameState('livegame');
             setCurrentNumAnswers(0);
             setSubmittedAnswer(false);
             setRevealAnswer(false);
@@ -66,7 +67,7 @@ export default function LiveGamePage() {
         } else if (event.eventType === EventType.RevealAnswer) {
             setRevealAnswer(true);
         } else if (event.eventType === EventType.EndGame) {
-            setGameEnded(true);
+            setGameState('endgame');
             // @ts-ignore
             window.onbeforeunload.call(null);
             window.onbeforeunload = null;
@@ -81,6 +82,8 @@ export default function LiveGamePage() {
                 }
                 window.location.href = '/join';
             }
+        } else if (event.eventType === EventType.InbetweenQuestions) {
+            setGameState('livegame-waiting');
         }
 
         setLastEvent(event);
@@ -145,10 +148,12 @@ export default function LiveGamePage() {
         return(<NotInGame />);
     }
 
-    if (!gameStarted) {
+    if (gameState === 'pregame') {
         return(<GameLobby users={users} currentUser={currentUser} gameId={id} leaveHandle={handleLeave} />);
-    } else if (gameEnded) {
+    } else if (gameState === 'endgame') {
         return(<GameEnded users={users} currentUser={currentUser} gameId={id} />);
+    } else if (gameState === 'livegame-waiting') {
+        return(<ClientWaiting />);
     }
 
     if (currentQuestion === undefined) return(<Loading />);

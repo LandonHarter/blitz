@@ -3,6 +3,7 @@
 import Footer from '@components/footer/footer';
 import styles from './page.module.css';
 import Link from 'next/link';
+import HostWaiting from './host/waiting/waiting';
 
 export default function Home() {
   return (
@@ -89,7 +90,7 @@ export default function Home() {
       </div>
 
       <div style={{ marginBottom: 30 }} />
-    
+
       <Footer />
     </div>
   );
