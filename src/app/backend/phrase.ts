@@ -24,3 +24,14 @@ export const getRandomEndGamePhrase = () => {
 export const getRandomEndGamePhraseSeed = (seed: number) => {
     return endGamePhrases[seed % endGamePhrases.length];
 }
+
+const submittedAnswerPhrases = [
+    "Nice!",
+    "Good one!",
+    "Great answer!",
+    "That's a good one!",
+    "That's a good answer!",
+];
+export const getRandomSubmittedAnswerPhrase = () => {
+    return submittedAnswerPhrases[Math.floor(Math.random() * submittedAnswerPhrases.length)];
+}

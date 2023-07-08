@@ -8,7 +8,7 @@ import { User } from '@/backend/firebase/user';
 import { getRandomPreGamePhrase } from '@/backend/phrase';
 import { motion } from 'framer-motion';
 
-export default function GameLobby(props:{ currentUser:User, users:GameUser[], gameId:string, leaveHandle:() => Promise<void> }) {
+export default function GameLobby(props:{ currentUser:User, gameId:string, leaveHandle:() => Promise<void> }) {
     const router = useRouter();
 
     return(

@@ -14,3 +14,9 @@
 .leave_button:active {
     transform: scale(0.95);
 }
+
+.waiting_title {
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 60px;
+}

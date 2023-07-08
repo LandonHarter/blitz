@@ -20,6 +20,7 @@ import GameLobby from "./lobby/lobby";
 import GameEnded from "./game-ended/ended";
 import NotInGame from "./not-in-game/notingame";
 import ClientWaiting from "./waiting/startgamewait";
+import { getRandomSubmittedAnswerPhrase } from "@/backend/phrase";
 
 export default function LiveGamePage() {
     const router = useRouter();
@@ -29,10 +30,8 @@ export default function LiveGamePage() {
     const { currentUser, signedIn, userLoading } = useCurrentUser();
 
     const [loadingData, setLoadingData] = useState(true);
-    const [users, setUsers] = useState<GameUser[]>([]);
 
     const [gameState, setGameState] = useState<string>('pregame');
-    const [numPlayers, setNumPlayers] = useState<number>(0);
     const [currentQuestion, setCurrentQuestion] = useState<Question>();
     const [currentQuestionNumber, setCurrentQuestionNumber] = useState<number>(0);
     const [submittedAnswer, setSubmittedAnswer] = useState<boolean>(false);
@@ -90,19 +89,11 @@ export default function LiveGamePage() {
     };
 
     const onUserJoin = (user:GameUser) => {
-        setUsers((prevUsers) => [...prevUsers, {
-            name: user.name,
-            uid: user.uid,
-            pfp: user.pfp,
-            email: user.email,
-            points: user.points
-        }]);
-        setNumPlayers((prevNum) => prevNum + 1);
+        
     };
 
     const onUserLeave = (user:GameUser) => {
-        setUsers((prevUsers) => prevUsers.filter(u => u.uid !== user.uid));
-        setNumPlayers((prevNum) => prevNum - 1);
+
     };
 
     useEffect(() => {
@@ -134,7 +125,6 @@ export default function LiveGamePage() {
                     await leaveGame(id, currentUser);
                 };
 
-                setNumPlayers(gameData.numPlayers);
                 setLoadingData(false);
             }
         })();
@@ -149,9 +139,9 @@ export default function LiveGamePage() {
     }
 
     if (gameState === 'pregame') {
-        return(<GameLobby users={users} currentUser={currentUser} gameId={id} leaveHandle={handleLeave} />);
+        return(<GameLobby currentUser={currentUser} gameId={id} leaveHandle={handleLeave} />);
     } else if (gameState === 'endgame') {
-        return(<GameEnded users={users} currentUser={currentUser} gameId={id} />);
+        return(<GameEnded currentUser={currentUser} gameId={id} />);
     } else if (gameState === 'livegame-waiting') {
         return(<ClientWaiting />);
     }
@@ -161,7 +151,7 @@ export default function LiveGamePage() {
     if (submittedAnswer && !revealAnswer) {
         return(
             <Waiting>
-                <h1>{currentNumAnswers}/{numPlayers} answered</h1>
+                <h1 className={styles.waiting_title}>{getRandomSubmittedAnswerPhrase()}</h1>
             </Waiting>
         );
     }

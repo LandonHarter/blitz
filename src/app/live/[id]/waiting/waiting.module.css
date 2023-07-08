@@ -1,11 +1,13 @@
 .background {
     width: 100vw;
-    height: calc(100vh - 300px);
+    height: 100vh;
 
     display: flex;
 	flex-direction: column;
     align-items: center;
     justify-content: center;
+
+	--hourglass-scale: 2;
 }
 
 /* https://codepen.io/jkantner/pen/wvWXyKG */
@@ -26,13 +28,13 @@
 
     animation-name: flip;
 	animation-timing-function: ease-in-out;
-	background-image: linear-gradient(var(--primary) 0.5em,#737a8c55 0.5em 8.5em,var(--primary) 8.5em);
+	background-image: linear-gradient(var(--primary) calc(0.5em * var(--hourglass-scale)),#737a8c55 calc(0.5em * var(--hourglass-scale)) calc(8.5em * var(--hourglass-scale)),var(--primary) calc(8.5em * var(--hourglass-scale)));
 	clip-path: var(--polygonH);
 	-webkit-clip-path: var(--polygonH);
 	overflow: hidden;
 	position: relative;
-	width: 5em;
-	height: 9em;
+	width: calc(5em * var(--hourglass-scale));
+	height: calc(9em * var(--hourglass-scale));
 	z-index: 0;
 }
 .hourglass:before, .hourglass:after {
@@ -52,24 +54,11 @@
 	background-size: 100% 3.6em;
 	clip-path: var(--polygonB1);
 	-webkit-clip-path: var(--polygonB1);
-	top: 0.5em;
-	left: 0.5em;
-	width: 4em;
-	height: 8em;
+	top: calc(0.5em * var(--hourglass-scale));
+	left: calc(0.5em * var(--hourglass-scale));
+	width: calc(4em * var(--hourglass-scale));
+	height: calc(8em * var(--hourglass-scale));
 	z-index: 1;
-}
-.hourglass:after {
-	animation-name: glare;
-	background:
-		linear-gradient(90deg,#0000 0.5em,#0003 0.5em 1.5em,#0000 1.5em 3.5em,#fff3 3.5em 4.5em,#fff0 4.5em 6.5em,#0003 6.5em 7.5em,#0000 7.5em) 0 0 / 100% 0.5em,
-		linear-gradient(90deg,#0000 0.75em,#0003 0.75em 1.25em,#0000 1.25em 3.75em,#fff3 3.75em 4.25em,#fff0 4.25em 6.75em,#0003 6.75em 7.25em,#0000 7.25em) 0 0.5em / 100% 8em,
-		linear-gradient(90deg,#0000 0.5em,#0003 0.5em 1.5em,#0000 1.5em 3.5em,#fff3 3.5em 4.5em,#fff0 4.5em 6.5em,#0003 6.5em 7.5em,#0000 7.5em) 0 100% / 100% 0.5em;
-	background-repeat: repeat-x;
-	top: 0;
-	left: -3em;
-	width: 200%;
-	height: 100%;
-	z-index: 2;
 }
 
 .waiting_container {
