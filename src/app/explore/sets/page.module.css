@@ -13,12 +13,12 @@
 }
 
 .sets p, .sets h2 {
-    color: black;
+    color: var(--text-color);
 }
 
 .set_card {
     --img-scale: 1.001;
-    --title-color: black;
+    --title-color: var(--text-color);
     --link-icon-translate: -20px;
     --link-icon-opacity: 0;
 
