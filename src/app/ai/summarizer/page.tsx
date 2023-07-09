@@ -1,15 +1,15 @@
 'use client'
 
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 
 import styles from './page.module.css';
 import { summarizeText } from '@/backend/ai/generate';
 import { AIState } from '@/backend/ai/AIState';
 import Popup from '@/components/popup/popup';
 import Image from 'next/image';
-import useCurrentUser from '@/hooks/useCurrentUser';
 import Loading from '@/components/loading/loading';
 import NeedSignin from '@/components/require-signin/needsignin';
+import UserContext from '@/context/usercontext';
 
 export default function SummarizerAIPage() {
     const [article, setArticle] = useState('');
@@ -21,7 +21,7 @@ export default function SummarizerAIPage() {
     const [errorOpen, setErrorOpen] = useState(false);
     const [error, setError] = useState('');
 
-    const { currentUser, userLoading, signedIn } = useCurrentUser();
+    const { currentUser, signedIn, userLoading } = useContext(UserContext);
     if (userLoading) return(<Loading />);
     if (!signedIn) return(<NeedSignin />);
 

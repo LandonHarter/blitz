@@ -4,8 +4,15 @@ import Footer from '@components/footer/footer';
 import styles from './page.module.css';
 import Link from 'next/link';
 import HostWaiting from './host/waiting/waiting';
+import { useRouter } from 'next/navigation';
+import { auth } from './backend/firebase/init';
+import { useContext } from 'react';
+import SignInContext from './context/signincontext';
 
 export default function Home() {
+  const router = useRouter();
+  const signInPopup = useContext(SignInContext);
+
   return (
     <div>
       <div className={styles.hero_background_1}>
@@ -13,7 +20,14 @@ export default function Home() {
             <h1 className={styles.hero_title_1}>Fuel your <br />education for <span className={styles.hero_gradient_word_1}>free</span></h1>
             <p className={styles.hero_subtitle_1}>For everyone, no matter your level</p>
             <div className={styles.hero_buttons_container_1}>
-              <Link href='/explore/sets'><button className={styles.hero_button_1}>Get started</button></Link>
+              <button className={styles.hero_button_1} onClick={() => {
+                if (auth.currentUser) {
+                  router.push('/explore/sets');
+                  return;
+                }
+
+                signInPopup.set(true);
+              }}>Get started</button>
               <Link href='/about'><button className={styles.hero_button_2}>Learn more</button></Link>
             </div>
             <div className={styles.hero_graphic_1}>

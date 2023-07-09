@@ -4,18 +4,19 @@ import useCurrentUser from '@hooks/useCurrentUser';
 import styles from './page.module.css';
 
 import Image from 'next/image';
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { createGame, joinGame } from '@/backend/live/game';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Popup from '@/components/popup/popup';
 import Loading from '@/components/loading/loading';
 import NeedSignin from '@/components/require-signin/needsignin';
+import UserContext from '@/context/usercontext';
 
 export default function JoinPage() {
     const router = useRouter();
     const joinInput = useRef<HTMLInputElement>(null);
-    const { currentUser, signedIn, userLoading } = useCurrentUser();
+    const { currentUser, signedIn, userLoading } = useContext(UserContext);
 
     const [joining, setJoining] = useState(false);
 

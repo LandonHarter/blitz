@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import styles from './page.module.css';
 import Loading from '@/components/loading/loading';
@@ -9,11 +9,12 @@ import useCurrentUser from '@/hooks/useCurrentUser';
 import NeedSignin from '@/components/require-signin/needsignin';
 import { doc, collection, getDoc } from 'firebase/firestore';
 import { firestore } from '@baas/init';
+import UserContext from '@/context/usercontext';
 
 export default function MySetsPage() {
     const [sets, setSets] = useState<any[]|null>(null);
 
-    const { currentUser, userLoading, signedIn } = useCurrentUser();
+    const { currentUser, userLoading, signedIn } = useContext(UserContext);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

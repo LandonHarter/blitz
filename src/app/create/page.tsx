@@ -1,13 +1,12 @@
 'use client'
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from './page.module.css';
 import Popup from '@/components/popup/popup';
 import Loading from '@/components/loading/loading';
 import { arrayUnion, collection, doc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
 import { firestore, storage } from '@baas/init';
 import { useRouter } from 'next/navigation';
-import useCurrentUser from '@hooks/useCurrentUser';
 import { getDownloadURL, ref, uploadBytes, uploadString } from 'firebase/storage';
 import FileResizer from 'react-image-file-resizer';
 import Image from 'next/image';
@@ -18,6 +17,7 @@ import { AIState } from '@/backend/ai/AIState';
 import AILoading from '@/components/ai-loading/loading';
 import { parseAi } from '@/backend/ai/convert';
 import NeedSignin from '@/components/require-signin/needsignin';
+import UserContext from '@/context/usercontext';
 
 export default function CreatePage() {
     const router = useRouter();
@@ -28,7 +28,7 @@ export default function CreatePage() {
     const [aiPopup, setAiPopup] = useState(false);
 
     const [loadingMenu, setLoadingMenu] = useState(false);
-    const { currentUser, signedIn, userLoading } = useCurrentUser();
+    const { currentUser, signedIn, userLoading } = useContext(UserContext);
 
     const [nameField, setNameField] = useState('');
     const [descriptionField, setDescriptionField] = useState('');

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from './page.module.css';
 import AILoading from '@/components/ai-loading/loading';
 
@@ -10,9 +10,9 @@ import { AIState } from '@/backend/ai/AIState';
 import Popup from '@/components/popup/popup';
 import Image from 'next/image';
 import { parseWorksheet } from '@/backend/ai/convert';
-import useCurrentUser from '@/hooks/useCurrentUser';
 import Loading from '@/components/loading/loading';
 import NeedSignin from '@/components/require-signin/needsignin';
+import UserContext from '@/context/usercontext';
 
 export default function WorksheetCreatorPage() {
     const [title, setTitle] = useState('');
@@ -22,7 +22,7 @@ export default function WorksheetCreatorPage() {
 
     const [errorOpen, setErrorOpen] = useState(false);
 
-    const { currentUser, userLoading, signedIn } = useCurrentUser();
+    const { currentUser, userLoading, signedIn } = useContext(UserContext);
     if (userLoading) return(<Loading />);
     if (!signedIn) return(<NeedSignin />);
 

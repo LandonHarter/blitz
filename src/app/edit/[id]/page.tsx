@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import styles from './page.module.css';
 import { Question, QuestionOption, QuestionType } from '@/backend/live/set';
@@ -9,7 +9,7 @@ import generateId from '@/backend/id';
 import Loading from '@/components/loading/loading';
 import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, firestore } from '@/backend/firebase/init';
-import useCurrentUser from '@hooks/useCurrentUser';
+import UserContext from '@/context/usercontext';
 
 export default function EditPage() {
     const id = usePathname().split('/')[2];
@@ -22,7 +22,7 @@ export default function EditPage() {
     const option4Input = useRef<HTMLInputElement>(null);
     const correctOptionCheckbox = useRef<HTMLSelectElement>(null);
 
-    const { currentUser, signedIn, userLoading } = useCurrentUser();
+    const { currentUser, signedIn, userLoading } = useContext(UserContext);
 
     const [owner, setOwner] = useState<string|null>(null);
     const [questions, setQuestions] = useState<Question[]>([]);

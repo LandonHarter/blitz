@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import styles from "./page.module.css";
 import Loading from "@/components/loading/loading";
@@ -9,11 +9,10 @@ import { firestore } from "@/backend/firebase/init";
 import { createGame } from "@/backend/live/game";
 import { useRouter } from "next/navigation";
 import Popup from "@/components/popup/popup";
-import useCurrentUser from "@/hooks/useCurrentUser";
 import Image from "next/image";
-import Waiting from "@/live/[id]/waiting/waiting";
 import Link from "next/link";
 import BasicReturn from "@/components/basic-return/return";
+import UserContext from "@/context/usercontext";
 
 export default function ExploreSetsPage() {
     const router = useRouter();
@@ -23,7 +22,7 @@ export default function ExploreSetsPage() {
     const [error, setError] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
 
-    const { currentUser, signedIn, userLoading } = useCurrentUser();
+    const { currentUser, signedIn, userLoading } = useContext(UserContext);
 
     const formatTimestamp = (timestamp:Timestamp) => {
         const date = new Date(timestamp.seconds * 1000);
