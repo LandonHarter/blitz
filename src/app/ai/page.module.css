@@ -25,11 +25,11 @@
 }
 
 .ai_options {
-    width: 1425px;
+    width: 80vw;
     height: fit-content;
 
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
 }
