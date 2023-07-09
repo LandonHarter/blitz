@@ -17,17 +17,18 @@ import Image from 'next/image';
 
 export default function MySetsPage() {
     const router = useRouter();
-    const [sets, setSets] = useState<any[]|null>(null);
+    const [sets, setSets] = useState<any[] | null>(null);
+    const [setsOverflowing, setSetsOverflowing] = useState(true);
+    const [maxOverflow, setMaxOverflow] = useState<number>(0);
+
+    const [setTranslation, setSetTranslation] = useState<number>(0);
+    const transformStep = 450;
 
     const { currentUser, userLoading, signedIn } = useContext(UserContext);
     const [loading, setLoading] = useState(true);
 
     const [errorOpen, setErrorOpen] = useState(false);
     const [error, setError] = useState('');
-
-    useEffect(() => {
-        console.error(error);
-    }, [error]);
 
     useEffect(() => {
         if (!signedIn) {
@@ -53,65 +54,105 @@ export default function MySetsPage() {
             }
 
             setSets(userSets);
+
+            const windowWidth = window.innerWidth;
+            const setsWidth = userSets.length * transformStep;
+            if (setsWidth < windowWidth) {
+                setSetsOverflowing(false);
+            } else {
+                setSetsOverflowing(true);
+                setMaxOverflow(setsWidth - windowWidth);
+            }
+
+            window.onresize = () => {
+                const windowWidth = window.innerWidth;
+                const setsWidth = userSets.length * transformStep;
+                if (setsWidth < windowWidth) {
+                    setSetsOverflowing(false);
+                } else {
+                    setSetsOverflowing(true);
+                    setMaxOverflow(setsWidth - windowWidth);
+                }
+            };
+
+            setLoading(false);
         })();
     }, [signedIn]);
 
     if (!signedIn) {
-        return(<NeedSignin />);
+        return (<NeedSignin />);
     } else if (loading || userLoading || !sets) {
-        return(<Loading />);
+        return (<Loading />);
     }
 
     if (sets && sets.length === 0) {
-        return(<BasicReturn text='No sets available' returnLink='/' />)
+        return (<BasicReturn text='No sets available' returnLink='/' />)
     }
 
-    return(
-        <div className={styles.sets}>
-            {sets.map((set, index) => {
-                return(
-                    <article key={index} className={styles.set_card}>
-                            <div className={styles.article_wrapper}>
-                                <figure style={{ backgroundImage: `url(${set.image})` }}>
-                                    
-                                </figure>
-                                <div className={styles.article_body}>
-                                    <Link href={`/set/${set.id}`} className={styles.link_decoration}><h2 onClick={() => {
-                                    }}>{set.name}</h2></Link>
-                                    <p>{set.description}</p>
-                                </div>
-                                <div className={styles.card_footer}>
-                                    <div />
-                                    <button onClick={async () => {
-                                        if (!signedIn) {
-                                            setError('You must be signed in to host a live game.');
-                                            setErrorOpen(true);
-                                            return;
-                                        }
+    return (
+        <div>
+            <h1 className={styles.your_sets_title}>Your Sets</h1>
+            <div className={styles.set_carousel}>
+                <div className={`${styles.move_left} ${!setsOverflowing ? styles.move_button_disabled : styles.move_button_active}`} onClick={() => {
+                    if (!setsOverflowing || -setTranslation <= 0) return;
+                    setSetTranslation((prevTranslation) => { return prevTranslation + transformStep });
+                }}><p>➜</p></div>
 
-                                        setLoading(true);
-                                        const {
-                                            success,
-                                            error,
-                                            gameCode
-                                        } = await createGame(currentUser.uid, set.id);
-                                        
-                                        if (success) {
-                                            router.push(`/host/${gameCode}`);
-                                        } else {
-                                            setError(error);
-                                            setErrorOpen(true);
-                                            setLoading(false);
-                                        }
-                                    }}>Host Live</button>
+                <div className={styles.sets} style={{ transform: `translateX(${setTranslation + 50}px)` }}>
+                    {sets.map((set, index) => {
+                        return (
+                            <article key={index} className={styles.set_card}>
+                                <div className={styles.article_wrapper}>
+                                    <figure style={{ backgroundImage: `url(${set.image})` }}>
+
+                                    </figure>
+                                    <div className={styles.article_body}>
+                                        <Link href={`/set/${set.id}`} className={styles.link_decoration}><h2 onClick={() => {
+                                        }}>{set.name}</h2></Link>
+                                        <p>{set.description}</p>
+                                    </div>
+                                    <div className={styles.card_footer}>
+                                        <div />
+                                        <div>
+                                            <Link href={`/edit/${set.id}`}><button className={styles.edit_button}>Edit</button></Link>
+                                            <button onClick={async () => {
+                                                if (!signedIn) {
+                                                    setError('You must be signed in to host a live game.');
+                                                    setErrorOpen(true);
+                                                    return;
+                                                }
+
+                                                setLoading(true);
+                                                const {
+                                                    success,
+                                                    error,
+                                                    gameCode
+                                                } = await createGame(currentUser.uid, set.id);
+
+                                                if (success) {
+                                                    router.push(`/host/${gameCode}`);
+                                                } else {
+                                                    setError(error);
+                                                    setErrorOpen(true);
+                                                    setLoading(false);
+                                                }
+                                            }}>Host Live</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </article>
-                );
-            })}
+                            </article>
+                        );
+                    })}
+                </div>
+
+                <div className={`${styles.move_right} ${!setsOverflowing ? styles.move_button_disabled : styles.move_button_active}`} onClick={() => {
+                    if (!setsOverflowing || -setTranslation > maxOverflow) return;
+                    setSetTranslation((prevTranslation) => { return prevTranslation - transformStep });
+                }}><p>➜</p></div>
+            </div>
 
             <Popup open={errorOpen} setOpen={setErrorOpen} exitButton>
-                <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom:25 }} />
+                <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom: 25 }} />
                 <p className={styles.popup_content}>{error}</p>
             </Popup>
         </div>

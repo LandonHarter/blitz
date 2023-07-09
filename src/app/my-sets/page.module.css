@@ -1,16 +1,18 @@
 .sets {
-    width: 100vw;
+    width: fit-content;
     height: fit-content;
 
-    display: grid;
-    max-width: 1200px;
-    margin-inline: auto;
-    padding-inline: 24px;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 24px;
+    overflow: visible;
+
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    transition: transform 0.4s ease-in-out;
 }
 
-.sets p, .sets h2 {
+.sets p,
+.sets h2 {
     color: var(--text-color);
 }
 
@@ -27,6 +29,9 @@
     transform-origin: center;
     transition: all 0.4s ease-in-out;
     overflow: hidden;
+
+    width: 400px;
+    margin: 0 25px;
 }
 
 .set_card h2 {
@@ -41,7 +46,7 @@
 .set_card p {
     font-family: 'SF Pro Display';
 }
-  
+
 .article_wrapper figure {
     margin: 0;
     padding: 0;
@@ -54,7 +59,7 @@
     background-position: center;
     background-repeat: no-repeat;
 }
-  
+
 .set_card img {
     max-width: 100%;
     transform-origin: center;
@@ -94,6 +99,12 @@
     transform: scale(1.05);
 }
 
+.edit_button {
+    margin-right: 10px;
+    background-color: var(--bg-darker) !important;
+    color: var(--text-color) !important;
+}
+
 .popup_error {
     text-align: center;
     color: black;
@@ -103,4 +114,101 @@
 
 .link_decoration {
     text-decoration: none;
+}
+
+.your_sets_title {
+    font-family: 'SF Pro Display';
+    font-size: 50px;
+    color: var(--text-color);
+
+    margin: 15px;
+}
+
+.set_carousel {
+    width: 100vw;
+    height: fit-content;
+
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.move_right {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    right: 15px;
+
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+    border: none;
+    border-radius: 100%;
+
+    height: 50px;
+    aspect-ratio: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 2;
+}
+
+.move_right p {
+    color: var(--bg);
+    font-weight: bold;
+    font-family: 'SF Pro Display';
+    font-size: 25px;
+    text-align: center;
+
+    transform: translate(-1px, -1px);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.move_left {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    left: 15px;
+
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+    border: none;
+    border-radius: 100%;
+
+    height: 50px;
+    aspect-ratio: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 2;
+}
+
+.move_left p {
+    color: var(--bg);
+    font-weight: bold;
+    font-family: 'SF Pro Display';
+    font-size: 25px;
+    text-align: center;
+
+    transform: translate(0px, 2px) rotate(180deg);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.move_button_disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.move_button_active:active {
+    transform: scale(0.9);
 }
