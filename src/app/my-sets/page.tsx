@@ -6,7 +6,7 @@ import styles from './page.module.css';
 import Loading from '@/components/loading/loading';
 import BasicReturn from '@/components/basic-return/return';
 import NeedSignin from '@/components/require-signin/needsignin';
-import { doc, collection, getDoc } from 'firebase/firestore';
+import { doc, collection, getDoc, Timestamp } from 'firebase/firestore';
 import { firestore } from '@baas/init';
 import Link from 'next/link';
 import UserContext from '@/context/usercontext';
@@ -18,11 +18,16 @@ import Image from 'next/image';
 export default function MySetsPage() {
     const router = useRouter();
     const [sets, setSets] = useState<any[] | null>(null);
+
     const [setsOverflowing, setSetsOverflowing] = useState(true);
     const [maxOverflow, setMaxOverflow] = useState<number>(0);
+    const [sortedRecentlySets, setSortedRecentlySets] = useState<any[]>([]);
 
     const [setTranslation, setSetTranslation] = useState<number>(0);
     const transformStep = 450;
+
+    const [search, setSearch] = useState<string>('');
+    const [filteredSets, setFilteredSets] = useState<any[]>([]);
 
     const { currentUser, userLoading, signedIn } = useContext(UserContext);
     const [loading, setLoading] = useState(true);
@@ -53,10 +58,38 @@ export default function MySetsPage() {
                 return;
             }
 
-            setSets(userSets);
+            const alphabeticalSets: any[] = userSets;
+            alphabeticalSets.sort((a: any, b: any) => {
+                const aName: string = a.name.toLowerCase();
+                const bName: string = b.name.toLowerCase();
+
+                if (aName < bName) {
+                    return -1;
+                } else if (aName > bName) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+            setSets(alphabeticalSets);
+
+            const recentSets: any[] = userSets;
+            recentSets.sort((a: any, b: any) => {
+                const aUpdatedAt: Timestamp = a.updatedAt;
+                const bUpdatedAt: Timestamp = b.updatedAt;
+
+                if (aUpdatedAt.seconds > bUpdatedAt.seconds) {
+                    return -1;
+                } else if (aUpdatedAt.seconds < bUpdatedAt.seconds) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }).slice(0, 10);
+            setSortedRecentlySets(recentSets);
 
             const windowWidth = window.innerWidth;
-            const setsWidth = userSets.length * transformStep;
+            const setsWidth = recentSets.length * transformStep;
             if (setsWidth < windowWidth) {
                 setSetsOverflowing(false);
             } else {
@@ -66,7 +99,7 @@ export default function MySetsPage() {
 
             window.onresize = () => {
                 const windowWidth = window.innerWidth;
-                const setsWidth = userSets.length * transformStep;
+                const setsWidth = recentSets.length * transformStep;
                 if (setsWidth < windowWidth) {
                     setSetsOverflowing(false);
                 } else {
@@ -91,15 +124,16 @@ export default function MySetsPage() {
 
     return (
         <div>
-            <h1 className={styles.your_sets_title}>Your Sets</h1>
+            <h1 className={styles.your_sets_title}>Recently Updated</h1>
             <div className={styles.set_carousel}>
                 <div className={`${styles.move_left} ${!setsOverflowing ? styles.move_button_disabled : styles.move_button_active}`} onClick={() => {
                     if (!setsOverflowing || -setTranslation <= 0) return;
                     setSetTranslation((prevTranslation) => { return prevTranslation + transformStep });
                 }}><p>➜</p></div>
 
-                <div className={styles.sets} style={{ transform: `translateX(${setTranslation + 50}px)` }}>
-                    {sets.map((set, index) => {
+                <div className={styles.sets} style={{ transform: `translateX(${setTranslation}px)` }}>
+                    {sortedRecentlySets.map((set, index) => {
+                        if (index > 9) return;
                         return (
                             <article key={index} className={styles.set_card}>
                                 <div className={styles.article_wrapper}>
@@ -149,6 +183,67 @@ export default function MySetsPage() {
                     if (!setsOverflowing || -setTranslation > maxOverflow) return;
                     setSetTranslation((prevTranslation) => { return prevTranslation - transformStep });
                 }}><p>➜</p></div>
+            </div>
+
+            <div className={styles.divider} />
+
+            <h1 className={styles.your_sets_title}>All Sets ({sets.length})</h1>
+            <input className={styles.search_sets} placeholder='Search' value={search} onChange={(e) => {
+                setSearch(e.target.value);
+                if (e.target.value === '') return;
+
+                let newFilter = sets;
+                newFilter = newFilter.filter((set) => {
+                    return set.name.toLowerCase().includes(e.target.value.toLowerCase());
+                });
+                setFilteredSets(newFilter);
+            }} />
+            <div className={styles.all_sets}>
+                {(search === '' ? sets : filteredSets).map((set, index) => {
+                    if (index > 9) return;
+                    return (
+                        <article key={index} className={styles.set_card}>
+                            <div className={styles.article_wrapper}>
+                                <figure style={{ backgroundImage: `url(${set.image})` }}>
+
+                                </figure>
+                                <div className={styles.article_body}>
+                                    <Link href={`/set/${set.id}`} className={styles.link_decoration}><h2 onClick={() => {
+                                    }}>{set.name}</h2></Link>
+                                    <p>{set.description}</p>
+                                </div>
+                                <div className={styles.card_footer}>
+                                    <div />
+                                    <div>
+                                        <Link href={`/edit/${set.id}`}><button className={styles.edit_button}>Edit</button></Link>
+                                        <button onClick={async () => {
+                                            if (!signedIn) {
+                                                setError('You must be signed in to host a live game.');
+                                                setErrorOpen(true);
+                                                return;
+                                            }
+
+                                            setLoading(true);
+                                            const {
+                                                success,
+                                                error,
+                                                gameCode
+                                            } = await createGame(currentUser.uid, set.id);
+
+                                            if (success) {
+                                                router.push(`/host/${gameCode}`);
+                                            } else {
+                                                setError(error);
+                                                setErrorOpen(true);
+                                                setLoading(false);
+                                            }
+                                        }}>Host Live</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    );
+                })}
             </div>
 
             <Popup open={errorOpen} setOpen={setErrorOpen} exitButton>

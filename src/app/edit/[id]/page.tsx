@@ -4,17 +4,18 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect, useRef, useState } from 'react';
 
 import styles from './page.module.css';
-import { Question, QuestionOption, QuestionType } from '@/backend/live/set';
+import { Question, QuestionType } from '@/backend/live/set';
 import generateId from '@/backend/id';
 import Loading from '@/components/loading/loading';
-import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
-import { auth, firestore } from '@/backend/firebase/init';
+import { Timestamp, collection, doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { firestore } from '@/backend/firebase/init';
 import UserContext from '@/context/usercontext';
+import { getUserData } from '@/backend/firebase/user';
 
 export default function EditPage() {
     const id = usePathname().split('/')[2];
     const router = useRouter();
-    
+
     const questionInput = useRef<HTMLInputElement>(null);
     const option1Input = useRef<HTMLInputElement>(null);
     const option2Input = useRef<HTMLInputElement>(null);
@@ -24,7 +25,7 @@ export default function EditPage() {
 
     const { currentUser, signedIn, userLoading } = useContext(UserContext);
 
-    const [owner, setOwner] = useState<string|null>(null);
+    const [owner, setOwner] = useState<string | null>(null);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [loadingMenu, setLoadingMenu] = useState<boolean>(true);
 
@@ -61,7 +62,7 @@ export default function EditPage() {
                 return;
             }
 
-            const questionsArray:Question[] = [];
+            const questionsArray: Question[] = [];
 
             const setData = setSnapshot.data();
             const setQuestionsArray = setData.questions;
@@ -74,7 +75,7 @@ export default function EditPage() {
                 const option3 = options[2];
                 const option4 = options[3];
 
-                const questionElement:Question = {
+                const questionElement: Question = {
                     id: question.id,
                     question: question.question,
                     type: QuestionType[type as keyof typeof QuestionType],
@@ -163,18 +164,25 @@ export default function EditPage() {
 
     const updateSet = async () => {
         const questionRef = doc(collection(firestore, 'sets'), id);
-        console.log(auth.currentUser?.uid);
         await updateDoc(questionRef, {
             questions: questions,
             numQuestions: questions.length,
+            updatedAt: serverTimestamp(),
+        });
+
+        const userSetsArray = (await getUserData(currentUser.uid)).sets;
+        const setIndex = userSetsArray.findIndex((set) => set.id === id);
+        userSetsArray[setIndex].updatedAt = Timestamp.now();
+        await updateDoc(doc(collection(firestore, 'users'), currentUser.uid), {
+            sets: userSetsArray,
         });
     };
 
     if (loadingMenu) {
-        return(<Loading />);
+        return (<Loading />);
     }
 
-    return(
+    return (
         <div className={styles.edit_container}>
             <div className={styles.question_form}>
                 <input ref={questionInput} type="text" placeholder="Question" />
@@ -203,19 +211,19 @@ export default function EditPage() {
                     setQuestionsDropdownOpen(!questionsDropdownOpen);
                 }}>
                     <svg height="25" width="25" className={`${styles.dropdown_triangle} ${questionsDropdownOpen && styles.dropdown_triangle_active}`}>
-                        <polygon points={`0,0 ${dropdownTriangleSize/2},${dropdownTriangleSize} ${dropdownTriangleSize},0`} style={{ fill: '#353535' }} />
+                        <polygon points={`0,0 ${dropdownTriangleSize / 2},${dropdownTriangleSize} ${dropdownTriangleSize},0`} style={{ fill: '#353535' }} />
                     </svg>
-                    <h1 style={{ marginLeft:20, color:'#353535' }}>Questions ({questions.length})</h1>
+                    <h1 style={{ marginLeft: 20, color: '#353535' }}>Questions ({questions.length})</h1>
                 </div>
 
                 {questionsDropdownOpen && questions.map((question, index) => {
-                    return(
+                    return (
                         <div key={index} className={styles.question}>
                             <h1>{question.question}</h1>
 
                             <div className={styles.question_options}>
                                 {question.options.map((option, index) => {
-                                    return(
+                                    return (
                                         <div key={option.id} className={`${styles.question_option} ${option.correct && styles.question_option_correct}`} onClick={() => {
                                             option.correct = !option.correct;
                                             setQuestions([...questions]);
@@ -228,7 +236,7 @@ export default function EditPage() {
                         </div>
                     );
                 })}
-            </div> 
+            </div>
         </div>
     );
 }
