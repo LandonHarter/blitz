@@ -3,17 +3,23 @@
 import { motion } from 'framer-motion';
 import styles from './question.module.css';
 import { Question } from '@/backend/live/set';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function HostQuestion(props: { question:Question, submittedAnswers:number, revealAnswer:() => Promise<void> }) {
+export default function HostQuestion(props: { question:Question, submittedAnswers:number, reset:boolean, setReset:Function, revealAnswer:() => Promise<void> }) {
+    const [currentTimer, setCurrentTimer] = useState<NodeJS.Timeout>();
+    
     const timerLength = 15;
-
     useEffect(() => {
-        setTimeout(async () => {
+        const timer = setTimeout(async () => {
             await props.revealAnswer();
         }, timerLength * 1000);
+        setCurrentTimer(timer);
+
+        return () => {
+            clearTimeout(timer);
+            console.log('cancelled timer');
+        }
     }, [props.question]);
-    
 
     return(
         <div className={styles.question_container}>

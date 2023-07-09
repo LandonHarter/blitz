@@ -30,6 +30,8 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
     const [playersCopy, setPlayersCopy] = useState<GameUser[]>([]);
     const [numAnswers, setNumAnswers] = useState<number>(0);
 
+    const [resetTimer, setResetTimer] = useState<boolean>(false);
+
     const [gameState, setGameState] = useState<string>('pregame');
 
     const { currentUser, signedIn, userLoading } = useCurrentUser();
@@ -45,6 +47,7 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
                 });
                 setRevealedQuestion(true);
                 setNumAnswers(0);
+                setResetTimer(true);
 
                 return;
             }
@@ -53,6 +56,7 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
         } else if (event.eventType === EventType.StartGame) {
             setGameState('livegame-waiting');
             const numUsers = await getNumUsersInGame(props.gameId);
+            setResetTimer(true);
             setNumPlayers(numUsers);
         } else if (event.eventType === EventType.EndGame) {
             setGameState('endgame');
@@ -181,7 +185,7 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
     if (!revealedQuestion) {
         return(
             <div>
-                <HostQuestion question={questions[currentQuestionIndex]} submittedAnswers={numAnswers} revealAnswer={async () => {
+                <HostQuestion question={questions[currentQuestionIndex]} submittedAnswers={numAnswers} reset={resetTimer} setReset={setResetTimer} revealAnswer={async () => {
                     await pushGameEvent(props.gameId, {
                         eventType: EventType.RevealAnswer,
                         eventData: {},
