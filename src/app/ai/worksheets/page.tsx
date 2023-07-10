@@ -5,6 +5,7 @@ import styles from './page.module.css';
 import AILoading from '@/components/ai-loading/loading';
 
 import { httpsCallable, getFunctions, HttpsCallableResult } from '@firebase/functions';
+import { deleteObject, ref } from '@firebase/storage';
 import { generateText } from '@/backend/ai/generate';
 import { AIState } from '@/backend/ai/AIState';
 import Popup from '@/components/popup/popup';
@@ -13,6 +14,7 @@ import { parseWorksheet } from '@/backend/ai/convert';
 import Loading from '@/components/loading/loading';
 import NeedSignin from '@/components/require-signin/needsignin';
 import UserContext from '@/context/usercontext';
+import { storage } from '@/backend/firebase/init';
 
 export default function WorksheetCreatorPage() {
     const [title, setTitle] = useState('');
@@ -23,14 +25,14 @@ export default function WorksheetCreatorPage() {
     const [errorOpen, setErrorOpen] = useState(false);
 
     const { currentUser, userLoading, signedIn } = useContext(UserContext);
-    if (userLoading) return(<Loading />);
-    if (!signedIn) return(<NeedSignin />);
+    if (userLoading) return (<Loading />);
+    if (!signedIn) return (<NeedSignin />);
 
     if (generating) {
-        return(<AILoading />);
+        return (<AILoading />);
     }
 
-    return(
+    return (
         <div className={styles.container}>
             <div className={styles.content}>
                 <h1 className={styles.title}>Worksheet Creator</h1>
@@ -45,20 +47,20 @@ export default function WorksheetCreatorPage() {
 
                 <div className={styles.question_num}>
                     <div className={styles.quantity}>
-                        <input className={styles.number_input} type="number" min={1} max={5} step={1} value={numQuestions} onChange={() => {}} />
-                            <div className={styles.quantity_nav}>
-                                <div className={`${styles.quantity_button} ${styles.quantity_up}`} onClick={() => {
-                                    if (numQuestions >= 5) return;
+                        <input className={styles.number_input} type="number" min={1} max={5} step={1} value={numQuestions} onChange={() => { }} />
+                        <div className={styles.quantity_nav}>
+                            <div className={`${styles.quantity_button} ${styles.quantity_up}`} onClick={() => {
+                                if (numQuestions >= 5) return;
 
-                                    setNumQuestions((prevNumQuestions) => prevNumQuestions + 1);
-                                }}>+</div>
-                                <div className={`${styles.quantity_button} ${styles.quantity_down}`} onClick={() => {
-                                    if (numQuestions <= 1) return;
+                                setNumQuestions((prevNumQuestions) => prevNumQuestions + 1);
+                            }}>+</div>
+                            <div className={`${styles.quantity_button} ${styles.quantity_down}`} onClick={() => {
+                                if (numQuestions <= 1) return;
 
-                                    setNumQuestions((prevNumQuestions) => prevNumQuestions - 1);
-                                }}>-</div>
-                            </div>
+                                setNumQuestions((prevNumQuestions) => prevNumQuestions - 1);
+                            }}>-</div>
                         </div>
+                    </div>
                     <h1># of Questions</h1>
                 </div>
 
@@ -66,14 +68,14 @@ export default function WorksheetCreatorPage() {
                     if (prompt.length === 0) return;
 
                     setGenerating(true);
-                    
+
                     let aiText = {
                         response: '',
                         success: false,
                         error: ''
                     };
                     await new Promise((resolve, reject) => {
-                        generateText(`Write ${numQuestions} open ended questions that end with a question mark. They should stay between 10 and 20 words. Prompt: ${prompt}`, (state:AIState, response:string, error:string) => {
+                        generateText(`Write ${numQuestions} open ended questions that end with a question mark. They should stay between 10 and 20 words. Prompt: ${prompt}`, (state: AIState, response: string, error: string) => {
                             if (state === AIState.COMPLETED) {
                                 aiText = {
                                     response: response,
@@ -97,15 +99,15 @@ export default function WorksheetCreatorPage() {
                         return;
                     }
 
-                    const questions:string[] = parseWorksheet(aiText.response, numQuestions);
+                    const questions: string[] = parseWorksheet(aiText.response, numQuestions);
                     const functions = getFunctions();
                     const generateWorksheet = httpsCallable(functions, 'generatePdf');
-                    const result:HttpsCallableResult = await generateWorksheet({
+                    const result: HttpsCallableResult = await generateWorksheet({
                         title: title,
                         questions: questions
                     });
 
-                    const data:any = result.data;
+                    const data: any = result.data;
                     if (!data) {
                         setErrorOpen(true);
                         return;
@@ -114,7 +116,16 @@ export default function WorksheetCreatorPage() {
                     setPrompt('');
                     setTitle('');
 
-                    window.open(data.fileUrl, '_blank');
+                    const url = data.fileUrl;
+                    const path = data.filePath;
+
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${title}.pdf`;
+                    a.click();
+
+                    await deleteObject(ref(storage, path));
+
                     setGenerating(false);
                 }}>Generate</button>
             </div>
