@@ -63,7 +63,7 @@
 
 .popup_error {
     text-align: center;
-    color: black;
+    color: var(--text-color);
     margin-bottom: 50px;
     letter-spacing: 2px;
 }

@@ -63,11 +63,7 @@
   --inputLineHeight: var(--lineHeightMd);
   --labelScaleFactor: 0.8;
   --labelDefaultPosY: 50%;
-  --labelTransformedPosY: calc(
-    (var(--labelDefaultPosY)) -
-    (var(--inputPaddingV) * var(--labelScaleFactor)) -
-    (var(--inputFontSize) * var(--inputLineHeight))
-  );
+  --labelTransformedPosY: calc((var(--labelDefaultPosY)) - (var(--inputPaddingV) * var(--labelScaleFactor)) - (var(--inputFontSize) * var(--inputLineHeight)));
   --inputTransitionDuration: var(--transitionDuration);
   --inputTransitionTF: var(--transitionTF);
 }
@@ -120,22 +116,23 @@
   transition: opacity var(--inputTransitionDuration) var(--inputTransitionTF), transform var(--inputTransitionDuration) var(--inputTransitionTF), visibility 0ms var(--inputTransitionDuration) var(--inputTransitionTF), z-index 0ms var(--inputTransitionDuration) var(--inputTransitionTF);
 }
 
-.name_input_field:-moz-placeholder-shown + .name_input_label {
+.name_input_field:-moz-placeholder-shown+.name_input_label {
   visibility: hidden;
   z-index: -1;
 }
 
-.name_input_field:-ms-input-placeholder + .name_input_label {
+.name_input_field:-ms-input-placeholder+.name_input_label {
   visibility: hidden;
   z-index: -1;
 }
 
-.name_input_field:placeholder-shown + .name_input_label {
+.name_input_field:placeholder-shown+.name_input_label {
   visibility: hidden;
   z-index: -1;
 }
 
-.name_input_field:not(:-moz-placeholder-shown) + .name_input_label, .name_input_field:focus:not(:-moz-placeholder-shown) + .name_input_label {
+.name_input_field:not(:-moz-placeholder-shown)+.name_input_label,
+.name_input_field:focus:not(:-moz-placeholder-shown)+.name_input_label {
   visibility: visible;
   z-index: 1;
   opacity: 1;
@@ -144,7 +141,8 @@
   transition: transform var(--inputTransitionDuration), visibility 0ms, z-index 0ms;
 }
 
-.name_input_field:not(:-ms-input-placeholder) + .name_input_label, .name_input_field:focus:not(:-ms-input-placeholder) + .name_input_label {
+.name_input_field:not(:-ms-input-placeholder)+.name_input_label,
+.name_input_field:focus:not(:-ms-input-placeholder)+.name_input_label {
   visibility: visible;
   z-index: 1;
   opacity: 1;
@@ -153,8 +151,8 @@
   transition: transform var(--inputTransitionDuration), visibility 0ms, z-index 0ms;
 }
 
-.name_input_field:not(:placeholder-shown) + .name_input_label,
-.name_input_field:focus:not(:placeholder-shown) + .name_input_label {
+.name_input_field:not(:placeholder-shown)+.name_input_label,
+.name_input_field:focus:not(:placeholder-shown)+.name_input_label {
   visibility: visible;
   z-index: 1;
   opacity: 1;
@@ -235,22 +233,23 @@
   transition: opacity var(--inputTransitionDuration) var(--inputTransitionTF), transform var(--inputTransitionDuration) var(--inputTransitionTF), visibility 0ms var(--inputTransitionDuration) var(--inputTransitionTF), z-index 0ms var(--inputTransitionDuration) var(--inputTransitionTF);
 }
 
-.description_input_field:-moz-placeholder-shown + .description_input_label {
+.description_input_field:-moz-placeholder-shown+.description_input_label {
   visibility: hidden;
   z-index: -1;
 }
 
-.description_input_field:-ms-input-placeholder + .description_input_label {
+.description_input_field:-ms-input-placeholder+.description_input_label {
   visibility: hidden;
   z-index: -1;
 }
 
-.description_input_field:placeholder-shown + .description_input_label {
+.description_input_field:placeholder-shown+.description_input_label {
   visibility: hidden;
   z-index: -1;
 }
 
-.description_input_field:not(:-moz-placeholder-shown) + .description_input_label, .description_input_field:focus:not(:-moz-placeholder-shown) + .description_input_label {
+.description_input_field:not(:-moz-placeholder-shown)+.description_input_label,
+.description_input_field:focus:not(:-moz-placeholder-shown)+.description_input_label {
   visibility: visible;
   z-index: 1;
   opacity: 1;
@@ -259,7 +258,8 @@
   transition: transform var(--inputTransitionDuration), visibility 0ms, z-index 0ms;
 }
 
-.description_input_field:not(:-ms-input-placeholder) + .description_input_label, .description_input_field:focus:not(:-ms-input-placeholder) + .description_input_label {
+.description_input_field:not(:-ms-input-placeholder)+.description_input_label,
+.description_input_field:focus:not(:-ms-input-placeholder)+.description_input_label {
   visibility: visible;
   z-index: 1;
   opacity: 1;
@@ -268,8 +268,8 @@
   transition: transform var(--inputTransitionDuration), visibility 0ms, z-index 0ms;
 }
 
-.description_input_field:not(:placeholder-shown) + .description_input_label,
-.description_input_field:focus:not(:placeholder-shown) + .description_input_label {
+.description_input_field:not(:placeholder-shown)+.description_input_label,
+.description_input_field:focus:not(:placeholder-shown)+.description_input_label {
   visibility: visible;
   z-index: 1;
   opacity: 1;
@@ -351,7 +351,7 @@
 
   font-size: 24px;
 
-  background-color: var(--secondary-color); 
+  background-color: var(--secondary-color);
   border-radius: 10px;
   border: none;
 
@@ -434,10 +434,10 @@
 }
 
 .popup_content {
-    text-align: center;
-    color: black;
-    font-size: 30px;
-    margin-bottom: 50px;
+  text-align: center;
+  color: var(--text-color);
+  font-size: 30px;
+  margin-bottom: 50px;
 }
 
 .ai_popup_content {
@@ -492,14 +492,12 @@
 }
 
 .number_input::-webkit-inner-spin-button,
-.number_input::-webkit-outer-spin-button
-{
+.number_input::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.number_input
-{
+.number_input {
   -moz-appearance: textfield;
   color: #353535;
   font-family: 'SF Pro Display';

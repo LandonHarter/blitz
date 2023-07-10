@@ -62,7 +62,7 @@
 }
 
 .login_modal_title {
-    color: black;
+    color: var(--text-color);
     font-weight: 600;
     font-size: 40px;
 }
@@ -84,7 +84,7 @@
     align-items: center;
     justify-content: center;
 
-    color: black;
+    color: var(--text-color);
     font-size: 20px;
 
     background-color: transparent;
@@ -109,7 +109,7 @@
     margin-right: 12px;
     margin-top: -545px;
 
-    color: black;
+    color: var(--text-color);
     font-size: 40px;
 
     cursor: pointer;
@@ -203,13 +203,14 @@
     color: var(--text-color);
 }
 
-.nav_link:hover, .nav_link:hover .link_text {
+.nav_link:hover,
+.nav_link:hover .link_text {
     color: var(--primary-color);
 }
 
 .nav_link_content p {
     font-family: 'SF Pro Display';
-    font-weight: bold;  
+    font-weight: bold;
     color: var(--text-color);
     transition: 0.15s ease-in-out;
     font-size: 25px;

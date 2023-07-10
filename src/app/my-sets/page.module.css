@@ -108,7 +108,7 @@
 
 .popup_error {
     text-align: center;
-    color: black;
+    color: var(--text-color);
     margin-bottom: 50px;
     letter-spacing: 2px;
 }
@@ -262,4 +262,11 @@
     background-position: right center;
     background-origin: content-box;
     background-size: var(--icon-size) var(--icon-size);
+}
+
+.popup_content {
+    text-align: center;
+    color: var(--text-color);
+    font-size: 30px;
+    margin-bottom: 50px;
 }

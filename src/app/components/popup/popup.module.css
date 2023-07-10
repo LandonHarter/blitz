@@ -32,7 +32,7 @@
     margin-right: 5px;
     margin-bottom: 10px;
 
-    color: black;
+    color: var(--text-color);
     font-size: 40px;
 
     cursor: pointer;

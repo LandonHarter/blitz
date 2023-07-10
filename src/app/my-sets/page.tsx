@@ -126,10 +126,10 @@ export default function MySetsPage() {
         <div>
             <h1 className={styles.your_sets_title}>Recently Updated</h1>
             <div className={styles.set_carousel}>
-                <div className={`${styles.move_left} ${!setsOverflowing ? styles.move_button_disabled : styles.move_button_active}`} onClick={() => {
+                {setsOverflowing && <div className={`${styles.move_left} ${!setsOverflowing ? styles.move_button_disabled : styles.move_button_active}`} onClick={() => {
                     if (!setsOverflowing || -setTranslation <= 0) return;
                     setSetTranslation((prevTranslation) => { return prevTranslation + transformStep });
-                }}><p>➜</p></div>
+                }}><p>➜</p></div>}
 
                 <div className={styles.sets} style={{ transform: `translateX(${setTranslation}px)` }}>
                     {sortedRecentlySets.map((set, index) => {
@@ -179,10 +179,10 @@ export default function MySetsPage() {
                     })}
                 </div>
 
-                <div className={`${styles.move_right} ${!setsOverflowing ? styles.move_button_disabled : styles.move_button_active}`} onClick={() => {
+                {setsOverflowing && <div className={`${styles.move_right} ${!setsOverflowing ? styles.move_button_disabled : styles.move_button_active}`} onClick={() => {
                     if (!setsOverflowing || -setTranslation > maxOverflow) return;
                     setSetTranslation((prevTranslation) => { return prevTranslation - transformStep });
-                }}><p>➜</p></div>
+                }}><p>➜</p></div>}
             </div>
 
             <div className={styles.divider} />

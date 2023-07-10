@@ -89,6 +89,7 @@ export default function CreatePage() {
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
             owner: currentUser.uid,
+            ownerName: currentUser.name,
             public: true,
             likes: 0,
             image: imageUrl,

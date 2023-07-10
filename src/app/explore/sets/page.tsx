@@ -30,13 +30,14 @@ export default function ExploreSetsPage() {
             const setsQuery = query(collection(firestore, 'sets'), limit(20), orderBy('likes', 'desc'), where('public', '==', true));
             const docs = await getDocs(setsQuery);
 
-            const setsArray:any[] = [];
+            const setsArray: any[] = [];
             docs.forEach(doc => {
                 setsArray.push({
                     id: doc.id,
                     name: doc.data().name,
                     likes: doc.data().likes,
                     owner: doc.data().owner,
+                    ownerName: doc.data().ownerName,
                     numQuestions: doc.data().numQuestions,
                     createdAt: doc.data().createdAt,
                     description: doc.data().description,
@@ -50,27 +51,27 @@ export default function ExploreSetsPage() {
     }, []);
 
     if (loading) {
-        return(<Loading />);
+        return (<Loading />);
     }
 
     if (sets.length === 0) {
-        return(<BasicReturn text="No sets are available" returnLink="/" />);
+        return (<BasicReturn text="No sets are available" returnLink="/" />);
     }
 
-    return(
+    return (
         <div>
             <div className={styles.sets}>
-                {sets.map((set:any, index) => {
-                    return(
+                {sets.map((set: any, index) => {
+                    return (
                         <article key={index} className={styles.set_card}>
                             <div className={styles.article_wrapper}>
                                 <figure style={{ backgroundImage: `url(${set.image})` }}>
-                                    
+
                                 </figure>
                                 <div className={styles.article_body}>
                                     <Link href={`/set/${set.id}`} className={styles.link_decoration}><h2 onClick={() => {
                                     }}>{set.name}</h2></Link>
-                                    <p>{set.description}</p>
+                                    <p>Created by {set.ownerName}</p>
                                 </div>
                                 <div className={styles.card_footer}>
                                     <p style={{ fontFamily: 'Cubano' }}>Created {formatTimestamp(set.createdAt)}</p>
@@ -87,7 +88,7 @@ export default function ExploreSetsPage() {
                                             error,
                                             gameCode
                                         } = await createGame(currentUser.uid, set.id);
-                                        
+
                                         if (success) {
                                             router.push(`/host/${gameCode}`);
                                         } else {
@@ -104,7 +105,7 @@ export default function ExploreSetsPage() {
             </div>
 
             <Popup open={errorOpen} setOpen={setErrorOpen} exitButton>
-                <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom:25 }} />
+                <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom: 25 }} />
                 <h1 className={styles.popup_error}>{error}</h1>
             </Popup>
         </div>

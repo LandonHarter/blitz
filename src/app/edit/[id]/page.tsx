@@ -11,17 +11,14 @@ import { Timestamp, collection, doc, getDoc, serverTimestamp, updateDoc } from '
 import { firestore } from '@/backend/firebase/init';
 import UserContext from '@/context/usercontext';
 import { getUserData } from '@/backend/firebase/user';
+import Popup from '@/components/popup/popup';
+import Image from 'next/image';
+import { AnimatePresence, motion } from 'framer-motion';
+import { arrayMove } from '@/backend/util';
 
 export default function EditPage() {
     const id = usePathname().split('/')[2];
     const router = useRouter();
-
-    const questionInput = useRef<HTMLInputElement>(null);
-    const option1Input = useRef<HTMLInputElement>(null);
-    const option2Input = useRef<HTMLInputElement>(null);
-    const option3Input = useRef<HTMLInputElement>(null);
-    const option4Input = useRef<HTMLInputElement>(null);
-    const correctOptionCheckbox = useRef<HTMLSelectElement>(null);
 
     const { currentUser, signedIn, userLoading } = useContext(UserContext);
 
@@ -29,8 +26,14 @@ export default function EditPage() {
     const [questions, setQuestions] = useState<Question[]>([]);
     const [loadingMenu, setLoadingMenu] = useState<boolean>(true);
 
-    const [questionsDropdownOpen, setQuestionsDropdownOpen] = useState<boolean>(true);
+    const [errorOpen, setErrorOpen] = useState<boolean>(false);
+    const [error, setError] = useState<string>('');
+
     const dropdownTriangleSize = 25;
+    const [questionUiData, setQuestionUiData] = useState<{
+        open: boolean,
+        showShifters: boolean
+    }[]>([]);
 
     useEffect(() => {
         if (userLoading) return;
@@ -63,6 +66,7 @@ export default function EditPage() {
             }
 
             const questionsArray: Question[] = [];
+            const questionUiDataArray: any[] = [];
 
             const setData = setSnapshot.data();
             const setQuestionsArray = setData.questions;
@@ -104,62 +108,37 @@ export default function EditPage() {
                 };
 
                 questionsArray.push(questionElement);
+                questionUiDataArray.push({
+                    open: false,
+                    showShifters: false
+                });
             }
 
             setQuestions(questionsArray);
+            setQuestionUiData(questionUiDataArray);
             setOwner(setSnapshot.data()?.owner);
             setLoadingMenu(false);
         })();
     }, [userLoading]);
 
     const createQuestion = () => {
-        const questionText = questionInput.current?.value;
-        const option1Text = option1Input.current?.value;
-        const option2Text = option2Input.current?.value;
-        const option3Text = option3Input.current?.value;
-        const option4Text = option4Input.current?.value;
-        const correctOption = correctOptionCheckbox.current?.value;
-
-        if (!questionText || !option1Text || !option2Text || !option3Text || !option4Text) {
-            alert('Please fill out all fields');
-            return;
-        }
-
-        const option1 = {
+        const emptyOption = {
+            option: '',
+            correct: false,
             id: generateId(),
-            option: option1Text,
-            correct: correctOption === 'Option 1',
-        };
-        const option2 = {
-            id: generateId(),
-            option: option2Text,
-            correct: correctOption === 'Option 2',
-        };
-        const option3 = {
-            id: generateId(),
-            option: option3Text,
-            correct: correctOption === 'Option 3',
-        };
-        const option4 = {
-            id: generateId(),
-            option: option4Text,
-            correct: correctOption === 'Option 4',
         };
         const question = {
             id: generateId(),
             type: QuestionType.MultipleChoice,
-            question: questionText,
-            options: [option1, option2, option3, option4],
+            question: '',
+            options: [emptyOption, emptyOption, emptyOption, emptyOption],
         };
 
         setQuestions((oldQuestions) => [...oldQuestions, question]);
-
-        questionInput.current!.value = '';
-        option1Input.current!.value = '';
-        option2Input.current!.value = '';
-        option3Input.current!.value = '';
-        option4Input.current!.value = '';
-        correctOptionCheckbox.current!.value = 'Option 1';
+        setQuestionUiData((oldQuestionUiData) => [...oldQuestionUiData, {
+            open: true,
+            showShifters: false
+        }]);
     };
 
     const updateSet = async () => {
@@ -178,65 +157,98 @@ export default function EditPage() {
         });
     };
 
+    const colorFromIndex = (index: number) => {
+        const colors = [styles.option_red, styles.option_blue, styles.option_green, styles.option_yellow];
+        return colors[index];
+    };
+
     if (loadingMenu) {
         return (<Loading />);
     }
 
     return (
         <div className={styles.edit_container}>
-            <div className={styles.question_form}>
-                <input ref={questionInput} type="text" placeholder="Question" />
-                <input ref={option1Input} type="text" placeholder="Option 1" />
-                <input ref={option2Input} type="text" placeholder="Option 2" />
-                <input ref={option3Input} type="text" placeholder="Option 3" />
-                <input ref={option4Input} type="text" placeholder="Option 4" />
-                <select ref={correctOptionCheckbox}>
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                    <option>Option 3</option>
-                    <option>Option 4</option>
-                </select>
-                <button onClick={() => {
-                    createQuestion();
-                }}>Create Question</button>
-                <button onClick={async () => {
-                    setLoadingMenu(true);
-                    await updateSet();
-                    setLoadingMenu(false);
-                }}>Update Set</button>
+            <div className={styles.data_container}>
+
             </div>
+            <div className={styles.questions_container}>
+                {questions.map((question, index) => (
+                    <div key={index} className={styles.question_container} onMouseOver={(e) => {
+                        const newQuestionsData = [...questionUiData];
+                        newQuestionsData[index].showShifters = true;
+                        setQuestionUiData(newQuestionsData);
+                    }} onMouseOut={(e) => {
+                        const newQuestionsData = [...questionUiData];
+                        newQuestionsData[index].showShifters = false;
+                        setQuestionUiData(newQuestionsData);
+                    }}>
+                        <AnimatePresence mode='wait'>
+                            {questionUiData[index].showShifters ?
+                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className={styles.shift_question_buttons}>
+                                    <Image src='/images/icons/shifter.png' className={styles.shift_button} alt='arrow' width={25} height={25} style={{ rotate: '180deg' }} onClick={() => {
+                                        if (index === 0) return;
 
-            <div className={styles.questions}>
-                <div className={styles.questions_dropdown} onClick={() => {
-                    setQuestionsDropdownOpen(!questionsDropdownOpen);
-                }}>
-                    <svg height="25" width="25" className={`${styles.dropdown_triangle} ${questionsDropdownOpen && styles.dropdown_triangle_active}`}>
-                        <polygon points={`0,0 ${dropdownTriangleSize / 2},${dropdownTriangleSize} ${dropdownTriangleSize},0`} style={{ fill: '#353535' }} />
-                    </svg>
-                    <h1 style={{ marginLeft: 20, color: '#353535' }}>Questions ({questions.length})</h1>
-                </div>
-
-                {questionsDropdownOpen && questions.map((question, index) => {
-                    return (
-                        <div key={index} className={styles.question}>
-                            <h1>{question.question}</h1>
-
-                            <div className={styles.question_options}>
-                                {question.options.map((option, index) => {
-                                    return (
-                                        <div key={option.id} className={`${styles.question_option} ${option.correct && styles.question_option_correct}`} onClick={() => {
-                                            option.correct = !option.correct;
-                                            setQuestions([...questions]);
-                                        }}>
-                                            <p>{option.option}</p>
-                                        </div>
-                                    );
-                                })}
+                                        setQuestions(arrayMove([...questions], index, index - 1));
+                                        setQuestionUiData(arrayMove([...questionUiData], index, index - 1));
+                                    }} />
+                                    <Image src='/images/icons/shifter.png' className={styles.shift_button} alt='arrow' width={25} height={25} onClick={() => {
+                                        if (index === questions.length - 1) return;
+                                        setQuestions(arrayMove([...questions], index, index + 1));
+                                        setQuestionUiData(arrayMove([...questionUiData], index, index + 1));
+                                    }} />
+                                </motion.div> : <div className={styles.empty_shifter_space} />
+                            }
+                        </AnimatePresence>
+                        <motion.div initial={{ height: 93, opacity: 0, scaleY: 0.3 }} animate={{ height: questionUiData[index].open ? 355 : 93, opacity: 1, scaleY: 1 }}
+                            className={styles.question}>
+                            <div className={styles.question_topbar}>
+                                <svg height="25" width="25" className={`${styles.dropdown_triangle} ${!questionUiData[index].open && styles.dropdown_triangle_closed}`} onClick={() => {
+                                    const newQuestionsData = [...questionUiData];
+                                    newQuestionsData[index].open = !newQuestionsData[index].open;
+                                    setQuestionUiData(newQuestionsData);
+                                }}>
+                                    <polygon points={`0,0 ${dropdownTriangleSize / 2},${dropdownTriangleSize} ${dropdownTriangleSize},0`} style={{ fill: '#353535' }} />
+                                </svg>
+                                <input className={styles.question_input} placeholder='Question here' value={question.question} onChange={(e) => {
+                                    question.question = e.target.value;
+                                    setQuestions((oldQuestions) => [...oldQuestions]);
+                                }} />
                             </div>
-                        </div>
-                    );
-                })}
+                            <motion.div initial={{ scaleY: 0 }} animate={{ scaleY: questionUiData[index].open ? 1 : 0 }} className={styles.options_container}>
+                                {question.options.map((option, optionIndex) => (
+                                    <div key={optionIndex} className={`${styles.option} ${colorFromIndex(optionIndex)}`}>
+                                        <input className={styles.inp_cbx} id={`correct-${question.options[optionIndex].id}`} type="checkbox" style={{ display: 'none' }} checked={option.correct} onChange={(e) => {
+                                            option.correct = e.target.checked;
+                                            setQuestions((oldQuestions) => [...oldQuestions]);
+                                        }} />
+                                        <label className={styles.cbx} htmlFor={`correct-${question.options[optionIndex].id}`}>
+                                            <span>
+                                                <svg width="12px" height="9px" viewBox="0 0 12 9">
+                                                    <polyline points="1 5 4 8 11 1"></polyline>
+                                                </svg>
+                                            </span>
+                                        </label>
+                                        <input className={styles.option_input} placeholder={`Option ${optionIndex + 1}`} value={option.option} onChange={(e) => {
+                                            option.option = e.target.value;
+                                            setQuestions((oldQuestions) => [...oldQuestions]);
+                                        }} />
+                                    </div>
+                                ))}
+                            </motion.div>
+                        </motion.div>
+                    </div>
+                ))}
+                <motion.div whileTap={{ translateY: '380px' }} className={`${styles.question} ${styles.add_question}`} onClick={() => {
+                    createQuestion();
+                }}>
+                    <h1 className={styles.add_symbol}>+</h1>
+                </motion.div>
             </div>
+
+            <Popup open={errorOpen} setOpen={setErrorOpen} exitButton>
+                <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom: 25 }} />
+                <p className={styles.popup_content}>{error}</p>
+            </Popup>
         </div>
     );
 }
