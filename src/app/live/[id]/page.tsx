@@ -21,6 +21,7 @@ import GameEnded from "./game-ended/ended";
 import NotInGame from "./not-in-game/notingame";
 import ClientWaiting from "./waiting/startgamewait";
 import { getRandomSubmittedAnswerPhrase } from "@/backend/phrase";
+import TFQuestion from "./question/tf/question";
 
 export default function LiveGamePage() {
     const router = useRouter();
@@ -37,7 +38,7 @@ export default function LiveGamePage() {
     const [submittedAnswer, setSubmittedAnswer] = useState<boolean>(false);
     const [revealAnswer, setRevealAnswer] = useState<boolean>(false);
 
-    const [handleLeave, setHandleLeave] = useState<() => Promise<void>>(async () => {});
+    const [handleLeave, setHandleLeave] = useState<() => Promise<void>>(async () => { });
 
     const [currentNumAnswers, setCurrentNumAnswers] = useState<number>(0);
     const [lastEvent, setLastEvent] = useState<GameEvent>({
@@ -46,7 +47,7 @@ export default function LiveGamePage() {
         eventId: ''
     });
 
-    const onGameEvent = (event:GameEvent) => {
+    const onGameEvent = (event: GameEvent) => {
         if (event.eventType === EventType.StartGame) {
             setGameState('livegame-waiting');
         } else if (event.eventType === EventType.NextQuestion) {
@@ -60,7 +61,7 @@ export default function LiveGamePage() {
                 type: QuestionType[event.eventData.type as keyof typeof QuestionType],
                 options: event.eventData.options
             });
-            setCurrentQuestionNumber((prevNum) => prevNum + 1); 
+            setCurrentQuestionNumber((prevNum) => prevNum + 1);
         } else if (event.eventType === EventType.SubmitAnswer) {
             setCurrentNumAnswers((prevNum) => prevNum + 1);
         } else if (event.eventType === EventType.RevealAnswer) {
@@ -88,12 +89,29 @@ export default function LiveGamePage() {
         setLastEvent(event);
     };
 
-    const onUserJoin = (user:GameUser) => {
-        
+    const onUserJoin = (user: GameUser) => {
+
     };
 
-    const onUserLeave = (user:GameUser) => {
+    const onUserLeave = (user: GameUser) => {
 
+    };
+
+    const getQuestionUI = () => {
+        if (currentQuestion === undefined) return (<></>);
+        if (currentQuestion.type === QuestionType.MultipleChoice) {
+            return (<MCQuestion question={currentQuestion} uid={currentUser.uid} questionNumber={currentQuestionNumber}
+                currentNumAnswers={currentNumAnswers} gameId={id}
+                lastEvent={lastEvent} setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
+            );
+        } else if (currentQuestion.type === QuestionType.TrueFalse) {
+            return (<TFQuestion question={currentQuestion} uid={currentUser.uid} questionNumber={currentQuestionNumber}
+                currentNumAnswers={currentNumAnswers} gameId={id}
+                lastEvent={lastEvent} setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
+            );
+        }
+
+        return (<></>);
     };
 
     useEffect(() => {
@@ -131,34 +149,34 @@ export default function LiveGamePage() {
     }, [currentUser, id, signedIn]);
 
     if (userLoading || loadingData) {
-        return(<Loading />);
+        return (<Loading />);
     } else if (!signedIn) {
-        return(<NeedSignin />)
+        return (<NeedSignin />)
     } else if (!inGame) {
-        return(<NotInGame />);
+        return (<NotInGame />);
     }
 
     if (gameState === 'pregame') {
-        return(<GameLobby currentUser={currentUser} gameId={id} leaveHandle={handleLeave} />);
+        return (<GameLobby currentUser={currentUser} gameId={id} leaveHandle={handleLeave} />);
     } else if (gameState === 'endgame') {
-        return(<GameEnded currentUser={currentUser} gameId={id} />);
+        return (<GameEnded currentUser={currentUser} gameId={id} />);
     } else if (gameState === 'livegame-waiting') {
-        return(<ClientWaiting />);
+        return (<ClientWaiting />);
     }
 
-    if (currentQuestion === undefined) return(<Loading />);
+    if (currentQuestion === undefined) return (<Loading />);
 
     if (submittedAnswer && !revealAnswer) {
-        return(
+        return (
             <Waiting>
                 <h1 className={styles.waiting_title}>{getRandomSubmittedAnswerPhrase()}</h1>
             </Waiting>
         );
     }
 
-    return(
+    return (
         <div>
-            <MCQuestion question={currentQuestion} uid={currentUser.uid} questionNumber={currentQuestionNumber} currentNumAnswers={currentNumAnswers} gameId={id} lastEvent={lastEvent} setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
+            {getQuestionUI()}
         </div>
     );
 }

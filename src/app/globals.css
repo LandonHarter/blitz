@@ -13,6 +13,7 @@
     --primary-color: #3440ad;
     --secondary-color: #ff6b6b;
     --text-color: #353535;
+    --correct-color: #18ca00;
 }
 
 body {
@@ -21,7 +22,8 @@ body {
     overflow-x: hidden
 }
 
-input, textarea {
+input,
+textarea {
     font-family: 'SF Pro Display';
     font-weight: bold;
 }

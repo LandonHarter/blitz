@@ -1,3 +1,5 @@
+import generateId from "../id";
+
 export interface Set {
     id: string;
     owner: string;
@@ -20,4 +22,62 @@ export interface QuestionOption {
 
 export enum QuestionType {
     MultipleChoice = "MultipleChoice",
+    TrueFalse = "TrueFalse",
+}
+
+export const emptyQuestion: Question = {
+    question: "",
+    type: QuestionType.MultipleChoice,
+    options: [],
+    id: "",
+}
+
+export const emptyMultipleChoiceQuestion = () => {
+    return {
+        question: "",
+        type: QuestionType.MultipleChoice,
+        options: [
+            {
+                option: "",
+                correct: false,
+                id: generateId(),
+            },
+            {
+                option: "",
+                correct: false,
+                id: generateId(),
+            },
+            {
+                option: "",
+                correct: false,
+                id: generateId(),
+            },
+            {
+                option: "",
+                correct: false,
+                id: generateId(),
+            },
+        ],
+        id: generateId(),
+    }
+}
+
+export const emptyTrueFalseQuestion = () => {
+    return {
+        question: "",
+        type: QuestionType.TrueFalse,
+        options: [
+            {
+                option: "True",
+                correct: false,
+                id: generateId(),
+            },
+            {
+                option: "False",
+                correct: false,
+                id: generateId(),
+            },
+        ],
+        id: generateId(),
+    }
 }

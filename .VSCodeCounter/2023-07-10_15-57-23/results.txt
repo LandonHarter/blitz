@@ -1,0 +1,198 @@
+Date : 2023-07-10 15:57:23
+Directory : c:\Users\lando\OneDrive\Documents\Coding\blitz\src
+Total : 112 files,  7051 codes, 8 comments, 1331 blanks, all 8390 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| CSS            |         40 |      3,320 |          4 |        797 |      4,121 |
+| TypeScript JSX |         48 |      2,905 |          4 |        416 |      3,325 |
+| TypeScript     |         24 |        826 |          0 |        118 |        944 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                   | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                      |        112 |      7,051 |          8 |      1,331 |      8,390 |
+| app                                                                                                    |        112 |      7,051 |          8 |      1,331 |      8,390 |
+| app (Files)                                                                                            |          7 |        314 |          0 |         57 |        371 |
+| app\about                                                                                              |          2 |          5 |          0 |          3 |          8 |
+| app\ai                                                                                                 |          6 |        548 |          0 |        124 |        672 |
+| app\ai (Files)                                                                                         |          2 |        104 |          0 |         22 |        126 |
+| app\ai\summarizer                                                                                      |          2 |        185 |          0 |         48 |        233 |
+| app\ai\worksheets                                                                                      |          2 |        259 |          0 |         54 |        313 |
+| app\animation                                                                                          |          2 |         55 |          0 |          5 |         60 |
+| app\backend                                                                                            |         18 |        695 |          0 |        101 |        796 |
+| app\backend (Files)                                                                                    |          4 |        113 |          0 |          8 |        121 |
+| app\backend\ai                                                                                         |          3 |        161 |          0 |         16 |        177 |
+| app\backend\firebase                                                                                   |          4 |        115 |          0 |         29 |        144 |
+| app\backend\live                                                                                       |          4 |        306 |          0 |         45 |        351 |
+| app\backend\live (Files)                                                                               |          3 |        296 |          0 |         43 |        339 |
+| app\backend\live\events                                                                                |          1 |         10 |          0 |          2 |         12 |
+| app\backend\third-party                                                                                |          3 |          0 |          0 |          3 |          3 |
+| app\components                                                                                         |         18 |      1,000 |          1 |        191 |      1,192 |
+| app\components\ai-loading                                                                              |          2 |         51 |          0 |         11 |         62 |
+| app\components\basic-return                                                                            |          2 |         57 |          0 |         12 |         69 |
+| app\components\footer                                                                                  |          2 |        137 |          0 |         33 |        170 |
+| app\components\header                                                                                  |          2 |        294 |          0 |         67 |        361 |
+| app\components\loading                                                                                 |          2 |        265 |          1 |         23 |        289 |
+| app\components\popup                                                                                   |          2 |         57 |          0 |          8 |         65 |
+| app\components\require-signin                                                                          |          2 |         58 |          0 |         13 |         71 |
+| app\components\tabs                                                                                    |          4 |         81 |          0 |         24 |        105 |
+| app\contact                                                                                            |          1 |          4 |          0 |          1 |          5 |
+| app\context                                                                                            |          2 |         14 |          0 |          2 |         16 |
+| app\create                                                                                             |          2 |        791 |          2 |        133 |        926 |
+| app\edit                                                                                               |          7 |        909 |          0 |        187 |      1,096 |
+| app\edit\[id]                                                                                          |          7 |        909 |          0 |        187 |      1,096 |
+| app\edit\[id] (Files)                                                                                  |          2 |        676 |          0 |        140 |        816 |
+| app\edit\[id]\question-types                                                                           |          5 |        233 |          0 |         47 |        280 |
+| app\explore                                                                                            |          2 |        185 |          1 |         36 |        222 |
+| app\explore\sets                                                                                       |          2 |        185 |          1 |         36 |        222 |
+| app\hooks                                                                                              |          3 |         72 |          0 |         12 |         84 |
+| app\host                                                                                               |         14 |        990 |          0 |        207 |      1,197 |
+| app\host (Files)                                                                                       |          3 |        219 |          0 |         31 |        250 |
+| app\host\[id]                                                                                          |          2 |         36 |          0 |         13 |         49 |
+| app\host\end                                                                                           |          2 |        293 |          0 |         60 |        353 |
+| app\host\pre-game                                                                                      |          2 |        193 |          0 |         47 |        240 |
+| app\host\question                                                                                      |          3 |        185 |          0 |         42 |        227 |
+| app\host\waiting                                                                                       |          2 |         64 |          0 |         14 |         78 |
+| app\join                                                                                               |          2 |        120 |          0 |         20 |        140 |
+| app\live                                                                                               |         14 |        595 |          4 |        110 |        709 |
+| app\live\[id]                                                                                          |         14 |        595 |          4 |        110 |        709 |
+| app\live\[id] (Files)                                                                                  |          3 |        168 |          2 |         29 |        199 |
+| app\live\[id]\game-ended                                                                               |          2 |         12 |          0 |          3 |         15 |
+| app\live\[id]\lobby                                                                                    |          2 |         42 |          0 |          6 |         48 |
+| app\live\[id]\not-in-game                                                                              |          2 |         54 |          0 |         12 |         66 |
+| app\live\[id]\question                                                                                 |          2 |        154 |          0 |         36 |        190 |
+| app\live\[id]\question\mcq                                                                             |          2 |        154 |          0 |         36 |        190 |
+| app\live\[id]\waiting                                                                                  |          3 |        165 |          2 |         24 |        191 |
+| app\my-sets                                                                                            |          2 |        432 |          0 |         95 |        527 |
+| app\privacy                                                                                            |          2 |        122 |          0 |         14 |        136 |
+| app\profile                                                                                            |          2 |         34 |          0 |         10 |         44 |
+| app\profile\[id]                                                                                       |          2 |         34 |          0 |         10 |         44 |
+| app\set                                                                                                |          2 |         11 |          0 |          6 |         17 |
+| app\set\[id]                                                                                           |          2 |         11 |          0 |          6 |         17 |
+| app\settings                                                                                           |          2 |          7 |          0 |          3 |         10 |
+| app\terms                                                                                              |          2 |        148 |          0 |         14 |        162 |
++--------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                                               | language       | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\about\page.module.css                           | CSS            |          0 |          0 |          1 |          1 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\about\page.tsx                                  | TypeScript JSX |          5 |          0 |          2 |          7 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\ai\page.module.css                              | CSS            |         67 |          0 |         16 |         83 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\ai\page.tsx                                     | TypeScript JSX |         37 |          0 |          6 |         43 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\ai\summarizer\page.module.css                   | CSS            |        114 |          0 |         34 |        148 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\ai\summarizer\page.tsx                          | TypeScript JSX |         71 |          0 |         14 |         85 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\ai\worksheets\page.module.css                   | CSS            |        144 |          0 |         30 |        174 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\ai\worksheets\page.tsx                          | TypeScript JSX |        115 |          0 |         24 |        139 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\animation\AnimationDiv.tsx                      | TypeScript JSX |         10 |          0 |          2 |         12 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\animation\animation.ts                          | TypeScript     |         45 |          0 |          3 |         48 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\ai\AIState.ts                           | TypeScript     |          5 |          0 |          0 |          5 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\ai\convert.ts                           | TypeScript     |         88 |          0 |          6 |         94 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\ai\generate.ts                          | TypeScript     |         68 |          0 |         10 |         78 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\color.ts                                | TypeScript     |         32 |          0 |          2 |         34 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\firebase\analytics.ts                   | TypeScript     |         13 |          0 |          5 |         18 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\firebase\init.ts                        | TypeScript     |         19 |          0 |          2 |         21 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\firebase\login.ts                       | TypeScript     |         50 |          0 |         13 |         63 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\firebase\user.ts                        | TypeScript     |         33 |          0 |          9 |         42 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\id.ts                                   | TypeScript     |          3 |          0 |          0 |          3 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\live\events\event.ts                    | TypeScript     |         10 |          0 |          2 |         12 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\live\game.ts                            | TypeScript     |        213 |          0 |         36 |        249 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\live\set.ts                             | TypeScript     |         76 |          0 |          7 |         83 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\live\user.ts                            | TypeScript     |          7 |          0 |          0 |          7 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\phrase.ts                               | TypeScript     |         35 |          0 |          2 |         37 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\third-party\kahoot.ts                   | TypeScript     |          0 |          0 |          1 |          1 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\third-party\quillbot.ts                 | TypeScript     |          0 |          0 |          1 |          1 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\third-party\quizlet.ts                  | TypeScript     |          0 |          0 |          1 |          1 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\backend\util.ts                                 | TypeScript     |         43 |          0 |          4 |         47 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\ai-loading\loading.module.css        | CSS            |         39 |          0 |          9 |         48 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\ai-loading\loading.tsx               | TypeScript JSX |         12 |          0 |          2 |         14 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\basic-return\return.module.css       | CSS            |         44 |          0 |         10 |         54 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\basic-return\return.tsx              | TypeScript JSX |         13 |          0 |          2 |         15 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\footer\footer.module.css             | CSS            |         84 |          0 |         27 |        111 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\footer\footer.tsx                    | TypeScript JSX |         53 |          0 |          6 |         59 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\header\header.module.css             | CSS            |        188 |          0 |         55 |        243 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\header\header.tsx                    | TypeScript JSX |        106 |          0 |         12 |        118 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\loading\loading.module.css           | CSS            |        249 |          0 |         20 |        269 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\loading\loading.tsx                  | TypeScript JSX |         16 |          1 |          3 |         20 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\popup\popup.module.css               | CSS            |         34 |          0 |          5 |         39 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\popup\popup.tsx                      | TypeScript JSX |         23 |          0 |          3 |         26 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\require-signin\needsignin.module.css | CSS            |         45 |          0 |         10 |         55 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\require-signin\needsignin.tsx        | TypeScript JSX |         13 |          0 |          3 |         16 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\tabs\tab.module.css                  | CSS            |          0 |          0 |          1 |          1 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\tabs\tab.tsx                         | TypeScript JSX |          5 |          0 |          2 |          7 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\tabs\tabbar.module.css               | CSS            |         37 |          0 |         11 |         48 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\components\tabs\tabbar.tsx                      | TypeScript JSX |         39 |          0 |         10 |         49 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\contact\page.tsx                                | TypeScript JSX |          4 |          0 |          1 |          5 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\context\signincontext.ts                        | TypeScript     |          3 |          0 |          1 |          4 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\context\usercontext.ts                          | TypeScript     |         11 |          0 |          1 |         12 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\create\page.module.css                          | CSS            |        480 |          1 |         91 |        572 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\create\page.tsx                                 | TypeScript JSX |        311 |          1 |         42 |        354 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\edit\[id]\page.module.css                       | CSS            |        323 |          0 |         99 |        422 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\edit\[id]\page.tsx                              | TypeScript JSX |        353 |          0 |         41 |        394 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\edit\[id]\question-types\basestyles.module.css  | CSS            |         90 |          0 |         16 |        106 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\edit\[id]\question-types\mcq.module.css         | CSS            |         37 |          0 |         14 |         51 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\edit\[id]\question-types\mcq.tsx                | TypeScript JSX |         35 |          0 |          4 |         39 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\edit\[id]\question-types\tf.module.css          | CSS            |         31 |          0 |         11 |         42 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\edit\[id]\question-types\tf.tsx                 | TypeScript JSX |         40 |          0 |          2 |         42 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\explore\sets\page.module.css                    | CSS            |         87 |          1 |         21 |        109 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\explore\sets\page.tsx                           | TypeScript JSX |         98 |          0 |         15 |        113 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\global-error.tsx                                | TypeScript JSX |         30 |          0 |          4 |         34 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\globals.css                                     | CSS            |         43 |          0 |         10 |         53 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\hooks\useCurrentUser.ts                         | TypeScript     |         45 |          0 |          7 |         52 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\hooks\useHover.ts                               | TypeScript     |         13 |          0 |          3 |         16 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\hooks\useOutsideClick.ts                        | TypeScript     |         14 |          0 |          2 |         16 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\host\[id]\page.module.css                       | CSS            |          0 |          0 |          1 |          1 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\host\[id]\page.tsx                              | TypeScript JSX |         36 |          0 |         12 |         48 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\host\end\endgame.module.css                     | CSS            |        169 |          0 |         44 |        213 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\host\end\endgame.tsx                            | TypeScript JSX |        124 |          0 |         16 |        140 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\host\host.module.css                            | CSS            |         12 |          0 |          0 |         12 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\host\host.tsx                                   | TypeScript JSX |        194 |          0 |         31 |        225 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\host\layout.tsx                                 | TypeScript JSX |         13 |          0 |          0 |         13 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\host\pre-game\pregame.module.css                | CSS            |        116 |          0 |         38 |        154 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\host\pre-game\pregame.tsx                       | TypeScript JSX |         77 |          0 |          9 |         86 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\host\question\question.module.css               | CSS            |        105 |          0 |         35 |        140 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\host\question\question.tsx                      | TypeScript JSX |         45 |          0 |          5 |         50 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\host\question\revealedquestion.tsx              | TypeScript JSX |         35 |          0 |          2 |         37 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\host\waiting\waiting.module.css                 | CSS            |         36 |          0 |          8 |         44 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\host\waiting\waiting.tsx                        | TypeScript JSX |         28 |          0 |          6 |         34 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\join\page.module.css                            | CSS            |         61 |          0 |          8 |         69 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\join\page.tsx                                   | TypeScript JSX |         59 |          0 |         12 |         71 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\layout.tsx                                      | TypeScript JSX |         14 |          0 |          2 |         16 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\live\[id]\game-ended\ended.module.css           | CSS            |          0 |          0 |          1 |          1 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\live\[id]\game-ended\ended.tsx                  | TypeScript JSX |         12 |          0 |          2 |         14 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\live\[id]\layout.tsx                            | TypeScript JSX |         13 |          0 |          0 |         13 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\live\[id]\lobby\lobby.module.css                | CSS            |         22 |          0 |          3 |         25 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\live\[id]\lobby\lobby.tsx                       | TypeScript JSX |         20 |          0 |          3 |         23 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\live\[id]\not-in-game\notingame.module.css      | CSS            |         45 |          0 |         10 |         55 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\live\[id]\not-in-game\notingame.tsx             | TypeScript JSX |          9 |          0 |          2 |         11 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\live\[id]\page.module.css                       | CSS            |         20 |          0 |          2 |         22 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\live\[id]\page.tsx                              | TypeScript JSX |        135 |          2 |         27 |        164 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\live\[id]\question\mcq\question.module.css      | CSS            |         76 |          0 |         25 |        101 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\live\[id]\question\mcq\question.tsx             | TypeScript JSX |         78 |          0 |         11 |         89 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\live\[id]\waiting\startgamewait.tsx             | TypeScript JSX |         26 |          0 |          6 |         32 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\live\[id]\waiting\waiting.module.css            | CSS            |        129 |          2 |         16 |        147 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\live\[id]\waiting\waiting.tsx                   | TypeScript JSX |         10 |          0 |          2 |         12 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\my-sets\page.module.css                         | CSS            |        212 |          0 |         60 |        272 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\my-sets\page.tsx                                | TypeScript JSX |        220 |          0 |         35 |        255 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\not-found.tsx                                   | TypeScript JSX |          9 |          0 |          2 |         11 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\page.module.css                                 | CSS            |         91 |          0 |         30 |        121 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\page.tsx                                        | TypeScript JSX |        105 |          0 |          6 |        111 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\privacy\page.module.css                         | CSS            |         45 |          0 |         11 |         56 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\privacy\page.tsx                                | TypeScript JSX |         77 |          0 |          3 |         80 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\profile\[id]\page.module.css                    | CSS            |          0 |          0 |          1 |          1 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\profile\[id]\page.tsx                           | TypeScript JSX |         34 |          0 |          9 |         43 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\rootlayoutcontent.tsx                           | TypeScript JSX |         22 |          0 |          3 |         25 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\set\[id]\page.module.css                        | CSS            |          0 |          0 |          1 |          1 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\set\[id]\page.tsx                               | TypeScript JSX |         11 |          0 |          5 |         16 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\settings\page.module.css                        | CSS            |          0 |          0 |          1 |          1 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\settings\page.tsx                               | TypeScript JSX |          7 |          0 |          2 |          9 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\terms\page.module.css                           | CSS            |         45 |          0 |         11 |         56 |
+| c:\Users\lando\OneDrive\Documents\Coding\blitz\src\app\terms\page.tsx                                  | TypeScript JSX |        103 |          0 |          3 |        106 |
+| Total                                                                                                  |                |      7,051 |          8 |      1,331 |      8,390 |
++--------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+

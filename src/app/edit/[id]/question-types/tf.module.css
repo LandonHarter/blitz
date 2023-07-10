@@ -1,0 +1,42 @@
+.true_false_container {
+    width: 100%;
+    height: fit-content;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+
+    transform-origin: top;
+}
+
+.options_container {
+    width: 100%;
+    height: fit-content;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+
+    transform-origin: top;
+}
+
+.option {
+    margin: 10px;
+
+    width: calc(100% - 20px);
+    height: fit-content;
+    padding: 30px 0;
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+}
+
+.option_title {
+    margin-left: 30px;
+
+    font-family: 'SF Pro Display';
+    font-size: 25px;
+
+    color: var(--bg);
+}

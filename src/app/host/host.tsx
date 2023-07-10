@@ -13,10 +13,12 @@ import generateId from '@/backend/id';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import { useRouter } from 'next/navigation';
 import PreGame from './pre-game/pregame';
-import HostQuestion from './question/question';
-import HostRevealedQuestion from './question/revealedquestion';
+import HostMultipleChoiceQuestion from './question/mcq/question';
+import HostRevealedMultipleChoiceQuestion from './question/mcq/revealedquestion';
 import HostEndGame from './end/endgame';
 import HostWaiting from './waiting/waiting';
+import HostTrueFalseQuestion from './question/tf/question';
+import HostRevealedTrueFalseQuestion from './question/tf/revealedquestion';
 
 export default function HostDashboard(props: { gameId: string, setId: string }) {
     const router = useRouter();
@@ -35,7 +37,7 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
     const [gameState, setGameState] = useState<string>('pregame');
 
     const { currentUser, signedIn, userLoading } = useCurrentUser();
-    const onGameEvent = async (event:GameEvent) => {
+    const onGameEvent = async (event: GameEvent) => {
         if (event.eventType === EventType.SubmitAnswer) {
             const newNumAnswers = numAnswers + 1;
 
@@ -66,14 +68,69 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
         }
     };
 
-    const onUserJoin = (user:GameUser) => {
+    const onUserJoin = (user: GameUser) => {
         setPlayers((prevPlayers) => [...prevPlayers, user]);
     };
 
-    const onUserLeave = (user:GameUser) => {
+    const onUserLeave = (user: GameUser) => {
         setPlayers((prevPlayers) => prevPlayers.filter((player) => player.uid !== user.uid));
     };
-    
+
+    const getQuestionUI = () => {
+        const question = questions[currentQuestionIndex];
+        const revealAnswerCallback = async () => {
+            await pushGameEvent(props.gameId, {
+                eventType: EventType.RevealAnswer,
+                eventData: {},
+                eventId: generateId()
+            });
+            setRevealedQuestion(true);
+            const numUsers = await getNumUsersInGame(props.gameId);
+            setNumPlayers(numUsers);
+        };
+
+        if (question.type === QuestionType.MultipleChoice) {
+            return (<HostMultipleChoiceQuestion question={questions[currentQuestionIndex]} revealAnswer={revealAnswerCallback} />);
+        } else if (question.type === QuestionType.TrueFalse) {
+            return (<HostTrueFalseQuestion question={questions[currentQuestionIndex]} revealAnswer={revealAnswerCallback} />);
+        }
+
+        return (<></>);
+    };
+
+    const getRevealedQuestionUI = () => {
+        const question = questions[currentQuestionIndex];
+        const nextQuestionCallback = async () => {
+            const nextQuestionIndex = currentQuestionIndex + 1;
+            if (nextQuestionIndex >= questions.length) {
+                await pushGameEvent(props.gameId, {
+                    eventType: EventType.EndGame,
+                    eventData: {},
+                    eventId: generateId()
+                });
+                setGameState('endgame');
+                return;
+            }
+
+            setNumAnswers(0);
+            setRevealedQuestion(false);
+            setGameState('livegame-waiting');
+            await pushGameEvent(props.gameId, {
+                eventType: EventType.InbetweenQuestions,
+                eventData: {},
+                eventId: generateId()
+            });
+        };
+
+        if (question.type === QuestionType.MultipleChoice) {
+            return (<HostRevealedMultipleChoiceQuestion question={questions[currentQuestionIndex]} nextQuestion={nextQuestionCallback} />);
+        } else if (question.type === QuestionType.TrueFalse) {
+            return (<HostRevealedTrueFalseQuestion question={questions[currentQuestionIndex]} nextQuestion={nextQuestionCallback} />);
+        }
+
+        return (<></>);
+    };
+
 
     useEffect(() => {
         (async () => {
@@ -139,9 +196,9 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
     }, []);
 
     if (gameState === 'endgame') {
-        return(<HostEndGame users={playersCopy} gameCode={props.gameId} />);
+        return (<HostEndGame users={playersCopy} gameCode={props.gameId} />);
     } else if (gameState === 'pregame') {
-        return(<PreGame gameId={props.gameId} users={players} start={async () => {
+        return (<PreGame gameId={props.gameId} users={players} start={async () => {
             setPlayersCopy(players);
 
             if (questions.length === 0) {
@@ -165,7 +222,7 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
             window.location.href = '/';
         }} />);
     } else if (gameState === 'livegame-waiting') {
-        return(<HostWaiting nextQuestion={async () => {
+        return (<HostWaiting nextQuestion={async () => {
             const nextQuestionIndex = currentQuestionIndex + 1;
             setCurrentQuestionIndex(nextQuestionIndex);
 
@@ -175,51 +232,12 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
                     questionId: questions[nextQuestionIndex].id,
                     question: questions[nextQuestionIndex].question,
                     type: questions[nextQuestionIndex].type.toString(),
-                    options: questions[nextQuestionIndex].options 
+                    options: questions[nextQuestionIndex].options
                 },
                 eventId: generateId()
             });
         }} />)
     }
 
-    if (!revealedQuestion) {
-        return(
-            <div>
-                <HostQuestion question={questions[currentQuestionIndex]} submittedAnswers={numAnswers} reset={resetTimer} setReset={setResetTimer} revealAnswer={async () => {
-                    await pushGameEvent(props.gameId, {
-                        eventType: EventType.RevealAnswer,
-                        eventData: {},
-                        eventId: generateId()
-                    });
-                    setRevealedQuestion(true);
-                    const numUsers = await getNumUsersInGame(props.gameId);
-                    setNumPlayers(numUsers);
-                }} />
-            </div>
-        );
-    }
-
-    return(
-        <HostRevealedQuestion question={questions[currentQuestionIndex]} nextQuestion={async () => {
-            const nextQuestionIndex = currentQuestionIndex + 1;
-            if (nextQuestionIndex >= questions.length) {
-                await pushGameEvent(props.gameId, {
-                    eventType: EventType.EndGame,
-                    eventData: {},
-                    eventId: generateId()
-                });
-                setGameState('endgame');
-                return;
-            }
-
-            setNumAnswers(0);
-            setRevealedQuestion(false);
-            setGameState('livegame-waiting');
-            await pushGameEvent(props.gameId, {
-                eventType: EventType.InbetweenQuestions,
-                eventData: {},
-                eventId: generateId()
-            });
-        }} />
-    )
+    return (<>{revealedQuestion ? getRevealedQuestionUI() : getQuestionUI()}</>);
 }

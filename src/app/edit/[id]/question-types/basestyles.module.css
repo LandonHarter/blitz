@@ -1,0 +1,106 @@
+.option_red {
+    background-color: #C60929;
+}
+
+.option_green {
+    background-color: #106B03;
+}
+
+.option_blue {
+    background-color: #0542B9;
+}
+
+.option_yellow {
+    background-color: #D89E00;
+}
+
+.cbx {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+
+    margin-left: 10px;
+    transform: scale(1.5);
+}
+
+.cbx span {
+    display: inline-block;
+    vertical-align: middle;
+    transform: translate3d(0, 0, 0);
+}
+
+.cbx span:first-child {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    transform: scale(1);
+    vertical-align: middle;
+    border: 2px solid var(--bg);
+    transition: all 0.2s ease;
+}
+
+.cbx span:first-child svg {
+    position: absolute;
+    z-index: 1;
+    top: 8px;
+    left: 6px;
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 16px;
+    stroke-dashoffset: 16px;
+    transition: all 0.3s ease;
+    transition-delay: 0.1s;
+    transform: translate3d(0, 0, 0);
+}
+
+.cbx span:first-child:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: var(--correct-color);
+    display: block;
+    transform: scale(0);
+    opacity: 1;
+    border-radius: 50%;
+    transition-delay: 0.2s;
+}
+
+.cbx span:last-child {
+    margin-left: 8px;
+}
+
+article .cbx:hover span:first-child {
+    border-color: var(--correct-color);
+}
+
+.inp_cbx:checked+.cbx span:first-child {
+    border-color: var(--correct-color);
+    background: var(--correct-color);
+    animation: check 0.6s ease;
+}
+
+.inp_cbx:checked+.cbx span:first-child svg {
+    stroke-dashoffset: 0;
+}
+
+.inp_cbx:checked+.cbx span:first-child:before {
+    transform: scale(2.2);
+    opacity: 0;
+    transition: all 0.6s ease;
+}
+
+.inp_cbx:checked+.cbx span:last-child {
+    color: var(--correct-color);
+    transition: all 0.3s ease;
+}
+
+@keyframes check {
+    50% {
+        transform: scale(1.2);
+    }
+}
