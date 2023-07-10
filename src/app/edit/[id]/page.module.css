@@ -9,6 +9,11 @@
 .data_container {
     width: var(--data-width);
     height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .questions_container {
@@ -309,4 +314,162 @@ article .cbx:hover span:first-child {
 
 .dropdown_triangle_closed {
     transform: rotate(-90deg);
+}
+
+.name_input {
+    margin: 0 10%;
+    padding-left: 20px;
+
+    width: calc(80% - 20px);
+    height: 50px;
+
+    border: none;
+    outline: none;
+    border: 4px dashed var(--bg-dark);
+    border-radius: 10px;
+
+    transform: translateY(-3px);
+
+    font-size: 25px;
+
+    transition: 0.15s ease-in-out;
+
+    background-color: #fff;
+    color: var(--text-color);
+}
+
+.divider {
+    width: 80%;
+    height: 2px;
+
+    background-color: var(--bg-darker);
+    border-radius: 10px;
+
+    margin-bottom: 20px;
+}
+
+.set_title {
+    width: 90%;
+    color: var(--text-color);
+
+    margin: 20px 0;
+
+    font-family: 'SF Pro Display';
+    font-size: 70px;
+
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.name_input_container {
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 15px;
+}
+
+.name_input_title {
+    margin: 5px 10%;
+    transform: translateX(20px);
+
+    font-size: 22px;
+    color: var(--text-color);
+    letter-spacing: 1.5px;
+}
+
+.desc_input {
+    margin: 0 10%;
+    padding: 10px 20px;
+
+    width: calc(80% - 40px);
+    height: fit-content;
+    min-height: 175px;
+
+    border: none;
+    outline: none;
+    border: 4px dashed var(--bg-dark);
+    border-radius: 10px;
+
+    transform: translateY(-3px);
+
+    font-size: 25px;
+
+    transition: 0.15s ease-in-out;
+
+    background-color: #fff;
+    color: var(--text-color);
+
+    resize: none;
+}
+
+.desc_input_container {
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.desc_input_title {
+    margin: 5px 10%;
+    transform: translateX(20px);
+
+    font-size: 22px;
+    color: var(--text-color);
+    letter-spacing: 1.5px;
+}
+
+.update_set {
+    width: calc(80% - 20px);
+
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+
+    font-size: 30px;
+
+    background-color: var(--primary-color);
+    margin: 20px 0;
+
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+.update_set:active {
+    transform: scale(0.975);
+}
+
+.popup_content {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 50px;
+    letter-spacing: 2px;
+}
+
+.save_message {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+
+    padding: 10px 20px;
+
+    width: fit-content;
+    height: fit-content;
+
+    display: flex;
+    align-items: center;
+
+    border-radius: 10px;
+
+    background-color: var(--bg-dark);
+}
+
+.save_message h1 {
+    font-size: 25px;
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    margin: 0 10px;
 }

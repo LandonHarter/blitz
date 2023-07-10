@@ -23,6 +23,11 @@ export default function EditPage() {
     const { currentUser, signedIn, userLoading } = useContext(UserContext);
 
     const [owner, setOwner] = useState<string | null>(null);
+    const [set, setSet] = useState<any>(null);
+    const [tempSet, setTempSet] = useState<{
+        name: string,
+        description: string,
+    }>({ name: '', description: '' });
     const [questions, setQuestions] = useState<Question[]>([]);
     const [loadingMenu, setLoadingMenu] = useState<boolean>(true);
 
@@ -34,6 +39,8 @@ export default function EditPage() {
         open: boolean,
         showShifters: boolean
     }[]>([]);
+
+    const [showSuccess, setShowSuccess] = useState<boolean>(false);
 
     useEffect(() => {
         if (userLoading) return;
@@ -114,12 +121,24 @@ export default function EditPage() {
                 });
             }
 
+            setSet(setSnapshot.data());
+            setTempSet({
+                name: setData.name,
+                description: setData.description,
+            });
             setQuestions(questionsArray);
             setQuestionUiData(questionUiDataArray);
             setOwner(setSnapshot.data()?.owner);
             setLoadingMenu(false);
         })();
     }, [userLoading]);
+
+    const triggerSuccess = (duration: number) => {
+        setShowSuccess(true);
+        setTimeout(() => {
+            setShowSuccess(false);
+        }, duration * 1000);
+    };
 
     const createQuestion = () => {
         const emptyOption = {
@@ -141,12 +160,39 @@ export default function EditPage() {
         }]);
     };
 
+    const checkQuestionsValidity = () => {
+        let valid = true;
+        questions.forEach((question) => {
+            if (question.question === '') {
+                console.log("invalid: " + question.id);
+                valid = false;
+            }
+
+            question.options.forEach((option) => {
+                if (option.option === '') {
+                    console.log("invalid: " + option.id);
+                    valid = false;
+                }
+            });
+        });
+
+        return valid;
+    };
+
     const updateSet = async () => {
+        if (tempSet.name === '' || !checkQuestionsValidity()) {
+            setError('Invalid: Empty fields');
+            setErrorOpen(true);
+            return;
+        }
+
         const questionRef = doc(collection(firestore, 'sets'), id);
         await updateDoc(questionRef, {
             questions: questions,
             numQuestions: questions.length,
             updatedAt: serverTimestamp(),
+            name: tempSet.name,
+            description: tempSet.description,
         });
 
         const userSetsArray = (await getUserData(currentUser.uid)).sets;
@@ -155,6 +201,8 @@ export default function EditPage() {
         await updateDoc(doc(collection(firestore, 'users'), currentUser.uid), {
             sets: userSetsArray,
         });
+
+        triggerSuccess(5);
     };
 
     const colorFromIndex = (index: number) => {
@@ -169,7 +217,31 @@ export default function EditPage() {
     return (
         <div className={styles.edit_container}>
             <div className={styles.data_container}>
+                <h1 className={styles.set_title}>{set.name}</h1>
 
+                <div className={styles.divider} />
+
+                <div className={styles.name_input_container}>
+                    <h1 className={styles.name_input_title}>Name</h1>
+                    <input className={styles.name_input} placeholder='Set Name' value={tempSet.name} onChange={(e) => {
+                        setTempSet((prevData) => ({
+                            name: e.target.value,
+                            description: prevData.description,
+                        }));
+                    }} />
+                </div>
+                <div className={styles.desc_input_container}>
+                    <h1 className={styles.desc_input_title}>Description</h1>
+                    <textarea className={styles.desc_input} placeholder='Set Description' value={tempSet.description} onChange={(e) => {
+                        setTempSet((prevData) => ({
+                            name: prevData.name,
+                            description: e.target.value,
+                        }));
+                    }} />
+                </div>
+                <button className={styles.update_set} onClick={() => {
+                    updateSet();
+                }}>Save</button>
             </div>
             <div className={styles.questions_container}>
                 {questions.map((question, index) => (
@@ -247,8 +319,14 @@ export default function EditPage() {
 
             <Popup open={errorOpen} setOpen={setErrorOpen} exitButton>
                 <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom: 25 }} />
-                <p className={styles.popup_content}>{error}</p>
+                <h1 className={styles.popup_content}>{error}</h1>
             </Popup>
+            <AnimatePresence mode='wait'>
+                {showSuccess && <motion.div initial={{ opacity: 0, right: -400 }} animate={{ opacity: 1, right: 10 }} exit={{ opacity: 0 }} transition={{ duration: 0.45 }} className={styles.save_message}>
+                    <Image src='/images/icons/check.png' alt='error' width={40} height={40} />
+                    <h1>Successfully saved set.</h1>
+                </motion.div>}
+            </AnimatePresence>
         </div>
     );
 }
