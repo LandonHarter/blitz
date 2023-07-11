@@ -17,6 +17,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { arrayMove } from '@/backend/util';
 import MultipleChoiceQuestion from './question-types/mcq';
 import TrueFalseQuestion from './question-types/tf';
+import { LockSVG } from '@/svg';
 
 export default function EditPage() {
     const id = usePathname().split('/')[2];
@@ -275,7 +276,10 @@ export default function EditPage() {
     return (
         <div className={styles.edit_container}>
             <div className={styles.data_container}>
-                <h1 className={styles.set_title}>{set.name}</h1>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+                    {!set.public && <LockSVG className={styles.lock} />}
+                    <h1 className={styles.set_title}>{set.name}</h1>
+                </div>
 
                 <div className={styles.divider} />
 

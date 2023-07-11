@@ -188,7 +188,7 @@
 }
 
 .set_title {
-    width: 90%;
+    max-width: 90%;
     color: var(--text-color);
 
     margin: 20px 0;
@@ -196,7 +196,6 @@
     font-family: 'SF Pro Display';
     font-size: 70px;
 
-    text-align: center;
     word-wrap: break-word;
 }
 
@@ -419,4 +418,15 @@
     margin-top: 5px;
     font-family: 'SF Pro Display';
     user-select: none;
+}
+
+.lock {
+    width: 50px;
+    height: 50px;
+
+    margin-right: 10px;
+}
+
+.lock path {
+    fill: var(--text-color);
 }
