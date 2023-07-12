@@ -200,7 +200,6 @@ export default function MySetsPage() {
             }} />
             <div className={styles.all_sets}>
                 {(search === '' ? sets : filteredSets).map((set, index) => {
-                    if (index > 9) return;
                     return (
                         <article key={index} className={styles.set_card}>
                             <div className={styles.article_wrapper}>
@@ -248,7 +247,7 @@ export default function MySetsPage() {
 
             <Popup open={errorOpen} setOpen={setErrorOpen} exitButton>
                 <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom: 25 }} />
-                <p className={styles.popup_content}>{error}</p>
+                <p className={styles.popup_error}>{error}</p>
             </Popup>
         </div>
     );

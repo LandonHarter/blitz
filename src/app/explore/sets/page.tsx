@@ -13,7 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import BasicReturn from "@/components/basic-return/return";
 import UserContext from "@/context/usercontext";
-import { formatTimestamp } from "@/backend/util";
+import { formatTimestampAgo } from "@/backend/util";
 
 export default function ExploreSetsPage() {
     const router = useRouter();
@@ -74,7 +74,7 @@ export default function ExploreSetsPage() {
                                     <p>Created by {set.ownerName}</p>
                                 </div>
                                 <div className={styles.card_footer}>
-                                    <p style={{ fontFamily: 'Cubano' }}>Created {formatTimestamp(set.createdAt)}</p>
+                                    <p style={{ fontFamily: 'Cubano' }}>Created {formatTimestampAgo(set.createdAt)}</p>
                                     <button onClick={async () => {
                                         if (!signedIn) {
                                             setError('You must be signed in to host a live game.');

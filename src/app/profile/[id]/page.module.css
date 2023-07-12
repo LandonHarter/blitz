@@ -1,0 +1,170 @@
+.profile_container {
+    width: 100vw;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+
+    --profile-picture-size: 150px;
+}
+
+.background_art {
+    width: 100vw;
+    height: 350px;
+
+    background-size: 100%;
+    background-position-x: 75%;
+}
+
+.user_pfp {
+    border-radius: 100%;
+
+    position: relative;
+    bottom: calc((350px - (var(--profile-picture-size) / 2) + 25px) * -1);
+    left: 30px;
+
+    user-select: none;
+}
+
+.verified_container {
+    position: relative;
+    bottom: calc((350px - (var(--profile-picture-size) / 2) + 22px) * -1);
+    left: -15px;
+
+    background-color: transparent;
+    border: none;
+}
+
+.verified_badge {
+    border-radius: 100%;
+    user-select: none;
+
+    cursor: pointer;
+}
+
+.user_info {
+    margin-top: 10px;
+    margin-left: calc(60px + var(--profile-picture-size));
+}
+
+.user_name {
+    color: var(--text-color);
+
+    font-family: 'SF Pro Display';
+    font-size: 50px;
+}
+
+.user_subtitle {
+    color: var(--text-color-light);
+    font-family: 'SF Pro Display';
+    font-size: 22px;
+}
+
+.popup_error {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 50px;
+    letter-spacing: 2px;
+}
+
+.link_decoration {
+    text-decoration: none;
+}
+
+.sets p,
+.sets h2 {
+    color: var(--text-color);
+}
+
+.set_card {
+    --img-scale: 1.001;
+    --title-color: var(--text-color);
+    --link-icon-translate: -20px;
+    --link-icon-opacity: 0;
+
+    position: relative;
+    border-radius: 16px;
+    box-shadow: none;
+    background: var(--bg-dark);
+    transform-origin: center;
+    transition: all 0.4s ease-in-out;
+    overflow: hidden;
+
+    width: 400px;
+    margin: 0 25px;
+}
+
+.set_card h2 {
+    margin: 0 0 18px 0;
+    font-size: 1.9rem;
+    letter-spacing: 0.06em;
+    color: var(--title-color);
+    cursor: pointer;
+    transition: color 0.3s ease-out;
+}
+
+.set_card p {
+    font-family: 'SF Pro Display';
+    color: var(--text-color);
+}
+
+.article_wrapper figure {
+    margin: 0;
+    padding: 0;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+
+    max-width: 100%;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.set_card img {
+    max-width: 100%;
+    transform-origin: center;
+    transform: scale(var(--img-scale));
+    transition: transform 0.4s ease-in-out;
+}
+
+.article_body {
+    padding: 24px;
+}
+
+.card_footer {
+    width: calc(100% - 48px);
+    height: 100%;
+    margin-bottom: 10px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 24px;
+}
+
+.card_footer button {
+    width: 100px;
+    height: 30px;
+
+    background-color: #50C878;
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.card_footer button:hover {
+    transform: scale(1.05);
+}
+
+.all_sets {
+    margin: 50px 0;
+
+    width: 100vw;
+    height: fit-content;
+
+    display: flex;
+    flex-wrap: wrap;
+}

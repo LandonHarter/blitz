@@ -1,3 +1,5 @@
+@import '/node_modules/cooltipz-css/cooltipz.min.css';
+
 * {
     margin: 0;
     padding: 0;
@@ -13,6 +15,7 @@
     --primary-color: #3440ad;
     --secondary-color: #ff6b6b;
     --text-color: #353535;
+    --text-color-light: #6b6b6b;
     --correct-color: #18ca00;
 }
 

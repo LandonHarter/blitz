@@ -9,6 +9,7 @@ export interface User {
     uid: string;
     empty: boolean;
     sets: UserSet[];
+    createdAt?: Timestamp;
 
 }
 
@@ -19,6 +20,7 @@ export interface UserSet {
     description: string;
     image: string;
     updatedAt: Timestamp;
+
 }
 
 export async function getUserData(userId: string) {
@@ -33,6 +35,7 @@ export async function getUserData(userId: string) {
             uid: userData.data().uid,
             empty: false,
             sets: userData.data().sets,
+            createdAt: userData.data().createdAt
         };
 
         return Promise.resolve(newUser);

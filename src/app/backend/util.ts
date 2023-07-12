@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 
-export const formatTimestamp = (timestamp: Timestamp) => {
+export const formatTimestampAgo = (timestamp: Timestamp) => {
     const date = new Date(timestamp.seconds * 1000);
     const now = new Date();
     const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
@@ -33,6 +33,14 @@ export const formatTimestamp = (timestamp: Timestamp) => {
 
     const secondsAgo = seconds === 1 ? 'second' : 'seconds';
     return seconds + " " + secondsAgo + " ago";
+};
+
+export const formatTimestampDate = (timestamp: Timestamp) => {
+    const date = timestamp.toDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return month + " " + day + ", " + year;
 };
 
 export const arrayMove = (arr: any[], oldIndex: number, newIndex: number) => {

@@ -1,7 +1,7 @@
 import { auth, firestore } from "@baas/init";
 import { randomInt } from "crypto";
 import { GithubAuthProvider, GoogleAuthProvider, OAuthProvider, UserCredential, getAdditionalUserInfo, signInWithPopup } from "firebase/auth";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { Timestamp, collection, doc, setDoc } from "firebase/firestore";
 import { User } from '@baas/user';
 
 export const signInWithGoogle = async () => {
@@ -40,22 +40,23 @@ export const signOut = async () => {
     return Promise.resolve();
 };
 
-const setUserData = async (credentials:UserCredential) => {
+const setUserData = async (credentials: UserCredential) => {
     const userInfo = await getAdditionalUserInfo(credentials);
     if (userInfo != null && !userInfo.isNewUser) return Promise.reject();
 
     const user = credentials.user;
     if (user == null) return Promise.reject();
 
-    const userObject:User = {
+    const userObject: User = {
         name: user.displayName ?? "User" + randomInt(0, 100000),
         email: user.email ?? "",
         pfp: user.photoURL ?? "/images/avatar.png",
         uid: user.uid,
         empty: false,
         sets: [],
+        createdAt: Timestamp.now()
     };
-    
+
     const userRef = doc(collection(firestore, 'users'), user.uid);
     await setDoc(userRef, userObject);
 
