@@ -1,10 +1,10 @@
 import generateId from "../id";
 import { Question, QuestionOption, QuestionType } from "../live/set";
 
-export const parseAi = (response:string, numQuestions:number) => {
+export const parseAi = (response: string, numQuestions: number) => {
     try {
         const answers = response.split('Answers:')[1];
-        const answersIndex:number[] = [];
+        const answersIndex: number[] = [];
         for (let i = 0; i < numQuestions; i++) {
             const letter = answers.split(`${i + 1}. (`)[1][0];
             switch (letter) {
@@ -27,7 +27,7 @@ export const parseAi = (response:string, numQuestions:number) => {
         }
 
         const questions = response.split('Answers:')[0];
-        const questionsArray:Question[] = [];
+        const questionsArray: Question[] = [];
         for (let i = 0; i < numQuestions; i++) {
             const question = questions.split(`${i + 1}. `)[1].split('\n')[0];
             const options = questions.split(`${i + 1}. `)[1].split('\n');
@@ -36,26 +36,30 @@ export const parseAi = (response:string, numQuestions:number) => {
             const option2 = optionsString.split('(b) ')[1].split('\n')[0].replace('(b) ', '');
             const option3 = optionsString.split('(c) ')[1].split('\n')[0].replace('(c) ', '');
             const option4 = optionsString.split('(d) ')[1].split('\n')[0].replace('(d) ', '');
-            const optionsArray:QuestionOption[] = [
+            const optionsArray: QuestionOption[] = [
                 {
                     option: option1,
                     correct: answersIndex[i] === 0,
-                    id: generateId()
+                    id: generateId(),
+                    optionData: {}
                 },
                 {
                     option: option2,
                     correct: answersIndex[i] === 1,
-                    id: generateId()
+                    id: generateId(),
+                    optionData: {}
                 },
                 {
                     option: option3,
                     correct: answersIndex[i] === 2,
-                    id: generateId()
+                    id: generateId(),
+                    optionData: {}
                 },
                 {
                     option: option4,
                     correct: answersIndex[i] === 3,
-                    id: generateId()
+                    id: generateId(),
+                    optionData: {}
                 }
             ];
 
@@ -81,8 +85,8 @@ export const parseAi = (response:string, numQuestions:number) => {
     }
 };
 
-export const parseWorksheet = (response:string, numQuestions:number) => {
-    const questions:string[] = [];
+export const parseWorksheet = (response: string, numQuestions: number) => {
+    const questions: string[] = [];
     for (let i = 0; i < numQuestions; i++) {
         const startingIndex = response.indexOf(`${i + 1}. `);
         const endingIndex = response.indexOf(`${i + 2}. `);

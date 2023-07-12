@@ -1,0 +1,79 @@
+.questions {
+    width: 100vw;
+    height: var(--bottom-bar-height);
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.input_answer_container {
+    width: 100vw;
+    height: var(--bottom-bar-height);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input_answer_container h1 {
+    color: var(--text-color);
+    font-size: 80px;
+    letter-spacing: 2px;
+}
+
+.accepted_answers_container {
+    width: 100vw;
+    height: var(--bottom-bar-height);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    --accepted-answer-width: 300px;
+    --accepted-answer-margin: 10px;
+}
+
+.accepted_answers {
+    width: calc(3 * (var(--accepted-answer-width) + 2 * var(--accepted-answer-margin)));
+    height: fit-content;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.accepted_answer {
+    width: var(--accepted-answer-width);
+    height: 80px;
+
+    border-radius: 10px;
+
+    margin: var(--accepted-answer-margin);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.accepted_answer h1 {
+    color: var(--bg-dark);
+    font-size: 40px;
+    font-family: 'SF Pro Display';
+}
+
+.accepted_answer_red {
+    background-color: #C60929;
+}
+
+.accepted_answer_green {
+    background-color: #106B03;
+}
+
+.accepted_answer_blue {
+    background-color: #0542B9;
+}
+
+.accepted_answer_yellow {
+    background-color: #D89E00;
+}

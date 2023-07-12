@@ -19,6 +19,8 @@ import HostEndGame from './end/endgame';
 import HostWaiting from './waiting/waiting';
 import HostTrueFalseQuestion from './question/tf/question';
 import HostRevealedTrueFalseQuestion from './question/tf/revealedquestion';
+import HostShortAnswerQuestion from './question/shortanswer/question';
+import HostRevealedShortAnswerQuestion from './question/shortanswer/revealedquestion';
 
 export default function HostDashboard(props: { gameId: string, setId: string }) {
     const router = useRouter();
@@ -62,7 +64,7 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
             setNumPlayers(numUsers);
         } else if (event.eventType === EventType.EndGame) {
             setGameState('endgame');
-            window.onbeforeunload = null;
+            window.onunload = null;
         } else if (event.eventType === EventType.NextQuestion) {
             setGameState('livegame');
         }
@@ -93,6 +95,8 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
             return (<HostMultipleChoiceQuestion question={questions[currentQuestionIndex]} revealAnswer={revealAnswerCallback} />);
         } else if (question.type === QuestionType.TrueFalse) {
             return (<HostTrueFalseQuestion question={questions[currentQuestionIndex]} revealAnswer={revealAnswerCallback} />);
+        } else if (question.type === QuestionType.ShortAnswer) {
+            return (<HostShortAnswerQuestion question={questions[currentQuestionIndex]} revealAnswer={revealAnswerCallback} />)
         }
 
         return (<></>);
@@ -126,6 +130,8 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
             return (<HostRevealedMultipleChoiceQuestion question={questions[currentQuestionIndex]} nextQuestion={nextQuestionCallback} />);
         } else if (question.type === QuestionType.TrueFalse) {
             return (<HostRevealedTrueFalseQuestion question={questions[currentQuestionIndex]} nextQuestion={nextQuestionCallback} />);
+        } else if (question.type === QuestionType.ShortAnswer) {
+            return (<HostRevealedShortAnswerQuestion question={questions[currentQuestionIndex]} nextQuestion={nextQuestionCallback} />)
         }
 
         return (<></>);
@@ -164,7 +170,8 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
                     options.push({
                         id: option.id,
                         option: option.option,
-                        correct: option.correct
+                        correct: option.correct,
+                        optionData: option.optionData || {}
                     });
                 }
 

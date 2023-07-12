@@ -18,11 +18,13 @@ export interface QuestionOption {
     option: string;
     correct: boolean;
     id: string;
+    optionData: any;
 }
 
 export enum QuestionType {
     MultipleChoice = "MultipleChoice",
     TrueFalse = "TrueFalse",
+    ShortAnswer = "ShortAnswer"
 }
 
 export const emptyQuestion: Question = {
@@ -41,21 +43,25 @@ export const emptyMultipleChoiceQuestion = () => {
                 option: "",
                 correct: false,
                 id: generateId(),
+                optionData: {}
             },
             {
                 option: "",
                 correct: false,
                 id: generateId(),
+                optionData: {}
             },
             {
                 option: "",
                 correct: false,
                 id: generateId(),
+                optionData: {}
             },
             {
                 option: "",
                 correct: false,
                 id: generateId(),
+                optionData: {}
             },
         ],
         id: generateId(),
@@ -71,13 +77,31 @@ export const emptyTrueFalseQuestion = () => {
                 option: "True",
                 correct: false,
                 id: generateId(),
+                optionData: {}
             },
             {
                 option: "False",
                 correct: false,
                 id: generateId(),
+                optionData: {}
             },
         ],
+        id: generateId(),
+    }
+}
+
+export const emptyShortAnswerQuestion = () => {
+    return {
+        question: "",
+        type: QuestionType.ShortAnswer,
+        options: [{
+            option: "",
+            correct: false,
+            id: generateId(),
+            optionData: {
+                correctAnswers: [],
+            }
+        }],
         id: generateId(),
     }
 }

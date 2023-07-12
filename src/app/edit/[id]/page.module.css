@@ -430,3 +430,9 @@
 .lock path {
     fill: var(--text-color);
 }
+
+.question_types_title {
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 50px;
+}

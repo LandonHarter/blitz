@@ -22,9 +22,9 @@ import NotInGame from "./not-in-game/notingame";
 import ClientWaiting from "./waiting/startgamewait";
 import { getRandomSubmittedAnswerPhrase } from "@/backend/phrase";
 import TFQuestion from "./question/tf/question";
+import ShortAnswerQuestion from "./question/shortanswer/question";
 
 export default function LiveGamePage() {
-    const router = useRouter();
     const id = usePathname().split('/')[2];
 
     const [inGame, setInGame] = useState(false);
@@ -69,16 +69,16 @@ export default function LiveGamePage() {
         } else if (event.eventType === EventType.EndGame) {
             setGameState('endgame');
             // @ts-ignore
-            window.onbeforeunload.call(null);
-            window.onbeforeunload = null;
+            window.onunload.call(null);
+            window.onunload = null;
         } else if (event.eventType === EventType.KickPlayer) {
             if (currentUser?.uid === event.eventData.uid) {
-                const unload = window.onbeforeunload;
+                const unload = window.onunload;
                 if (unload) {
                     // @ts-ignore
                     unload.call(null);
 
-                    window.onbeforeunload = null;
+                    window.onunload = null;
                 }
                 window.location.href = '/join';
             }
@@ -109,6 +109,11 @@ export default function LiveGamePage() {
                 currentNumAnswers={currentNumAnswers} gameId={id}
                 lastEvent={lastEvent} setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
             );
+        } else if (currentQuestion.type === QuestionType.ShortAnswer) {
+            return (<ShortAnswerQuestion question={currentQuestion} uid={currentUser.uid} questionNumber={currentQuestionNumber}
+                currentNumAnswers={currentNumAnswers} gameId={id}
+                lastEvent={lastEvent} setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
+            );
         }
 
         return (<></>);
@@ -135,7 +140,7 @@ export default function LiveGamePage() {
                 }
 
                 const { unsubscribeEvent, unsubscribeNewPlayer, unsubscribeLeavePlayer } = await subscribeToGame(id, onGameEvent, onUserJoin, onUserLeave);
-                window.onbeforeunload = async () => {
+                window.onunload = async () => {
                     unsubscribeEvent();
                     unsubscribeNewPlayer();
                     unsubscribeLeavePlayer();
@@ -157,7 +162,9 @@ export default function LiveGamePage() {
     }
 
     if (gameState === 'pregame') {
-        return (<GameLobby currentUser={currentUser} gameId={id} leaveHandle={handleLeave} />);
+        return (<GameLobby currentUser={currentUser} gameId={id} leaveHandle={async () => {
+            await leaveGame(id, currentUser);
+        }} />);
     } else if (gameState === 'endgame') {
         return (<GameEnded currentUser={currentUser} gameId={id} />);
     } else if (gameState === 'livegame-waiting') {
