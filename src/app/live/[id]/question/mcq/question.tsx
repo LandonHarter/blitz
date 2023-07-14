@@ -7,7 +7,7 @@ import { GameEvent, awardPoints, pushGameEvent } from '@/backend/live/game';
 import { EventType } from '@/backend/live/events/event';
 import generateId from '@/backend/id';
 import AnswerBanner from '../../answer-banner/banner';
-import { CorrectAnswerContext } from '../../page';
+import { CorrectAnswerContext } from '../../correctanswercontext';
 
 export default function MCQuestion(props: { question: Question, uid: string, gameId: string, setSubmitted: Function, revealAnswer: boolean }) {
     const question = props.question;

@@ -24,14 +24,7 @@ import { getRandomSubmittedAnswerPhrase } from "@/backend/phrase";
 import TFQuestion from "./question/tf/question";
 import ShortAnswerQuestion from "./question/shortanswer/question";
 import FlashcardQuestion from "./question/flashcard/question";
-
-export const CorrectAnswerContext = createContext<{
-    get: any,
-    set: any
-}>({
-    get: undefined,
-    set: () => { }
-});
+import { CorrectAnswerContext } from "./correctanswercontext";
 
 export default function LiveGamePage() {
     const id = usePathname().split('/')[2];

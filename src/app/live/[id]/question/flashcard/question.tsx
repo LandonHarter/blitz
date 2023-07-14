@@ -7,7 +7,7 @@ import styles from './question.module.css';
 import { GameEvent, awardPoints, pushGameEvent } from '@/backend/live/game';
 import { EventType } from '@/backend/live/events/event';
 import generateId from '@/backend/id';
-import { CorrectAnswerContext } from '../../page';
+import { CorrectAnswerContext } from '../../correctanswercontext';
 import AnswerBanner from '../../answer-banner/banner';
 
 export default function FlashcardQuestion(props: { question: Question, uid: string, gameId: string, setSubmitted: Function, revealAnswer: boolean }) {
