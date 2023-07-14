@@ -71,6 +71,9 @@
 }
 
 .question {
+    --input-margin: 20px;
+    --trash-size: 40px;
+
     width: calc(var(--questions-width) - 10vw);
     height: fit-content;
 
@@ -82,10 +85,9 @@
 }
 
 .question_input {
-    --input-margin: 20px;
     margin: var(--input-margin);
 
-    width: calc(100% - var(--input-margin) * 2 - 45px);
+    width: calc(100% - var(--input-margin) * 2 - 45px - var(--trash-size));
     height: 50px;
 
     border: none;
@@ -106,6 +108,23 @@
 .question_input:hover {
     border-bottom: 3px solid var(--bg-dark);
     border-radius: 3px;
+}
+
+.delete_question {
+    width: fit-content;
+    height: var(--trash-size);
+    cursor: pointer;
+
+    margin-right: var(--input-margin);
+    transition: 0.3s ease-in-out;
+}
+
+.delete_question:hover {
+    transform: scale(1.1);
+}
+
+.delete_question:hover path {
+    stroke: red;
 }
 
 .add_question {

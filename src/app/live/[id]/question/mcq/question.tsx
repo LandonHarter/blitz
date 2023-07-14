@@ -1,18 +1,22 @@
 'use client'
 
 import { Question } from '@/backend/live/set';
-import { useEffect, useState } from 'react';
-
+import { useContext, useEffect, useState } from 'react';
 import styles from './question.module.css';
 import { GameEvent, awardPoints, pushGameEvent } from '@/backend/live/game';
 import { EventType } from '@/backend/live/events/event';
 import generateId from '@/backend/id';
+import AnswerBanner from '../../answer-banner/banner';
+import { CorrectAnswerContext } from '../../page';
 
-export default function MCQuestion(props:{ question:Question, uid:string, questionNumber:number, currentNumAnswers:number, gameId:string, lastEvent:GameEvent, setSubmitted:Function, revealAnswer:boolean }) {
+export default function MCQuestion(props: { question: Question, uid: string, gameId: string, setSubmitted: Function, revealAnswer: boolean }) {
     const question = props.question;
 
-    const submitAnswer = async (optionIndex:number) => {
+    const correctAnswerContext = useContext(CorrectAnswerContext);
+
+    const submitAnswer = async (optionIndex: number) => {
         if (props.revealAnswer) return;
+        correctAnswerContext.set(question.options[optionIndex].correct);
 
         await pushGameEvent(props.gameId, {
             eventType: EventType.SubmitAnswer,
@@ -21,14 +25,14 @@ export default function MCQuestion(props:{ question:Question, uid:string, questi
         });
 
         if (question.options[optionIndex].correct) {
-            awardPoints(props.gameId, props.uid, 1000);
+            await awardPoints(props.gameId, props.uid, 1000);
         }
 
         props.setSubmitted(true);
     };
 
     if (props.revealAnswer) {
-        return(
+        return (
             <div className={styles.question_container}>
                 <div className={styles.top_bar}>
                     <h1 className={styles.question_title}>{question.question}</h1>
@@ -50,11 +54,13 @@ export default function MCQuestion(props:{ question:Question, uid:string, questi
                         </div>
                     </div>
                 </div>
+
+                <AnswerBanner correct={correctAnswerContext.get} />
             </div>
         );
     }
 
-    return(
+    return (
         <div className={styles.question_container}>
             <div className={styles.top_bar}>
                 <h1 className={styles.question_title}>{question.question}</h1>

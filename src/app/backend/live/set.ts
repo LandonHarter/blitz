@@ -24,7 +24,8 @@ export interface QuestionOption {
 export enum QuestionType {
     MultipleChoice = "MultipleChoice",
     TrueFalse = "TrueFalse",
-    ShortAnswer = "ShortAnswer"
+    ShortAnswer = "ShortAnswer",
+    Flashcard = "Flashcard",
 }
 
 export const emptyQuestion: Question = {
@@ -105,3 +106,19 @@ export const emptyShortAnswerQuestion = () => {
         id: generateId(),
     }
 }
+
+export const emptyFlashcardQuestion = () => {
+    return {
+        question: "",
+        type: QuestionType.Flashcard,
+        options: [{
+            option: "",
+            correct: false,
+            id: generateId(),
+            optionData: {
+                answer: "",
+            },
+        }],
+        id: generateId(),
+    };
+};

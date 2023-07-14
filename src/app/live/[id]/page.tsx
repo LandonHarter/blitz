@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import useCurrentUser from "@hooks/useCurrentUser";
 import Loading from "@components/loading/loading";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { DataSnapshot, get, ref, set } from "firebase/database";
 import { realtimeDb } from "@baas/init";
 
@@ -23,6 +23,15 @@ import ClientWaiting from "./waiting/startgamewait";
 import { getRandomSubmittedAnswerPhrase } from "@/backend/phrase";
 import TFQuestion from "./question/tf/question";
 import ShortAnswerQuestion from "./question/shortanswer/question";
+import FlashcardQuestion from "./question/flashcard/question";
+
+export const CorrectAnswerContext = createContext<{
+    get: any,
+    set: any
+}>({
+    get: undefined,
+    set: () => { }
+});
 
 export default function LiveGamePage() {
     const id = usePathname().split('/')[2];
@@ -34,36 +43,25 @@ export default function LiveGamePage() {
 
     const [gameState, setGameState] = useState<string>('pregame');
     const [currentQuestion, setCurrentQuestion] = useState<Question>();
-    const [currentQuestionNumber, setCurrentQuestionNumber] = useState<number>(0);
     const [submittedAnswer, setSubmittedAnswer] = useState<boolean>(false);
     const [revealAnswer, setRevealAnswer] = useState<boolean>(false);
 
-    const [handleLeave, setHandleLeave] = useState<() => Promise<void>>(async () => { });
-
-    const [currentNumAnswers, setCurrentNumAnswers] = useState<number>(0);
-    const [lastEvent, setLastEvent] = useState<GameEvent>({
-        eventType: EventType.None,
-        eventData: {},
-        eventId: ''
-    });
+    const [correctAnswer, setCorrectAnswer] = useState<boolean>(false);
 
     const onGameEvent = (event: GameEvent) => {
         if (event.eventType === EventType.StartGame) {
             setGameState('livegame-waiting');
         } else if (event.eventType === EventType.NextQuestion) {
             setGameState('livegame');
-            setCurrentNumAnswers(0);
             setSubmittedAnswer(false);
             setRevealAnswer(false);
+            setCorrectAnswer(false);
             setCurrentQuestion({
                 id: event.eventData.questionId,
                 question: event.eventData.question,
                 type: QuestionType[event.eventData.type as keyof typeof QuestionType],
                 options: event.eventData.options
             });
-            setCurrentQuestionNumber((prevNum) => prevNum + 1);
-        } else if (event.eventType === EventType.SubmitAnswer) {
-            setCurrentNumAnswers((prevNum) => prevNum + 1);
         } else if (event.eventType === EventType.RevealAnswer) {
             setRevealAnswer(true);
         } else if (event.eventType === EventType.EndGame) {
@@ -85,8 +83,6 @@ export default function LiveGamePage() {
         } else if (event.eventType === EventType.InbetweenQuestions) {
             setGameState('livegame-waiting');
         }
-
-        setLastEvent(event);
     };
 
     const onUserJoin = (user: GameUser) => {
@@ -100,19 +96,20 @@ export default function LiveGamePage() {
     const getQuestionUI = () => {
         if (currentQuestion === undefined) return (<></>);
         if (currentQuestion.type === QuestionType.MultipleChoice) {
-            return (<MCQuestion question={currentQuestion} uid={currentUser.uid} questionNumber={currentQuestionNumber}
-                currentNumAnswers={currentNumAnswers} gameId={id}
-                lastEvent={lastEvent} setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
+            return (<MCQuestion question={currentQuestion} uid={currentUser.uid} gameId={id}
+                setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
             );
         } else if (currentQuestion.type === QuestionType.TrueFalse) {
-            return (<TFQuestion question={currentQuestion} uid={currentUser.uid} questionNumber={currentQuestionNumber}
-                currentNumAnswers={currentNumAnswers} gameId={id}
-                lastEvent={lastEvent} setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
+            return (<TFQuestion question={currentQuestion} uid={currentUser.uid} gameId={id}
+                setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
             );
         } else if (currentQuestion.type === QuestionType.ShortAnswer) {
-            return (<ShortAnswerQuestion question={currentQuestion} uid={currentUser.uid} questionNumber={currentQuestionNumber}
-                currentNumAnswers={currentNumAnswers} gameId={id}
-                lastEvent={lastEvent} setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
+            return (<ShortAnswerQuestion question={currentQuestion} uid={currentUser.uid} gameId={id}
+                setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
+            );
+        } else if (currentQuestion.type === QuestionType.Flashcard) {
+            return (<FlashcardQuestion question={currentQuestion} uid={currentUser.uid} gameId={id}
+                setSubmitted={setSubmittedAnswer} revealAnswer={revealAnswer} />
             );
         }
 
@@ -182,8 +179,8 @@ export default function LiveGamePage() {
     }
 
     return (
-        <div>
+        <CorrectAnswerContext.Provider value={{ get: correctAnswer, set: setCorrectAnswer }}>
             {getQuestionUI()}
-        </div>
+        </CorrectAnswerContext.Provider>
     );
 }

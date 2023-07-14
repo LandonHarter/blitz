@@ -10,11 +10,11 @@ import generateId from '@/backend/id';
 import { CorrectAnswerContext } from '../../page';
 import AnswerBanner from '../../answer-banner/banner';
 
-export default function ShortAnswerQuestion(props: { question: Question, uid: string, gameId: string, setSubmitted: Function, revealAnswer: boolean }) {
+export default function FlashcardQuestion(props: { question: Question, uid: string, gameId: string, setSubmitted: Function, revealAnswer: boolean }) {
     const question = props.question;
     const [response, setResponse] = useState<string>('');
 
-    const correctAnswer = useContext(CorrectAnswerContext);
+    const correctContext = useContext(CorrectAnswerContext);
 
     const submitAnswer = async () => {
         if (props.revealAnswer) return;
@@ -25,14 +25,10 @@ export default function ShortAnswerQuestion(props: { question: Question, uid: st
             eventId: generateId()
         });
 
-        const correctAnswers: string[] = question.options[0].optionData.correctAnswers;
-        for (let i = 0; i < correctAnswers.length; i++) {
-            if (response.toLowerCase().includes(correctAnswers[i].toLowerCase())) {
-                correctAnswer.set(true);
-
-                await awardPoints(props.gameId, props.uid, 1000);
-                break;
-            }
+        const answer: string = props.question.options[0].optionData.answer;
+        const correct: boolean = answer.toLowerCase() === response.toLowerCase();
+        if (correct) {
+            await awardPoints(props.gameId, props.uid, 1000);
         }
 
         props.setSubmitted(true);
@@ -40,9 +36,8 @@ export default function ShortAnswerQuestion(props: { question: Question, uid: st
 
     if (props.revealAnswer) {
         return (
-            <div className={styles.reveal_container}>
-                <h1 className={styles.reveal_title}>Look to the host screen to see accepted answers!</h1>
-                <AnswerBanner correct={correctAnswer.get} />
+            <div>
+                <AnswerBanner correct={correctContext.get} />
             </div>
         );
     }
@@ -54,12 +49,7 @@ export default function ShortAnswerQuestion(props: { question: Question, uid: st
             </div>
 
             <div className={styles.bottom_bar}>
-                <input placeholder='Type a response' className={styles.response_input} value={response} onChange={(e) => {
-                    setResponse(e.target.value);
-                }} maxLength={100} />
-                <button className={styles.submit_button} onClick={() => {
-                    submitAnswer();
-                }}>Submit</button>
+
             </div>
         </div>
     )

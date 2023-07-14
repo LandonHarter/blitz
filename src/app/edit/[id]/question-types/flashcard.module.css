@@ -1,0 +1,40 @@
+.input_card {
+    width: calc(100% - 20px);
+    height: fit-content;
+
+    margin: 10px;
+    padding: 30px 0;
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+}
+
+.flashcard_term_input {
+    margin-left: 30px;
+
+    width: calc(100% - 106px);
+    height: 50px;
+
+    border: none;
+    outline: none;
+    border-bottom: 1px solid var(--bg-dark);
+
+    transform: translateY(-3px);
+
+    font-size: 25px;
+
+    transition: 0.15s ease-in-out;
+
+    background-color: transparent;
+    color: var(--bg);
+}
+
+.flashcard_term_input:focus {
+    border-bottom: 2px solid var(--bg);
+    border-radius: 3px;
+}
+
+.flashcard_term_input::placeholder {
+    color: var(--bg-dark);
+}

@@ -1,0 +1,25 @@
+.banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    width: 100vw;
+
+    background-color: var(--primary-color);
+    transform-origin: bottom;
+
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner_title {
+    color: var(--bg);
+    font-family: 'SF Pro Display';
+    font-size: 40px;
+
+    margin-left: 15px;
+}

@@ -10,6 +10,14 @@ export interface User {
     empty: boolean;
     sets: UserSet[];
     createdAt?: Timestamp;
+    verified?: boolean;
+
+}
+
+export interface UserProfile {
+
+    bio: string;
+    profileBackground: string;
 
 }
 
@@ -35,7 +43,24 @@ export async function getUserData(userId: string) {
             uid: userData.data().uid,
             empty: false,
             sets: userData.data().sets,
-            createdAt: userData.data().createdAt
+            createdAt: userData.data().createdAt,
+            verified: userData.data().verified
+        };
+
+        return Promise.resolve(newUser);
+    }
+
+    return Promise.reject();
+}
+
+export async function getUserProfileData(userId: string) {
+    const userRef = doc(collection(firestore, 'users-profile'), userId);
+    const userData = await getDoc(userRef);
+
+    if (userData.exists()) {
+        const newUser: UserProfile = {
+            bio: userData.data().bio,
+            profileBackground: userData.data().profileBackground
         };
 
         return Promise.resolve(newUser);

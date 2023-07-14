@@ -6,13 +6,19 @@ import styles from './question.module.css';
 import { GameEvent, awardPoints, pushGameEvent } from '@/backend/live/game';
 import { EventType } from '@/backend/live/events/event';
 import generateId from '@/backend/id';
+import { useContext } from 'react';
+import { CorrectAnswerContext } from '../../page';
+import AnswerBanner from '../../answer-banner/banner';
 
-export default function TFQuestion(props: { question: Question, uid: string, questionNumber: number, currentNumAnswers: number, gameId: string, lastEvent: GameEvent, setSubmitted: Function, revealAnswer: boolean }) {
+export default function TFQuestion(props: { question: Question, uid: string, gameId: string, setSubmitted: Function, revealAnswer: boolean }) {
     const question = props.question;
+
+    const correctContext = useContext(CorrectAnswerContext);
 
     const submitAnswer = async (optionIndex: number) => {
         if (props.revealAnswer) return;
 
+        correctContext.set(question.options[optionIndex].correct);
         await pushGameEvent(props.gameId, {
             eventType: EventType.SubmitAnswer,
             eventData: {},
@@ -43,6 +49,8 @@ export default function TFQuestion(props: { question: Question, uid: string, que
                         </div>
                     </div>
                 </div>
+
+                <AnswerBanner correct={correctContext.get} />
             </div>
         );
     }

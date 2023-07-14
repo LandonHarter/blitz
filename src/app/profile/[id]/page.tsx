@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import Loading from '@/components/loading/loading';
 import BasicReturn from '@/components/basic-return/return';
 import Image from 'next/image';
-import { User, getUserData } from '@/backend/firebase/user';
+import { User, UserProfile, getUserData, getUserProfileData } from '@/backend/firebase/user';
 import { formatTimestampDate } from '@/backend/util';
 import { createGame } from '@/backend/live/game';
 import { useRouter } from 'next/navigation';
@@ -14,6 +14,7 @@ import 'cooltipz-css';
 import Link from 'next/link';
 import UserContext from '@/context/usercontext';
 import Popup from '@/components/popup/popup';
+import { profileBackgroundColorFromName } from '@/backend/color';
 
 export default function ProfilePage() {
     const router = useRouter();
@@ -21,6 +22,7 @@ export default function ProfilePage() {
 
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState<User>();
+    const [userProfile, setUserProfile] = useState<UserProfile>();
     const { currentUser, signedIn, userLoading } = useContext(UserContext);
     const [background, setBackground] = useState<string>('linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)');
 
@@ -31,6 +33,11 @@ export default function ProfilePage() {
         (async () => {
             const userData = await getUserData(userId);
             setUser(userData);
+
+            const userProfileData = await getUserProfileData(userId);
+            setUserProfile(userProfileData);
+
+            setBackground(profileBackgroundColorFromName(userProfileData.profileBackground));
             setLoading(false);
         })();
     }, []);
@@ -51,7 +58,7 @@ export default function ProfilePage() {
         <div className={styles.profile_container}>
             <div className={styles.background_art} style={{ backgroundImage: background }}>
                 <Image src={user.pfp} alt='user profile picture' width={150} height={150} className={styles.user_pfp} />
-                <button className={styles.verified_container} aria-label='Verified Teacher' data-cooltipz-dir="bottom"><Image src='/images/icons/verified.png' alt='verified' width={40} height={40} className={styles.verified_badge} /></button>
+                {user.verified && <button className={styles.verified_container} aria-label='Verified Teacher' data-cooltipz-dir="bottom"><Image src='/images/icons/verified.png' alt='verified' width={40} height={40} className={styles.verified_badge} /></button>}
             </div>
             <div className={styles.user_info}>
                 <h1 className={styles.user_name}>{user.name}</h1>

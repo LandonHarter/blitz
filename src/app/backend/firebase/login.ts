@@ -2,7 +2,7 @@ import { auth, firestore } from "@baas/init";
 import { randomInt } from "crypto";
 import { GithubAuthProvider, GoogleAuthProvider, OAuthProvider, UserCredential, getAdditionalUserInfo, signInWithPopup } from "firebase/auth";
 import { Timestamp, collection, doc, setDoc } from "firebase/firestore";
-import { User } from '@baas/user';
+import { User, UserProfile } from '@baas/user';
 
 export const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -54,11 +54,20 @@ const setUserData = async (credentials: UserCredential) => {
         uid: user.uid,
         empty: false,
         sets: [],
-        createdAt: Timestamp.now()
+        createdAt: Timestamp.now(),
+        verified: false,
     };
 
     const userRef = doc(collection(firestore, 'users'), user.uid);
     await setDoc(userRef, userObject);
+
+    const userProfileObject: UserProfile = {
+        bio: "",
+        profileBackground: "dusty-grass"
+    };
+
+    const userProfileRef = doc(collection(firestore, 'users-profile'), user.uid);
+    await setDoc(userProfileRef, userProfileObject);
 
     return Promise.resolve();
 };

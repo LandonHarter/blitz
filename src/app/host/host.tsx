@@ -21,6 +21,8 @@ import HostTrueFalseQuestion from './question/tf/question';
 import HostRevealedTrueFalseQuestion from './question/tf/revealedquestion';
 import HostShortAnswerQuestion from './question/shortanswer/question';
 import HostRevealedShortAnswerQuestion from './question/shortanswer/revealedquestion';
+import HostFlashcardQuestion from './question/flashcard/question';
+import HostRevealedFlashcardQuestion from './question/flashcard/revealedquestion';
 
 export default function HostDashboard(props: { gameId: string, setId: string }) {
     const router = useRouter();
@@ -96,7 +98,9 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
         } else if (question.type === QuestionType.TrueFalse) {
             return (<HostTrueFalseQuestion question={questions[currentQuestionIndex]} revealAnswer={revealAnswerCallback} />);
         } else if (question.type === QuestionType.ShortAnswer) {
-            return (<HostShortAnswerQuestion question={questions[currentQuestionIndex]} revealAnswer={revealAnswerCallback} />)
+            return (<HostShortAnswerQuestion question={questions[currentQuestionIndex]} revealAnswer={revealAnswerCallback} />);
+        } else if (question.type === QuestionType.Flashcard) {
+            return (<HostFlashcardQuestion question={questions[currentQuestionIndex]} revealAnswer={revealAnswerCallback} />);
         }
 
         return (<></>);
@@ -132,6 +136,8 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
             return (<HostRevealedTrueFalseQuestion question={questions[currentQuestionIndex]} nextQuestion={nextQuestionCallback} />);
         } else if (question.type === QuestionType.ShortAnswer) {
             return (<HostRevealedShortAnswerQuestion question={questions[currentQuestionIndex]} nextQuestion={nextQuestionCallback} />)
+        } else if (question.type === QuestionType.Flashcard) {
+            return (<HostRevealedFlashcardQuestion question={questions[currentQuestionIndex]} nextQuestion={nextQuestionCallback} />);
         }
 
         return (<></>);
