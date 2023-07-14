@@ -1,0 +1,65 @@
+.profile_background_section {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.profile_background_title {
+    color: var(--text-color);
+    letter-spacing: 2px;
+
+    margin-bottom: 20px;
+}
+
+.profile_background_colors {
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.profile_background_color_container {
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.profile_background_color {
+    width: 140px;
+    height: 70px;
+
+    border-radius: 10px;
+    border: solid 3px var(--bg);
+    transition: 0.15s ease-in-out;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    cursor: pointer;
+}
+
+.profile_background_color_selected {
+    border: solid 3px var(--primary-color) !important;
+}
+
+.profile_background_color_name {
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 16px;
+
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.profile_background_color_selected_icon {
+    width: 25px;
+    height: 25px;
+
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-top-left-radius: 5px;
+}

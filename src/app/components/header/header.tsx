@@ -4,7 +4,7 @@ import Link from "next/link";
 import styles from "./header.module.css";
 
 import Image from "next/image";
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { signInWithGithub, signInWithGoogle, signInWithMicrosoft, signOut } from "@baas/login";
 import Loading from "@components/loading/loading";
 import useOutsideClick from "@/hooks/useOutsideClick";
@@ -16,8 +16,10 @@ import AnimationDiv from "@/animation/AnimationDiv";
 import { dropdown } from "@/animation/animation";
 import SignInContext from "@/context/signincontext";
 import UserContext from "@/context/usercontext";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
+    const router = useRouter();
     const signInPopup = useContext(SignInContext);
     const [avatarDropdown, setAvatarDropdown] = useState(false);
 
@@ -29,16 +31,25 @@ export default function Header() {
 
     const { currentUser, signedIn, userLoading } = useContext(UserContext);
 
+    useEffect(() => {
+        router.prefetch('/join');
+        router.prefetch('/create');
+        router.prefetch('/explore/sets');
+        router.prefetch('/ai');
+        router.prefetch('/settings');
+        router.prefetch('/my-sets');
+    }, []);
+
     if (userLoading) {
-        return(<Loading />);
+        return (<Loading />);
     }
 
-    return(
+    return (
         <div className={styles.header}>
             <div className={styles.header_nav}>
                 <div className={styles.header_nav_left}>
                     <Link href='/' className={styles.header_logo}>
-                        <Image style={{ aspectRatio:'1331/750' }} src='/bigicon.png' alt="logo" width={166} height={94} />
+                        <Image style={{ aspectRatio: '1331/750' }} src='/bigicon.png' alt="logo" width={166} height={94} />
                     </Link>
                     <div className={styles.nav_links}>
                         <Link href='/join' className={styles.nav_link}>Join</Link>
@@ -50,10 +61,10 @@ export default function Header() {
                     </div>
                 </div>
                 <div className={styles.header_nav_right}>
-                    {!signedIn ? 
+                    {!signedIn ?
                         <div>
                             <button className={styles.signin_button} onClick={() => signInPopup.set(true)}>Log In</button>
-                        </div> : 
+                        </div> :
                         <div className={styles.avatar_container}>
                             <Image src={currentUser.pfp} alt="avatar" className={styles.avatar_image} width={42} height={42} onClick={() => {
                                 setAvatarDropdown(!avatarDropdown);
@@ -85,10 +96,10 @@ export default function Header() {
                                             setAvatarDropdown(false);
                                         }}>
                                             <Image src='/images/icons/logout.png' alt='user' width={25} height={25} />
-                                            <p style={{color: "red"}}>SIGN OUT</p>
+                                            <p style={{ color: "red" }}>SIGN OUT</p>
                                         </div>
                                     </AnimationDiv>
-                                }   
+                                }
                             </AnimatePresence>
                         </div>
                     }

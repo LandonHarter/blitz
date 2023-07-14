@@ -3,6 +3,7 @@ import { randomInt } from "crypto";
 import { GithubAuthProvider, GoogleAuthProvider, OAuthProvider, UserCredential, getAdditionalUserInfo, signInWithPopup } from "firebase/auth";
 import { Timestamp, collection, doc, setDoc } from "firebase/firestore";
 import { User, UserProfile } from '@baas/user';
+import { getRandomProfileBackground } from "../color";
 
 export const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -63,7 +64,7 @@ const setUserData = async (credentials: UserCredential) => {
 
     const userProfileObject: UserProfile = {
         bio: "",
-        profileBackground: "dusty-grass"
+        profileBackground: getRandomProfileBackground().name,
     };
 
     const userProfileRef = doc(collection(firestore, 'users-profile'), user.uid);

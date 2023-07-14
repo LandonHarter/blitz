@@ -1,0 +1,96 @@
+.settings_container {
+    width: 100vw;
+    height: fit-content;
+
+    display: flex;
+}
+
+.sidebar {
+    width: 300px;
+    height: fit-content;
+
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 120px;
+}
+
+.sidebar_item {
+    display: flex;
+    align-items: center;
+    padding: 20px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.sidebar_item:hover {
+    background-color: var(--bg-dark) !important;
+}
+
+.sidebar_item_selected:hover {
+    background-color: var(--bg-darker) !important;
+}
+
+.sidebar_item_image {
+    margin: 0 10px;
+}
+
+.sidebar_item_title {
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+    color: var(--text-color);
+}
+
+.settings {
+    --title-height: 70px;
+
+    display: flex;
+    flex-direction: column;
+
+    margin-top: calc(100px - var(--title-height) - 10px);
+}
+
+.settings_title {
+    height: var(--title-height);
+
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 55px;
+
+    margin-left: 10px;
+}
+
+.settings_content {
+    width: 50vw;
+    height: fit-content;
+
+    border: solid 2px var(--bg-darker);
+    border-radius: 15px;
+
+    padding: 50px;
+}
+
+.save_message {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+
+    padding: 10px 20px;
+
+    width: fit-content;
+    height: fit-content;
+
+    display: flex;
+    align-items: center;
+
+    border-radius: 10px;
+
+    background-color: var(--bg-dark);
+}
+
+.save_message h1 {
+    font-size: 25px;
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    margin: 0 10px;
+}

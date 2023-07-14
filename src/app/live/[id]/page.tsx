@@ -3,8 +3,8 @@
 import { usePathname, useRouter } from "next/navigation";
 import useCurrentUser from "@hooks/useCurrentUser";
 import Loading from "@components/loading/loading";
-import { createContext, useEffect, useState } from "react";
-import { DataSnapshot, get, ref, set } from "firebase/database";
+import { useEffect, useState } from "react";
+import { get, ref } from "firebase/database";
 import { realtimeDb } from "@baas/init";
 
 import styles from './page.module.css';
