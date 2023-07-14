@@ -12,6 +12,7 @@ export interface Question {
     type: QuestionType;
     options: QuestionOption[];
     id: string;
+    photo?: string;
 }
 
 export interface QuestionOption {

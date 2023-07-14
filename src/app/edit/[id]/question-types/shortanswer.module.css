@@ -126,6 +126,8 @@
 .controls_bar {
     margin-left: 10px;
 
+    align-self: flex-start;
+
     display: flex;
     align-items: center;
 }

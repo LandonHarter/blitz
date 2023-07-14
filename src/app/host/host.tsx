@@ -185,7 +185,8 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
                     id: question.id,
                     question: question.question,
                     type: QuestionType[question.type as keyof typeof QuestionType],
-                    options: options
+                    options: options,
+                    photo: question.photo || '',
                 });
             }
 
@@ -245,7 +246,8 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
                     questionId: questions[nextQuestionIndex].id,
                     question: questions[nextQuestionIndex].question,
                     type: questions[nextQuestionIndex].type.toString(),
-                    options: questions[nextQuestionIndex].options
+                    options: questions[nextQuestionIndex].options,
+                    photo: questions[nextQuestionIndex].photo
                 },
                 eventId: generateId()
             });

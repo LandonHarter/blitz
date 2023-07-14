@@ -9,6 +9,7 @@ import { EventType } from '@/backend/live/events/event';
 import generateId from '@/backend/id';
 import { CorrectAnswerContext } from '../../correctanswercontext';
 import AnswerBanner from '../../answer-banner/banner';
+import ClientBaseQuestion from '../basequestion';
 
 export default function ShortAnswerQuestion(props: { question: Question, uid: string, gameId: string, setSubmitted: Function, revealAnswer: boolean }) {
     const question = props.question;
@@ -40,27 +41,21 @@ export default function ShortAnswerQuestion(props: { question: Question, uid: st
 
     if (props.revealAnswer) {
         return (
-            <div className={styles.reveal_container}>
+            <ClientBaseQuestion question={question}>
                 <h1 className={styles.reveal_title}>Look to the host screen to see accepted answers!</h1>
                 <AnswerBanner correct={correctAnswer.get} />
-            </div>
+            </ClientBaseQuestion>
         );
     }
 
     return (
-        <div className={styles.question_container}>
-            <div className={styles.top_bar}>
-                <h1 className={styles.question_title}>{question.question}</h1>
-            </div>
-
-            <div className={styles.bottom_bar}>
-                <input placeholder='Type a response' className={styles.response_input} value={response} onChange={(e) => {
-                    setResponse(e.target.value);
-                }} maxLength={100} />
-                <button className={styles.submit_button} onClick={() => {
-                    submitAnswer();
-                }}>Submit</button>
-            </div>
-        </div>
+        <ClientBaseQuestion question={question}>
+            <input placeholder='Type a response' className={styles.response_input} value={response} onChange={(e) => {
+                setResponse(e.target.value);
+            }} maxLength={100} />
+            <button className={styles.submit_button} onClick={() => {
+                submitAnswer();
+            }}>Submit</button>
+        </ClientBaseQuestion>
     )
 }

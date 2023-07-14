@@ -9,6 +9,7 @@ import generateId from '@/backend/id';
 import { useContext } from 'react';
 import { CorrectAnswerContext } from '../../correctanswercontext';
 import AnswerBanner from '../../answer-banner/banner';
+import ClientBaseQuestion from '../basequestion';
 
 export default function TFQuestion(props: { question: Question, uid: string, gameId: string, setSubmitted: Function, revealAnswer: boolean }) {
     const question = props.question;
@@ -34,47 +35,35 @@ export default function TFQuestion(props: { question: Question, uid: string, gam
 
     if (props.revealAnswer) {
         return (
-            <div className={styles.question_container}>
-                <div className={styles.top_bar}>
-                    <h1 className={styles.question_title}>{question.question}</h1>
-                </div>
-
-                <div className={styles.bottom_bar}>
-                    <div className={styles.questions}>
-                        <div className={`${styles.question_box} ${styles.question_red} ${question.options[0].correct ? styles.option_correct : styles.option_incorrect}`}>
-                            <h1 className={styles.question_option}>True</h1>
-                        </div>
-                        <div className={`${styles.question_box} ${styles.question_blue} ${question.options[1].correct ? styles.option_correct : styles.option_incorrect}`}>
-                            <h1 className={styles.question_option}>False</h1>
-                        </div>
+            <ClientBaseQuestion question={question}>
+                <div className={styles.questions}>
+                    <div className={`${styles.question_box} ${styles.question_red} ${question.options[0].correct ? styles.option_correct : styles.option_incorrect}`}>
+                        <h1 className={styles.question_option}>True</h1>
+                    </div>
+                    <div className={`${styles.question_box} ${styles.question_blue} ${question.options[1].correct ? styles.option_correct : styles.option_incorrect}`}>
+                        <h1 className={styles.question_option}>False</h1>
                     </div>
                 </div>
 
                 <AnswerBanner correct={correctContext.get} />
-            </div>
+            </ClientBaseQuestion>
         );
     }
 
     return (
-        <div className={styles.question_container}>
-            <div className={styles.top_bar}>
-                <h1 className={styles.question_title}>{question.question}</h1>
-            </div>
-
-            <div className={styles.bottom_bar}>
-                <div className={styles.questions}>
-                    <div className={`${styles.question_box} ${styles.question_red}`} onClick={() => {
-                        submitAnswer(0);
-                    }}>
-                        <h1 className={styles.question_option}>True</h1>
-                    </div>
-                    <div className={`${styles.question_box} ${styles.question_blue}`} onClick={() => {
-                        submitAnswer(1);
-                    }}>
-                        <h1 className={styles.question_option}>False</h1>
-                    </div>
+        <ClientBaseQuestion question={question}>
+            <div className={styles.questions}>
+                <div className={`${styles.question_box} ${styles.question_red}`} onClick={() => {
+                    submitAnswer(0);
+                }}>
+                    <h1 className={styles.question_option}>True</h1>
+                </div>
+                <div className={`${styles.question_box} ${styles.question_blue}`} onClick={() => {
+                    submitAnswer(1);
+                }}>
+                    <h1 className={styles.question_option}>False</h1>
                 </div>
             </div>
-        </div>
+        </ClientBaseQuestion >
     )
 }

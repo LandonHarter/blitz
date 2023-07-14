@@ -19,7 +19,6 @@ import UserContext from "@/context/usercontext";
 import { useRouter } from "next/navigation";
 
 export default function Header() {
-    const router = useRouter();
     const signInPopup = useContext(SignInContext);
     const [avatarDropdown, setAvatarDropdown] = useState(false);
 
@@ -30,15 +29,6 @@ export default function Header() {
     useOutsideClick(loginModalRef, () => signInPopup.set(false));
 
     const { currentUser, signedIn, userLoading } = useContext(UserContext);
-
-    useEffect(() => {
-        router.prefetch('/join');
-        router.prefetch('/create');
-        router.prefetch('/explore/sets');
-        router.prefetch('/ai');
-        router.prefetch('/settings');
-        router.prefetch('/my-sets');
-    }, []);
 
     if (userLoading) {
         return (<Loading />);

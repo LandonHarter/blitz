@@ -53,7 +53,8 @@ export default function LiveGamePage() {
                 id: event.eventData.questionId,
                 question: event.eventData.question,
                 type: QuestionType[event.eventData.type as keyof typeof QuestionType],
-                options: event.eventData.options
+                options: event.eventData.options,
+                photo: event.eventData.photo,
             });
         } else if (event.eventType === EventType.RevealAnswer) {
             setRevealAnswer(true);

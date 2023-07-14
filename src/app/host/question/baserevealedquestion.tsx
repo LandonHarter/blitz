@@ -9,6 +9,9 @@ export default function BaseHostRevealedQuestion(props: { children: any, questio
         <div className={styles.question_container}>
             <div className={styles.top_bar}>
                 <h1 className={styles.question}>{props.question.question}</h1>
+                {props.question.photo !== '' &&
+                    <div className={styles.question_photo} style={{ backgroundImage: `url('${props.question.photo}'` }} />
+                }
                 <motion.button className={styles.next_button} onClick={async () => {
                     await props.nextQuestion();
                 }}>Next</motion.button>

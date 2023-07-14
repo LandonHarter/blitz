@@ -9,6 +9,7 @@ import { EventType } from '@/backend/live/events/event';
 import generateId from '@/backend/id';
 import { CorrectAnswerContext } from '../../correctanswercontext';
 import AnswerBanner from '../../answer-banner/banner';
+import ClientBaseQuestion from '../basequestion';
 
 export default function FlashcardQuestion(props: { question: Question, uid: string, gameId: string, setSubmitted: Function, revealAnswer: boolean }) {
     const question = props.question;
@@ -36,21 +37,15 @@ export default function FlashcardQuestion(props: { question: Question, uid: stri
 
     if (props.revealAnswer) {
         return (
-            <div>
+            <ClientBaseQuestion question={question}>
                 <AnswerBanner correct={correctContext.get} />
-            </div>
+            </ClientBaseQuestion>
         );
     }
 
     return (
-        <div className={styles.question_container}>
-            <div className={styles.top_bar}>
-                <h1 className={styles.question_title}>{question.question}</h1>
-            </div>
+        <ClientBaseQuestion question={question}>
 
-            <div className={styles.bottom_bar}>
-
-            </div>
-        </div>
+        </ClientBaseQuestion>
     )
 }

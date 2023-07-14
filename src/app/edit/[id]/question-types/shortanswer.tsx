@@ -6,6 +6,7 @@ import questionStyles from './basestyles.module.css'
 import styles from './shortanswer.module.css'
 import { Question } from '@/backend/live/set'
 import { TrashSVG } from '@/svg'
+import QuestionImage from './questionimage'
 
 export default function ShortAnswerQuestion(props: { question: Question, questionIndex: number, questionUiData: any[], setQuestions: Dispatch<SetStateAction<any>> }) {
     const getColor = (index: number) => {
@@ -14,7 +15,9 @@ export default function ShortAnswerQuestion(props: { question: Question, questio
     };
 
     return (
-        <motion.div initial={{ scaleY: 0 }} animate={{ scaleY: props.questionUiData[props.questionIndex].open ? 1 : 0 }} style={{ transformOrigin: 'top' }}>
+        <motion.div initial={{ scaleY: 0 }} animate={{ scaleY: props.questionUiData[props.questionIndex].open ? 1 : 0 }} style={{ transformOrigin: 'top', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <QuestionImage question={props.question} setQuestions={props.setQuestions} />
+
             <div className={styles.controls_bar}>
                 <h1>Correct Answers: </h1>
                 <button className={styles.add_remove_answer} onClick={() => {
