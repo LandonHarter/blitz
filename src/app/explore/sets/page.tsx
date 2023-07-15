@@ -100,7 +100,6 @@ export default function ExploreSetsPage() {
                                                 return;
                                             }
 
-                                            setLoading(true);
                                             const {
                                                 success,
                                                 error,
@@ -112,7 +111,6 @@ export default function ExploreSetsPage() {
                                             } else {
                                                 setError(error);
                                                 setErrorOpen(true);
-                                                setLoading(false);
                                             }
                                         }}>Host Live</button>
                                     </div>
