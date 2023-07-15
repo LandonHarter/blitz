@@ -26,7 +26,7 @@ export default function MCQuestion(props: { question: Question, uid: string, gam
         });
 
         if (question.options[optionIndex].correct) {
-            await awardPoints(props.gameId, props.uid, 1000);
+            await awardPoints(props.gameId, props.uid, props.question.questionPoints || 100);
         }
 
         props.setSubmitted(true);
@@ -50,7 +50,7 @@ export default function MCQuestion(props: { question: Question, uid: string, gam
                     </div>
                 </div>
 
-                <AnswerBanner correct={correctAnswerContext.get} />
+                <AnswerBanner correct={correctAnswerContext.get} points={props.question.questionPoints || 100} />
             </ClientBaseQuestion>
         );
     }

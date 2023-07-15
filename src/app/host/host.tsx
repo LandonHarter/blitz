@@ -188,7 +188,8 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
                     options: options,
                     photo: question.photo || '',
                     scramble: question.scramble || false,
-                    questionLength: question.questionLength || 15
+                    questionLength: question.questionLength || 15,
+                    questionPoints: question.questionPoints || 100,
                 });
             }
 
@@ -272,6 +273,7 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
                     type: questionsArray[nextQuestionIndex].type.toString(),
                     options: questionsArray[nextQuestionIndex].options,
                     photo: questionsArray[nextQuestionIndex].photo,
+                    points: questionsArray[nextQuestionIndex].questionPoints,
                 },
                 eventId: generateId()
             });

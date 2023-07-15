@@ -548,6 +548,8 @@
 .number_input_container {
     display: flex;
     align-items: center;
+
+    margin: 15px 0;
 }
 
 .number_input {

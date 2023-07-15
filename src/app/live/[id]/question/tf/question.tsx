@@ -27,7 +27,7 @@ export default function TFQuestion(props: { question: Question, uid: string, gam
         });
 
         if (question.options[optionIndex].correct) {
-            awardPoints(props.gameId, props.uid, 1000);
+            awardPoints(props.gameId, props.uid, props.question.questionPoints || 100);
         }
 
         props.setSubmitted(true);
@@ -45,7 +45,7 @@ export default function TFQuestion(props: { question: Question, uid: string, gam
                     </div>
                 </div>
 
-                <AnswerBanner correct={correctContext.get} />
+                <AnswerBanner correct={correctContext.get} points={props.question.questionPoints || 100} />
             </ClientBaseQuestion>
         );
     }

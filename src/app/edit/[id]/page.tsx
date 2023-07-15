@@ -181,6 +181,7 @@ export default function EditPage() {
                 }
 
                 questionElement.questionLength = question.questionLength || 15;
+                questionElement.questionPoints = question.questionPoints || 100;
 
                 questionsArray.push(questionElement);
                 questionUiDataArray.push({
@@ -572,8 +573,18 @@ export default function EditPage() {
 
                                 questions[questionSettings.questionIndex].questionLength = newNumber;
                                 setQuestions([...questions]);
-                            }} min={1} max={99} />
+                            }} min={1} max={1000} />
                             <p className={styles.toggle_text}>Duration (seconds)</p>
+                        </label>
+                        <label className={styles.number_input_container} id='question-length'>
+                            <input type="number" className={styles.number_input} id='question-length' value={questions[questionSettings.questionIndex].questionPoints} onChange={(e) => {
+                                let newNumber = Number.parseInt(e.target.value);
+                                if (newNumber > 1000) return;
+
+                                questions[questionSettings.questionIndex].questionPoints = newNumber;
+                                setQuestions([...questions]);
+                            }} min={1} max={99} style={{ width: 70 }} />
+                            <p className={styles.toggle_text}>Points</p>
                         </label>
                     </>
                 }

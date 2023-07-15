@@ -31,7 +31,7 @@ export default function ShortAnswerQuestion(props: { question: Question, uid: st
             if (response.toLowerCase().includes(correctAnswers[i].toLowerCase())) {
                 correctAnswer.set(true);
 
-                await awardPoints(props.gameId, props.uid, 1000);
+                await awardPoints(props.gameId, props.uid, props.question.questionPoints || 100);
                 break;
             }
         }
@@ -43,7 +43,7 @@ export default function ShortAnswerQuestion(props: { question: Question, uid: st
         return (
             <ClientBaseQuestion question={question}>
                 <h1 className={styles.reveal_title}>Look to the host screen to see accepted answers!</h1>
-                <AnswerBanner correct={correctAnswer.get} />
+                <AnswerBanner correct={correctAnswer.get} points={props.question.questionPoints || 100} />
             </ClientBaseQuestion>
         );
     }

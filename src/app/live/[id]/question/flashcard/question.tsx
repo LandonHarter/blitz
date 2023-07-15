@@ -29,7 +29,7 @@ export default function FlashcardQuestion(props: { question: Question, uid: stri
         const answer: string = props.question.options[0].optionData.answer;
         const correct: boolean = answer.toLowerCase() === response.toLowerCase();
         if (correct) {
-            await awardPoints(props.gameId, props.uid, 1000);
+            await awardPoints(props.gameId, props.uid, props.question.questionPoints || 100);
         }
 
         props.setSubmitted(true);
@@ -38,7 +38,7 @@ export default function FlashcardQuestion(props: { question: Question, uid: stri
     if (props.revealAnswer) {
         return (
             <ClientBaseQuestion question={question}>
-                <AnswerBanner correct={correctContext.get} />
+                <AnswerBanner correct={correctContext.get} points={props.question.questionPoints || 100} />
             </ClientBaseQuestion>
         );
     }
