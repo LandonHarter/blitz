@@ -4,6 +4,8 @@ import { GithubAuthProvider, GoogleAuthProvider, OAuthProvider, UserCredential, 
 import { Timestamp, collection, doc, setDoc } from "firebase/firestore";
 import { User, UserProfile } from '@baas/user';
 import { getRandomProfileBackground } from "../color";
+import { sendEmailFromTemplate } from "./email";
+import { WelcomeTemplate } from "./emailTemplates";
 
 export const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -44,6 +46,8 @@ export const signOut = async () => {
 const setUserData = async (credentials: UserCredential) => {
     const userInfo = await getAdditionalUserInfo(credentials);
     if (userInfo != null && !userInfo.isNewUser) return Promise.reject();
+
+    sendEmailFromTemplate(credentials.user.email ?? '', 'Welcome to Blitz!', WelcomeTemplate(credentials.user.displayName ?? 'User'));
 
     const user = credentials.user;
     if (user == null) return Promise.reject();
