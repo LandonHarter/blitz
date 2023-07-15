@@ -15,6 +15,7 @@ export interface Question {
     id: string;
     photo?: string;
     scramble?: boolean;
+    questionLength?: number;
 }
 
 export interface QuestionOption {

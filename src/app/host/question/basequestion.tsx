@@ -6,11 +6,10 @@ import { useEffect, useState } from 'react';
 import styles from './basequestion.module.css';
 
 export default function BaseHostQuestion(props: { children: any, question: Question, revealAnswer: () => Promise<void> }) {
-    const timerLength = 15;
     useEffect(() => {
         const timer = setTimeout(async () => {
             await props.revealAnswer();
-        }, timerLength * 1000);
+        }, (props.question.questionLength || 15) * 1000);
         return () => {
             clearTimeout(timer);
         }
@@ -25,7 +24,7 @@ export default function BaseHostQuestion(props: { children: any, question: Quest
                 }
             </div>
             <div className={styles.timer}>
-                <motion.div initial={{ transform: 'scaleX(1)' }} animate={{ transform: 'scaleX(0)' }} transition={{ duration: timerLength, ease: 'linear' }} className={styles.timer_bar} />
+                <motion.div initial={{ transform: 'scaleX(1)' }} animate={{ transform: 'scaleX(0)' }} transition={{ duration: (props.question.questionLength || 15), ease: 'linear' }} className={styles.timer_bar} />
             </div>
             <div className={styles.bottom_bar}>
                 {props.children}

@@ -538,8 +538,36 @@
     color: var(--text-color);
     font-family: 'SF Pro Display';
     font-size: 32px;
+    font-weight: 700;
 }
 
 .scramble_questions {
     padding: 25px 0;
+}
+
+.number_input_container {
+    display: flex;
+    align-items: center;
+}
+
+.number_input {
+    width: 50px;
+    height: 50px;
+
+    border-radius: 10px;
+    border: solid 2px var(--text-color);
+
+    color: var(--text-color);
+
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+
+    text-align: center;
+    margin-right: 10px;
+}
+
+.number_input::-webkit-outer-spin-button,
+.number_input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
