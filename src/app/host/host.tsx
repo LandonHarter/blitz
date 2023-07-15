@@ -28,6 +28,8 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
     const router = useRouter();
 
     const [questions, setQuestions] = useState<Question[]>([]);
+    const [scrambledQuestions, setScrambledQuestions] = useState<Question[]>([]);
+    const [scramble, setScramble] = useState<boolean>(false);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(-1);
     const [revealedQuestion, setRevealedQuestion] = useState<boolean>(false);
 
@@ -35,8 +37,6 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
     const [numPlayers, setNumPlayers] = useState<number>(0);
     const [playersCopy, setPlayersCopy] = useState<GameUser[]>([]);
     const [numAnswers, setNumAnswers] = useState<number>(0);
-
-    const [resetTimer, setResetTimer] = useState<boolean>(false);
 
     const [gameState, setGameState] = useState<string>('pregame');
 
@@ -53,7 +53,6 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
                 });
                 setRevealedQuestion(true);
                 setNumAnswers(0);
-                setResetTimer(true);
 
                 return;
             }
@@ -62,7 +61,6 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
         } else if (event.eventType === EventType.StartGame) {
             setGameState('livegame-waiting');
             const numUsers = await getNumUsersInGame(props.gameId);
-            setResetTimer(true);
             setNumPlayers(numUsers);
         } else if (event.eventType === EventType.EndGame) {
             setGameState('endgame');
@@ -81,7 +79,7 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
     };
 
     const getQuestionUI = () => {
-        const question = questions[currentQuestionIndex];
+        const question = scramble ? scrambledQuestions[currentQuestionIndex] : questions[currentQuestionIndex];
         const revealAnswerCallback = async () => {
             await pushGameEvent(props.gameId, {
                 eventType: EventType.RevealAnswer,
@@ -94,20 +92,20 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
         };
 
         if (question.type === QuestionType.MultipleChoice) {
-            return (<HostMultipleChoiceQuestion question={questions[currentQuestionIndex]} revealAnswer={revealAnswerCallback} />);
+            return (<HostMultipleChoiceQuestion question={question} revealAnswer={revealAnswerCallback} />);
         } else if (question.type === QuestionType.TrueFalse) {
-            return (<HostTrueFalseQuestion question={questions[currentQuestionIndex]} revealAnswer={revealAnswerCallback} />);
+            return (<HostTrueFalseQuestion question={question} revealAnswer={revealAnswerCallback} />);
         } else if (question.type === QuestionType.ShortAnswer) {
-            return (<HostShortAnswerQuestion question={questions[currentQuestionIndex]} revealAnswer={revealAnswerCallback} />);
+            return (<HostShortAnswerQuestion question={question} revealAnswer={revealAnswerCallback} />);
         } else if (question.type === QuestionType.Flashcard) {
-            return (<HostFlashcardQuestion question={questions[currentQuestionIndex]} revealAnswer={revealAnswerCallback} />);
+            return (<HostFlashcardQuestion question={question} revealAnswer={revealAnswerCallback} />);
         }
 
         return (<></>);
     };
 
     const getRevealedQuestionUI = () => {
-        const question = questions[currentQuestionIndex];
+        const question = scramble ? scrambledQuestions[currentQuestionIndex] : questions[currentQuestionIndex];
         const nextQuestionCallback = async () => {
             const nextQuestionIndex = currentQuestionIndex + 1;
             if (nextQuestionIndex >= questions.length) {
@@ -131,18 +129,17 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
         };
 
         if (question.type === QuestionType.MultipleChoice) {
-            return (<HostRevealedMultipleChoiceQuestion question={questions[currentQuestionIndex]} nextQuestion={nextQuestionCallback} />);
+            return (<HostRevealedMultipleChoiceQuestion question={question} nextQuestion={nextQuestionCallback} />);
         } else if (question.type === QuestionType.TrueFalse) {
-            return (<HostRevealedTrueFalseQuestion question={questions[currentQuestionIndex]} nextQuestion={nextQuestionCallback} />);
+            return (<HostRevealedTrueFalseQuestion question={question} nextQuestion={nextQuestionCallback} />);
         } else if (question.type === QuestionType.ShortAnswer) {
-            return (<HostRevealedShortAnswerQuestion question={questions[currentQuestionIndex]} nextQuestion={nextQuestionCallback} />)
+            return (<HostRevealedShortAnswerQuestion question={question} nextQuestion={nextQuestionCallback} />)
         } else if (question.type === QuestionType.Flashcard) {
-            return (<HostRevealedFlashcardQuestion question={questions[currentQuestionIndex]} nextQuestion={nextQuestionCallback} />);
+            return (<HostRevealedFlashcardQuestion question={question} nextQuestion={nextQuestionCallback} />);
         }
 
         return (<></>);
     };
-
 
     useEffect(() => {
         (async () => {
@@ -167,6 +164,9 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
             const questions = data.questions;
             const numQuestions = data.numQuestions;
 
+            const scramble = data.scramble;
+            setScramble(scramble || false);
+
             const questionsArray: Question[] = [];
             for (let i = 0; i < numQuestions; i++) {
                 const question = questions[i];
@@ -187,6 +187,7 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
                     type: QuestionType[question.type as keyof typeof QuestionType],
                     options: options,
                     photo: question.photo || '',
+                    scramble: question.scramble || false,
                 });
             }
 
@@ -206,6 +207,26 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
             window.onbeforeunload = unload;
 
             setQuestions(questionsArray);
+
+            const scrambledOptionsQuestions = [...questionsArray];
+            for (let i = 0; i < scrambledOptionsQuestions.length; i++) {
+                const question = scrambledOptionsQuestions[i];
+                if (question.type !== QuestionType.MultipleChoice || !question.scramble) continue;
+
+                const scrambledOptions = [...question.options];
+                for (let j = 0; j < scrambledOptions.length; j++) {
+                    const k = Math.floor(Math.random() * (j + 1));
+                    [scrambledOptions[j], scrambledOptions[k]] = [scrambledOptions[k], scrambledOptions[j]];
+                }
+                question.options = scrambledOptions;
+            }
+
+            const scrambledQuestionsArray = [...scrambledOptionsQuestions];
+            for (let i = 0; i < scrambledQuestionsArray.length; i++) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [scrambledQuestionsArray[i], scrambledQuestionsArray[j]] = [scrambledQuestionsArray[j], scrambledQuestionsArray[i]];
+            }
+            setScrambledQuestions(scrambledQuestionsArray);
         })();
     }, []);
 
@@ -240,14 +261,16 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
             const nextQuestionIndex = currentQuestionIndex + 1;
             setCurrentQuestionIndex(nextQuestionIndex);
 
+            const questionsArray = scramble ? scrambledQuestions : questions;
+            console.log(questionsArray);
             await pushGameEvent(props.gameId, {
                 eventType: EventType.NextQuestion,
                 eventData: {
-                    questionId: questions[nextQuestionIndex].id,
-                    question: questions[nextQuestionIndex].question,
-                    type: questions[nextQuestionIndex].type.toString(),
-                    options: questions[nextQuestionIndex].options,
-                    photo: questions[nextQuestionIndex].photo
+                    questionId: questionsArray[nextQuestionIndex].id,
+                    question: questionsArray[nextQuestionIndex].question,
+                    type: questionsArray[nextQuestionIndex].type.toString(),
+                    options: questionsArray[nextQuestionIndex].options,
+                    photo: questionsArray[nextQuestionIndex].photo
                 },
                 eventId: generateId()
             });

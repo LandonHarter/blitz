@@ -7,8 +7,9 @@ import styles from './mcq.module.css';
 import questionStyles from './basestyles.module.css';
 import { Dispatch, SetStateAction } from 'react';
 import QuestionImage from './questionimage';
+import Image from 'next/image';
 
-export default function MultipleChoiceQuestion(props: { question: Question, questionIndex: number, questionUiData: any[], setQuestions: Dispatch<SetStateAction<any>> }) {
+export default function MultipleChoiceQuestion(props: { question: Question, questionIndex: number, questionUiData: any[], setQuestions: Dispatch<SetStateAction<any>>, settingsPopup: Dispatch<SetStateAction<any>> }) {
     const colorFromIndex = (index: number) => {
         const colors = [questionStyles.option_red, questionStyles.option_blue, questionStyles.option_green, questionStyles.option_yellow];
         return colors[index];
@@ -17,6 +18,12 @@ export default function MultipleChoiceQuestion(props: { question: Question, ques
     return (
         <motion.div initial={{ scaleY: 0 }} animate={{ scaleY: props.questionUiData[props.questionIndex].open ? 1 : 0 }} className={styles.mcq_container}>
             <QuestionImage question={props.question} setQuestions={props.setQuestions} />
+            <Image src='/images/icons/settings.png' alt='settings' width={30} height={30} onClick={() => {
+                props.settingsPopup({
+                    open: true,
+                    questionIndex: props.questionIndex,
+                });
+            }} className={questionStyles.settings} />
             <div className={styles.options_container}>
                 {props.question.options.map((option, optionIndex) => (
                     <div key={optionIndex} className={`${styles.option} ${colorFromIndex(optionIndex)}`}>

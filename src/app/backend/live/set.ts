@@ -5,6 +5,7 @@ export interface Set {
     owner: string;
     name: string;
     questions: Question[];
+    scramble?: boolean;
 }
 
 export interface Question {
@@ -13,6 +14,7 @@ export interface Question {
     options: QuestionOption[];
     id: string;
     photo?: string;
+    scramble?: boolean;
 }
 
 export interface QuestionOption {

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import styles from './basequestion.module.css';
 
 export default function BaseHostQuestion(props: { children: any, question: Question, revealAnswer: () => Promise<void> }) {
-    const timerLength = 15000;
+    const timerLength = 15;
     useEffect(() => {
         const timer = setTimeout(async () => {
             await props.revealAnswer();

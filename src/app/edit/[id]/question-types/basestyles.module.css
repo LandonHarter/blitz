@@ -104,3 +104,10 @@ article .cbx:hover span:first-child {
         transform: scale(1.2);
     }
 }
+
+.settings {
+    padding-right: 15px;
+
+    align-self: flex-end;
+    cursor: pointer;
+}

@@ -32,7 +32,8 @@ export default function EditPage() {
     const [tempSet, setTempSet] = useState<{
         name: string,
         description: string,
-    }>({ name: '', description: '' });
+        scramble: boolean,
+    }>({ name: '', description: '', scramble: false });
     const [questions, setQuestions] = useState<Question[]>([]);
     const [loadingMenu, setLoadingMenu] = useState<boolean>(true);
 
@@ -46,6 +47,10 @@ export default function EditPage() {
         showTrash: boolean
     }[]>([]);
 
+    const [questionSettings, setQuestionSettings] = useState<{
+        open: boolean,
+        questionIndex: number
+    }>({ open: false, questionIndex: 0 });
     const [questionTypePopup, setQuestionTypePopup] = useState<boolean>(false);
 
     const [showSuccess, setShowSuccess] = useState<boolean>(false);
@@ -187,6 +192,7 @@ export default function EditPage() {
             setTempSet({
                 name: setData.name,
                 description: setData.description,
+                scramble: setData.scramble,
             });
             setQuestions(questionsArray);
             setQuestionUiData(questionUiDataArray);
@@ -296,6 +302,7 @@ export default function EditPage() {
             updatedAt: serverTimestamp(),
             name: tempSet.name,
             description: tempSet.description,
+            scramble: tempSet.scramble
         });
 
         const userSetsArray = (await getUserData(currentUser.uid)).sets;
@@ -322,7 +329,7 @@ export default function EditPage() {
         if (question.type === QuestionType.MultipleChoice) {
             return (
                 <MultipleChoiceQuestion question={question} questionIndex={index}
-                    questionUiData={questionUiData} setQuestions={setQuestions} />
+                    questionUiData={questionUiData} setQuestions={setQuestions} settingsPopup={setQuestionSettings} />
             );
         } else if (question.type === QuestionType.TrueFalse) {
             return (
@@ -382,6 +389,7 @@ export default function EditPage() {
                         setTempSet((prevData) => ({
                             name: e.target.value,
                             description: prevData.description,
+                            scramble: prevData.scramble
                         }));
                     }} />
                 </div>
@@ -391,9 +399,29 @@ export default function EditPage() {
                         setTempSet((prevData) => ({
                             name: prevData.name,
                             description: e.target.value,
+                            scramble: prevData.scramble
                         }));
                     }} />
                 </div>
+                <label className={`${styles.toggle} ${styles.scramble_questions}`} htmlFor={`scramble-questions`}>
+                    <input type="checkbox" className={styles.toggle__input} id={`scramble-questions`} checked={tempSet.scramble} />
+                    <span className={styles.toggle_track} onClick={() => {
+                        setTempSet((prevData) => ({
+                            name: prevData.name,
+                            description: prevData.description,
+                            scramble: !prevData.scramble
+                        }));
+                    }}>
+                        <span className={styles.toggle_indicator}>
+                            <span className={styles.checkMark}>
+                                <svg viewBox="0 0 24 24" id="ghq-svg-check" role="presentation" aria-hidden="true">
+                                    <path d="M9.86 18a1 1 0 01-.73-.32l-4.86-5.17a1.001 1.001 0 011.46-1.37l4.12 4.39 8.41-9.2a1 1 0 111.48 1.34l-9.14 10a1 1 0 01-.73.33h-.01z"></path>
+                                </svg>
+                            </span>
+                        </span>
+                    </span>
+                    <p className={styles.toggle_text}>Scramble Questions</p>
+                </label>
                 <button className={styles.update_set} onClick={() => {
                     updateSet();
                 }}>Save</button>
@@ -513,6 +541,29 @@ export default function EditPage() {
                         </QuestionTypeBox>
                     </div>
                 </>
+            </Popup>
+            <Popup open={questionSettings.open} close={() => {
+                setQuestionSettings({ open: false, questionIndex: 0 });
+            }} exitButton>
+                {questionSettings.open &&
+                    <label className={styles.toggle} htmlFor={`scramble-options-${questionSettings.questionIndex}`}>
+                        <input type="checkbox" className={styles.toggle__input} id={`scramble-options-${questionSettings.questionIndex}`} checked={questions[questionSettings.questionIndex].scramble} />
+                        <span className={styles.toggle_track} onClick={() => {
+                            questions[questionSettings.questionIndex].scramble = !questions[questionSettings.questionIndex].scramble;
+                            setQuestions([...questions]);
+                        }}>
+                            <span className={styles.toggle_indicator}>
+                                <span className={styles.checkMark}>
+                                    <svg viewBox="0 0 24 24" id="ghq-svg-check" role="presentation" aria-hidden="true">
+                                        <path d="M9.86 18a1 1 0 01-.73-.32l-4.86-5.17a1.001 1.001 0 011.46-1.37l4.12 4.39 8.41-9.2a1 1 0 111.48 1.34l-9.14 10a1 1 0 01-.73.33h-.01z"></path>
+                                    </svg>
+                                </span>
+                            </span>
+                        </span>
+                        <p className={styles.toggle_text}>Scramble Options</p>
+                    </label>
+                }
+                <div style={{ marginBottom: 30 }} />
             </Popup>
             <AnimatePresence mode='wait'>
                 {showSuccess && <motion.div initial={{ opacity: 0, right: -400 }} animate={{ opacity: 1, right: 10 }} exit={{ opacity: 0 }} transition={{ duration: 0.45 }} className={styles.save_message}>

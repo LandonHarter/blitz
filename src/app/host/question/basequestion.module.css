@@ -6,7 +6,7 @@
     --timer-color: var(--primary-color);
     --bottom-bar-height: calc(100vh - var(--top-bar-height) - (var(--timer-height) * 2));
     --next-button-right-margin: 10px;
-    --next-button-bottom-margin: 0px;
+    --next-button-bottom-margin: 10px;
 }
 
 .top_bar {
@@ -86,8 +86,16 @@
     cursor: pointer;
 }
 
+.next_button_noimage {
+    transform: translateY(calc((var(--top-bar-height) / 2) - var(--timer-height) - var(--next-button-bottom-margin))) !important;
+}
+
 .next_button:active {
     transform: translateY(30px) scale(0.95);
+}
+
+.next_button_noimage:active {
+    transform: translateY(calc((var(--top-bar-height) / 2) - var(--timer-height) - var(--next-button-bottom-margin))) scale(0.95) !important;
 }
 
 .question_photo {

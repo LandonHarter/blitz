@@ -39,7 +39,7 @@ export default function Header() {
             <div className={styles.header_nav}>
                 <div className={styles.header_nav_left}>
                     <Link href='/' className={styles.header_logo}>
-                        <Image style={{ aspectRatio: '1331/750' }} src='/bigicon.png' alt="logo" width={166} height={94} />
+                        <Image style={{ aspectRatio: '1331/750' }} src='/bigicon.png' alt="logo" width={166} height={94} priority />
                     </Link>
                     <div className={styles.nav_links}>
                         <Link href='/join' className={styles.nav_link}>Join</Link>
@@ -58,7 +58,7 @@ export default function Header() {
                         <div className={styles.avatar_container}>
                             <Image src={currentUser.pfp} alt="avatar" className={styles.avatar_image} width={42} height={42} onClick={() => {
                                 setAvatarDropdown(!avatarDropdown);
-                            }} />
+                            }} priority />
 
                             <AnimatePresence initial={false} mode='wait'>
                                 {avatarDropdown &&
