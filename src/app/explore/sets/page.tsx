@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import styles from "./page.module.css";
 import Loading from "@/components/loading/loading";
-import { query, collection, orderBy, limit, getDocs, where } from "firebase/firestore";
+import { query, collection, orderBy, limit, getDocs, where, Timestamp } from "firebase/firestore";
 import { firestore } from "@/backend/firebase/init";
 import { createGame } from "@/backend/live/game";
 import { useRouter } from "next/navigation";
@@ -14,11 +14,16 @@ import Link from "next/link";
 import BasicReturn from "@/components/basic-return/return";
 import UserContext from "@/context/usercontext";
 import { formatTimestampAgo } from "@/backend/util";
+import algoliasearch from "algoliasearch/lite";
 
 export default function ExploreSetsPage() {
     const router = useRouter();
     const [sets, setSets] = useState<any[]>([]);
     const [loadingContent, setLoadingContent] = useState(true);
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchClient, setSearchClient] = useState<any>(null);
+    const [searchIndex, setSearchIndex] = useState<any>(null);
 
     const [error, setError] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
@@ -41,14 +46,41 @@ export default function ExploreSetsPage() {
                     numQuestions: doc.data().numQuestions,
                     createdAt: doc.data().createdAt,
                     description: doc.data().description,
-                    image: doc.data().image
+                    image: doc.data().image,
+                    scramble: doc.data().scramble,
+                    public: doc.data().public
                 });
             });
-
             setSets(setsArray);
+
+            const algoliaAppId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID;
+            const algoliaSearchKey = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY;
+
+            if (!algoliaAppId || !algoliaSearchKey) {
+                setError('Search is currently unavailable. Please try again later.');
+                setErrorOpen(true);
+                return;
+            }
+
+            const algoliaClient = algoliasearch(algoliaAppId, algoliaSearchKey);
+            const algoliaIndex = algoliaClient.initIndex('sets');
+
+            setSearchClient(algoliaClient);
+            setSearchIndex(algoliaIndex);
             setLoadingContent(false);
         })();
     }, []);
+
+    const search = async (query: string) => {
+        if (!searchClient || !searchIndex) {
+            return;
+        }
+
+        setLoadingContent(true);
+        const { hits } = await searchIndex.search(query);
+        setSets(hits);
+        setLoadingContent(false);
+    }
 
     if (userLoading) {
         return (<Loading />);
@@ -63,9 +95,13 @@ export default function ExploreSetsPage() {
             <h1 className={styles.title}>Explore Sets</h1>
 
             <div className={styles.search_container}>
-                <input className={styles.search} placeholder="Search for a set" />
-                <button className={styles.search_button}>
-                    <Image src="/images/icons/search-light.png" alt="search" width={35} height={35} />
+                <input className={styles.search} placeholder="Search for a set" value={searchQuery} onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                }} />
+                <button className={styles.search_button} onClick={() => {
+                    search(searchQuery);
+                }}>
+                    <Image src="/images/icons/search-light.png" alt="search" width={30} height={30} />
                 </button>
             </div>
 
@@ -92,7 +128,7 @@ export default function ExploreSetsPage() {
                                         <p>Created by {set.ownerName}</p>
                                     </div>
                                     <div className={styles.card_footer}>
-                                        <p style={{ fontFamily: 'Cubano' }}>Created {formatTimestampAgo(set.createdAt)}</p>
+                                        <p style={{ fontFamily: 'Cubano' }}>Created {formatTimestampAgo(typeof set.createdAt === "number" ? Timestamp.fromMillis(set.createdAt) : set.createdAt)}</p>
                                         <button onClick={async () => {
                                             if (!signedIn) {
                                                 setError('You must be signed in to host a live game.');
