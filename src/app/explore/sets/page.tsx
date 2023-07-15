@@ -18,7 +18,7 @@ import { formatTimestampAgo } from "@/backend/util";
 export default function ExploreSetsPage() {
     const router = useRouter();
     const [sets, setSets] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [loadingContent, setLoadingContent] = useState(true);
 
     const [error, setError] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
@@ -27,7 +27,7 @@ export default function ExploreSetsPage() {
 
     useEffect(() => {
         (async () => {
-            const setsQuery = query(collection(firestore, 'sets'), limit(20), orderBy('likes', 'desc'), where('public', '==', true));
+            const setsQuery = query(collection(firestore, 'sets'), limit(30), orderBy('likes', 'desc'), where('public', '==', true));
             const docs = await getDocs(setsQuery);
 
             const setsArray: any[] = [];
@@ -46,11 +46,11 @@ export default function ExploreSetsPage() {
             });
 
             setSets(setsArray);
-            setLoading(false);
+            setLoadingContent(false);
         })();
     }, []);
 
-    if (loading) {
+    if (userLoading) {
         return (<Loading />);
     }
 
@@ -59,49 +59,68 @@ export default function ExploreSetsPage() {
     }
 
     return (
-        <div>
+        <div className={styles.explore}>
+            <h1 className={styles.title}>Explore Sets</h1>
+
+            <div className={styles.search_container}>
+                <input className={styles.search} placeholder="Search for a set" />
+                <button className={styles.search_button}>
+                    <Image src="/images/icons/search-light.png" alt="search" width={35} height={35} />
+                </button>
+            </div>
+
             <div className={styles.sets}>
-                {sets.map((set: any, index) => {
-                    return (
-                        <article key={index} className={styles.set_card}>
-                            <div className={styles.article_wrapper}>
-                                <figure style={{ backgroundImage: `url(${set.image})` }}>
+                {loadingContent ?
+                    <div className={styles.loading_content}>
+                        <div className={styles.loader}>
+                            <div className={styles.dot}></div>
+                            <div className={styles.dot}></div>
+                            <div className={styles.dot}></div>
+                        </div>
+                        <h1 className={styles.loading_title}>Loading...</h1>
+                    </div> :
+                    sets.map((set: any, index) => {
+                        return (
+                            <article key={index} className={styles.set_card}>
+                                <div className={styles.article_wrapper}>
+                                    <figure style={{ backgroundImage: `url(${set.image})` }}>
 
-                                </figure>
-                                <div className={styles.article_body}>
-                                    <Link href={`/set/${set.id}`} className={styles.link_decoration}><h2 onClick={() => {
-                                    }}>{set.name}</h2></Link>
-                                    <p>Created by {set.ownerName}</p>
+                                    </figure>
+                                    <div className={styles.article_body}>
+                                        <Link href={`/set/${set.id}`} className={styles.link_decoration}><h2 onClick={() => {
+                                        }}>{set.name}</h2></Link>
+                                        <p>Created by {set.ownerName}</p>
+                                    </div>
+                                    <div className={styles.card_footer}>
+                                        <p style={{ fontFamily: 'Cubano' }}>Created {formatTimestampAgo(set.createdAt)}</p>
+                                        <button onClick={async () => {
+                                            if (!signedIn) {
+                                                setError('You must be signed in to host a live game.');
+                                                setErrorOpen(true);
+                                                return;
+                                            }
+
+                                            setLoading(true);
+                                            const {
+                                                success,
+                                                error,
+                                                gameCode
+                                            } = await createGame(currentUser.uid, set.id);
+
+                                            if (success) {
+                                                router.push(`/host/${gameCode}`);
+                                            } else {
+                                                setError(error);
+                                                setErrorOpen(true);
+                                                setLoading(false);
+                                            }
+                                        }}>Host Live</button>
+                                    </div>
                                 </div>
-                                <div className={styles.card_footer}>
-                                    <p style={{ fontFamily: 'Cubano' }}>Created {formatTimestampAgo(set.createdAt)}</p>
-                                    <button onClick={async () => {
-                                        if (!signedIn) {
-                                            setError('You must be signed in to host a live game.');
-                                            setErrorOpen(true);
-                                            return;
-                                        }
-
-                                        setLoading(true);
-                                        const {
-                                            success,
-                                            error,
-                                            gameCode
-                                        } = await createGame(currentUser.uid, set.id);
-
-                                        if (success) {
-                                            router.push(`/host/${gameCode}`);
-                                        } else {
-                                            setError(error);
-                                            setErrorOpen(true);
-                                            setLoading(false);
-                                        }
-                                    }}>Host Live</button>
-                                </div>
-                            </div>
-                        </article>
-                    );
-                })}
+                            </article>
+                        );
+                    })
+                }
             </div>
 
             <Popup open={errorOpen} setOpen={setErrorOpen} exitButton>
