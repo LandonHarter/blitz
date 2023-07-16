@@ -235,6 +235,21 @@
     box-shadow: rgba(255, 255, 255, 0.6) 0 0 2px 2px, #03A9F4 0 0 12px 0;
 }
 
+.no_sets {
+    width: 100vw;
+    height: 40vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no_sets h1 {
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 55px;
+}
+
 @-webkit-keyframes jump--1 {
     0% {
         transform: translate3d(0, 0, 0) scale(2);

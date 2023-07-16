@@ -78,16 +78,21 @@ export default function ExploreSetsPage() {
 
         setLoadingContent(true);
         const { hits } = await searchIndex.search(query);
-        setSets(hits);
+
+        let filteredHits: any[] = [];
+        for (let i = 0; i < hits.length; i++) {
+            const hit = hits[i];
+            if (hit.public) {
+                filteredHits.push(hit);
+            }
+        }
+
+        setSets(filteredHits);
         setLoadingContent(false);
     }
 
     if (userLoading) {
         return (<Loading />);
-    }
-
-    if (sets.length === 0) {
-        return (<BasicReturn text="No sets are available" returnLink="/" />);
     }
 
     return (
@@ -114,46 +119,53 @@ export default function ExploreSetsPage() {
                             <div className={styles.dot}></div>
                         </div>
                         <h1 className={styles.loading_title}>Loading...</h1>
-                    </div> :
-                    sets.map((set: any, index) => {
-                        return (
-                            <article key={index} className={styles.set_card}>
-                                <div className={styles.article_wrapper}>
-                                    <figure style={{ backgroundImage: `url(${set.image})` }}>
+                    </div> : <>
+                        {sets.map((set: any, index) => {
+                            return (
+                                <article key={index} className={styles.set_card}>
+                                    <div className={styles.article_wrapper}>
+                                        <figure style={{ backgroundImage: `url(${set.image})` }}>
 
-                                    </figure>
-                                    <div className={styles.article_body}>
-                                        <Link href={`/set/${set.id}`} className={styles.link_decoration}><h2 onClick={() => {
-                                        }}>{set.name}</h2></Link>
-                                        <p>Created by {set.ownerName}</p>
+                                        </figure>
+                                        <div className={styles.article_body}>
+                                            <Link href={`/set/${set.id}`} className={styles.link_decoration}><h2 onClick={() => {
+                                            }}>{set.name}</h2></Link>
+                                            <p>Created by {set.ownerName}</p>
+                                        </div>
+                                        <div className={styles.card_footer}>
+                                            <p style={{ fontFamily: 'Cubano' }}>Created {formatTimestampAgo(typeof set.createdAt === "number" ? Timestamp.fromMillis(set.createdAt) : set.createdAt)}</p>
+                                            <button onClick={async () => {
+                                                if (!signedIn) {
+                                                    setError('You must be signed in to host a live game.');
+                                                    setErrorOpen(true);
+                                                    return;
+                                                }
+
+                                                const {
+                                                    success,
+                                                    error,
+                                                    gameCode
+                                                } = await createGame(currentUser.uid, set.id);
+
+                                                if (success) {
+                                                    router.push(`/host/${gameCode}`);
+                                                } else {
+                                                    setError(error);
+                                                    setErrorOpen(true);
+                                                }
+                                            }}>Host Live</button>
+                                        </div>
                                     </div>
-                                    <div className={styles.card_footer}>
-                                        <p style={{ fontFamily: 'Cubano' }}>Created {formatTimestampAgo(typeof set.createdAt === "number" ? Timestamp.fromMillis(set.createdAt) : set.createdAt)}</p>
-                                        <button onClick={async () => {
-                                            if (!signedIn) {
-                                                setError('You must be signed in to host a live game.');
-                                                setErrorOpen(true);
-                                                return;
-                                            }
+                                </article>
+                            );
+                        })}
 
-                                            const {
-                                                success,
-                                                error,
-                                                gameCode
-                                            } = await createGame(currentUser.uid, set.id);
-
-                                            if (success) {
-                                                router.push(`/host/${gameCode}`);
-                                            } else {
-                                                setError(error);
-                                                setErrorOpen(true);
-                                            }
-                                        }}>Host Live</button>
-                                    </div>
-                                </div>
-                            </article>
-                        );
-                    })
+                        {(sets.length === 0 && !loadingContent) &&
+                            <div className={styles.no_sets}>
+                                <h1>No sets found.</h1>
+                            </div>
+                        }
+                    </>
                 }
             </div>
 
