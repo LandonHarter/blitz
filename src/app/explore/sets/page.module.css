@@ -250,6 +250,34 @@
     font-size: 55px;
 }
 
+.heart {
+    width: 25px;
+    height: 25px;
+
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.heart path {
+    fill: none;
+    stroke: var(--text-color);
+    stroke-width: 2px;
+}
+
+.heart_liked path {
+    fill: #ea3c53;
+}
+
+.likes_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.likes_container p {
+    transform: translateY(-2px);
+}
+
 @-webkit-keyframes jump--1 {
     0% {
         transform: translate3d(0, 0, 0) scale(2);

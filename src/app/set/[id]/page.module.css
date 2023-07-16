@@ -127,7 +127,7 @@
     background-color: var(--bg-dark);
     border-radius: 10px;
 
-    margin-top: 50px;
+    margin-top: 10px;
 }
 
 .author_pfp {
@@ -218,4 +218,42 @@
 
 .option_correct {
     background-color: var(--correct-color) !important;
+}
+
+.set_stats {
+    margin-top: 50px;
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.like_icon {
+    width: 30px;
+    height: 30px;
+
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+.like_icon path {
+    fill: none;
+    stroke: var(--text-color);
+    stroke-width: 2px;
+}
+
+.like_icon:active {
+    transform: scale(0.9);
+}
+
+.like_icon_liked path {
+    fill: #ea3c53;
+}
+
+.like_count {
+    color: var(--text-color);
+    margin-left: 10px;
+    transform: translateY(-2px);
 }

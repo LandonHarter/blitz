@@ -8,13 +8,13 @@ import useCurrentUser from "./hooks/useCurrentUser";
 
 export default function RootLayoutContent(props: { children: React.ReactNode }) {
     const [signInPopup, setSignInPopup] = useState(false);
-    const { currentUser, signedIn, userLoading } = useCurrentUser();
+    const { currentUser, signedIn, userLoading, updateUserData } = useCurrentUser();
 
     return (
         <html lang="en">
             <body>
                 <SignInContext.Provider value={{ get: signInPopup, set: setSignInPopup }}>
-                    <UserContext.Provider value={{ currentUser: currentUser, signedIn: signedIn, userLoading: userLoading }}>
+                    <UserContext.Provider value={{ currentUser: currentUser, signedIn: signedIn, userLoading: userLoading, updateUserData: updateUserData }}>
                         <Header />
                         {props.children}
                     </UserContext.Provider>

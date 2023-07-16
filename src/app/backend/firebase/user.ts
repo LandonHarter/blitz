@@ -11,6 +11,7 @@ export interface User {
     sets: UserSet[];
     createdAt?: Timestamp;
     verified?: boolean;
+    likedSets?: string[];
 
 }
 
@@ -43,6 +44,7 @@ export async function getUserData(userId: string) {
             uid: userData.data().uid,
             empty: false,
             sets: userData.data().sets,
+            likedSets: userData.data().likedSets,
             createdAt: userData.data().createdAt,
             verified: userData.data().verified
         };

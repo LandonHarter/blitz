@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { createGame } from '@/backend/live/game';
 import Popup from '@/components/popup/popup';
 import Image from 'next/image';
+import { HeartSVG } from '@/svg';
 
 export default function MySetsPage() {
     const router = useRouter();

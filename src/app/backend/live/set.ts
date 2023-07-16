@@ -1,4 +1,7 @@
+import { arrayUnion, collection, doc, increment, updateDoc } from "firebase/firestore";
+import { User } from "../firebase/user";
 import generateId from "../id";
+import { firestore } from "../firebase/init";
 
 export interface Set {
     id: string;
@@ -127,3 +130,41 @@ export const emptyFlashcardQuestion = () => {
         id: generateId(),
     };
 };
+
+export const likeSet = async (setId: string, currentUser: User, updateUserData: () => Promise<void>) => {
+    if (currentUser.empty) return;
+
+    const userReference = doc(collection(firestore, 'users'), currentUser.uid);
+    const setReference = doc(collection(firestore, 'sets'), setId);
+
+    const likedSets = currentUser.likedSets || [];
+    if (likedSets.includes(setId)) return;
+
+    await updateDoc(setReference, {
+        likes: increment(1),
+    });
+    await updateDoc(userReference, {
+        likedSets: arrayUnion(setId),
+    });
+
+    await updateUserData();
+};
+
+export const unlikeSet = async (setId: string, currentUser: User, updateUserData: () => Promise<void>) => {
+    if (currentUser.empty) return;
+
+    const userReference = doc(collection(firestore, 'users'), currentUser.uid);
+    const setReference = doc(collection(firestore, 'sets'), setId);
+
+    const likedSets = currentUser.likedSets || [];
+    if (!likedSets.includes(setId)) return;
+
+    await updateDoc(setReference, {
+        likes: increment(-1),
+    });
+    await updateDoc(userReference, {
+        likedSets: likedSets.filter(set => set !== setId),
+    });
+
+    await updateUserData();
+}

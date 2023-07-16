@@ -17,6 +17,25 @@ export default function useCurrentUser() {
     const [userLoading, setUserLoading] = useState<boolean>(true);
     const [user, loading, error] = useAuthState(auth);
 
+    const updateUserData = async () => {
+        if (user) {
+            setCurrentUser(await getUserData(user.uid));
+            setSignedIn(true);
+            setUserLoading(false);
+        }
+        else {
+            setCurrentUser({
+                name: "",
+                email: "",
+                pfp: "/images/avatar.png",
+                uid: "",
+                empty: true,
+                sets: [],
+            });
+            setSignedIn(false);
+        }
+    };
+
     useEffect(() => {
         (async () => {
             if (user) {
@@ -47,6 +66,5 @@ export default function useCurrentUser() {
     }, [user, error]);
 
 
-    return { currentUser: currentUser, signedIn: signedIn, userLoading: userLoading };
+    return { currentUser: currentUser, signedIn: signedIn, userLoading: userLoading, updateUserData: updateUserData };
 }
-  

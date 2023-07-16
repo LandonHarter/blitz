@@ -270,3 +270,20 @@
     font-size: 30px;
     margin-bottom: 50px;
 }
+
+.stats {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.heart {
+    width: 30px;
+    height: 30px;
+}
+
+.heart path {
+    fill: none;
+    stroke: var(--text-color);
+    stroke-width: 2px;
+}

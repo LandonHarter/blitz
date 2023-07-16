@@ -15,6 +15,8 @@ import BasicReturn from "@/components/basic-return/return";
 import UserContext from "@/context/usercontext";
 import { formatTimestampAgo } from "@/backend/util";
 import algoliasearch from "algoliasearch/lite";
+import { HeartSVG } from "@/svg";
+import { likeSet, unlikeSet } from "@/backend/live/set";
 
 export default function ExploreSetsPage() {
     const router = useRouter();
@@ -28,7 +30,8 @@ export default function ExploreSetsPage() {
     const [error, setError] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
 
-    const { currentUser, signedIn, userLoading } = useContext(UserContext);
+    const { currentUser, signedIn, userLoading, updateUserData } = useContext(UserContext);
+    const [finishedLiking, setFinishedLiking] = useState(true);
 
     useEffect(() => {
         (async () => {
@@ -48,7 +51,8 @@ export default function ExploreSetsPage() {
                     description: doc.data().description,
                     image: doc.data().image,
                     scramble: doc.data().scramble,
-                    public: doc.data().public
+                    public: doc.data().public,
+                    liked: (currentUser.likedSets || []).includes(doc.id)
                 });
             });
             setSets(setsArray);
@@ -133,7 +137,33 @@ export default function ExploreSetsPage() {
                                             <p>Created by {set.ownerName}</p>
                                         </div>
                                         <div className={styles.card_footer}>
-                                            <p style={{ fontFamily: 'Cubano' }}>Created {formatTimestampAgo(typeof set.createdAt === "number" ? Timestamp.fromMillis(set.createdAt) : set.createdAt)}</p>
+                                            <div className={styles.likes_container}>
+                                                <div onClick={async () => {
+                                                    if (currentUser.empty || !finishedLiking) return;
+
+                                                    setFinishedLiking(false);
+                                                    if (!(currentUser.likedSets || []).includes(set.id)) {
+                                                        const newSets = [...sets];
+                                                        newSets[index].likes++;
+                                                        newSets[index].liked = true;
+                                                        setSets(newSets);
+
+                                                        await likeSet(set.id, currentUser, updateUserData);
+                                                    }
+                                                    else {
+                                                        const newSets = [...sets];
+                                                        newSets[index].likes--;
+                                                        newSets[index].liked = false;
+                                                        setSets(newSets);
+
+                                                        await unlikeSet(set.id, currentUser, updateUserData);
+                                                    }
+                                                    setFinishedLiking(true);
+                                                }}>
+                                                    <HeartSVG className={`${styles.heart} ${set.liked && styles.heart_liked}`} />
+                                                </div>
+                                                <p>{set.likes} like{set.likes !== 1 && 's'}</p>
+                                            </div>
                                             <button onClick={async () => {
                                                 if (!signedIn) {
                                                     setError('You must be signed in to host a live game.');

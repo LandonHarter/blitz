@@ -6,7 +6,7 @@ import styles from './page.module.css';
 import { useRouter, usePathname } from 'next/navigation';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
-import { Question, QuestionType, Set } from '@/backend/live/set';
+import { Question, QuestionType, Set, likeSet, unlikeSet } from '@/backend/live/set';
 import Loading from '@/components/loading/loading';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,6 +17,7 @@ import Popup from '@/components/popup/popup';
 import { AnimatePresence, motion } from 'framer-motion';
 import OptionDropdown from './mcq';
 import ShortAnswerDropdown from './sa';
+import { HeartSVG } from '@/svg';
 
 export default function SetPage() {
     const id = usePathname().split('/')[2];
@@ -24,10 +25,11 @@ export default function SetPage() {
 
     const [set, setSet] = useState<any>();
     const [author, setAuthor] = useState<any>();
+    const [isLiked, setIsLiked] = useState<boolean>(false);
     const [loading, setLoading] = useState(true);
     const [questionsOpen, setQuestionsOpen] = useState<boolean[]>([]);
 
-    const { currentUser, signedIn, userLoading } = useContext(UserContext);
+    const { currentUser, signedIn, userLoading, updateUserData } = useContext(UserContext);
 
     const [error, setError] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
@@ -76,6 +78,9 @@ export default function SetPage() {
             const authorData = await getDoc(authorRef);
             setAuthor(authorData.data());
 
+            const likedSets = authorData.data()?.likedSets || [];
+            setIsLiked(likedSets.includes(setData.id));
+
             setLoading(false);
         })();
     }, []);
@@ -94,6 +99,35 @@ export default function SetPage() {
                 <div className={styles.set_image} style={{ backgroundImage: `url('${set.image}')` }} />
                 <h1 className={styles.set_name}>{set.name}</h1>
                 <p className={styles.set_description}>{set.description}</p>
+
+                <div className={styles.set_stats}>
+                    <div onClick={() => {
+                        if (!signedIn) {
+                            setError('You must be signed in to like a set.');
+                            setErrorOpen(true);
+                            return;
+                        }
+
+                        if (isLiked) {
+                            setIsLiked(false);
+                            const newSet = { ...set };
+                            newSet.likes--;
+                            setSet(newSet);
+
+                            unlikeSet(set.id, currentUser, updateUserData);
+                        } else {
+                            setIsLiked(true);
+                            const newSet = { ...set };
+                            newSet.likes++;
+                            setSet(newSet);
+
+                            likeSet(set.id, currentUser, updateUserData);
+                        }
+                    }}>
+                        <HeartSVG className={`${styles.like_icon} ${isLiked && styles.like_icon_liked}`} />
+                    </div>
+                    <p className={styles.like_count}>{set.likes} Like{set.likes !== 1 && 's'}</p>
+                </div>
                 <Link href={`/profile/${author.uid}`} style={{ width: '100%' }}>
                     <div className={styles.author_container}>
                         <Image className={styles.author_pfp} src={author.pfp} alt='pfp' width={40} height={40} />
