@@ -27,16 +27,16 @@ export default function JoinPage() {
     const [info, setInfo] = useState("");
 
     if (userLoading) {
-        return(<Loading />);
+        return (<Loading />);
     } else if (!signedIn) {
-        return(<NeedSignin />);
+        return (<NeedSignin />);
     }
 
-    return(
+    return (
         <div className={styles.background}>
             <div className={styles.content}>
                 <Image src='/bigicon.png' alt="logo" width={333} height={187.5} priority />
-                <input type="text" ref={joinInput} className={styles.join_input} placeholder="Join Code" maxLength={6} onKeyDown={(e) => {if (!/[a-z]/i.test(e.key)) e.preventDefault()}} />
+                <input type="text" ref={joinInput} className={styles.join_input} placeholder="Join Code" maxLength={6} onKeyDown={(e) => { if (!/[a-z]/i.test(e.key)) e.preventDefault() }} />
                 <button className={joining ? styles.join_button_joining : styles.join_button} onClick={async () => {
                     if (joinInput.current === null || currentUser === null) return;
                     if (joinInput.current.value.length !== 6) {
@@ -59,11 +59,11 @@ export default function JoinPage() {
             </div>
 
             <Popup open={errorOpen} setOpen={setErrorOpen} exitButton>
-                <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom:25 }} />
+                <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom: 25 }} />
                 <h1 className={styles.popup_error}>{error}</h1>
             </Popup>
 
-            <Popup open={infoOpen} setOpen={setInfoOpen} exitButton>    
+            <Popup open={infoOpen} setOpen={setInfoOpen} exitButton>
                 <h1 className={styles.popup_error}>{info}</h1>
             </Popup>
         </div>
