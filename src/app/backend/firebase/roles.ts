@@ -10,7 +10,14 @@ export enum Permissions {
     WriteTeacherApplications = 'write:teacherapps',
 };
 
+const rolesCache: { [uid: string]: Roles[] } = {};
+const permissionsCache: { [role: string]: Permissions[] } = {};
+
 export const getPermissions = async (role: Roles): Promise<Permissions[]> => {
+    if (permissionsCache[role]) {
+        return permissionsCache[role];
+    }
+
     const roleRef = doc(collection(firestore, 'roles'), role.toString());
     const roleData = await getDoc(roleRef);
 
@@ -19,10 +26,15 @@ export const getPermissions = async (role: Roles): Promise<Permissions[]> => {
     }
 
     const permissions: string[] = roleData.data().permissions;
+    permissionsCache[role] = permissions as Permissions[];
     return permissions as Permissions[];
 };
 
 export const hasRole = async (uid: string, role: Roles): Promise<boolean> => {
+    if (rolesCache[uid] && rolesCache[uid].includes(role)) {
+        return true;
+    }
+
     const rolesRef = doc(collection(firestore, 'roles'), role.toString());
     const roleData = await getDoc(rolesRef);
 
@@ -34,6 +46,10 @@ export const hasRole = async (uid: string, role: Roles): Promise<boolean> => {
 };
 
 export const getRoles = async (uid: string): Promise<Roles[]> => {
+    if (rolesCache[uid]) {
+        return rolesCache[uid];
+    }
+
     const rolesRef = collection(firestore, 'roles');
     const allRoles = await getDocs(rolesRef);
 
@@ -44,6 +60,7 @@ export const getRoles = async (uid: string): Promise<Roles[]> => {
             userRoles.push(result.id as Roles);
         }
     });
+    rolesCache[uid] = userRoles;
 
     return userRoles;
 };
