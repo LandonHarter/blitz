@@ -58,7 +58,7 @@ export default function ProfilePage() {
         <div className={styles.profile_container}>
             <div className={styles.background_art} style={{ backgroundImage: background }}>
                 <Image src={user.pfp} alt='user profile picture' width={150} height={150} className={styles.user_pfp} />
-                {user.verified && <button className={styles.verified_container} aria-label='Verified Teacher' data-cooltipz-dir="bottom"><Image src='/images/icons/verified.png' alt='verified' width={40} height={40} className={styles.verified_badge} /></button>}
+                {user.verified && <Link href='/apply/teacher'><button className={styles.verified_container} aria-label='Verified Teacher' data-cooltipz-dir="bottom"><Image src='/images/icons/verified.png' alt='verified' width={40} height={40} className={styles.verified_badge} /></button></Link>}
             </div>
             <div className={styles.user_info}>
                 <h1 className={styles.user_name}>{user.name}</h1>

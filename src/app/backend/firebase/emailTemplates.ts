@@ -39,3 +39,65 @@ export const WelcomeTemplate = (name: string) => {
     
     </html>`;
 };
+
+export const AcceptedTeacherTemplate = (name: string, uid: string) => {
+    return `<!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <title></title>
+    </head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+
+    <body>
+        Hello ${name},<br /><br />
+    
+        We are so excited to inform you that you have been accepted as a verified teacher! 🎉 <br /><br />
+        
+        <a href="https://blitzedu.vercel.app/profile/${uid}" target="_blank">See your badge!</a><br /><br />
+    
+        Sincerely,<br />
+        The Blitz Team
+    </body>
+    
+    </html>`;
+};
+
+export const RejectedTeacherTemplate = (name: string) => {
+    return `<!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <title></title>
+    </head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+
+    <body>
+        Hello ${name},<br /><br />
+    
+        Unfortunately, we were unable to accept you into our teacher program. We are sorry for the inconvenience. <br /><br />
+
+        Sincerely,<br />
+        The Blitz Team
+    </body>
+    
+    </html>`;
+};

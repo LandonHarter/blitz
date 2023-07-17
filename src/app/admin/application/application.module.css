@@ -1,0 +1,66 @@
+.container {
+    width: 100vw;
+    height: fit-content;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.application {
+    width: 300px;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: #fff;
+    padding: 20px;
+
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+
+    margin: 10px;
+}
+
+.application h1 {
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+}
+
+.application a {
+    color: #3abfbf;
+}
+
+.bottom_bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+}
+
+.accept_button {
+    width: 100px;
+    height: 40px;
+
+    background-color: var(--correct-color);
+    border: none;
+    border-radius: 10px;
+
+    margin-top: 15px;
+    margin-bottom: -10px;
+    cursor: pointer;
+}
+
+.reject_button {
+    width: 100px;
+    height: 40px;
+
+    background-color: #dc143c;
+    border: none;
+    border-radius: 10px;
+
+    margin-top: 15px;
+    margin-bottom: -10px;
+    cursor: pointer;
+}
