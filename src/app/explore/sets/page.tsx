@@ -35,6 +35,8 @@ export default function ExploreSetsPage() {
 
     useEffect(() => {
         (async () => {
+            if (currentUser.empty) return;
+
             const setsQuery = query(collection(firestore, 'sets'), limit(30), orderBy('likes', 'desc'), where('public', '==', true));
             const docs = await getDocs(setsQuery);
 
@@ -73,7 +75,7 @@ export default function ExploreSetsPage() {
             setSearchIndex(algoliaIndex);
             setLoadingContent(false);
         })();
-    }, []);
+    }, [currentUser]);
 
     const search = async (query: string) => {
         if (!searchClient || !searchIndex) {
@@ -87,7 +89,10 @@ export default function ExploreSetsPage() {
         for (let i = 0; i < hits.length; i++) {
             const hit = hits[i];
             if (hit.public) {
-                filteredHits.push(hit);
+                filteredHits.push({
+                    ...hit,
+                    liked: (currentUser.likedSets || []).includes(hit.objectID),
+                });
             }
         }
 
