@@ -305,7 +305,7 @@ export default function EditPage() {
             updatedAt: serverTimestamp(),
             name: tempSet.name,
             description: tempSet.description,
-            scramble: tempSet.scramble
+            scramble: tempSet.scramble || false,
         });
 
         const userSetsArray = (await getUserData(currentUser.uid)).sets;

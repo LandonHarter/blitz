@@ -1,0 +1,65 @@
+.popup_error {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 50px;
+    letter-spacing: 2px;
+}
+
+.study_title {
+    color: var(--text-color);
+    font-size: 35px;
+
+    margin: 20px 40px;
+}
+
+.study_methods {
+    width: calc(100vw - 80px);
+    height: fit-content;
+
+    margin: 0 40px;
+    margin-bottom: 40px;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.study_method {
+    display: flex;
+    align-items: center;
+
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    border: none;
+
+    font-size: 30px;
+    font-family: 'SF Pro Display';
+
+    padding: 10px 20px;
+    margin-right: 20px;
+
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+
+    width: 250px;
+    height: 70px;
+
+    cursor: pointer;
+    transition: 0.1s ease-in-out;
+}
+
+.study_method:active {
+    transform: scale(0.975);
+}
+
+.study_method img {
+    margin-right: 10px;
+}
+
+.study_method_selected {
+    background-color: #ae40da !important;
+}
+
+.study_method_container {
+    width: calc(100vw - 80px);
+    height: fit-content;
+    margin: 40px 20px;
+}
