@@ -57,6 +57,13 @@
     flex-direction: column;
 }
 
+.footer_columns_container {
+    width: fit-content;
+    height: fit-content;
+
+    display: flex;
+}
+
 .footer_section_column_link {
     text-decoration: none;
     font-family: 'SF Pro Display';
@@ -92,7 +99,7 @@
     font-size: 14px;
     font-weight: 500;
 
-    color: #8c92c5; 
+    color: #8c92c5;
 }
 
 .footer_copyright a {
@@ -103,7 +110,7 @@
 
     margin: 0 10px;
 
-    color: #8c92c5; 
+    color: #8c92c5;
 }
 
 .footer_copyright a:hover {
