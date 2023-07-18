@@ -5,9 +5,9 @@ import { GameUser } from "./user";
 import generateId from "@backend/id";
 import { EventType } from "@backend/live/events/event";
 import { AnalyticsEventType, pushAnalyticsEvent } from "../firebase/analytics";
-import { collection, getDoc, doc } from "firebase/firestore";
+import { collection, getDoc, doc, updateDoc, increment } from "firebase/firestore";
 
-export const createGame = async (hostId:string, setId:string) => {
+export const createGame = async (hostId: string, setId: string) => {
     const setData = await getDoc(doc(collection(firestore, 'sets'), setId));
     if (!setData.exists()) {
         return {
@@ -41,6 +41,10 @@ export const createGame = async (hostId:string, setId:string) => {
         data: {},
     });
 
+    updateDoc(doc(collection(firestore, 'site'), 'metrics'), {
+        numGamesPlayed: increment(1),
+    });
+
     return {
         success: true,
         error: '',
@@ -48,7 +52,7 @@ export const createGame = async (hostId:string, setId:string) => {
     };
 };
 
-export const joinGame = async (gameCode:string, user:User) => {
+export const joinGame = async (gameCode: string, user: User) => {
     const formattedGameCode = gameCode.toUpperCase();
     const gameRef = ref(realtimeDb, `live-games/${formattedGameCode}`);
     const usersRef = ref(realtimeDb, `live-games/${formattedGameCode}/users/${user.uid}`);
@@ -88,12 +92,12 @@ export const joinGame = async (gameCode:string, user:User) => {
     };
 };
 
-export const leaveGame = async (gameCode:string, user:User) => {
+export const leaveGame = async (gameCode: string, user: User) => {
     const usersRef = ref(realtimeDb, `live-games/${gameCode}/users/${user.uid}`);
     await remove(usersRef);
 };
 
-export const subscribeToGame = (gameCode:string, gameEvents:Function, userJoin:Function, userLeave:Function) => {
+export const subscribeToGame = (gameCode: string, gameEvents: Function, userJoin: Function, userLeave: Function) => {
     const usersRef = ref(realtimeDb, `live-games/${gameCode}/users/`);
     const gameRef = ref(realtimeDb, `live-games/${gameCode}/events/`);
 
@@ -127,7 +131,7 @@ export const subscribeToGame = (gameCode:string, gameEvents:Function, userJoin:F
     return { unsubscribeEvent, unsubscribeNewPlayer, unsubscribeLeavePlayer };
 }
 
-export const getGameData = async (gameCode:string) => {
+export const getGameData = async (gameCode: string) => {
     const gameRef = ref(realtimeDb, `live-games/${gameCode}/`);
     const gameSnapshot = await get(gameRef);
 
@@ -139,7 +143,7 @@ export const getGameData = async (gameCode:string) => {
     const usersRef = ref(realtimeDb, `live-games/${gameCode}/users/`);
     const usersSnapshot = await get(usersRef);
 
-    const data:GameData = {
+    const data: GameData = {
         host: gameData.host,
         setId: gameData.gameSetId,
         numPlayers: usersSnapshot.size,
@@ -148,12 +152,12 @@ export const getGameData = async (gameCode:string) => {
     return data;
 };
 
-export const getUsersInGame = async (gameCode:string) => {
+export const getUsersInGame = async (gameCode: string) => {
     const usersRef = ref(realtimeDb, `live-games/${gameCode}/users/`);
     const usersSnapshot = await get(usersRef);
     const users = usersSnapshot.val();
 
-    const usersArray:GameUser[] = [];
+    const usersArray: GameUser[] = [];
     for (const key in users) {
         usersArray.push({
             name: users[key].name,
@@ -167,13 +171,13 @@ export const getUsersInGame = async (gameCode:string) => {
     return usersArray;
 }
 
-export const getNumUsersInGame = async (gameCode:string) => {
+export const getNumUsersInGame = async (gameCode: string) => {
     const usersRef = ref(realtimeDb, `live-games/${gameCode}/users/`);
     const usersSnapshot = await get(usersRef);
     return usersSnapshot.size;
 };
 
-export const pushGameEvent = async (gameCode:string, event:GameEvent) => {
+export const pushGameEvent = async (gameCode: string, event: GameEvent) => {
     const eventsRef = ref(realtimeDb, `live-games/${gameCode}/events/${generateId()}`);
     await set(eventsRef, {
         eventType: event.eventType.toString(),
@@ -182,7 +186,7 @@ export const pushGameEvent = async (gameCode:string, event:GameEvent) => {
     });
 };
 
-export const startGame = async (id:string) => {
+export const startGame = async (id: string) => {
     const gameRef = ref(realtimeDb, `live-games/${id}/`);
     await update(gameRef, {
         started: true,
@@ -195,12 +199,12 @@ export const startGame = async (id:string) => {
     });
 };
 
-export const deleteGame = async (id:string) => {
+export const deleteGame = async (id: string) => {
     const gameRef = ref(realtimeDb, `live-games/${id}/`);
     await remove(gameRef);
 }
 
-export const kickPlayer = async (gameId:string, gameUser:GameUser) => {
+export const kickPlayer = async (gameId: string, gameUser: GameUser) => {
     const usersRef = ref(realtimeDb, `live-games/${gameId}/users/${gameUser.uid}`);
     await remove(usersRef);
 
@@ -213,7 +217,7 @@ export const kickPlayer = async (gameId:string, gameUser:GameUser) => {
     });
 };
 
-export const awardPoints = async (gameId:string, uid:string, points:number) => {
+export const awardPoints = async (gameId: string, uid: string, points: number) => {
     const usersRef = ref(realtimeDb, `live-games/${gameId}/users/${uid}`);
     const gameUserSnapshot = await get(usersRef);
     if (!gameUserSnapshot.exists()) {
@@ -237,13 +241,13 @@ const generateGameCode = () => {
 };
 
 export interface GameData {
-    host:string;
-    setId:string;
-    numPlayers:number;
+    host: string;
+    setId: string;
+    numPlayers: number;
 }
 
 export interface GameEvent {
-    eventType:EventType;
-    eventData:any;
-    eventId:string;
+    eventType: EventType;
+    eventData: any;
+    eventId: string;
 }

@@ -53,3 +53,25 @@ export const arrayMove = (arr: any[], oldIndex: number, newIndex: number) => {
     arr.splice(newIndex, 0, arr.splice(oldIndex, 1)[0]);
     return arr;
 };
+
+export const formatNumber = (num: number) => {
+    if (num < 1000) return num.toString();
+
+    const numStr = num.toString();
+    const numStrLen = numStr.length;
+    if (numStrLen <= 6) {
+        const thousands = numStr.substring(0, numStrLen - 3);
+        return thousands + "K+";
+    } else if (numStrLen <= 9) {
+        const millions = numStr.substring(0, numStrLen - 6);
+        return millions + "M+";
+    } else if (numStrLen <= 12) {
+        const billions = numStr.substring(0, numStrLen - 9);
+        return billions + "B+";
+    } else if (numStrLen <= 15) {
+        const trillions = numStr.substring(0, numStrLen - 12);
+        return trillions + "T+";
+    }
+
+    return num.toString();
+}

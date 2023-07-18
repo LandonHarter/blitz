@@ -1,0 +1,217 @@
+.about {
+    width: 100vw;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.stats_banner {
+    border-radius: 15px;
+    width: 70vw;
+    height: 250px;
+
+    background-color: #808dff44;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stats {
+    width: calc((100% / 3) - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 0 40px;
+}
+
+.stats_number {
+    color: var(--primary-color);
+    font-size: 55px;
+    font-family: 'SF Pro Display';
+    text-align: center;
+
+    margin-bottom: 10px;
+}
+
+.stats_text {
+    color: var(--primary-color);
+    font-size: 18px;
+    font-family: 'SF Pro Display';
+
+    width: 65%;
+    text-align: center;
+}
+
+.hero {
+    width: 100vw;
+    height: fit-content;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    margin-bottom: 150px;
+    padding-top: 100px;
+}
+
+.hero_left {
+    width: 50vw;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.hero_right {
+    width: 50vw;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.text_container {
+    width: fit-content;
+    margin-right: 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.small_title {
+    color: var(--primary-color);
+    font-size: 25px;
+    font-family: 'SF Pro Display';
+
+    margin-bottom: 10px;
+}
+
+.big_title {
+    width: 35vw;
+
+    color: var(--text-color);
+    font-size: 55px;
+    font-family: 'SF Pro Display';
+
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    width: 40%;
+    margin-right: 30%;
+    color: var(--text-color-light);
+    font-family: 'SF Pro Display';
+    font-size: 20px;
+}
+
+.section {
+    width: 100%;
+    margin-top: 125px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.section_content {
+    margin-left: 7%;
+}
+
+.section_small_title {
+    color: var(--primary-color);
+    font-size: 25px;
+    font-family: 'SF Pro Display';
+
+    margin-bottom: 10px;
+}
+
+.section_big_title {
+    color: var(--text-color);
+    font-size: 45px;
+    font-family: 'SF Pro Display';
+
+    margin-bottom: 10px;
+}
+
+.story_text {
+    width: calc(40%);
+
+    color: var(--text-color-light);
+    font-size: 24px;
+    font-family: 'SF Pro Display';
+}
+
+.story_text_content {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 30px;
+}
+
+.story_text a {
+    color: var(--primary-color);
+    font-size: 24px;
+    font-family: 'SF Pro Display';
+    cursor: pointer;
+}
+
+.portrait {
+    width: 325px;
+    height: 400px;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('/images/portraits/landon.png');
+    background-color: black;
+    background-blend-mode: screen;
+
+    display: flex;
+    align-items: flex-end;
+
+    margin: 30px 0;
+
+    border-radius: 10px;
+}
+
+.portrait_data {
+    background-image: linear-gradient(#FFFFFF80, #FFFFFF4D);
+    border-radius: 0 0 10px 10px;
+    backdrop-filter: blur(5px);
+    padding: 10px;
+    border-top: 1px solid #ffffffa2;
+
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.portrait_name {
+    font-family: 'SF Pro Display';
+    font-size: 28px;
+}
+
+.portrait_title {
+    font-family: 'SF Pro Display';
+    font-size: 20px;
+
+    margin-bottom: 30px;
+}
+
+.portrait_links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.portrait_link {
+    margin: 0 5px;
+}

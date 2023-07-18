@@ -4,7 +4,7 @@ import { useContext, useState } from 'react';
 import styles from './page.module.css';
 import Popup from '@/components/popup/popup';
 import Loading from '@/components/loading/loading';
-import { arrayUnion, collection, doc, serverTimestamp, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
+import { arrayUnion, collection, doc, serverTimestamp, setDoc, updateDoc, Timestamp, increment } from 'firebase/firestore';
 import { firestore, storage } from '@baas/init';
 import { useRouter } from 'next/navigation';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
@@ -97,7 +97,6 @@ export default function CreatePage() {
         });
 
         const userRef = doc(collection(firestore, 'users'), currentUser.uid);
-
         await updateDoc(userRef, {
             sets: arrayUnion({
                 id: newSetId,
@@ -106,6 +105,10 @@ export default function CreatePage() {
                 image: imageUrl,
                 updatedAt: Timestamp.now()
             })
+        });
+
+        await updateDoc(doc(collection(firestore, 'site'), 'metrics'), {
+            numSets: increment(1)
         });
 
         return {

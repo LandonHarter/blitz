@@ -1,7 +1,7 @@
 import { auth, firestore } from "@baas/init";
 import { randomInt } from "crypto";
 import { GithubAuthProvider, GoogleAuthProvider, OAuthProvider, UserCredential, getAdditionalUserInfo, signInWithPopup } from "firebase/auth";
-import { Timestamp, collection, doc, setDoc } from "firebase/firestore";
+import { Timestamp, collection, doc, increment, setDoc, updateDoc } from "firebase/firestore";
 import { User, UserProfile } from '@baas/user';
 import { getRandomProfileBackground } from "../color";
 import { sendEmailFromTemplate } from "./email";
@@ -74,6 +74,10 @@ const setUserData = async (credentials: UserCredential) => {
 
     const userProfileRef = doc(collection(firestore, 'users-profile'), user.uid);
     await setDoc(userProfileRef, userProfileObject);
+
+    await updateDoc(doc(collection(firestore, 'site'), 'metrics'), {
+        numUsers: increment(1)
+    });
 
     return Promise.resolve();
 };
