@@ -15,6 +15,8 @@ export default function MCQuestion(props: { question: Question, uid: string, gam
 
     const correctAnswerContext = useContext(CorrectAnswerContext);
 
+    const colors: string[] = [styles.question_red, styles.question_blue, styles.question_green, styles.question_yellow];
+
     const submitAnswer = async (optionIndex: number) => {
         if (props.revealAnswer) return;
         correctAnswerContext.set(question.options[optionIndex].correct);
@@ -35,19 +37,16 @@ export default function MCQuestion(props: { question: Question, uid: string, gam
     if (props.revealAnswer) {
         return (
             <ClientBaseQuestion question={question}>
-                <div className={styles.questions}>
-                    <div className={`${styles.question_box} ${styles.question_red} ${question.options[0].correct ? styles.option_correct : styles.option_incorrect}`}>
-                        <h1 className={styles.question_option}>{question.options[0].option}</h1>
-                    </div>
-                    <div className={`${styles.question_box} ${styles.question_blue} ${question.options[1].correct ? styles.option_correct : styles.option_incorrect}`}>
-                        <h1 className={styles.question_option}>{question.options[1].option}</h1>
-                    </div>
-                    <div className={`${styles.question_box} ${styles.question_green} ${question.options[2].correct ? styles.option_correct : styles.option_incorrect}`}>
-                        <h1 className={styles.question_option}>{question.options[2].option}</h1>
-                    </div>
-                    <div className={`${styles.question_box} ${styles.question_yellow} ${question.options[3].correct ? styles.option_correct : styles.option_incorrect}`}>
-                        <h1 className={styles.question_option}>{question.options[3].option}</h1>
-                    </div>
+                <div className={styles.questions} style={{
+                    '--num-rows': Math.ceil(question.options.length / 2)
+                } as React.CSSProperties}>
+                    {question.options.map((option, index) => {
+                        return (
+                            <div className={`${styles.question_box} ${colors[index % colors.length]} ${option.correct ? styles.option_correct : styles.option_incorrect}`} key={index}>
+                                <h1 className={styles.question_option}>{option.option}</h1>
+                            </div>
+                        )
+                    })}
                 </div>
 
                 <AnswerBanner correct={correctAnswerContext.get} points={props.question.questionPoints || 100} />
@@ -57,27 +56,18 @@ export default function MCQuestion(props: { question: Question, uid: string, gam
 
     return (
         <ClientBaseQuestion question={question}>
-            <div className={styles.questions}>
-                <div className={`${styles.question_box} ${styles.question_red}`} onClick={() => {
-                    submitAnswer(0);
-                }}>
-                    <h1 className={styles.question_option}>{question.options[0].option}</h1>
-                </div>
-                <div className={`${styles.question_box} ${styles.question_blue}`} onClick={() => {
-                    submitAnswer(1);
-                }}>
-                    <h1 className={styles.question_option}>{question.options[1].option}</h1>
-                </div>
-                <div className={`${styles.question_box} ${styles.question_green}`} onClick={() => {
-                    submitAnswer(2);
-                }}>
-                    <h1 className={styles.question_option}>{question.options[2].option}</h1>
-                </div>
-                <div className={`${styles.question_box} ${styles.question_yellow}`} onClick={() => {
-                    submitAnswer(3);
-                }}>
-                    <h1 className={styles.question_option}>{question.options[3].option}</h1>
-                </div>
+            <div className={styles.questions} style={{
+                '--num-rows': Math.ceil(question.options.length / 2)
+            } as React.CSSProperties}>
+                {question.options.map((option, index) => {
+                    return (
+                        <div className={`${styles.question_box} ${colors[index % colors.length]}`} onClick={() => {
+                            submitAnswer(index);
+                        }} key={index}>
+                            <h1 className={styles.question_option}>{option.option}</h1>
+                        </div>
+                    );
+                })}
             </div>
         </ClientBaseQuestion>
     )

@@ -6,11 +6,18 @@ import questionStyles from './basestyles.module.css'
 import styles from './tf.module.css'
 import { Question } from '@/backend/live/set'
 import QuestionImage from './questionimage'
+import Image from 'next/image'
 
-export default function TrueFalseQuestion(props: { question: Question, questionIndex: number, questionUiData: any[], setQuestions: Dispatch<SetStateAction<any>> }) {
+export default function TrueFalseQuestion(props: { question: Question, questionIndex: number, questionUiData: any[], setQuestions: Dispatch<SetStateAction<any>>, settingsPopup: Dispatch<SetStateAction<any>> }) {
     return (
         <motion.div initial={{ scaleY: 0 }} animate={{ scaleY: props.questionUiData[props.questionIndex].open ? 1 : 0 }} style={{ transformOrigin: 'top', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <QuestionImage question={props.question} setQuestions={props.setQuestions} />
+            <Image src='/images/icons/settings.png' alt='settings' width={30} height={30} onClick={() => {
+                props.settingsPopup({
+                    open: true,
+                    questionIndex: props.questionIndex,
+                });
+            }} className={questionStyles.settings} />
 
             <div className={styles.true_false_container}>
                 <div className={`${styles.option} ${questionStyles.option_red}`}>

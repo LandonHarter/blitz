@@ -213,14 +213,16 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
             const scrambledOptionsQuestions = [...questionsArray];
             for (let i = 0; i < scrambledOptionsQuestions.length; i++) {
                 const question = scrambledOptionsQuestions[i];
-                if (question.type !== QuestionType.MultipleChoice || !question.scramble) continue;
+                if (!question.scramble) continue;
 
-                const scrambledOptions = [...question.options];
-                for (let j = 0; j < scrambledOptions.length; j++) {
-                    const k = Math.floor(Math.random() * (j + 1));
-                    [scrambledOptions[j], scrambledOptions[k]] = [scrambledOptions[k], scrambledOptions[j]];
+                if (question.type === QuestionType.MultipleChoice || question.type === QuestionType.TrueFalse) {
+                    const scrambledOptions = [...question.options];
+                    for (let j = 0; j < scrambledOptions.length; j++) {
+                        const k = Math.floor(Math.random() * (j + 1));
+                        [scrambledOptions[j], scrambledOptions[k]] = [scrambledOptions[k], scrambledOptions[j]];
+                    }
+                    question.options = scrambledOptions;
                 }
-                question.options = scrambledOptions;
             }
 
             const scrambledQuestionsArray = [...scrambledOptionsQuestions];
@@ -264,7 +266,6 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
             setCurrentQuestionIndex(nextQuestionIndex);
 
             const questionsArray = scramble ? scrambledQuestions : questions;
-            console.log(questionsArray);
             await pushGameEvent(props.gameId, {
                 eventType: EventType.NextQuestion,
                 eventData: {

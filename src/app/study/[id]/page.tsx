@@ -27,7 +27,7 @@ export default function StudyPage() {
     const [error, setError] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
 
-    const [studyMethod, setStudyMethod] = useState('none');
+    const [studyMethod, setStudyMethod] = useState('flashcards');
 
     const getStudyMethodUI = () => {
         switch (studyMethod) {

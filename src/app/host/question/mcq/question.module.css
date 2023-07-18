@@ -1,15 +1,16 @@
 .questions {
+    --num-rows: 3;
     width: 100vw;
     height: var(--bottom-bar-height);
 
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(var(--num-rows), 1fr);
 }
 
 .question_box {
     width: calc(50vw - 20px);
-    height: calc((var(--bottom-bar-height) / 2) - 20px);
+    height: calc((var(--bottom-bar-height) / var(--num-rows)) - 20px);
 
     display: flex;
     flex-direction: column;

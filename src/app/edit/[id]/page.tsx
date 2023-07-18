@@ -337,17 +337,17 @@ export default function EditPage() {
         } else if (question.type === QuestionType.TrueFalse) {
             return (
                 <TrueFalseQuestion question={question} questionIndex={index}
-                    questionUiData={questionUiData} setQuestions={setQuestions} />
+                    questionUiData={questionUiData} setQuestions={setQuestions} settingsPopup={setQuestionSettings} />
             );
         } else if (question.type === QuestionType.ShortAnswer) {
             return (
                 <ShortAnswerQuestion question={question} questionIndex={index}
-                    questionUiData={questionUiData} setQuestions={setQuestions} />
+                    questionUiData={questionUiData} setQuestions={setQuestions} settingsPopup={setQuestionSettings} />
             );
         } else if (question.type === QuestionType.Flashcard) {
             return (
                 <FlashcardQuestion question={question} questionIndex={index}
-                    questionUiData={questionUiData} setQuestions={setQuestions} />
+                    questionUiData={questionUiData} setQuestions={setQuestions} settingsPopup={setQuestionSettings} />
             );
         }
 

@@ -55,3 +55,51 @@
 .option_input::placeholder {
     color: var(--bg);
 }
+
+.controls_bar {
+    width: calc(100% - 20px);
+    margin: 0 10px;
+
+    align-self: flex-start;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.controls_bar h1 {
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 30px;
+}
+
+.add_remove_answer {
+    background-color: transparent;
+
+    width: 50px;
+    height: 50px;
+
+    border: none;
+    border-radius: 100%;
+
+    margin-left: 10px;
+
+    cursor: pointer;
+    transition: 0.15s ease-in-out;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add_remove_answer p {
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 40px;
+
+    transform: translateY(-2px);
+}
+
+.add_remove_answer:hover {
+    background-color: var(--bg-dark);
+}
