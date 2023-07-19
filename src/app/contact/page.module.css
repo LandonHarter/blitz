@@ -42,7 +42,7 @@
 }
 
 .card {
-    width: 500px;
+    width: calc(33% - 200px);
     height: fit-content;
 
     display: flex;
