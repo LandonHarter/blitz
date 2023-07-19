@@ -1,0 +1,130 @@
+.page_container {
+    width: 100vw;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero {
+    width: 100vw;
+    height: fit-content;
+
+    margin-top: 150px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.small_title {
+    color: var(--primary-color);
+    font-family: 'SF Pro Display';
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.big_title {
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 55px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    color: var(--text-color-light);
+    font-family: 'SF Pro Display';
+    font-size: 28px;
+    text-align: center;
+}
+
+.gradient_word {
+    background: linear-gradient(45deg, #ff4800 0%, #FFC700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.features {
+    width: 80vw;
+    height: fit-content;
+
+    margin-top: 150px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.feature {
+    width: calc(33% - 40px);
+    height: 200px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 0 20px;
+    padding: 20px;
+}
+
+.feature_image {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+
+.image_ring_1 {
+    position: absolute;
+
+    width: 70px;
+    height: 70px;
+
+    background-color: var(--primary-color);
+    border-radius: 100%;
+
+    opacity: 0.1;
+}
+
+.image_ring_2 {
+    position: absolute;
+
+    width: 50px;
+    height: 50px;
+
+    background-color: var(--primary-color);
+    border-radius: 100%;
+
+    opacity: 0.15;
+}
+
+.feature_image_content {
+    position: absolute;
+    z-index: 2;
+}
+
+.feature_title {
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 30px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.feature_description {
+    width: 70%;
+    color: var(--text-color-light);
+    font-family: 'SF Pro Display';
+    font-size: 18px;
+    text-align: center;
+}
