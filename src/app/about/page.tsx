@@ -29,6 +29,8 @@ export default function AboutPage() {
 
     return (
         <div className={styles.about}>
+            <div className='bg_scrolling' />
+
             <div className={styles.hero}>
                 <div className={styles.hero_left}>
                     <div className={styles.text_container}>

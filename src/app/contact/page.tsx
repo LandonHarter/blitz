@@ -22,7 +22,7 @@ export default function ContactPage() {
 
     return (
         <div>
-            <div className={styles.bg_scrolling} />
+            <div className='bg_scrolling' />
 
             <div className={styles.hero}>
                 <h1 className={styles.small_title}>Contact Us</h1>
