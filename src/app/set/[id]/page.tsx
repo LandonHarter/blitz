@@ -1,8 +1,8 @@
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import SetContent from "./set";
 import { getSet } from "@/backend/live/set";
 
-export async function generateMetadata({ params, seachParams }: any, parent?: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params, seachParams }: any): Promise<Metadata> {
     const id = params.id;
     const setData = await getSet(id);
 
