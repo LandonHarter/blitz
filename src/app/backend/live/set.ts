@@ -179,7 +179,7 @@ export const getSet = async (setId: string) => {
     const setData = await getDoc(setRef);
 
     if (!setData.exists()) {
-        return Promise.reject();
+        return null;
     }
 
     const set = setData.data();

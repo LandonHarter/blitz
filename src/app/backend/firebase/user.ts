@@ -32,7 +32,12 @@ export interface UserSet {
 
 }
 
+const userCache: { [key: string]: User } = {};
 export async function getUserData(userId: string) {
+    if (userCache[userId]) {
+        return Promise.resolve(userCache[userId]);
+    }
+
     const userRef = doc(collection(firestore, 'users'), userId);
     const userData = await getDoc(userRef);
 
@@ -48,11 +53,11 @@ export async function getUserData(userId: string) {
             createdAt: userData.data().createdAt,
             verified: userData.data().verified
         };
-
+        userCache[userId] = newUser;
         return Promise.resolve(newUser);
     }
 
-    return Promise.reject();
+    return null;
 }
 
 export async function getUserProfileData(userId: string) {

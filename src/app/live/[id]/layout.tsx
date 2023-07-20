@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Live Game - Blitz",
+  title: "Live Game • Blitz",
 };
 
 export default function LiveLayout({

@@ -1,6 +1,9 @@
-'use client'
-
+import { Metadata } from 'next';
 import styles from './page.module.css';
+
+export const metadata: Metadata = {
+    title: 'Teacher Application Requisites • Blitz',
+};
 
 export default function ApplyTeacherRequisitesPage() {
     return (
