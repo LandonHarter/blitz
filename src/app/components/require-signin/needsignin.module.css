@@ -8,48 +8,90 @@
 
     background-color: var(--bg);
     z-index: 900;
+}
+
+.container {
+    width: 100vw;
+    height: calc(70vh - 134px);
 
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-}
-
-.content {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-
-    transform: translateY(-100px);
 }
 
-.title {
-    font-weight: bold;
-    width: 600px;
-    text-align: center;
-    font-family: 'SF Pro Display';
-    font-size: 60px;
-    color: var(--text-color);
-    margin-bottom: 1rem;
-}
-
-.gohome {
-    font-family: 'SF Pro Display';
+.small_title {
+    color: var(--primary-color);
     font-size: 24px;
-    font-weight: 500;
-    color: var(--bg);
-    margin-top: 15px;
+    font-family: 'SF Pro Display';
 
+    margin-bottom: 25px;
+}
+
+.big_title {
+    color: var(--text-color);
+    font-size: 55px;
+    font-family: 'SF Pro Display';
+
+    text-align: center;
+    width: 60%;
+
+    margin-bottom: 25px;
+}
+
+.subtitle {
+    color: var(--text-color-light);
+    font-size: 30px;
+    font-family: 'SF Pro Display';
+
+    width: 40%;
+    text-align: center;
+
+    margin-bottom: 50px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.go_back {
     padding: 10px 20px;
-    border-radius: 10px;
+    background-color: var(--bg-dark);
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 28px;
+
+    margin: 0 15px;
+
     border: none;
-    background-color: var(--primary-color);
+    border-radius: 10px;
 
     transition: 0.1s ease-in-out;
     cursor: pointer;
 }
 
-.gohome:active {
+.go_back:active {
+    transform: scale(0.95);
+}
+
+.go_home {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    font-family: 'SF Pro Display';
+    font-size: 28px;
+
+    margin: 0 15px;
+
+    border: none;
+    border-radius: 10px;
+
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+.go_home:active {
     transform: scale(0.95);
 }

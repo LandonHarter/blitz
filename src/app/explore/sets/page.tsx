@@ -35,8 +35,6 @@ export default function ExploreSetsPage() {
 
     useEffect(() => {
         (async () => {
-            if (currentUser.empty) return;
-
             const setsQuery = query(collection(firestore, 'sets'), limit(30), orderBy('likes', 'desc'), where('public', '==', true));
             const docs = await getDocs(setsQuery);
 
