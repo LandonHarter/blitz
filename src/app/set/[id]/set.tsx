@@ -6,7 +6,7 @@ import styles from './page.module.css';
 import { useRouter, usePathname } from 'next/navigation';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
-import { Question, QuestionType, Set, likeSet, unlikeSet } from '@/backend/live/set';
+import { Question, QuestionType, Set, getSet, likeSet, unlikeSet } from '@/backend/live/set';
 import Loading from '@/components/loading/loading';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -29,7 +29,7 @@ export default function SetContent() {
     const [loading, setLoading] = useState(true);
     const [questionsOpen, setQuestionsOpen] = useState<boolean[]>([]);
 
-    const { currentUser, signedIn, userLoading, updateUserData } = useContext(UserContext);
+    const { currentUser, signedIn, updateUserData } = useContext(UserContext);
 
     const [error, setError] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
@@ -51,30 +51,16 @@ export default function SetContent() {
         }
 
         (async () => {
-            const setRef = doc(collection(firestore, 'sets'), id);
-            const setData = await getDoc(setRef);
-
-            if (!setData.exists()) {
+            const setData: any = await getSet(id);
+            if (!setData) {
                 router.push('/');
                 return;
             }
 
-            const set = setData.data();
-            setSet({
-                id: setData.id,
-                name: set.name,
-                description: set.description,
-                image: set.image,
-                questions: set.questions as Question[],
-                likes: set.likes,
-                numQuestions: set.numQuestions,
-                createdAt: set.createdAt,
-                updatedAt: set.updatedAt,
-                public: set.public,
-            });
-            setQuestionsOpen(new Array(set.questions.length).fill(false));
+            setSet(setData);
+            setQuestionsOpen(new Array(setData.questions.length).fill(false));
 
-            const authorRef = doc(collection(firestore, 'users'), set.owner);
+            const authorRef = doc(collection(firestore, 'users'), setData.owner);
             const authorData = await getDoc(authorRef);
             setAuthor(authorData.data());
 

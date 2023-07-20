@@ -1,4 +1,4 @@
-import { arrayUnion, collection, doc, increment, updateDoc } from "firebase/firestore";
+import { arrayUnion, collection, doc, increment, updateDoc, getDoc } from "firebase/firestore";
 import { User } from "../firebase/user";
 import generateId from "../id";
 import { firestore } from "../firebase/init";
@@ -168,3 +168,35 @@ export const unlikeSet = async (setId: string, currentUser: User, updateUserData
 
     await updateUserData();
 }
+
+const cachedSets: { [key: string]: any } = {};
+export const getSet = async (setId: string) => {
+    if (cachedSets[setId]) {
+        return cachedSets[setId];
+    }
+
+    const setRef = doc(collection(firestore, 'sets'), setId);
+    const setData = await getDoc(setRef);
+
+    if (!setData.exists()) {
+        return Promise.reject();
+    }
+
+    const set = setData.data();
+    const setObj = {
+        id: setData.id,
+        name: set.name,
+        description: set.description,
+        image: set.image,
+        questions: set.questions as Question[],
+        likes: set.likes,
+        numQuestions: set.numQuestions,
+        createdAt: set.createdAt,
+        updatedAt: set.updatedAt,
+        public: set.public,
+        owner: set.owner,
+    };
+    cachedSets[setId] = setObj;
+
+    return setObj;
+};
