@@ -4,11 +4,6 @@ import Footer from '@/components/footer/footer';
 import styles from './page.module.css';
 import Image from 'next/image';
 
-export const metadata = {
-    title: 'Blitz | Why Us?',
-    description: 'Blitz offers a plethera of FREE services that improve your studying experience.',
-};
-
 export default function WhyUsPage() {
     return (
         <div className={styles.page_container}>
