@@ -308,7 +308,12 @@ export default function EditContent() {
             scramble: tempSet.scramble || false,
         });
 
-        const userSetsArray = (await getUserData(currentUser.uid)).sets;
+        const user = await getUserData(currentUser.uid);
+        if (!user) {
+            return;
+        }
+
+        const userSetsArray = user.sets;
         const setIndex = userSetsArray.findIndex((set) => set.id === id);
         userSetsArray[setIndex].updatedAt = Timestamp.now();
         await updateDoc(doc(collection(firestore, 'users'), currentUser.uid), {
