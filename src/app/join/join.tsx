@@ -1,11 +1,10 @@
 'use client'
 
-import useCurrentUser from '@hooks/useCurrentUser';
 import styles from './page.module.css';
 
 import Image from 'next/image';
 import { useContext, useRef } from 'react';
-import { createGame, joinGame } from '@/backend/live/game';
+import { joinGame } from '@/backend/live/game';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Popup from '@/components/popup/popup';

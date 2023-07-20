@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import JoinPageContent from "./join";
 
 export const metadata: Metadata = {
-    title: "Join Game - Blitz",
+    title: "Join Game • Blitz",
     description: "Join a live Blitz game!",
 }
 

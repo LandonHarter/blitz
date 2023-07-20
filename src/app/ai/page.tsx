@@ -1,11 +1,14 @@
-'use client'
-
 import Image from 'next/image';
 import styles from './page.module.css';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: "AI Tools • Blitz",
+    description: "A collection of AI tools to boost study productivity, in and out of the classroom."
+};
 
 export default function AIPage() {
-
     const AICard = (props: { title: string, description: string, image: string, link: string }) => {
         return (
             <Link href={props.link} className={styles.ai_card}>
