@@ -11,15 +11,11 @@ export default function RootLayoutContent(props: { children: React.ReactNode }) 
     const { currentUser, signedIn, userLoading, updateUserData } = useCurrentUser();
 
     return (
-        <html lang="en">
-            <body>
-                <SignInContext.Provider value={{ get: signInPopup, set: setSignInPopup }}>
-                    <UserContext.Provider value={{ currentUser: currentUser, signedIn: signedIn, userLoading: userLoading, updateUserData: updateUserData }}>
-                        <Header />
-                        {props.children}
-                    </UserContext.Provider>
-                </SignInContext.Provider>
-            </body>
-        </html>
+        <SignInContext.Provider value={{ get: signInPopup, set: setSignInPopup }}>
+            <UserContext.Provider value={{ currentUser: currentUser, signedIn: signedIn, userLoading: userLoading, updateUserData: updateUserData }}>
+                <Header />
+                {props.children}
+            </UserContext.Provider>
+        </SignInContext.Provider>
     );
 }
