@@ -182,3 +182,29 @@
     font-family: 'SF Pro Display';
     margin-left: 20px;
 }
+
+.correct_indicator {
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    background-color: var(--bg);
+    pointer-events: none;
+
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.correct_indicator h1 {
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 50px;
+    margin-top: 20px;
+}

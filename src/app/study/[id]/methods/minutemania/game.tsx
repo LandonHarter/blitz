@@ -6,6 +6,7 @@ import styles from './game.module.css';
 import Popup from "@/components/popup/popup";
 import { QuestionType } from "@/backend/live/set";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function MinuteManiaStudyMethod(props: { set: any }) {
     const [currentQuestion, setCurrentQuestion] = useState<any>();
@@ -14,7 +15,10 @@ export default function MinuteManiaStudyMethod(props: { set: any }) {
     const [timer, setTimer] = useState(5);
     const [gameState, setGameState] = useState('pregame');
     const [isHighscore, setIsHighscore] = useState(false);
+    const [correctIndicator, setCorrectIndicator] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(false);
 
+    const gameLength = 60;
     const backgroundColors = ['#C60929', '#0542B9', '#106B03', '#D89E00'];
 
     useEffect(() => {
@@ -113,18 +117,23 @@ export default function MinuteManiaStudyMethod(props: { set: any }) {
                             setCurrentQuestionIndex(newIndex);
                             setCurrentQuestion(props.set.questions[newIndex]);
 
-                            startTimer(60);
+                            startTimer(gameLength);
                         }}>Start</button>
                     </Popup>
                 </>
             }
             {gameState === 'game' &&
                 <div className={styles.question_container}>
+                    <motion.div className={styles.correct_indicator} initial={{ opacity: 0 }} animate={{ opacity: correctIndicator ? 1 : 0 }} transition={{ duration: 0.1 }}>
+                        <Image src={isCorrect ? '/images/icons/check.png' : '/images/icons/error.png'} alt="" width={75} height={75} />
+                        <h1>{isCorrect ? 'Correct!' : 'Nope, try again!'}</h1>
+                    </motion.div>
+
                     <div className={styles.question_top}>
                         <h1 className={styles.question_title}>{currentQuestion.question}</h1>
                     </div>
                     <div className={styles.timer}>
-                        <motion.div initial={{ transform: 'scaleX(1)' }} animate={{ transform: 'scaleX(0)' }} transition={{ duration: 60, ease: 'linear' }} className={styles.timer_bar} />
+                        <motion.div initial={{ transform: 'scaleX(1)' }} animate={{ transform: 'scaleX(0)' }} transition={{ duration: gameLength, ease: 'linear' }} className={styles.timer_bar} />
                     </div>
                     <div className={styles.question_bottom}>
                         {currentQuestion.options.map((option: any, index: number) => {
@@ -134,11 +143,21 @@ export default function MinuteManiaStudyMethod(props: { set: any }) {
                                 }} onClick={() => {
                                     if (option.correct) {
                                         setScore(score + 1);
+                                        setIsCorrect(true);
+
+                                        setTimeout(() => {
+                                            const newIndex = getNextQuestion(currentQuestionIndex + 1);
+                                            setCurrentQuestionIndex(newIndex);
+                                            setCurrentQuestion(props.set.questions[newIndex]);
+                                        }, 150);
+                                    } else {
+                                        setIsCorrect(false);
                                     }
 
-                                    const newIndex = getNextQuestion(currentQuestionIndex + 1);
-                                    setCurrentQuestionIndex(newIndex);
-                                    setCurrentQuestion(props.set.questions[newIndex]);
+                                    setCorrectIndicator(true);
+                                    setTimeout(() => {
+                                        setCorrectIndicator(false);
+                                    }, 500);
                                 }}>
                                     <h1>{option.option}</h1>
                                 </div>
