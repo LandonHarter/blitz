@@ -49,6 +49,8 @@ export default function ShortAnswerQuestion(props: { question: Question, questio
                                 props.setQuestions((oldQuestions: any) => [...oldQuestions]);
                             }} />
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => {
+                                if (props.question.options[0].optionData.correctAnswers.length <= 1) return;
+
                                 props.question.options[0].optionData.correctAnswers.splice(index, 1);
                                 props.setQuestions((oldQuestions: any) => [...oldQuestions]);
                             }}>

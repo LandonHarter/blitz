@@ -102,3 +102,27 @@
 .add_remove_answer:hover {
     background-color: var(--bg-dark);
 }
+
+.trash_bin {
+    width: 50px;
+    height: 50px;
+
+    cursor: pointer;
+    margin-left: 10px;
+
+    transition: 0.15s ease-in-out;
+    margin: 0 15px;
+}
+
+.trash_bin path {
+    transition: 0.15s ease-in-out;
+    stroke: var(--bg-dark);
+}
+
+.trash_bin:hover path {
+    stroke: var(--bg-darker);
+}
+
+.trash_bin:active {
+    transform: scale(0.95);
+}

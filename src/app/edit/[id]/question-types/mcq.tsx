@@ -9,6 +9,7 @@ import { Dispatch, SetStateAction } from 'react';
 import QuestionImage from './questionimage';
 import Image from 'next/image';
 import generateId from '@/backend/id';
+import { TrashSVG } from '@/svg';
 
 export default function MultipleChoiceQuestion(props: { question: Question, questionIndex: number, questionUiData: any[], setQuestions: Dispatch<SetStateAction<any>>, settingsPopup: Dispatch<SetStateAction<any>> }) {
     const colorFromIndex = (index: number) => {
@@ -62,6 +63,14 @@ export default function MultipleChoiceQuestion(props: { question: Question, ques
                             option.option = e.target.value;
                             props.setQuestions((oldQuestions: any) => [...oldQuestions]);
                         }} />
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => {
+                            if (props.question.options.length <= 1) return;
+
+                            props.question.options.splice(optionIndex, 1);
+                            props.setQuestions((oldQuestions: any) => [...oldQuestions]);
+                        }}>
+                            <TrashSVG className={styles.trash_bin} />
+                        </div>
                     </div>
                 ))}
             </div>

@@ -74,6 +74,9 @@ export const emptyMultipleChoiceQuestion = () => {
             },
         ],
         id: generateId(),
+        questionLength: 15,
+        questionPoints: 100,
+        scramble: false,
     }
 }
 
@@ -96,6 +99,9 @@ export const emptyTrueFalseQuestion = () => {
             },
         ],
         id: generateId(),
+        questionLength: 15,
+        questionPoints: 100,
+        scramble: false,
     }
 }
 
@@ -108,10 +114,15 @@ export const emptyShortAnswerQuestion = () => {
             correct: false,
             id: generateId(),
             optionData: {
-                correctAnswers: [],
+                correctAnswers: [
+                    ''
+                ],
             }
         }],
         id: generateId(),
+        questionLength: 15,
+        questionPoints: 100,
+        scramble: false,
     }
 }
 
@@ -128,6 +139,9 @@ export const emptyFlashcardQuestion = () => {
             },
         }],
         id: generateId(),
+        questionLength: 15,
+        questionPoints: 100,
+        scramble: false,
     };
 };
 
