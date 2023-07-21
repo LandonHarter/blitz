@@ -18,6 +18,8 @@ export default function MinuteManiaStudyMethod(props: { set: any }) {
     const [correctIndicator, setCorrectIndicator] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
 
+    console.log(props.set);
+
     const gameLength = 60;
     const backgroundColors = ['#C60929', '#0542B9', '#106B03', '#D89E00'];
 
@@ -130,7 +132,10 @@ export default function MinuteManiaStudyMethod(props: { set: any }) {
                     </motion.div>
 
                     <div className={styles.question_top}>
-                        <h1 className={styles.question_title}>{currentQuestion.question}</h1>
+                        <h1 className={styles.question_title} style={{
+                            marginTop: currentQuestion.photo ? 0 : 30
+                        }}>{currentQuestion.question}</h1>
+                        {currentQuestion.photo && <div className={styles.question_photo} style={{ backgroundImage: `url('${currentQuestion.photo}'` }} />}
                     </div>
                     <div className={styles.timer}>
                         <motion.div initial={{ transform: 'scaleX(1)' }} animate={{ transform: 'scaleX(0)' }} transition={{ duration: gameLength, ease: 'linear' }} className={styles.timer_bar} />

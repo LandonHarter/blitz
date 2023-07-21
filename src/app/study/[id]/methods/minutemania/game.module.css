@@ -98,8 +98,19 @@
     font-family: 'SF Pro Display';
     font-size: 45px;
     text-align: center;
+}
 
-    margin-top: 30px;
+.question_photo {
+    background-color: var(--bg-dark);
+    height: 100%;
+    aspect-ratio: 16/9;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    margin-top: 20px;
+    border-radius: 10px;
 }
 
 .option_loading {
