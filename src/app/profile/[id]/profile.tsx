@@ -88,10 +88,22 @@ export default function ProfileContent() {
                 <div className={styles.user_info_right}>
                     {currentUser.uid !== userId && (isFollowing ?
                         <button className={styles.unfollow_button} onClick={async () => {
+                            if (!signedIn) {
+                                setError('You must be signed in to unfollow a user.');
+                                setErrorOpen(true);
+                                return;
+                            }
+
                             setIsFollowing(false);
                             await unfollowUser(currentUser.uid, userId);
                         }}>Unfollow</button> :
                         <button className={styles.follow_button} onClick={async () => {
+                            if (!signedIn) {
+                                setError('You must be signed in to follow a user.');
+                                setErrorOpen(true);
+                                return;
+                            }
+
                             setIsFollowing(true);
                             await followUser(currentUser.uid, userId);
                         }}>Follow</button>
