@@ -58,6 +58,16 @@ export default function FlashcardStudyMethod(props: { set: any }) {
         setFlashcards(flashcards);
     }, []);
 
+    if (flashcards.length === 0) {
+        return (
+            <StudyMethodContainer>
+                <div className={styles.no_questions}>
+                    <h1>There are no questions in this set!</h1>
+                </div>
+            </StudyMethodContainer>
+        );
+    }
+
     if (offset + 1 > flashcards.length) {
         return (
             <StudyMethodContainer>

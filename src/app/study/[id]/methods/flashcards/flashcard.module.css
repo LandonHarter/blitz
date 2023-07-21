@@ -120,3 +120,18 @@
 .end_of_set button:active {
     transform: scale(0.975);
 }
+
+.no_questions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 150px;
+}
+
+.no_questions h1 {
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 50px;
+}

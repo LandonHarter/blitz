@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 
 import styles from './page.module.css';
-import { Question, QuestionType, emptyFlashcardQuestion, emptyMultipleChoiceQuestion, emptyQuestion, emptyShortAnswerQuestion, emptyTrueFalseQuestion } from '@/backend/live/set';
+import { Question, QuestionOption, QuestionType, emptyFlashcardQuestion, emptyMultipleChoiceQuestion, emptyQuestion, emptyShortAnswerQuestion, emptyTrueFalseQuestion } from '@/backend/live/set';
 import generateId from '@/backend/id';
 import Loading from '@/components/loading/loading';
 import { Timestamp, collection, doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
@@ -119,36 +119,12 @@ export default function EditContent() {
                         ],
                     };
                 } else if (type === QuestionType.MultipleChoice) {
+                    const options: QuestionOption[] = question.options;
                     questionElement = {
                         id: question.id,
                         type: type,
                         question: questionContent,
-                        options: [
-                            {
-                                option: options[0].option,
-                                correct: options[0].correct,
-                                id: options[0].id,
-                                optionData: options[0].optionData || {},
-                            },
-                            {
-                                option: options[1].option,
-                                correct: options[1].correct,
-                                id: options[1].id,
-                                optionData: options[1].optionData || {},
-                            },
-                            {
-                                option: options[2].option,
-                                correct: options[2].correct,
-                                id: options[2].id,
-                                optionData: options[2].optionData || {},
-                            },
-                            {
-                                option: options[3].option,
-                                correct: options[3].correct,
-                                id: options[3].id,
-                                optionData: options[3].optionData || {},
-                            },
-                        ],
+                        options: options,
                     };
                 } else if (type === QuestionType.ShortAnswer) {
                     questionElement = {

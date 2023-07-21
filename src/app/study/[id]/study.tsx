@@ -2,23 +2,21 @@
 
 import styles from './page.module.css';
 
-const { useContext, useEffect, useState } = require('react');
-import UserContext from '@/context/usercontext';
+const { useEffect, useState } = require('react');
 import { useRouter, usePathname } from 'next/navigation';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
-import { Question, getSet } from '@/backend/live/set';
+import { getSet } from '@/backend/live/set';
 import Loading from '@/components/loading/loading';
 import Popup from '@/components/popup/popup';
 import Image from 'next/image';
 import FlashcardStudyMethod from './methods/flashcards/flashcard';
 import { AnimatePresence } from 'framer-motion';
+import MinuteManiaStudyMethod from './methods/minutemania/game';
 
 export default function StudyContent() {
     const id = usePathname().split('/')[2];
     const router = useRouter();
-
-    const { currentUser, signedIn, userLoading } = useContext(UserContext);
 
     const [set, setSet] = useState();
     const [author, setAuthor] = useState();
@@ -33,11 +31,11 @@ export default function StudyContent() {
         switch (studyMethod) {
             case 'flashcards':
                 return (<FlashcardStudyMethod set={set} />);
+            case 'minute-mania':
+                return (<MinuteManiaStudyMethod set={set} />)
             default:
                 return (<></>);
         }
-
-        return (<></>);
     }
 
     useEffect(() => {
@@ -79,11 +77,14 @@ export default function StudyContent() {
 
     return (
         <div>
-            <h1 className={styles.study_title}>Choose a Study Method</h1>
+            <h1 className={styles.study_title}>Study Methods</h1>
             <div className={styles.study_methods}>
                 <button className={`${styles.study_method} ${studyMethod === 'flashcards' && styles.study_method_selected}`} onClick={() => {
                     setStudyMethod('flashcards');
                 }}><Image src='/images/icons/study/flashcards2.png' alt='icon' width={40} height={40} />Flashcards</button>
+                <button className={`${styles.study_method} ${studyMethod === 'minute-mania' && styles.study_method_selected}`} onClick={() => {
+                    setStudyMethod('minute-mania');
+                }}><Image src='/images/icons/study/minute-mania.png' alt='icon' width={40} height={40} />Minute Mania</button>
             </div>
 
             <div className={styles.study_method_container}>
