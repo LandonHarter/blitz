@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import Loading from '@/components/loading/loading';
 import BasicReturn from '@/components/basic-return/return';
 import Image from 'next/image';
-import { User, UserProfile, getUserData, getUserProfileData } from '@/backend/firebase/user';
+import { User, UserProfile, followUser, getUserData, getUserProfileData, unfollowUser } from '@/backend/firebase/user';
 import { formatTimestampDate } from '@/backend/util';
 import { createGame } from '@/backend/live/game';
 import { useRouter } from 'next/navigation';
@@ -29,6 +29,8 @@ export default function ProfileContent() {
     const [errorOpen, setErrorOpen] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
 
+    const [isFollowing, setIsFollowing] = useState<boolean>(false);
+
     useEffect(() => {
         (async () => {
             const userData = await getUserData(userId);
@@ -43,10 +45,22 @@ export default function ProfileContent() {
             const userProfileData = await getUserProfileData(userId);
             setUserProfile(userProfileData);
 
+            if (signedIn && currentUser.following) {
+                setIsFollowing(currentUser.following.includes(userId));
+            }
+
             setBackground(profileBackgroundColorFromName(userProfileData.profileBackground));
             setLoading(false);
         })();
     }, []);
+
+    useEffect(() => {
+        if (signedIn) {
+            if (userProfile && currentUser.following) {
+                setIsFollowing(currentUser.following.includes(userId));
+            }
+        }
+    }, [signedIn, userProfile]);
 
     if (loading) {
         return (<Loading />);
@@ -67,8 +81,22 @@ export default function ProfileContent() {
                 {user.verified && <Link href='/apply/teacher'><button className={styles.verified_container} aria-label='Verified Teacher' data-cooltipz-dir="bottom"><Image src='/images/icons/verified.png' alt='verified' width={40} height={40} className={styles.verified_badge} /></button></Link>}
             </div>
             <div className={styles.user_info}>
-                <h1 className={styles.user_name}>{user.name}</h1>
-                <p className={styles.user_subtitle}>Joined {formatTimestampDate(user.createdAt)}</p>
+                <div className={styles.user_info_left}>
+                    <h1 className={styles.user_name}>{user.name}</h1>
+                    <p className={styles.user_subtitle}>Joined {formatTimestampDate(user.createdAt)}</p>
+                </div>
+                <div className={styles.user_info_right}>
+                    {currentUser.uid !== userId && (isFollowing ?
+                        <button className={styles.unfollow_button} onClick={async () => {
+                            setIsFollowing(false);
+                            await unfollowUser(currentUser.uid, userId);
+                        }}>Unfollow</button> :
+                        <button className={styles.follow_button} onClick={async () => {
+                            setIsFollowing(true);
+                            await followUser(currentUser.uid, userId);
+                        }}>Follow</button>
+                    )}
+                </div>
             </div>
 
             <div className={styles.all_sets}>

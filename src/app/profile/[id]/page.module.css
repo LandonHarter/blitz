@@ -44,6 +44,48 @@
 .user_info {
     margin-top: 10px;
     margin-left: calc(60px + var(--profile-picture-size));
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user_info_right {
+    margin-right: 30px;
+}
+
+.follow_button {
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+.follow_button:active {
+    transform: scale(0.95);
+}
+
+.unfollow_button {
+    background-color: #d7d9db;
+    color: var(--text-color);
+    padding: 10px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
 }
 
 .user_name {

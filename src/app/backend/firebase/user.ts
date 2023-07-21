@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, Timestamp } from "@firebase/firestore";
+import { collection, doc, getDoc, Timestamp, updateDoc, arrayUnion, increment, arrayRemove } from "@firebase/firestore";
 import { firestore } from "@baas/init";
 
 export interface User {
@@ -12,6 +12,7 @@ export interface User {
     createdAt?: Timestamp;
     verified?: boolean;
     likedSets?: string[];
+    following?: string[];
 
 }
 
@@ -19,6 +20,7 @@ export interface UserProfile {
 
     bio: string;
     profileBackground: string;
+    followerCount: number;
 
 }
 
@@ -51,7 +53,8 @@ export async function getUserData(userId: string) {
             sets: userData.data().sets,
             likedSets: userData.data().likedSets,
             createdAt: userData.data().createdAt,
-            verified: userData.data().verified
+            verified: userData.data().verified,
+            following: userData.data().following,
         };
         userCache[userId] = newUser;
         return Promise.resolve(newUser);
@@ -67,11 +70,36 @@ export async function getUserProfileData(userId: string) {
     if (userData.exists()) {
         const newUser: UserProfile = {
             bio: userData.data().bio,
-            profileBackground: userData.data().profileBackground
+            profileBackground: userData.data().profileBackground,
+            followerCount: userData.data().followerCount,
         };
 
         return Promise.resolve(newUser);
     }
 
     return Promise.reject();
+}
+
+export async function followUser(follower: string, following: string) {
+    const followerRef = doc(collection(firestore, 'users'), follower);
+    await updateDoc(followerRef, {
+        following: arrayUnion(following)
+    });
+
+    const followingRef = doc(collection(firestore, 'users-profile'), following);
+    await updateDoc(followingRef, {
+        followerCount: increment(1)
+    });
+}
+
+export async function unfollowUser(follower: string, following: string) {
+    const followerRef = doc(collection(firestore, 'users'), follower);
+    await updateDoc(followerRef, {
+        following: arrayRemove(following)
+    });
+
+    const followingRef = doc(collection(firestore, 'users-profile'), following);
+    await updateDoc(followingRef, {
+        followerCount: increment(-1)
+    });
 }

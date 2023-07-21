@@ -62,6 +62,7 @@ const setUserData = async (credentials: UserCredential) => {
         likedSets: [],
         createdAt: Timestamp.now(),
         verified: false,
+        following: []
     };
 
     const userRef = doc(collection(firestore, 'users'), user.uid);
@@ -70,6 +71,7 @@ const setUserData = async (credentials: UserCredential) => {
     const userProfileObject: UserProfile = {
         bio: "",
         profileBackground: getRandomProfileBackground().name,
+        followerCount: 0
     };
 
     const userProfileRef = doc(collection(firestore, 'users-profile'), user.uid);
