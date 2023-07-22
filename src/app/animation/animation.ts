@@ -1,4 +1,4 @@
-export const fade:Animation = {
+export const fade: Animation = {
     initial: {
         opacity: 0,
     },
@@ -10,7 +10,7 @@ export const fade:Animation = {
     }
 };
 
-export const dropdown:Animation = {
+export const dropdown: Animation = {
     initial: {
         opacity: 0,
         scaleY: 0.8,
@@ -26,7 +26,7 @@ export const dropdown:Animation = {
     }
 };
 
-export const springScale:Animation = {
+export const springScale: Animation = {
     initial: {
         opacity: 0,
         scale: 0.8,
@@ -42,7 +42,7 @@ export const springScale:Animation = {
 };
 
 export interface Animation {
-    initial:any;
-    animate:any;
-    exit:any;
+    initial: any;
+    animate: any;
+    exit: any;
 }

@@ -9,11 +9,13 @@ import SignInContext from './context/signincontext';
 import UserContext from './context/usercontext';
 import Image from 'next/image';
 import InViewAnimation from './components/inview-animation/InViewAnimation';
+import DarkModeContext from './context/darkmode';
 
 export default function Home() {
   const router = useRouter();
   const signInPopup = useContext(SignInContext);
   const { signedIn } = useContext(UserContext);
+  const { get: darkMode } = useContext(DarkModeContext);
 
   const Feature = (props: { title: string, subtitle: string, image: string }) => (
     <div className={styles.feature}>
@@ -52,10 +54,12 @@ export default function Home() {
           <Link href='/about'><button className={styles.learn_more}>Learn More</button></Link>
         </div>
       </div>
-      <InViewAnimation className={styles.computer_screen}><></></InViewAnimation>
+      <div className={styles.computer_screen} style={{
+        backgroundImage: `url('/ss${darkMode ? '-dark' : ''}.png')`,
+      }} />
       <div className={styles.computer_screen_coverup} />
       <InViewAnimation className={styles.hero2}>
-        <h1 className={styles.hero2_small_title}>Features</h1>
+        <h1 className={styles.hero2_small_title}>Benefits</h1>
         <h1 className={styles.hero2_big_title}>Available tools to boost your study experience</h1>
         <h1 className={styles.hero2_subtitle}>Use a large amount of educational tools, completely free, forever.</h1>
 

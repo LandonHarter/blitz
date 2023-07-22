@@ -114,7 +114,7 @@ export default function SetContent() {
                     </div>
                     <p className={styles.like_count}>{set.likes} Like{set.likes !== 1 && 's'}</p>
                 </div>
-                <Link href={`/profile/${author.uid}`} style={{ width: '100%' }}>
+                <Link href={`/profile/${author.uid}`} style={{ width: '100%', textDecoration: 'none' }}>
                     <div className={styles.author_container}>
                         <Image className={styles.author_pfp} src={author.pfp} alt='pfp' width={40} height={40} />
                         <h1 className={styles.author_name}>{author.name}</h1>

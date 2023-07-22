@@ -14,6 +14,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    margin: 0 0 50px 0;
 }
 
 .title {
@@ -23,6 +25,7 @@
     margin-bottom: 40px;
     text-align: center;
     color: var(--text-color);
+    text-align: center;
 }
 
 .subtitle {
@@ -32,7 +35,7 @@
     font-size: 25px;
     color: var(--text-color-light);
 
-    margin-bottom: 50px;
+    margin: 0 0 50px 0;
 }
 
 .subtitle span {
@@ -88,12 +91,11 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('/ss.png');
 }
 
 .computer_screen_coverup {
     width: 100vw;
-    height: 10vw;
+    height: 12vw;
     background-color: var(--bg);
     transform: translateY(-10vw);
     margin-bottom: -10vw;
@@ -125,6 +127,7 @@
     font-size: 45px;
     color: var(--text-color);
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .hero2_subtitle {

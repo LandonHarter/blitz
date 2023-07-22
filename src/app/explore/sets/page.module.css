@@ -41,6 +41,8 @@
     border-radius: 10px;
     outline: none;
 
+    background-color: var(--no-color);
+
     padding: 0 10px;
     color: var(--text-color);
     font-size: 30px;

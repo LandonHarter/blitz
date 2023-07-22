@@ -6,6 +6,8 @@
 
     font-family: 'Cubano';
     color: #eeeeee;
+
+    transition: background-color 0.1s, color 0.1s, border-color 0.1s, fill 0.1s, stroke 0.1s;
 }
 
 :root {
@@ -13,7 +15,7 @@
 
     --bg: #f2f9ff;
     --bg-dark: #e5e9ec;
-    --bg-darker: #bbbec0;
+    --bg-darker: #d9dde0;
 
     /*
     --primary-color: #3440ad;
@@ -25,38 +27,48 @@
 
     --primary-color: #7F56D9;
     --primary-color-bare: 127, 86, 217;
-    --primary-color-off: #5c6ae9;
+    --primary-color-off: #563799;
     --primary-light: #8c92c5;
     --primary-light-bare: 140, 146, 197;
     --primary-dark: #42307D;
 
-    --secondary-color: #ff6b6b;
+    /* --secondary-color: #ff6b6b; */
+    --secondary-color: #EE609C;
 
     --text-color: #353535;
     --text-color-light: #6b6b6b;
 
     --correct-color: #18ca00;
+    --scrolling-bg-image: url("/images/bg/scrolling/light.png");
 }
 
-.dark_theme {
-    --no-color: #1f1f1f;
+[data-theme="dark"] {
+    --no-color: #2b2b2b;
+
     --bg: #1f1f1f;
     --bg-dark: #2a2a2a;
     --bg-darker: #333333;
 
-    --text-color: #eeeeee;
+    --primary-color: #7F56D9;
+    --primary-color-bare: 127, 86, 217;
+    --primary-color-off: #563799;
+    --primary-light: #8c92c5;
+    --primary-light-bare: 140, 146, 197;
+    --primary-dark: #42307D;
+
+    --secondary-color: #EE609C;
+
+    --text-color: #e2e2e2;
     --text-color-light: #a8a8a8;
+
+    --correct-color: #18ca00;
+    --scrolling-bg-image: url("/images/bg/scrolling/dark.png");
 }
 
 body {
     background-color: var(--bg);
     min-height: 100vh;
     overflow-x: hidden;
-}
-
-body>.dark_theme,
-html>.dark_theme {
-    background-color: #1f1f1f;
 }
 
 input,
@@ -72,10 +84,10 @@ textarea {
 
     width: 100vw;
     height: 650px;
+    pointer-events: none;
     z-index: -1;
 
-    color: #999;
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC") repeat 0 0;
+    background: var(--scrolling-bg-image) repeat 0 0;
     --animation-length: 2s;
     -webkit-animation: bg-scrolling-reverse var(--animation-length) infinite;
     -moz-animation: bg-scrolling-reverse var(--animation-length) infinite;

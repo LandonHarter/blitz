@@ -28,7 +28,7 @@
     display: flex;
     align-items: center;
 
-    background-color: var(--primary-color);
+    background-color: var(--primary-color-off);
     border-radius: 10px;
     border: none;
 
@@ -55,7 +55,7 @@
 }
 
 .study_method_selected {
-    background-color: var(--primary-color-off);
+    background-color: var(--primary-color);
 }
 
 .study_method_container {

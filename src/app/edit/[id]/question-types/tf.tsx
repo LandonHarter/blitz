@@ -1,18 +1,21 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useContext } from 'react'
 import questionStyles from './basestyles.module.css'
 import styles from './tf.module.css'
 import { Question } from '@/backend/live/set'
 import QuestionImage from './questionimage'
 import Image from 'next/image'
+import DarkModeContext from '@/context/darkmode'
 
 export default function TrueFalseQuestion(props: { question: Question, questionIndex: number, questionUiData: any[], setQuestions: Dispatch<SetStateAction<any>>, settingsPopup: Dispatch<SetStateAction<any>> }) {
+    const { get: darkMode } = useContext(DarkModeContext);
+
     return (
         <motion.div initial={{ scaleY: 0 }} animate={{ scaleY: props.questionUiData[props.questionIndex].open ? 1 : 0 }} style={{ transformOrigin: 'top', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <QuestionImage question={props.question} setQuestions={props.setQuestions} />
-            <Image src='/images/icons/settings.png' alt='settings' width={30} height={30} onClick={() => {
+            <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/settings.png`} alt='settings' width={30} height={30} onClick={() => {
                 props.settingsPopup({
                     open: true,
                     questionIndex: props.questionIndex,

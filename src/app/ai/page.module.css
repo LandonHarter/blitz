@@ -4,23 +4,23 @@
     align-items: center;
     justify-content: center;
 }
-  
+
 .title {
     font-size: 60px;
     font-family: 'SF Pro Display';
     font-weight: 700;
     color: var(--text-color);
-  
+
     margin-top: 40px;
     margin-bottom: 20px;
-  }
-  
+}
+
 .tick {
     width: 60px;
     height: 15px;
     background-color: var(--secondary-color);
     border-radius: 30px;
-  
+
     margin-bottom: 50px;
 }
 
@@ -39,7 +39,7 @@
     height: 166px;
     padding: 30px;
 
-    background-color: white;
+    background-color: var(--no-color);
     border-radius: 30px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
     cursor: pointer;
@@ -78,6 +78,6 @@
     font-size: 20px;
     font-family: 'SF Pro Display';
     font-weight: 400;
-    color: var(--text-color);
+    color: var(--text-color-light);
     margin-top: 10px;
 }

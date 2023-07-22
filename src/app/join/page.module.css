@@ -9,7 +9,8 @@
 
 .join_input {
     outline: none;
-    border: solid 2px var(--bg-dark);
+    border: solid 2px var(--bg-darker);
+    background-color: var(--no-color);
     border-radius: 10px;
     width: 300px;
     height: 50px;

@@ -12,6 +12,7 @@ import { UserProfile } from '@/backend/firebase/user';
 import NeedSignin from '@/components/require-signin/needsignin';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
+import DarkModeContext from '@/context/darkmode';
 
 export default function SettingsContent() {
     const [selectedItem, setSelectedItem] = useState<{
@@ -24,8 +25,9 @@ export default function SettingsContent() {
 
     const { currentUser, signedIn, userLoading } = useContext(UserContext);
     const [userProfile, setUserProfile] = useState<UserProfile>();
-
     const [showUpdated, setShowUpdated] = useState(false);
+
+    const { get: darkMode } = useContext(DarkModeContext);
 
     const onUpdateSettings = () => {
         setShowUpdated(true);
@@ -78,8 +80,8 @@ export default function SettingsContent() {
     return (
         <div className={styles.settings_container}>
             <div className={styles.sidebar}>
-                <SidebarItem icon='/images/icons/settings-solid.png' title='Account' index={0} />
-                <SidebarItem icon='/images/icons/user-solid.png' title='Profile' index={1} />
+                <SidebarItem icon={`/images/icons/${darkMode ? 'dark' : 'light'}/settings-solid.png`} title='Account' index={0} />
+                <SidebarItem icon={`/images/icons/${darkMode ? 'dark' : 'light'}/user-solid.png`} title='Profile' index={1} />
             </div>
             <div className={styles.settings}>
                 <h1 className={styles.settings_title}>{selectedItem.title}</h1>

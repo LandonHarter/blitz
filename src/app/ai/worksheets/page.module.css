@@ -39,6 +39,8 @@
   font-family: 'SF Pro Display';
   font-size: 24px;
   font-weight: 400;
+
+  background-color: var(--no-color);
 }
 
 .prompt_textarea {
@@ -56,6 +58,8 @@
   font-size: 24px;
   font-weight: 400;
 
+  background-color: var(--no-color);
+
   resize: none;
 }
 
@@ -66,7 +70,7 @@
   margin: 15px 0;
   padding: 5px 10px;
 
-  color: var(--bg);
+  color: #fff;
   font-family: 'SF Pro Display';
   font-size: 24px;
   font-weight: 400;
@@ -100,6 +104,7 @@
 .number_input {
   color: var(--text-color);
   font-family: 'SF Pro Display';
+  background-color: var(--bg-dark);
 }
 
 .quantity input {
@@ -111,7 +116,7 @@
   padding: 0;
   margin: 0;
   padding-left: 20px;
-  border: 1px solid var(--text-color);
+  border: 1px solid var(--bg-darker);
 }
 
 .quantity input:focus {
@@ -127,7 +132,7 @@
 .quantity_button {
   position: relative;
   cursor: pointer;
-  border-left: 1px solid var(--text-color);
+  border-left: 1px solid var(--bg-darker);
   width: 20px;
   text-align: center;
   color: var(--text-color);
@@ -147,7 +152,7 @@
   position: absolute;
   height: 50%;
   top: 0;
-  border-bottom: 1px solid var(--text-color);
+  border-bottom: 1px solid var(--bg-darker);
 }
 
 .quantity_button.quantity_down {

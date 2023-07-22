@@ -4,16 +4,14 @@ import React, { useContext, useEffect, useState } from "react";
 
 import styles from "./page.module.css";
 import Loading from "@/components/loading/loading";
-import { query, collection, orderBy, limit, getDocs, where, Timestamp } from "firebase/firestore";
+import { query, collection, orderBy, limit, getDocs, where } from "firebase/firestore";
 import { firestore } from "@/backend/firebase/init";
 import { createGame } from "@/backend/live/game";
 import { useRouter } from "next/navigation";
 import Popup from "@/components/popup/popup";
 import Image from "next/image";
 import Link from "next/link";
-import BasicReturn from "@/components/basic-return/return";
 import UserContext from "@/context/usercontext";
-import { formatTimestampAgo } from "@/backend/util";
 import algoliasearch from "algoliasearch/lite";
 import { HeartSVG } from "@/svg";
 import { likeSet, unlikeSet } from "@/backend/live/set";
@@ -113,7 +111,7 @@ export default function ExploreContent() {
                 <button className={styles.search_button} onClick={() => {
                     search(searchQuery);
                 }}>
-                    <Image src="/images/icons/search-light.png" alt="search" width={30} height={30} />
+                    <Image src="/images/icons/dark/search.png" alt="search" width={30} height={30} />
                 </button>
             </div>
 

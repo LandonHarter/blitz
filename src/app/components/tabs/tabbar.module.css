@@ -36,7 +36,6 @@
 }
 
 .tab_active h1 {
-    color: var(--no-color) !important;
     font-size: 24px;
     font-family: 'SF Pro Display';
 }

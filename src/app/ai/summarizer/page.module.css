@@ -33,6 +33,7 @@
     padding: 5px 10px;
 
     outline: none;
+    background-color: var(--no-color);
     border-radius: 10px;
     border: solid 1px var(--bg-darker);
     color: var(--text-color);
@@ -50,13 +51,15 @@
     margin: 15px 0;
     padding: 5px 10px;
 
-    color: var(--bg);
+    color: #fff;
     font-family: 'SF Pro Display';
     font-size: 24px;
     font-weight: 400;
 
     border-radius: 10px;
     border: none;
+
+    color: white;
 
     background-color: var(--primary-color);
     cursor: pointer;
@@ -95,12 +98,13 @@
 .summary_container h1 {
     color: var(--text-color);
     font-size: 32px;
+    font-family: 'SF Pro Display';
 
     margin-bottom: 15px;
 }
 
 .summary_container p {
-    color: var(--text-color);
+    color: var(--text-color-light);
     font-family: 'SF Pro Display';
     font-size: 18px;
     font-weight: 400;

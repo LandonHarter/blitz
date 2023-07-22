@@ -26,7 +26,7 @@ export default function Header() {
     const avatarDropdownRef = useRef(null);
     const loginModalRef = useRef(null);
 
-    const { get: darkMode } = useContext(DarkModeContext);
+    const { get: darkMode, set: setDarkMode } = useContext(DarkModeContext);
 
     useOutsideClick(avatarDropdownRef, () => setAvatarDropdown(false));
     useOutsideClick(loginModalRef, () => signInPopup.set(false));
@@ -54,6 +54,24 @@ export default function Header() {
                     </div>
                 </div>
                 <div className={styles.header_nav_right}>
+                    <div className={styles.toggle_wrapper}>
+                        <input type="checkbox" className={styles.dn} id="dn" checked={darkMode} onChange={(e) => {
+                            setDarkMode(e.target.checked);
+                        }} />
+                        <label htmlFor="dn" className={styles.toggle}>
+                            <span className={styles.toggle__handler}>
+                                <span className={`${styles.crater} ${styles.crater1}`} />
+                                <span className={`${styles.crater} ${styles.crater2}`} />
+                                <span className={`${styles.crater} ${styles.crater3}`} />
+                            </span>
+                            <span className={`${styles.star} ${styles.star1}`} />
+                            <span className={`${styles.star} ${styles.star2}`} />
+                            <span className={`${styles.star} ${styles.star3}`} />
+                            <span className={`${styles.star} ${styles.star4}`} />
+                            <span className={`${styles.star} ${styles.star5}`} />
+                            <span className={`${styles.star} ${styles.star6}`} />
+                        </label>
+                    </div>
                     {!signedIn ?
                         <div>
                             <button className={styles.signin_button} onClick={() => signInPopup.set(true)}>Log In</button>
@@ -69,19 +87,19 @@ export default function Header() {
                                         <Link href={`/profile/${currentUser.uid}`} className={styles.avatar_dropdown_option} onClick={() => {
                                             setAvatarDropdown(false);
                                         }}>
-                                            <Image src='/images/icons/user.png' alt='user' width={25} height={25} />
+                                            <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/user.png`} alt='user' width={25} height={25} />
                                             <p>PROFILE</p>
                                         </Link>
                                         <Link href='/my-sets' className={styles.avatar_dropdown_option} onClick={() => {
                                             setAvatarDropdown(false);
                                         }}>
-                                            <Image src='/images/icons/mysets.png' alt='user' width={25} height={25} />
+                                            <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/mysets.png`} alt='user' width={25} height={25} />
                                             <p>MY SETS</p>
                                         </Link>
                                         <Link href='/settings' className={styles.avatar_dropdown_option} onClick={() => {
                                             setAvatarDropdown(false);
                                         }}>
-                                            <Image src='/images/icons/settings.png' alt='user' width={25} height={25} />
+                                            <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/settings.png`} alt='user' width={25} height={25} />
                                             <p>SETTINGS</p>
                                         </Link>
                                         <div className={styles.avatar_dropdown_option} onClick={() => {

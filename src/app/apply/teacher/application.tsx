@@ -113,7 +113,9 @@ export default function ApplyTeacherContent() {
                         {contentType({ title: 'Teacher Badge/ID', index: 1 })}
                         {contentType({ title: 'Teaching Certificate', index: 2 })}
                         {contentType({ title: 'Other', index: 3 })}
-                        <img className={styles.select_box__icon} src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true" />
+                        <svg className={styles.select_box__icon} aria-hidden="true">
+                            <path xmlns="http://www.w3.org/2000/svg" fill="transparent" strokeWidth={2} stroke='var(--text-color)' d="M128,194.3L10,76.8l15.5-15.1L128,164.2L230.5,61.7L246,76.8L128,194.3z" />
+                        </svg>
                     </div>
                     <ul className={styles.select_box__list}>
                         {contentDisplay({ title: 'Teacher Portal', index: 0 })}

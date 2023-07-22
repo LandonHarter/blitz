@@ -41,7 +41,7 @@ export default function ProfileSection(props: { user: User, userProfile: UserPro
                                 }}>
                                     {selectedBackground === color.name &&
                                         <motion.div className={styles.profile_background_color_selected_icon} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
-                                            <Image src='/images/icons/check-solid.png' alt='check' width={20} height={20} />
+                                            <Image src='/images/icons/dark/check-solid.png' alt='check' width={20} height={20} />
                                         </motion.div>
                                     }
                                 </div>

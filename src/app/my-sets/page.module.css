@@ -250,18 +250,13 @@
     margin-bottom: 15px;
 
     outline: none;
-    border: none;
+    border: 1px solid var(--bg-darker);
     border-radius: 10px;
 
     font-family: 'SF Pro Display';
     font-size: 25px;
     color: var(--text-color);
-
-    background-image: url('/images/icons/search.png');
-    background-repeat: no-repeat;
-    background-position: right center;
-    background-origin: content-box;
-    background-size: var(--icon-size) var(--icon-size);
+    background-color: var(--no-color);
 }
 
 .popup_content {

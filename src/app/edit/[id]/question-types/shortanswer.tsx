@@ -1,15 +1,18 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useContext } from 'react'
 import questionStyles from './basestyles.module.css'
 import styles from './shortanswer.module.css'
 import { Question } from '@/backend/live/set'
 import { TrashSVG } from '@/svg'
 import QuestionImage from './questionimage'
 import Image from 'next/image'
+import DarkModeContext from '@/context/darkmode'
 
 export default function ShortAnswerQuestion(props: { question: Question, questionIndex: number, questionUiData: any[], setQuestions: Dispatch<SetStateAction<any>>, settingsPopup: Dispatch<SetStateAction<any>> }) {
+    const { get: darkMode } = useContext(DarkModeContext);
+
     const getColor = (index: number) => {
         const colors = [questionStyles.option_red, questionStyles.option_blue, questionStyles.option_green, questionStyles.option_yellow];
         return colors[index % colors.length];
@@ -33,7 +36,7 @@ export default function ShortAnswerQuestion(props: { question: Question, questio
                     }}><p>+</p></button>
                 </div>
 
-                <Image src='/images/icons/settings.png' alt='settings' width={30} height={30} onClick={() => {
+                <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/settings.png`} alt='settings' width={30} height={30} onClick={() => {
                     props.settingsPopup({
                         open: true,
                         questionIndex: props.questionIndex,

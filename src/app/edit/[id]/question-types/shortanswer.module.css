@@ -48,7 +48,7 @@
 
     border: none;
     outline: none;
-    border-bottom: 1px solid var(--bg-dark);
+    border-bottom: 1px solid #fff;
 
     transform: translateY(-3px);
 
@@ -57,16 +57,16 @@
     transition: 0.15s ease-in-out;
 
     background-color: transparent;
-    color: var(--bg);
+    color: #fff;
 }
 
 .option_input:focus {
-    border-bottom: 2px solid var(--bg);
+    border-bottom: 2px solid #fff;
     border-radius: 3px;
 }
 
 .option_input::placeholder {
-    color: var(--bg-dark);
+    color: #fff;
 }
 
 .trash_bin {
@@ -81,11 +81,11 @@
 
 .trash_bin path {
     transition: 0.15s ease-in-out;
-    stroke: var(--bg-dark);
+    stroke: #fff;
 }
 
 .trash_bin:hover path {
-    stroke: var(--bg-darker);
+    stroke: #e2e2e2;
 }
 
 .trash_bin:active {

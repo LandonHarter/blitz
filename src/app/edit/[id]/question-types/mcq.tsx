@@ -5,13 +5,16 @@ import { Question } from '@/backend/live/set';
 
 import styles from './mcq.module.css';
 import questionStyles from './basestyles.module.css';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useContext } from 'react';
 import QuestionImage from './questionimage';
 import Image from 'next/image';
 import generateId from '@/backend/id';
 import { TrashSVG } from '@/svg';
+import DarkModeContext from '@/context/darkmode';
 
 export default function MultipleChoiceQuestion(props: { question: Question, questionIndex: number, questionUiData: any[], setQuestions: Dispatch<SetStateAction<any>>, settingsPopup: Dispatch<SetStateAction<any>> }) {
+    const { get: darkMode } = useContext(DarkModeContext);
+
     const colorFromIndex = (index: number) => {
         const colors = [questionStyles.option_red, questionStyles.option_blue, questionStyles.option_green, questionStyles.option_yellow];
         return colors[index % colors.length];
@@ -38,7 +41,7 @@ export default function MultipleChoiceQuestion(props: { question: Question, ques
                     }}><p>+</p></button>
                 </div>
 
-                <Image src='/images/icons/settings.png' alt='settings' width={30} height={30} onClick={() => {
+                <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/settings.png`} alt='settings' width={30} height={30} onClick={() => {
                     props.settingsPopup({
                         open: true,
                         questionIndex: props.questionIndex,

@@ -18,6 +18,7 @@ import AILoading from '@/components/ai-loading/loading';
 import { parseAi } from '@/backend/ai/convert';
 import NeedSignin from '@/components/require-signin/needsignin';
 import UserContext from '@/context/usercontext';
+import DarkModeContext from '@/context/darkmode';
 
 export default function CreateContent() {
     const router = useRouter();
@@ -41,6 +42,7 @@ export default function CreateContent() {
     const [aiNumQuestions, setAiNumQuestions] = useState(5);
 
     const [selectedAiTab, setSelectedAiTab] = useState(0);
+    const { get: darkMode } = useContext(DarkModeContext);
 
     const createSet = async () => {
         if (nameField.length < 1 || descriptionField.length < 1) {
@@ -265,7 +267,7 @@ export default function CreateContent() {
                 <button className={`${styles.provider_button} ${styles.ai_button}`} onClick={() => {
                     setAiPopup(true);
                 }}>
-                    <Image src='/images/icons/robot.png' alt='robot' width={45} height={45} />
+                    <Image src={`/images/icons/dark/robot.png`} alt='robot' width={45} height={45} />
                     Create from AI
                 </button>
             </div>
@@ -276,7 +278,7 @@ export default function CreateContent() {
             </Popup>
 
             <Popup open={aiPopup} setOpen={setAiPopup} exitButton>
-                <Image src='/images/icons/robot-dark.png' alt='robot' width={60} height={60} style={{ marginBottom: 25 }} />
+                <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/robot.png`} alt='robot' width={60} height={60} style={{ marginBottom: 25 }} />
 
                 <h1 style={{ color: "var(--text-color)", marginBottom: 15 }}>Generate from...</h1>
                 <div className={styles.ai_popup_content}>

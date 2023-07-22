@@ -11,6 +11,7 @@ import Popup from '@/components/popup/popup';
 import Loading from '@/components/loading/loading';
 import NeedSignin from '@/components/require-signin/needsignin';
 import UserContext from '@/context/usercontext';
+import DarkModeContext from '@/context/darkmode';
 
 export default function JoinPageContent() {
     const router = useRouter();
@@ -25,6 +26,8 @@ export default function JoinPageContent() {
     const [infoOpen, setInfoOpen] = useState(false);
     const [info, setInfo] = useState("");
 
+    const { get: darkMode } = useContext(DarkModeContext);
+
     if (userLoading) {
         return (<Loading />);
     } else if (!signedIn) {
@@ -34,7 +37,7 @@ export default function JoinPageContent() {
     return (
         <div className={styles.background}>
             <div className={styles.content}>
-                <Image src='/bigicon.png' alt="logo" width={333} height={187.5} priority />
+                <Image src={`/bigicon${darkMode ? '-light' : ''}.png`} alt="logo" width={333} height={187.5} priority />
                 <input type="text" ref={joinInput} className={styles.join_input} placeholder="Join Code" maxLength={6} onKeyDown={(e) => { if (!/[a-z]/i.test(e.key)) e.preventDefault() }} />
                 <button className={joining ? styles.join_button_joining : styles.join_button} onClick={async () => {
                     if (joinInput.current === null || currentUser === null) return;
