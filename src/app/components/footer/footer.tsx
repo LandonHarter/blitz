@@ -4,10 +4,18 @@ import Image from "next/image";
 
 import styles from "./footer.module.css";
 import Link from "next/link";
+import { useContext } from "react";
+import DarkModeContext from "@/context/darkmode";
 
 export default function Footer() {
+    const { get: darkMode } = useContext(DarkModeContext);
+
     return (
-        <div className={styles.footer}>
+        <div className={styles.footer} style={{
+            backgroundColor: darkMode ? '' : 'var(--primary-dark)',
+            borderTop: !darkMode ? '' : '1px solid var(--bg-darker)',
+            '--footer-text-color': darkMode ? 'var(--text-color-light)' : 'var(--primary-light)'
+        } as React.CSSProperties}>
             <div className={styles.footer_sections}>
                 <div className={styles.company_details}>
                     <Image src='/bigicon-light.png' alt='blitz logo' width={125} height={70} />

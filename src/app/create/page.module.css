@@ -50,9 +50,6 @@
   width: 300px;
   margin: 10px 0;
 
-  --colorPrimary400: rgba(0, 0, 0, 0.75);
-  --colorPrimary600: rgba(0, 0, 0, 0.5);
-  --colorPrimary800: rgba(0, 0, 0, 0.25);
   --lineHeightSm: 1.1;
   --lineHeightMd: 1.3;
   --transitionDuration: 300ms;
@@ -73,6 +70,7 @@
   margin: 0;
   padding: var(--inputPaddingV) var(--inputPaddingH);
   color: var(--text-color);
+  background-color: var(--bg-dark);
   width: 100%;
   font-family: 'SF Pro Display';
   font-weight: 700;
@@ -80,24 +78,20 @@
   line-height: var(--inputLineHeight);
   border: solid 1px var(--bg-darker);
   border-radius: 0.4rem;
+  outline: none;
   transition: box-shadow var(--transitionDuration);
 }
 
 .name_input_field::-moz-placeholder {
-  color: var(--bg-darker);
+  color: var(--text-color-light);
 }
 
 .name_input_field:-ms-input-placeholder {
-  color: var(--bg-darker);
+  color: var(--text-color-light);
 }
 
 .name_input_field::placeholder {
-  color: var(--bg-darker);
-}
-
-.name_input_field:focus {
-  outline: none;
-  box-shadow: 0.2rem 0.8rem 1.6rem var(--colorPrimary600);
+  color: var(--text-color-light);
 }
 
 .name_input_label {
@@ -166,9 +160,6 @@
   height: 150px !important;
   margin: 20px 0;
 
-  --colorPrimary400: rgba(0, 0, 0, 0.75);
-  --colorPrimary600: rgba(0, 0, 0, 0.5);
-  --colorPrimary800: rgba(0, 0, 0, 0.25);
   --lineHeightSm: 1.1;
   --lineHeightMd: 1.3;
   --transitionDuration: 300ms;
@@ -189,6 +180,7 @@
   margin: 0;
   padding: var(--inputPaddingV) var(--inputPaddingH);
   color: var(--text-color);
+  background-color: var(--bg-dark);
   width: 100%;
   height: 150px;
   font-family: 'SF Pro Display';
@@ -201,15 +193,15 @@
 }
 
 .description_input_field::-moz-placeholder {
-  color: var(--bg-darker);
+  color: var(--text-color-light);
 }
 
 .description_input_field:-ms-input-placeholder {
-  color: var(--bg-darker);
+  color: var(--text-color-light);
 }
 
 .description_input_field::placeholder {
-  color: var(--bg-darker);
+  color: var(--text-color-light);
 }
 
 .description_input_field:focus {
@@ -375,13 +367,13 @@
   font-family: 'SF Pro Display';
   font-size: 24px;
   font-weight: 700;
-  color: var(--bg-darker);
+  color: var(--text-color-light);
 }
 
 .small_divider {
   width: 250px;
   height: 2px;
-  background-color: var(--bg-darker);
+  background-color: var(--text-color-light);
 
   margin: 0 20px;
 }

@@ -17,6 +17,7 @@ import { dropdown } from "@/animation/animation";
 import SignInContext from "@/context/signincontext";
 import UserContext from "@/context/usercontext";
 import { useRouter } from "next/navigation";
+import DarkModeContext from "@/context/darkmode";
 
 export default function Header() {
     const signInPopup = useContext(SignInContext);
@@ -24,6 +25,8 @@ export default function Header() {
 
     const avatarDropdownRef = useRef(null);
     const loginModalRef = useRef(null);
+
+    const { get: darkMode } = useContext(DarkModeContext);
 
     useOutsideClick(avatarDropdownRef, () => setAvatarDropdown(false));
     useOutsideClick(loginModalRef, () => signInPopup.set(false));
@@ -39,7 +42,7 @@ export default function Header() {
             <div className={styles.header_nav}>
                 <div className={styles.header_nav_left}>
                     <Link href='/' className={styles.header_logo}>
-                        <Image style={{ aspectRatio: '1331/750' }} src='/bigicon.png' alt="logo" width={166} height={94} priority />
+                        <Image style={{ aspectRatio: '1331/750' }} src={!darkMode ? '/bigicon.png' : '/bigicon-light.png'} alt="logo" width={166} height={94} priority />
                     </Link>
                     <div className={styles.nav_links}>
                         <Link href='/join' className={styles.nav_link}>Join</Link>
