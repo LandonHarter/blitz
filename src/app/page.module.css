@@ -1,121 +1,264 @@
-.hero_background_1 {
+.page {
     width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero1 {
+    width: 100vw;
+    min-height: 50vh;
     height: fit-content;
 
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 
-.hero_content_1 {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-
-    margin-top: 80px;
-}
-
-.hero_title_1 {
-    width: 600px;
+.title {
     font-family: 'SF Pro Display';
-    font-size: 66px;
-    line-height: 65px;
-    letter-spacing: -2%;
+    font-size: 65px;
+    white-space: nowrap;
+    margin-bottom: 40px;
     text-align: center;
     color: var(--text-color);
 }
 
-.hero_subtitle_1 {
-    font-family: 'SF Pro Display';
-    font-size: 24px;
+.subtitle {
+    width: 50%;
     text-align: center;
-    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 25px;
+    color: var(--text-color-light);
 
-    margin-top: 20px;
+    margin-bottom: 50px;
 }
 
-.hero_gradient_word_1 {
-    background: linear-gradient(45deg, #ff4800 0%, #FFC700 100%);
+.subtitle span {
+    background: linear-gradient(45deg, var(--primary-color), #4ba9c8);
     background-clip: text;
-
-    font-size: 60px;
-    letter-spacing: -2%;
-    font-family: 'Cubano';
-
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.hero_buttons_container_1 {
+.hero1_buttons {
     display: flex;
-    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.get_started {
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    margin-right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.1s ease-in-out;
+}
+
+.get_started:active {
+    transform: scale(0.95);
+}
+
+.learn_more {
+    background-color: #fff;
+    color: var(--text-color);
+    border: solid 1px var(--bg-darker);
+    border-radius: 10px;
+    padding: 20px;
+    margin-left: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.1s ease-in-out;
+}
+
+.learn_more:active {
+    transform: scale(0.95);
+}
+
+.computer_screen {
+    width: 70vw;
+    aspect-ratio: 16/9;
+    border: solid 20px #000;
+    border-radius: 50px 50px 0 0;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('/ss.png');
+}
+
+.computer_screen_coverup {
+    width: 100vw;
+    height: 10vw;
+    background-color: var(--bg);
+    transform: translateY(-10vw);
+    margin-bottom: -10vw;
+}
+
+.hero2 {
+    width: 100vw;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 150px;
+
+    background-color: var(--bg);
+}
+
+.hero2_small_title {
+    font-family: 'SF Pro Display';
+    font-size: 25px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.hero2_big_title {
+    font-family: 'SF Pro Display';
+    font-size: 45px;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.hero2_subtitle {
+    width: 50%;
+    text-align: center;
+    font-family: 'SF Pro Display';
+    font-size: 25px;
+    color: var(--text-color-light);
+
+    margin-bottom: 120px;
+}
+
+.hero2_features {
+    width: 80vw;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 20px;
+    row-gap: 80px;
+}
+
+.feature {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature_title {
+    font-family: 'SF Pro Display';
+    font-size: 25px;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.feature_subtitle {
+    width: 60%;
+    text-align: center;
+    font-family: 'SF Pro Display';
+    font-size: 20px;
+    color: var(--text-color-light);
+}
+
+.ring_image {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 30px;
+
+    display: flex;
     justify-content: center;
     align-items: center;
 
-    margin-top: 40px;
+    position: relative;
 }
 
-.hero_button_1 {
-    border-radius: 500px;
-    border: none;
+.ring_1 {
+    position: absolute;
+
+    width: 80px;
+    height: 80px;
 
     background-color: var(--primary-color);
-    color: white;
+    border-radius: 100%;
 
-    font-size: 18px;
-
-    padding: 15px 25px;
-    margin: 0 10px;
-
-    transition: 0.15s ease-in-out;
-    cursor: pointer;
+    opacity: 0.1;
 }
 
-.hero_button_1:hover {
-    filter: brightness(1.1);
+.ring_2 {
+    position: absolute;
+
+    width: 60px;
+    height: 60px;
+
+    background-color: var(--primary-color);
+    border-radius: 100%;
+
+    opacity: 0.15;
 }
 
-.hero_button_1:active {
-    transition: 0.05s ease-in-out;
-    transform: scale(0.96);
+.ring_content {
+    position: absolute;
+    z-index: 2;
 }
 
-.hero_button_2 {
-    border-radius: 500px;
-    border: none;
+.hero3 {
+    width: 100vw;
+    height: fit-content;
 
-    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--bg);
+}
+
+.hero3_big_title {
+    font-family: 'SF Pro Display';
+    font-size: 45px;
     color: var(--text-color);
-
-    font-size: 18px;
-
-    padding: 15px 25px;
-    margin: 0 10px;
-
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-
-    transition: 0.15s ease-in-out;
-
-    cursor: pointer;
+    margin-bottom: 20px;
 }
 
-.hero_button_2:hover {
-    filter: brightness(0.98);
+.hero3_subtitle {
+    width: 50%;
+    text-align: center;
+    font-family: 'SF Pro Display';
+    font-size: 25px;
+    color: var(--text-color-light);
+
+    margin-bottom: 120px;
 }
 
-.hero_button_2:active {
-    transition: 0.05s ease-in-out;
-    transform: scale(0.96);
+.question {
+    width: 60vw;
+
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 75px;
 }
 
-.hero_graphic_1 {
-    width: 977px;
-    height: 608px;
-
-    margin-bottom: 80px;    
+.question_title {
+    font-family: 'SF Pro Display';
+    font-size: 35px;
+    color: var(--text-color);
+    margin-bottom: 10px;
 }
 
-.hero_graphic_1 svg {
-    width: 100%;
-    height: 100%;
+.question_answer {
+    font-family: 'SF Pro Display';
+    font-size: 20px;
+    color: var(--text-color-light);
+    margin-bottom: 20px;
+    width: 70%;
 }

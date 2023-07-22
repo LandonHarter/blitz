@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 import Footer from '@/components/footer/footer';
 import { sendEmail } from '@/backend/firebase/email';
 import BasicReturn from '@/components/basic-return/return';
+import InViewAnimation from '@/components/inview-animation/InViewAnimation';
 
 export default function ContactContent() {
     const contactRef = useRef(null);
@@ -29,12 +30,12 @@ export default function ContactContent() {
                 <h1 className={styles.big_title}>We&apos;d love to hear from you</h1>
                 <h1 className={styles.subtitle}>Our friendly team is always here to chat.</h1>
 
-                <div className={styles.contact_methods}>
+                <InViewAnimation className={styles.contact_methods}>
                     <div className={styles.card}>
                         <div className={styles.card_image}>
                             <div className={styles.card_ring_1} />
                             <div className={styles.card_ring_2} />
-                            <Image className={styles.card_image_content} src='/images/icons/email.png' alt='' width={50} height={50} />
+                            <Image className={styles.card_image_content} src='/images/icons/primary/email.png' alt='' width={50} height={50} />
                         </div>
 
                         <h1 className={styles.card_title}>Email</h1>
@@ -45,7 +46,7 @@ export default function ContactContent() {
                         <div className={styles.card_image}>
                             <div className={styles.card_ring_1} />
                             <div className={styles.card_ring_2} />
-                            <Image className={styles.card_image_content} src='/images/icons/form.png' alt='' width={50} height={50} />
+                            <Image className={styles.card_image_content} src='/images/icons/primary/form.png' alt='' width={50} height={50} />
                         </div>
 
                         <h1 className={styles.card_title}>Contact Form</h1>
@@ -60,46 +61,48 @@ export default function ContactContent() {
                         <div className={styles.card_image}>
                             <div className={styles.card_ring_1} />
                             <div className={styles.card_ring_2} />
-                            <Image className={styles.card_image_content} src='/images/icons/phone.png' alt='' width={50} height={50} />
+                            <Image className={styles.card_image_content} src='/images/icons/primary/phone.png' alt='' width={50} height={50} />
                         </div>
 
                         <h1 className={styles.card_title}>Phone</h1>
                         <p className={styles.card_subtitle}>Shoot us a quick text.</p>
                         <a className={styles.details} target='_blank'>(269) 569-1186</a>
                     </div>
-                </div>
+                </InViewAnimation>
             </div>
 
-            <div className={styles.contact_form} ref={contactRef}>
-                <h1 className={styles.contact_form_small_title}>Contact Us</h1>
-                <h1 className={styles.contact_form_big_title}>Get in touch</h1>
-                <h1 className={styles.contact_form_subtitle}>We&apos;d love to hear from you. Please fill out this form.</h1>
+            <InViewAnimation>
+                <div className={styles.contact_form} ref={contactRef}>
+                    <h1 className={styles.contact_form_small_title}>Contact Us</h1>
+                    <h1 className={styles.contact_form_big_title}>Get in touch</h1>
+                    <h1 className={styles.contact_form_subtitle}>We&apos;d love to hear from you. Please fill out this form.</h1>
 
-                <div className={styles.form_content}>
-                    <div className={styles.name_inputs}>
-                        <input className={styles.name_input} placeholder='First name' maxLength={20} onChange={(e) => {
-                            setFirstName(e.target.value);
+                    <div className={styles.form_content}>
+                        <div className={styles.name_inputs}>
+                            <input className={styles.name_input} placeholder='First name' maxLength={20} onChange={(e) => {
+                                setFirstName(e.target.value);
+                            }} />
+                            <input className={styles.name_input} placeholder='Last name' maxLength={20} onChange={(e) => {
+                                setLastName(e.target.value);
+                            }} />
+                        </div>
+                        <input className={styles.email_input} placeholder='Email' maxLength={50} onChange={(e) => {
+                            setEmailAddress(e.target.value);
                         }} />
-                        <input className={styles.name_input} placeholder='Last name' maxLength={20} onChange={(e) => {
-                            setLastName(e.target.value);
-                        }} />
+                        <textarea className={styles.message_input} placeholder='Message' onChange={(e) => {
+                            setMessage(e.target.value);
+                        }} maxLength={300} />
+                        <button className={styles.send_message} onClick={() => {
+                            sendEmail('landonharter@outlook.com', 'Blitz Contact Form', `First Name: ${firstName}\nLast Name: ${lastName}\nEmail: ${emailAddress}\nMessage: ${message}`);
+                            setFirstName('');
+                            setLastName('');
+                            setEmailAddress('');
+                            setMessage('');
+                            setSubmittedMessage(true);
+                        }}>Send Message</button>
                     </div>
-                    <input className={styles.email_input} placeholder='Email' maxLength={50} onChange={(e) => {
-                        setEmailAddress(e.target.value);
-                    }} />
-                    <textarea className={styles.message_input} placeholder='Message' onChange={(e) => {
-                        setMessage(e.target.value);
-                    }} maxLength={300} />
-                    <button className={styles.send_message} onClick={() => {
-                        sendEmail('landonharter@outlook.com', 'Blitz Contact Form', `First Name: ${firstName}\nLast Name: ${lastName}\nEmail: ${emailAddress}\nMessage: ${message}`);
-                        setFirstName('');
-                        setLastName('');
-                        setEmailAddress('');
-                        setMessage('');
-                        setSubmittedMessage(true);
-                    }}>Send Message</button>
                 </div>
-            </div>
+            </InViewAnimation>
 
             <Footer />
         </div>

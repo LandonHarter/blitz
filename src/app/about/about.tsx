@@ -8,6 +8,8 @@ import { formatNumber } from "@/backend/util";
 import Footer from "@/components/footer/footer";
 import Link from "next/link";
 import Image from "next/image";
+import { motion, useInView } from "framer-motion";
+import InViewAnimation from "@/components/inview-animation/InViewAnimation";
 
 export default function AboutContent() {
     const [metrics, setMetrics] = useState<{
@@ -42,7 +44,8 @@ export default function AboutContent() {
                     <p className={styles.subtitle}>Blitz is an educational platform that aims to help students and teachers, in and out of the classroom. Use various study methods and live in class games that boost productivity and learning capacity.</p>
                 </div>
             </div>
-            <div className={styles.stats_banner}>
+
+            <InViewAnimation className={styles.stats_banner}>
                 <div className={styles.stats}>
                     <h1 className={styles.stats_number}>{formatNumber(metrics.numUsers)}</h1>
                     <h1 className={styles.stats_text}>Total Users</h1>
@@ -55,9 +58,9 @@ export default function AboutContent() {
                     <h1 className={styles.stats_number}>{formatNumber(metrics.numGamesPlayed)}</h1>
                     <h1 className={styles.stats_text}>Games Played</h1>
                 </div>
-            </div>
+            </InViewAnimation>
 
-            <div className={styles.section}>
+            <InViewAnimation className={styles.section}>
                 <div className={styles.section_content}>
                     <h1 className={styles.section_small_title}>Our Story</h1>
                     <h1 className={styles.section_big_title}>Blitzing Onto the Scene</h1>
@@ -74,9 +77,9 @@ export default function AboutContent() {
                         </p>
                     </div>
                 </div>
-            </div>
+            </InViewAnimation>
 
-            <div className={styles.section}>
+            <InViewAnimation className={styles.section}>
                 <div className={styles.section_content}>
                     <h1 className={styles.section_small_title}>The Team</h1>
                     <h1 className={styles.section_big_title}>All Developers</h1>
@@ -94,7 +97,7 @@ export default function AboutContent() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </InViewAnimation>
 
             <div style={{ marginBottom: 125 }} />
 

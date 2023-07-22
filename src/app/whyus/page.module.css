@@ -37,6 +37,7 @@
 }
 
 .subtitle {
+    width: 60%;
     color: var(--text-color-light);
     font-family: 'SF Pro Display';
     font-size: 28px;
