@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import HostLayoutContent from "./layoutcontent";
 
 export const metadata: Metadata = {
   title: 'Host • Blitz',
@@ -12,7 +13,9 @@ export default function HostLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <HostLayoutContent>
+          {children}
+        </HostLayoutContent>
       </body>
     </html>
   );

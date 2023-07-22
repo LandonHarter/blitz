@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import LiveLayoutContent from "./layoutcontent";
 
 export const metadata: Metadata = {
   title: "Live Game • Blitz",
@@ -12,7 +13,9 @@ export default function LiveLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <LiveLayoutContent>
+          {children}
+        </LiveLayoutContent>
       </body>
     </html>
   );
