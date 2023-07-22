@@ -7,7 +7,7 @@
 }
 
 .title {
-    color: #353535;
+    color: var(--text-color);
     font-family: 'SF Pro Display';
     font-size: 48px;
     font-weight: bold;
@@ -17,7 +17,7 @@
 }
 
 .subtitle {
-    color: #353535;
+    color: var(--text-color);
     font-family: 'SF Pro Display';
     font-size: 24px;
     font-weight: 400;
@@ -34,8 +34,8 @@
 
     outline: none;
     border-radius: 10px;
-    border: solid 1px #B0BEC5;
-    color: #353535;
+    border: solid 1px var(--bg-darker);
+    color: var(--text-color);
     font-family: 'SF Pro Display';
     font-size: 24px;
     font-weight: 400;
@@ -93,14 +93,14 @@
 }
 
 .summary_container h1 {
-    color: #353535;
+    color: var(--text-color);
     font-size: 32px;
 
     margin-bottom: 15px;
 }
 
 .summary_container p {
-    color: #353535;
+    color: var(--text-color);
     font-family: 'SF Pro Display';
     font-size: 18px;
     font-weight: 400;

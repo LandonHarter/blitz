@@ -67,11 +67,11 @@
     align-items: flex-end;
     height: 40vh;
 }
-  
+
 .podium__item {
     width: 25vw;
 }
-  
+
 .podium__rank {
     display: flex;
     justify-content: center;
@@ -81,25 +81,25 @@
 
     border: 5px solid var(--text-color);
 }
-  
+
 .podium__number {
     width: 27px;
     height: 75px;
 }
-  
+
 .podium .first {
     min-height: 300px;
 
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-  
+
 .podium .second {
     border-top-left-radius: 10px;
     border-right: none;
     min-height: 200px;
 }
-  
+
 .podium .third {
     min-height: 100px;
     border-top-right-radius: 10px;
@@ -116,15 +116,15 @@
 }
 
 .completed_leaderboard {
-  margin-top: 30px;
+    margin-top: 30px;
 
-  width: 75vw;
-  height: fit-content;
+    width: 75vw;
+    height: fit-content;
 }
 
 .leaderboard {
     padding: 20px;
-    background-color: #fff;
+    background-color: var(--no-color);
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
@@ -138,7 +138,7 @@
     width: 100%;
     height: 2px;
 
-    background-color: #e0e0e0;
+    background-color: var(--bg-dark);
     margin: 10px 0;
 }
 
@@ -153,8 +153,8 @@
     border-radius: 10px;
     padding: 0 10px;
 
-    background-color: #e0e0e0;
-    border: solid 2px #a5a5a5;
+    background-color: var(--bg-dark);
+    border: solid 2px var(--bg-darker);
 }
 
 .leaderboard_categories p {

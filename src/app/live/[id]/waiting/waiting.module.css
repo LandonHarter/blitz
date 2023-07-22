@@ -1,34 +1,36 @@
 .background {
-    width: 100vw;
-    height: 100vh;
+	width: 100vw;
+	height: 100vh;
 
-    display: flex;
+	display: flex;
 	flex-direction: column;
-    align-items: center;
-    justify-content: center;
+	align-items: center;
+	justify-content: center;
 
 	--hourglass-scale: 2;
 }
 
 /* https://codepen.io/jkantner/pen/wvWXyKG */
 
-.hourglass, .hourglass:before, .hourglass:after {
+.hourglass,
+.hourglass:before,
+.hourglass:after {
 	animation-duration: 4s;
 	animation-iteration-count: infinite;
 }
+
 .hourglass {
-	--polygonH: polygon(0% 0%,100% 0%,100% 5.55%,95% 5.55%,95% 28%,60% 46%,60% 54%,95% 72%,95% 94.45%,100% 94.45%,100% 100%,0% 100%,0% 94.45%,5% 94.45%,5% 72%,40% 54%,40% 46%,5% 28%,5% 5.55%,0% 5.55%);
-	--bg: #e3e4e8;
+	--polygonH: polygon(0% 0%, 100% 0%, 100% 5.55%, 95% 5.55%, 95% 28%, 60% 46%, 60% 54%, 95% 72%, 95% 94.45%, 100% 94.45%, 100% 100%, 0% 100%, 0% 94.45%, 5% 94.45%, 5% 72%, 40% 54%, 40% 46%, 5% 28%, 5% 5.55%, 0% 5.55%);
 	--fg: #c2b280;
 	--primary: #255ff4;
 
-    box-sizing: border-box;
-    border: 0;
+	box-sizing: border-box;
+	border: 0;
 	margin: 20px;
 
-    animation-name: flip;
+	animation-name: flip;
 	animation-timing-function: ease-in-out;
-	background-image: linear-gradient(var(--primary) calc(0.5em * var(--hourglass-scale)),#737a8c55 calc(0.5em * var(--hourglass-scale)) calc(8.5em * var(--hourglass-scale)),var(--primary) calc(8.5em * var(--hourglass-scale)));
+	background-image: linear-gradient(var(--primary) calc(0.5em * var(--hourglass-scale)), #737a8c55 calc(0.5em * var(--hourglass-scale)) calc(8.5em * var(--hourglass-scale)), var(--primary) calc(8.5em * var(--hourglass-scale)));
 	clip-path: var(--polygonH);
 	-webkit-clip-path: var(--polygonH);
 	overflow: hidden;
@@ -37,18 +39,21 @@
 	height: calc(9em * var(--hourglass-scale));
 	z-index: 0;
 }
-.hourglass:before, .hourglass:after {
+
+.hourglass:before,
+.hourglass:after {
 	animation-timing-function: linear;
 	content: "";
 	display: block;
 	position: absolute;
 }
+
 .hourglass:before {
-	--polygonB1: polygon(0% 0%,100% 0%,100% 24%,50% 47%,50% 47%,50% 47%,50% 47%,50% 47%,50% 47%,50% 47%,50% 47%,0% 24%);
-	--polygonB2: polygon(0% 4%,100% 4%,100% 24%,55% 45%,55% 100%,55% 100%,55% 100%,45% 100%,45% 100%,45% 100%,45% 45%,0% 24%);
-	--polygonB3: polygon(0% 24%,100% 24%,100% 24%,55% 45%,55% 80%,100% 100%,100% 100%,0% 100%,0% 100%,45% 80%,45% 45%,0% 24%);
-	--polygonB4: polygon(45% 45%,55% 45%,55% 45%,55% 45%,55% 58%,100% 76%,100% 100%,0% 100%,0% 76%,45% 58%,45% 45%,45% 45%);
-	--polygonB5: polygon(50% 53%,50% 53%,50% 53%,50% 53%,50% 53%,100% 76%,100% 100%,0% 100%,0% 76%,50% 53%,50% 53%,50% 53%);
+	--polygonB1: polygon(0% 0%, 100% 0%, 100% 24%, 50% 47%, 50% 47%, 50% 47%, 50% 47%, 50% 47%, 50% 47%, 50% 47%, 50% 47%, 0% 24%);
+	--polygonB2: polygon(0% 4%, 100% 4%, 100% 24%, 55% 45%, 55% 100%, 55% 100%, 55% 100%, 45% 100%, 45% 100%, 45% 100%, 45% 45%, 0% 24%);
+	--polygonB3: polygon(0% 24%, 100% 24%, 100% 24%, 55% 45%, 55% 80%, 100% 100%, 100% 100%, 0% 100%, 0% 100%, 45% 80%, 45% 45%, 0% 24%);
+	--polygonB4: polygon(45% 45%, 55% 45%, 55% 45%, 55% 45%, 55% 58%, 100% 76%, 100% 100%, 0% 100%, 0% 76%, 45% 58%, 45% 45%, 45% 45%);
+	--polygonB5: polygon(50% 53%, 50% 53%, 50% 53%, 50% 53%, 50% 53%, 100% 76%, 100% 100%, 0% 100%, 0% 76%, 50% 53%, 50% 53%, 50% 53%);
 	animation-name: fill;
 	background-color: var(--fg);
 	background-size: 100% 3.6em;
@@ -62,49 +67,50 @@
 }
 
 .waiting_container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 
-    width: 100vw;
-    height: 100vh;
+	width: 100vw;
+	height: 100vh;
 }
 
 .circle {
-    width: 140px;
-    height: 140px;
+	width: 140px;
+	height: 140px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-    fill: transparent;
-    stroke: var(--text-color);
-    stroke-width: 5;
+	fill: transparent;
+	stroke: var(--text-color);
+	stroke-width: 5;
 
-    stroke-dasharray: 0 220;
-    stroke-linecap: round;
-    animation: circle-timer 1s ease-in-out infinite;
-    transform: rotate(-90deg) scale(4);
+	stroke-dasharray: 0 220;
+	stroke-linecap: round;
+	animation: circle-timer 1s ease-in-out infinite;
+	transform: rotate(-90deg) scale(4);
 }
 
 .seconds {
-    color: var(--text-color);
-    font-size: 80px;
-    text-align: center;
+	color: var(--text-color);
+	font-size: 80px;
+	text-align: center;
 
-    transform: translateY(-120px);
+	transform: translateY(-120px);
 }
 
 /* Animations */
 @keyframes circle-timer {
-    0% {
-        stroke-dasharray: 0 220;
-    }
-    100% {
-        stroke-dasharray: 220 0;
-    }
+	0% {
+		stroke-dasharray: 0 220;
+	}
+
+	100% {
+		stroke-dasharray: 220 0;
+	}
 }
 
 @keyframes fill {
@@ -112,35 +118,48 @@
 		clip-path: var(--polygonB1);
 		-webkit-clip-path: var(--polygonB1);
 	}
+
 	10% {
 		clip-path: var(--polygonB2);
 		-webkit-clip-path: var(--polygonB2);
 	}
+
 	45% {
 		clip-path: var(--polygonB3);
 		-webkit-clip-path: var(--polygonB3);
 	}
+
 	80% {
 		clip-path: var(--polygonB4);
 		-webkit-clip-path: var(--polygonB4);
 	}
-	85%, to {
+
+	85%,
+	to {
 		clip-path: var(--polygonB5);
 		-webkit-clip-path: var(--polygonB5);
 	}
 }
+
 @keyframes glare {
-	from, 90% {
+
+	from,
+	90% {
 		transform: translateX(0);
 	}
+
 	to {
 		transform: translateX(3em);
 	}
 }
+
 @keyframes flip {
-	from, 90% {
+
+	from,
+	90% {
 		transform: rotate(0);
 	}
+
 	to {
 		transform: rotate(180deg);
 	}

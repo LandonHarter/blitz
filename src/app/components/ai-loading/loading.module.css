@@ -16,7 +16,7 @@
 
 .loading_background h1 {
     font-size: 50px;
-    color: #353535;
+    color: var(--text-color);
 }
 
 .robot {
@@ -24,7 +24,7 @@
     width: 250px;
 
     fill: transparent;
-    stroke: #353535;
+    stroke: var(--text-color);
 }
 
 .robot path {
@@ -38,11 +38,13 @@
     0% {
         stroke-dashoffset: 100;
     }
+
     10% {
         fill: transparent;
     }
+
     100% {
         stroke-dashoffset: 0;
-        fill: #353535;
+        fill: var(--text-color);
     }
 }

@@ -64,7 +64,7 @@
 }
 
 .learn_more {
-    background-color: #fff;
+    background-color: var(--no-color);
     color: var(--text-color);
     border: solid 1px var(--bg-darker);
     border-radius: 10px;

@@ -68,7 +68,7 @@
 }
 
 .login_modal_subtitle {
-    color: #b9bdc2;
+    color: var(--text-color-light);
     font-weight: 400;
     font-size: 25px;
 
@@ -90,7 +90,7 @@
     background-color: transparent;
     padding: 25px;
 
-    border: solid 2px #efefef;
+    border: solid 2px var(--bg-dark);
     border-radius: 10px;
 
     margin: 5px;
@@ -134,7 +134,7 @@
     width: 200px;
     height: auto;
 
-    background-color: #fff;
+    background-color: var(--no-color);
     border-radius: 10px;
 
     display: flex;
@@ -181,7 +181,7 @@
 }
 
 .avatar_dropdown_option:hover {
-    background-color: #EFEFEF;
+    background-color: var(--bg-dark);
 }
 
 .nav_links {

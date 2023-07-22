@@ -278,7 +278,7 @@ export default function CreateContent() {
             <Popup open={aiPopup} setOpen={setAiPopup} exitButton>
                 <Image src='/images/icons/robot-dark.png' alt='robot' width={60} height={60} style={{ marginBottom: 25 }} />
 
-                <h1 style={{ color: "#353535", marginBottom: 15 }}>Generate from...</h1>
+                <h1 style={{ color: "var(--text-color)", marginBottom: 15 }}>Generate from...</h1>
                 <div className={styles.ai_popup_content}>
                     <TabBar setSelectedTab={setSelectedAiTab}>
                         <Tab title='Topic'>

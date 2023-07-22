@@ -4,7 +4,7 @@
     background-color: #ff4f4f;
     border-radius: 10px;
     border: none;
-    color: #ffffff;
+    color: var(--bg);
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;

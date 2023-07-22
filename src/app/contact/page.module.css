@@ -95,7 +95,7 @@
 }
 
 .details button:hover {
-    background-color: #3440ad23;
+    background-color: rgba(var(--primary-color-bare), 0.1);
 }
 
 .details button:active {

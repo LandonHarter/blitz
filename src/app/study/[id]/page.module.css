@@ -55,7 +55,7 @@
 }
 
 .study_method_selected {
-    background-color: #5c6ae9;
+    background-color: var(--primary-color-off);
 }
 
 .study_method_container {

@@ -45,7 +45,7 @@
 }
 
 .gradient_word {
-    background: linear-gradient(45deg, #ff4800 0%, #FFC700 100%);
+    background: linear-gradient(45deg, var(--primary-color), #4ba9c8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

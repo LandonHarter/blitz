@@ -9,14 +9,14 @@
     font-size: 52px;
     font-family: 'SF Pro Display';
     font-weight: 600;
-    color: #353535;
+    color: var(--text-color);
 }
 
 .subtitle {
     font-size: 24px;
     font-family: 'SF Pro Display';
     font-weight: 400;
-    color: #353535;
+    color: var(--text-color);
 
     margin-left: 5px;
 }
@@ -24,7 +24,7 @@
 .divider {
     width: calc(100vw - 60px);
     height: 2px;
-    background-color: #353535;
+    background-color: var(--text-color);
     border-radius: 10px;
 
     margin-top: 10px;
@@ -41,7 +41,7 @@
     font-size: 22px;
     font-family: 'SF Pro Display';
     font-weight: 600;
-    color: #353535;
+    color: var(--text-color);
 
     margin-top: 20px;
     margin-bottom: 20px;

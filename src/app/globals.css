@@ -9,15 +9,28 @@
 }
 
 :root {
-    --bg: #F2F9FF;
+    --no-color: #ffffff;
+
+    --bg: #f2f9ff;
     --bg-dark: #e5e9ec;
     --bg-darker: #bbbec0;
+
     --primary-color: #3440ad;
+    --primary-color-bare: 52, 64, 173;
+    --primary-color-off: #5c6ae9;
+    --primary-light: #8c92c5;
+    --primary-light-bare: 140, 146, 197;
+    --primary-dark: #1E266D;
+
     --secondary-color: #ff6b6b;
+
     --text-color: #353535;
     --text-color-light: #6b6b6b;
+
     --correct-color: #18ca00;
 }
+
+.dark_theme {}
 
 body {
     background-color: var(--bg);

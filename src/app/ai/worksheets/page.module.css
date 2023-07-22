@@ -1,174 +1,172 @@
 .container {
-    width: 100vw;
-    height: calc(100vh - 134px);
+  width: 100vw;
+  height: calc(100vh - 134px);
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-    transform: translateY(-100px);
+  transform: translateY(-100px);
 }
 
 .title {
-    color: #353535;
-    font-family: 'SF Pro Display';
-    font-size: 48px;
-    font-weight: 600;
-    margin-bottom: 20px;
+  color: var(--text-color);
+  font-family: 'SF Pro Display';
+  font-size: 48px;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 
 .title_input {
-    width: 400px;
-    height: 40px;
+  width: 400px;
+  height: 40px;
 
-    margin-bottom: 10px;
-    padding: 5px 10px;
+  margin-bottom: 10px;
+  padding: 5px 10px;
 
-    outline: none;
-    border-radius: 10px;
-    border: solid 1px #B0BEC5;
-    color: #353535;
-    font-family: 'SF Pro Display';
-    font-size: 24px;
-    font-weight: 400;
+  outline: none;
+  border-radius: 10px;
+  border: solid 1px var(--bg-darker);
+  color: var(--text-color);
+  font-family: 'SF Pro Display';
+  font-size: 24px;
+  font-weight: 400;
 }
 
 .prompt_textarea {
-    width: 400px;
-    height: 150px;
-  
-    margin-bottom: 5px;
-    padding: 5px 10px;
-  
-    outline: none;
-    border-radius: 10px;
-    border: solid 1px #B0BEC5;
-    color: #353535;
-    font-family: 'SF Pro Display';
-    font-size: 24px;
-    font-weight: 400;
-  
-    resize: none;
+  width: 400px;
+  height: 150px;
+
+  margin-bottom: 5px;
+  padding: 5px 10px;
+
+  outline: none;
+  border-radius: 10px;
+  border: solid 1px var(--bg-darker);
+  color: var(--text-color);
+  font-family: 'SF Pro Display';
+  font-size: 24px;
+  font-weight: 400;
+
+  resize: none;
 }
 
 .generate_button {
-    width: 250px;
-    height: 50px;
+  width: 250px;
+  height: 50px;
 
-    margin: 15px 0;
-    padding: 5px 10px;
+  margin: 15px 0;
+  padding: 5px 10px;
 
-    color: var(--bg);
-    font-family: 'SF Pro Display';
-    font-size: 24px;
-    font-weight: 400;
+  color: var(--bg);
+  font-family: 'SF Pro Display';
+  font-size: 24px;
+  font-weight: 400;
 
-    border-radius: 10px;
-    border: none;
+  border-radius: 10px;
+  border: none;
 
-    background-color: var(--primary-color);
-    cursor: pointer;
-    transition: 0.1s ease-in-out;
+  background-color: var(--primary-color);
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
 }
 
 .generate_button:hover {
-    filter: brightness(1.1);
+  filter: brightness(1.1);
 }
 
 .generate_button:active {
-    transform: scale(0.95);
+  transform: scale(0.95);
 }
 
 .quantity {
-    position: relative;
-  }
-  
-  .number_input::-webkit-inner-spin-button,
-  .number_input::-webkit-outer-spin-button
-  {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  
-  .number_input
-  {
-    color: #353535;
-    font-family: 'SF Pro Display';
-  }
-  
-  .quantity input {
-    width: 45px;
-    height: 42px;
-    line-height: 1.65;
-    float: left;
-    display: block;
-    padding: 0;
-    margin: 0;
-    padding-left: 20px;
-    border: 1px solid #353535;
-  }
-  
-  .quantity input:focus {
-    outline: 0;
-  }
-  
-  .quantity_nav {
-    float: left;
-    position: relative;
-    height: 42px;
-  }
-  
-  .quantity_button {
-    position: relative;
-    cursor: pointer;
-    border-left: 1px solid #353535;
-    width: 20px;
-    text-align: center;
-    color: #333;
-    font-size: 13px;
-    font-family: "Trebuchet MS", Helvetica, sans-serif !important;
-    line-height: 1.7;
-    -webkit-transform: translateX(-100%);
-    transform: translateX(-100%);
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-  }
-  
-  .quantity_button.quantity_up {
-    position: absolute;
-    height: 50%;
-    top: 0;
-    border-bottom: 1px solid #353535;
-  }
-  
-  .quantity_button.quantity_down {
-    position: absolute;
-    bottom: -1px;
-    height: 50%;
-  }
-  
-  .question_num {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+}
 
-    padding: 30px;
-  }
-  
-  .question_num h1 {
-    color: #353535;
-    font-family: 'SF Pro Display';
-    font-size: 24px;
-    margin-left: 10px;
-  }
+.number_input::-webkit-inner-spin-button,
+.number_input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number_input {
+  color: var(--text-color);
+  font-family: 'SF Pro Display';
+}
+
+.quantity input {
+  width: 45px;
+  height: 42px;
+  line-height: 1.65;
+  float: left;
+  display: block;
+  padding: 0;
+  margin: 0;
+  padding-left: 20px;
+  border: 1px solid var(--text-color);
+}
+
+.quantity input:focus {
+  outline: 0;
+}
+
+.quantity_nav {
+  float: left;
+  position: relative;
+  height: 42px;
+}
+
+.quantity_button {
+  position: relative;
+  cursor: pointer;
+  border-left: 1px solid var(--text-color);
+  width: 20px;
+  text-align: center;
+  color: var(--text-color);
+  font-size: 13px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+  line-height: 1.7;
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.quantity_button.quantity_up {
+  position: absolute;
+  height: 50%;
+  top: 0;
+  border-bottom: 1px solid var(--text-color);
+}
+
+.quantity_button.quantity_down {
+  position: absolute;
+  bottom: -1px;
+  height: 50%;
+}
+
+.question_num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+}
+
+.question_num h1 {
+  color: var(--text-color);
+  font-family: 'SF Pro Display';
+  font-size: 24px;
+  margin-left: 10px;
+}

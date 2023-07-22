@@ -448,7 +448,7 @@ export default function EditContent() {
                                     newQuestionsData[index].open = !newQuestionsData[index].open;
                                     setQuestionUiData(newQuestionsData);
                                 }}>
-                                    <polygon points={`0,0 ${dropdownTriangleSize / 2},${dropdownTriangleSize} ${dropdownTriangleSize},0`} style={{ fill: '#353535' }} />
+                                    <polygon points={`0,0 ${dropdownTriangleSize / 2},${dropdownTriangleSize} ${dropdownTriangleSize},0`} style={{ fill: 'var(--text-color)' }} />
                                 </svg>
                                 <input className={styles.question_input} placeholder={getPlaceholder(question.type)} value={question.question} onChange={(e) => {
                                     question.question = e.target.value;

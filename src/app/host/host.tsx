@@ -5,7 +5,6 @@ import { GameUser } from '@/backend/live/user';
 import { Question, QuestionOption, QuestionType } from '@/backend/live/set';
 import { useEffect, useState } from 'react';
 
-import styles from './host.module.css';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
 import { EventType } from '@/backend/live/events/event';
