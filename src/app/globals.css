@@ -11,8 +11,6 @@
 }
 
 :root {
-    --no-color: #ffffff;
-
     --bg: #f2f9ff;
     --bg-dark: #e5e9ec;
     --bg-darker: #d9dde0;
@@ -43,8 +41,6 @@
 }
 
 [data-theme="dark"] {
-    --no-color: #2b2b2b;
-
     --bg: #1f1f1f;
     --bg-dark: #2a2a2a;
     --bg-darker: #333333;

@@ -18,6 +18,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import OptionDropdown from './mcq';
 import ShortAnswerDropdown from './sa';
 import { HeartSVG } from '@/svg';
+import FlashcardAnswerDropdown from './flashcard';
 
 export default function SetContent() {
     const id = usePathname().split('/')[2];
@@ -37,8 +38,10 @@ export default function SetContent() {
     const getQuestionUI = (question: Question) => {
         if (question.type === QuestionType.MultipleChoice || question.type === QuestionType.TrueFalse) {
             return (<OptionDropdown question={question} />);
-        } else if (question.type === QuestionType.Flashcard || question.type === QuestionType.ShortAnswer) {
+        } else if (question.type === QuestionType.ShortAnswer) {
             return (<ShortAnswerDropdown question={question} />);
+        } else if (question.type === QuestionType.Flashcard) {
+            return (<FlashcardAnswerDropdown question={question} />);
         }
 
         return (<></>);

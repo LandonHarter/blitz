@@ -106,8 +106,8 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
     const getRevealedQuestionUI = () => {
         const question = scramble ? scrambledQuestions[currentQuestionIndex] : questions[currentQuestionIndex];
         const nextQuestionCallback = async () => {
-            const nextQuestionIndex = currentQuestionIndex + 1;
-            if (nextQuestionIndex >= questions.length) {
+            const nextQuestionIndex = getNextQuestionId(currentQuestionIndex);
+            if (nextQuestionIndex === -1) {
                 await pushGameEvent(props.gameId, {
                     eventType: EventType.EndGame,
                     eventData: {},
@@ -138,6 +138,19 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
         }
 
         return (<></>);
+    };
+
+    const getNextQuestionId = (id: number) => {
+        let nextId = id + 1;
+        while (questions[nextId].type === QuestionType.Flashcard) {
+            nextId++;
+
+            if (nextId >= questions.length) {
+                return -1;
+            }
+        }
+
+        return nextId;
     };
 
     useEffect(() => {
@@ -261,7 +274,16 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
         }} />);
     } else if (gameState === 'livegame-waiting') {
         return (<HostWaiting nextQuestion={async () => {
-            const nextQuestionIndex = currentQuestionIndex + 1;
+            const nextQuestionIndex = getNextQuestionId(currentQuestionIndex);
+            if (nextQuestionIndex === -1) {
+                await pushGameEvent(props.gameId, {
+                    eventType: EventType.EndGame,
+                    eventData: {},
+                    eventId: generateId()
+                });
+                await deleteGame(props.gameId);
+                return;
+            }
             setCurrentQuestionIndex(nextQuestionIndex);
 
             const questionsArray = scramble ? scrambledQuestions : questions;

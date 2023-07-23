@@ -134,7 +134,7 @@
     width: 200px;
     height: auto;
 
-    background-color: var(--no-color);
+    background-color: var(--bg-dark);
     border-radius: 10px;
 
     display: flex;

@@ -33,7 +33,7 @@
     padding: 5px 10px;
 
     outline: none;
-    background-color: var(--no-color);
+    background-color: var(--bg-dark);
     border-radius: 10px;
     border: solid 1px var(--bg-darker);
     color: var(--text-color);

@@ -15,6 +15,7 @@ import UserContext from "@/context/usercontext";
 import algoliasearch from "algoliasearch/lite";
 import { HeartSVG } from "@/svg";
 import { likeSet, unlikeSet } from "@/backend/live/set";
+import SetCard from "@/components/set-card/setcard";
 
 export default function ExploreContent() {
     const router = useRouter();
@@ -126,69 +127,7 @@ export default function ExploreContent() {
                         <h1 className={styles.loading_title}>Loading...</h1>
                     </div> : <>
                         {sets.map((set: any, index) => {
-                            return (
-                                <article key={index} className={styles.set_card}>
-                                    <div className={styles.article_wrapper}>
-                                        <figure style={{ backgroundImage: `url(${set.image})` }}>
-
-                                        </figure>
-                                        <div className={styles.article_body}>
-                                            <Link href={`/set/${set.id}`} className={styles.link_decoration}><h2 onClick={() => {
-                                            }}>{set.name}</h2></Link>
-                                            <p>Created by {set.ownerName}</p>
-                                        </div>
-                                        <div className={styles.card_footer}>
-                                            <div className={styles.likes_container}>
-                                                <div onClick={async () => {
-                                                    if (currentUser.empty || !finishedLiking) return;
-
-                                                    setFinishedLiking(false);
-                                                    if (!(currentUser.likedSets || []).includes(set.id)) {
-                                                        const newSets = [...sets];
-                                                        newSets[index].likes++;
-                                                        newSets[index].liked = true;
-                                                        setSets(newSets);
-
-                                                        await likeSet(set.id, currentUser, updateUserData);
-                                                    }
-                                                    else {
-                                                        const newSets = [...sets];
-                                                        newSets[index].likes--;
-                                                        newSets[index].liked = false;
-                                                        setSets(newSets);
-
-                                                        await unlikeSet(set.id, currentUser, updateUserData);
-                                                    }
-                                                    setFinishedLiking(true);
-                                                }}>
-                                                    <HeartSVG className={`${styles.heart} ${set.liked && styles.heart_liked}`} />
-                                                </div>
-                                                <p>{set.likes} like{set.likes !== 1 && 's'}</p>
-                                            </div>
-                                            <button onClick={async () => {
-                                                if (!signedIn) {
-                                                    setError('You must be signed in to host a live game.');
-                                                    setErrorOpen(true);
-                                                    return;
-                                                }
-
-                                                const {
-                                                    success,
-                                                    error,
-                                                    gameCode
-                                                } = await createGame(currentUser.uid, set.id);
-
-                                                if (success) {
-                                                    router.push(`/host/${gameCode}`);
-                                                } else {
-                                                    setError(error);
-                                                    setErrorOpen(true);
-                                                }
-                                            }}>Host Live</button>
-                                        </div>
-                                    </div>
-                                </article>
-                            );
+                            return (<SetCard key={index} set={set} />);
                         })}
 
                         {(sets.length === 0 && !loadingContent) &&

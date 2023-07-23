@@ -31,7 +31,7 @@
 
     font-family: 'SF Pro Display';
     font-size: 20px;
-    background-color: var(--no-color);
+    background-color: var(--bg-dark);
     color: var(--text-color-light);
 
     transition: 0.2s ease-in-out;

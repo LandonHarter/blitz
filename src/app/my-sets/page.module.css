@@ -88,7 +88,7 @@
     width: 100px;
     height: 30px;
 
-    background-color: var(--correct-color);
+    background-color: var(--secondary-color);
     border: none;
     border-radius: 5px;
 
@@ -256,7 +256,7 @@
     font-family: 'SF Pro Display';
     font-size: 25px;
     color: var(--text-color);
-    background-color: var(--no-color);
+    background-color: var(--bg-dark);
 }
 
 .popup_content {

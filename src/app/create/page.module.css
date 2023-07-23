@@ -454,7 +454,7 @@
   border-radius: 10px;
   border: solid 1px var(--bg-darker);
   color: var(--text-color);
-  background-color: var(--no-color);
+  background-color: var(--bg-dark);
   font-family: 'SF Pro Display';
   font-size: 24px;
   font-weight: 400;

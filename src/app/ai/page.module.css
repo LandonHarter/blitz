@@ -39,7 +39,7 @@
     height: 166px;
     padding: 30px;
 
-    background-color: var(--no-color);
+    background-color: var(--bg-dark);
     border-radius: 30px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
     cursor: pointer;

@@ -144,7 +144,7 @@
     width: 100%;
     margin: 0;
     padding: 15px;
-    background-color: var(--no-color);
+    background-color: var(--bg-dark);
     color: var(--text-color);
 }
 
@@ -171,7 +171,7 @@
 .select_box__option {
     display: block;
     padding: 15px;
-    background-color: var(--no-color);
+    background-color: var(--bg-dark);
     color: var(--text-color);
 
     width: 300px;

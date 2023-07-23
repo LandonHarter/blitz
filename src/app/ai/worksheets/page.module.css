@@ -40,7 +40,7 @@
   font-size: 24px;
   font-weight: 400;
 
-  background-color: var(--no-color);
+  background-color: var(--bg-dark);
 }
 
 .prompt_textarea {
@@ -58,7 +58,7 @@
   font-size: 24px;
   font-weight: 400;
 
-  background-color: var(--no-color);
+  background-color: var(--bg-dark);
 
   resize: none;
 }
