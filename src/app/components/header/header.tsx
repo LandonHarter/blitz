@@ -130,7 +130,7 @@ export default function Header() {
                     Sign in with Microsoft
                 </motion.button>
                 <motion.button whileTap={{ scale: 0.95 }} transition={{ duration: 0.05 }} className={styles.provider_button} onClick={() => signInWithGithub().finally(() => signInPopup.set(false))}>
-                    <Image src='/images/providers/github.png' alt="github" width={25} height={25} />
+                    <Image src={`/images/providers/github${darkMode ? '-light' : ''}.png`} alt="github" width={25} height={25} />
                     Sign in with Github
                 </motion.button>
                 <div style={{ marginBottom: 30 }} />

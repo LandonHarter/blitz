@@ -34,6 +34,7 @@ export enum QuestionType {
     TrueFalse = "TrueFalse",
     ShortAnswer = "ShortAnswer",
     Flashcard = "Flashcard",
+    Math = "Math",
 }
 
 export const emptyQuestion: Question = {
@@ -78,7 +79,7 @@ export const emptyMultipleChoiceQuestion = () => {
         questionPoints: 100,
         scramble: false,
     }
-}
+};
 
 export const emptyTrueFalseQuestion = () => {
     return {
@@ -103,7 +104,7 @@ export const emptyTrueFalseQuestion = () => {
         questionPoints: 100,
         scramble: false,
     }
-}
+};
 
 export const emptyShortAnswerQuestion = () => {
     return {
@@ -124,7 +125,7 @@ export const emptyShortAnswerQuestion = () => {
         questionPoints: 100,
         scramble: false,
     }
-}
+};
 
 export const emptyFlashcardQuestion = () => {
     return {
@@ -136,6 +137,25 @@ export const emptyFlashcardQuestion = () => {
             id: generateId(),
             optionData: {
                 answer: "",
+            },
+        }],
+        id: generateId(),
+        questionLength: 15,
+        questionPoints: 100,
+        scramble: false,
+    };
+};
+
+export const emptyMathQuestion = () => {
+    return {
+        question: "",
+        type: QuestionType.Math,
+        options: [{
+            option: "",
+            correct: false,
+            id: generateId(),
+            optionData: {
+                correctAnswers: [''],
             },
         }],
         id: generateId(),

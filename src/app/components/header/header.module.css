@@ -90,7 +90,7 @@
     background-color: transparent;
     padding: 25px;
 
-    border: solid 2px var(--bg-dark);
+    border: solid 2px var(--bg-darker);
     border-radius: 10px;
 
     margin: 5px;
