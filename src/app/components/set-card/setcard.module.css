@@ -100,6 +100,7 @@
 
 .heart_liked path {
     fill: #ea3c53;
+    stroke: none;
 }
 
 .likes_container {

@@ -10,7 +10,7 @@ import AnimationDiv from '@/animation/AnimationDiv';
 export default function Popup(props: { open: boolean, setOpen?: Function, close?: any, exitButton: boolean, children: any, closeOnOutsideClick?: boolean }) {
     const popupRef = useRef(null);
     useOutsideClick(popupRef, () => {
-        if (!props.closeOnOutsideClick) return;
+        if (props.closeOnOutsideClick !== undefined && !props.closeOnOutsideClick) return;
         if (props.setOpen) props.setOpen(false);
         if (props.close) props.close();
     });

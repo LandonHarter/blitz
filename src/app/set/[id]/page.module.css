@@ -250,6 +250,7 @@
 
 .like_icon_liked path {
     fill: #ea3c53;
+    stroke: none;
 }
 
 .like_count {

@@ -64,3 +64,65 @@
     margin: 40px 20px;
     margin-bottom: 0;
 }
+
+.study_state_title {
+    font-family: 'SF Pro Display';
+    color: var(--text-color);
+    font-size: 40px;
+    text-align: center;
+    margin: 20px;
+}
+
+.study_state_subtitle {
+    font-family: 'SF Pro Display';
+    color: var(--text-color-light);
+    font-size: 20px;
+    margin: 20px 10px;
+    text-align: center;
+}
+
+.take_break {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    border: none;
+
+    padding: 10px 20px;
+
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+
+    margin-top: 20px;
+
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+.take_break:active {
+    transform: scale(0.975);
+}
+
+.ignore_break {
+    background-color: transparent;
+    color: var(--text-color-light);
+    border-radius: 10px;
+    border: none;
+
+    padding: 10px 20px;
+
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+.ignore_break:active {
+    transform: scale(0.975);
+}
+
+.timer {
+    font-family: 'SF Pro Display';
+    font-size: 80px;
+    color: var(--text-color);
+    text-align: center;
+}

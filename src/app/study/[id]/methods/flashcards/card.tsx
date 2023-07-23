@@ -15,7 +15,7 @@ export default function Flashcard(props: { question: string, answer: string, ind
         } as React.CSSProperties}>
             <div className={styles.flashcard_front}>
                 <h1>{props.question}</h1>
-            </div> :
+            </div>
             <div className={styles.flashcard_back}>
                 <h1>{props.answer}</h1>
             </div>
