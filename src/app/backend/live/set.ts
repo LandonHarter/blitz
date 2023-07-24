@@ -1,4 +1,4 @@
-import { arrayUnion, collection, doc, increment, updateDoc, getDoc } from "firebase/firestore";
+import { arrayUnion, collection, doc, increment, updateDoc, getDoc, arrayRemove } from "firebase/firestore";
 import { User } from "../firebase/user";
 import generateId from "../id";
 import { firestore } from "../firebase/init";
@@ -171,9 +171,6 @@ export const likeSet = async (setId: string, currentUser: User, updateUserData: 
     const userReference = doc(collection(firestore, 'users'), currentUser.uid);
     const setReference = doc(collection(firestore, 'sets'), setId);
 
-    const likedSets = currentUser.likedSets || [];
-    if (likedSets.includes(setId)) return;
-
     await updateDoc(setReference, {
         likes: increment(1),
     });
@@ -190,14 +187,11 @@ export const unlikeSet = async (setId: string, currentUser: User, updateUserData
     const userReference = doc(collection(firestore, 'users'), currentUser.uid);
     const setReference = doc(collection(firestore, 'sets'), setId);
 
-    const likedSets = currentUser.likedSets || [];
-    if (!likedSets.includes(setId)) return;
-
     await updateDoc(setReference, {
         likes: increment(-1),
     });
     await updateDoc(userReference, {
-        likedSets: likedSets.filter(set => set !== setId),
+        likedSets: arrayRemove(setId),
     });
 
     await updateUserData();

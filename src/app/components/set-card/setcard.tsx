@@ -34,7 +34,7 @@ export default function SetCard(props: { set: any }) {
                             if (currentUser.empty || !finishedLiking) return;
 
                             setFinishedLiking(false);
-                            if (!(currentUser.likedSets || []).includes(set.id)) {
+                            if (!liked) {
                                 setNumLikes(numLikes + 1);
                                 setLiked(true);
                                 await likeSet(set.id, currentUser, updateUserData);
