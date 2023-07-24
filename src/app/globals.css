@@ -148,22 +148,22 @@ textarea {
 
 @font-face {
     font-family: 'Cubano';
-    src: url('/fonts/Cubano.ttf');
+    src: url('/fonts/Cubano.woff2');
 }
 
 @font-face {
     font-family: 'SF Pro Display';
-    src: url('/fonts/SFProDisplay/SFPRODISPLAYREGULAR.OTF');
+    src: url('/fonts/SFProDisplay/SFPRODISPLAYREGULAR.woff2');
 }
 
 @font-face {
     font-family: 'SF Pro Display';
-    src: url('/fonts/SFProDisplay/SFPRODISPLAYBOLD.OTF');
+    src: url('/fonts/SFProDisplay/SFPRODISPLAYBOLD.woff2');
     font-weight: bold;
 }
 
 @font-face {
     font-family: 'SF Pro Display';
-    src: url('/fonts/SFProDisplay/SFPRODISPLAYMEDIUM.OTF');
+    src: url('/fonts/SFProDisplay/SFPRODISPLAYMEDIUM.woff2');
     font-weight: 400;
 }
