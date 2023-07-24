@@ -4,7 +4,16 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Privacy Policy • Blitz',
-    description: 'Blitz prides itself on being a privacy-first company. We do not sell your data to third parties.'
+    description: 'Blitz prides itself on being a privacy-first company. We do not sell your data to third parties.',
+    other: {
+        'og:image': 'https://blitzedu.vercel.app/icon.png',
+        'og:title': 'Privacy Policy • Blitz',
+        'og:description': 'Blitz prides itself on being a privacy-first company. We do not sell your data to third parties.',
+        'twitter:image': 'https://blitzedu.vercel.app/icon.png',
+        'twitter:title': 'Privacy Policy • Blitz',
+        'twitter:description': 'Blitz prides itself on being a privacy-first company. We do not sell your data to third parties.',
+        'twitter:card': 'summary_large_image',
+    }
 };
 
 export default function PrivacyPage() {

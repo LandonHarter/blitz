@@ -3,6 +3,16 @@ import styles from './page.module.css';
 
 export const metadata: Metadata = {
     title: 'Teacher Application Requisites • Blitz',
+    description: 'Apply to become a Blitz teacher.',
+    other: {
+        'og:image': 'https://blitzedu.vercel.app/icon.png',
+        'og:title': 'Teacher Application Requisites • Blitz',
+        'og:description': 'Apply to become a Blitz teacher.',
+        'twitter:image': 'https://blitzedu.vercel.app/icon.png',
+        'twitter:title': 'Teacher Application Requisites • Blitz',
+        'twitter:description': 'Apply to become a Blitz teacher.',
+        'twitter:card': 'summary_large_image',
+    }
 };
 
 export default function ApplyTeacherRequisitesPage() {

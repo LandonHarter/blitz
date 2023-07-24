@@ -4,7 +4,16 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Terms of Service • Blitz',
-    description: 'Terms of Service for Blitz.'
+    description: 'Terms of Service for Blitz.',
+    other: {
+        'og:image': 'https://blitzedu.vercel.app/icon.png',
+        'og:title': 'Terms of Service • Blitz',
+        'og:description': 'Terms of Service for Blitz.',
+        'twitter:image': 'https://blitzedu.vercel.app/icon.png',
+        'twitter:title': 'Terms of Service • Blitz',
+        'twitter:description': 'Terms of Service for Blitz.',
+        'twitter:card': 'summary_large_image',
+    }
 };
 
 export default function TOSPage() {

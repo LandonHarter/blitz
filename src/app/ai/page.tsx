@@ -5,7 +5,16 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: "AI Tools • Blitz",
-    description: "A collection of AI tools to boost study productivity, in and out of the classroom."
+    description: "A collection of AI tools to boost study productivity, in and out of the classroom.",
+    other: {
+        "og:image": "https://blitzedu.vercel.app/icon.png",
+        "og:title": "AI Tools • Blitz",
+        "og:description": "A collection of AI tools to boost study productivity, in and out of the classroom.",
+        "twitter:image": "https://blitzedu.vercel.app/icon.png",
+        "twitter:title": "AI Tools • Blitz",
+        "twitter:description": "A collection of AI tools to boost study productivity, in and out of the classroom.",
+        "twitter:card": "summary_large_image",
+    }
 };
 
 export default function AIPage() {
