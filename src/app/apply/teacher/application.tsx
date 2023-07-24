@@ -16,7 +16,7 @@ import generateId from '@/backend/id';
 export default function ApplyTeacherContent() {
     const { currentUser, signedIn, userLoading } = useContext(UserContext);
 
-    const [imagePath, setImagePath] = useState('/images/missingimage.jpg');
+    const [imagePath, setImagePath] = useState('/images/missingimage.webp');
     const [file, setFile] = useState<Blob | null>(null);
     const [selectedContentType, setSelectedContentType] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -29,7 +29,7 @@ export default function ApplyTeacherContent() {
 
         setLoading(true);
 
-        let imageUrl = '/images/missingimage.jpg';
+        let imageUrl = '/images/missingimage.webp';
         const imageUri = await new Promise<string>((resolve) => {
             FileResizer.imageFileResizer(file, 500, 500, 'JPEG', 100, 0, (uri: any) => {
                 // @ts-ignore

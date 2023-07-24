@@ -32,7 +32,7 @@ export default function QuestionImage(props: { question: Question, setQuestions:
             }} />
             <label htmlFor={`question-photo-input-${props.question.id}`}>
                 {!imageLoading ?
-                    <div className={styles.image} style={{ backgroundImage: `url('${props.question.photo || '/images/missingimage.jpg'}')` }} /> :
+                    <div className={styles.image} style={{ backgroundImage: `url('${props.question.photo || '/images/missingimage.webp'}')` }} /> :
                     <div className={styles.image_loading}>
                         <svg className={styles.pencil} viewBox="0 0 200 200" width="200px" height="200px" xmlns="http://www.w3.org/2000/svg">
                             <defs>

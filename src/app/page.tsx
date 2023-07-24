@@ -55,7 +55,7 @@ export default function Home() {
         </div>
       </div>
       <div className={styles.computer_screen} style={{
-        backgroundImage: `url('/ss${darkMode ? '-dark' : ''}.png')`,
+        backgroundImage: `url('/ss${darkMode ? '-dark' : ''}.webp')`,
       }} />
       <div className={styles.computer_screen_coverup} />
       <InViewAnimation className={styles.hero2}>

@@ -55,7 +55,7 @@ const setUserData = async (credentials: UserCredential) => {
     const userObject: User = {
         name: user.displayName ?? "User" + randomInt(0, 100000),
         email: user.email ?? "",
-        pfp: user.photoURL ?? "/images/avatar.png",
+        pfp: user.photoURL ?? "/images/avatar.webp",
         uid: user.uid,
         empty: false,
         sets: [],

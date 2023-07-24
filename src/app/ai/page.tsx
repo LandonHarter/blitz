@@ -31,13 +31,13 @@ export default function AIPage() {
                 <AICard
                     title='Summarizer'
                     description='Get a short summary of any short written passages. Request short, long, detailed, or simple summaries and finish with an extended view.'
-                    image='/images/icons/ai/book.png'
+                    image='/images/icons/ai/book.webp'
                     link='/ai/summarizer'
                 />
                 <AICard
                     title='Worksheet Creator'
                     description='Generate a full worksheet with multiple open ended questions. All questions are free response and generated using AI.'
-                    image='/images/icons/ai/worksheet.png'
+                    image='/images/icons/ai/worksheet.webp'
                     link='/ai/worksheets'
                 />
             </div>

@@ -5,7 +5,7 @@ const UserContext = createContext<{ currentUser: User, signedIn: boolean, userLo
     currentUser: {
         name: "",
         email: "",
-        pfp: "/images/avatar.png",
+        pfp: "/images/avatar.webp",
         uid: "",
         empty: true,
         sets: []

@@ -8,7 +8,7 @@ export default function useCurrentUser() {
     const [currentUser, setCurrentUser] = useState<User>({
         name: "User",
         email: "",
-        pfp: "/images/avatar.png",
+        pfp: "/images/avatar.webp",
         uid: "",
         empty: true,
         sets: [],
@@ -33,7 +33,7 @@ export default function useCurrentUser() {
             setCurrentUser({
                 name: "",
                 email: "",
-                pfp: "/images/avatar.png",
+                pfp: "/images/avatar.webp",
                 uid: "",
                 empty: true,
                 sets: [],
@@ -59,7 +59,7 @@ export default function useCurrentUser() {
                 setCurrentUser({
                     name: "",
                     email: "",
-                    pfp: "/images/avatar.png",
+                    pfp: "/images/avatar.webp",
                     uid: "",
                     empty: true,
                     sets: [],
