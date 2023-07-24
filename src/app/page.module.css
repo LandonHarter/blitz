@@ -19,9 +19,9 @@
 }
 
 .title {
+    width: 90%;
     font-family: 'SF Pro Display';
     font-size: 65px;
-    white-space: nowrap;
     margin-bottom: 40px;
     text-align: center;
     color: var(--text-color);
@@ -162,6 +162,7 @@
     font-size: 25px;
     color: var(--text-color);
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .feature_subtitle {
@@ -264,4 +265,85 @@
     color: var(--text-color-light);
     margin-bottom: 20px;
     width: 70%;
+}
+
+@media screen and (max-width: 768px) {
+
+    .title {
+        width: 95%;
+        font-size: 45px;
+    }
+
+    .subtitle {
+        width: 90%;
+        font-size: 20px;
+    }
+
+    .hero1_buttons {
+        flex-direction: column;
+    }
+
+    .get_started {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .learn_more {
+        margin-left: 0;
+    }
+
+    .hero2_big_title {
+        width: 90%;
+        font-size: 35px;
+    }
+
+    .hero2_subtitle {
+        width: 80%;
+        font-size: 20px;
+    }
+
+    .hero2_features {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .feature {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .feature_title {
+        font-size: 40px;
+    }
+
+    .hero3_subtitle {
+        width: 80%;
+        font-size: 20px;
+    }
+
+    .hero3_questions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .question {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .question_title {
+        width: 80%;
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .question_answer {
+        font-size: 20px;
+        width: 90%;
+        text-align: center;
+    }
+
 }

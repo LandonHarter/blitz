@@ -6,9 +6,11 @@ import styles from "./footer.module.css";
 import Link from "next/link";
 import { useContext } from "react";
 import DarkModeContext from "@/context/darkmode";
+import MobileContext from "@/context/mobile";
 
 export default function Footer() {
     const { get: darkMode } = useContext(DarkModeContext);
+    const mobile = useContext(MobileContext);
 
     return (
         <div className={styles.footer} style={{
@@ -17,12 +19,14 @@ export default function Footer() {
             '--footer-text-color': darkMode ? 'var(--text-color-light)' : 'var(--primary-light)'
         } as React.CSSProperties}>
             <div className={styles.footer_sections}>
-                <div className={styles.company_details}>
-                    <Image src='/bigicon-light.png' alt='blitz logo' width={125} height={70} />
-                    <p className={styles.company_details_content}>
-                        Blitz is a platform for teachers and students to connect and learn together through live games and personal study tools.
-                    </p>
-                </div>
+                {!mobile &&
+                    <div className={styles.company_details}>
+                        <Image src='/bigicon-light.png' alt='blitz logo' width={125} height={70} />
+                        <p className={styles.company_details_content}>
+                            Blitz is a platform for teachers and students to connect and learn together through live games and personal study tools.
+                        </p>
+                    </div>
+                }
 
                 <div className={styles.footer_columns_container}>
                     <div className={styles.footer_section_column}>

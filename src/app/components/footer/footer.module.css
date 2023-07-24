@@ -116,3 +116,33 @@
 .footer_copyright a:hover {
     text-decoration: underline;
 }
+
+@media screen and (max-width: 1250px) {
+
+    .footer_sections {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer_columns_container {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .footer_section_column {
+        margin: 0 50px 50px 50px;
+
+        align-items: center;
+    }
+
+    .footer_section_column h1 {
+        text-align: center;
+    }
+
+    .footer_section_column_list {
+        align-items: center;
+    }
+
+}
