@@ -1,5 +1,5 @@
 .terms_container {
-    width: 100vw;
+    width: calc(100vw - 60px);
     height: fit-content;
 
     padding: 30px;
@@ -61,4 +61,16 @@
     font-size: 18px !important;
     color: var(--text-color-light) !important;
     line-height: 28px;
+}
+
+@media screen and (max-width: 1250px) {
+
+    .big_title {
+        width: 80%;
+    }
+
+    .terms {
+        width: 80%;
+    }
+
 }
