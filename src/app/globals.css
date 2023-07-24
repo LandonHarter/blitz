@@ -149,21 +149,25 @@ textarea {
 @font-face {
     font-family: 'Cubano';
     src: url('/fonts/Cubano.woff2');
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'SF Pro Display';
     src: url('/fonts/SFProDisplay/SFPRODISPLAYREGULAR.woff2');
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'SF Pro Display';
     src: url('/fonts/SFProDisplay/SFPRODISPLAYBOLD.woff2');
     font-weight: bold;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'SF Pro Display';
     src: url('/fonts/SFProDisplay/SFPRODISPLAYMEDIUM.woff2');
     font-weight: 400;
+    font-display: swap;
 }

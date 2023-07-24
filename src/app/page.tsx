@@ -22,7 +22,7 @@ export default function Home() {
       <div className={styles.ring_image}>
         <div className={styles.ring_1} />
         <div className={styles.ring_2} />
-        <Image className={styles.ring_content} src={props.image} alt='' width={50} height={50} />
+        <Image className={styles.ring_content} src={props.image} alt='' width={50} height={50} priority={false} />
       </div>
       <h1 className={styles.feature_title}>{props.title}</h1>
       <h1 className={styles.feature_subtitle}>{props.subtitle}</h1>
