@@ -258,3 +258,21 @@
     margin-left: 10px;
     transform: translateY(-2px);
 }
+
+@media screen and (max-width: 1250px) {
+
+    .set_container {
+        flex-direction: column;
+    }
+
+    .side_bar {
+        width: calc(100vw - 80px);
+        margin: 20px;
+    }
+
+    .questions_container {
+        width: calc(100vw - 40px);
+        margin: 20px;
+    }
+
+}

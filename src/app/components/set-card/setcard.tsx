@@ -17,6 +17,17 @@ export default function SetCard(props: { set: any }) {
     const [liked, setLiked] = useState((currentUser.likedSets || []).includes(set.id));
     const [finishedLiking, setFinishedLiking] = useState(true);
 
+    const formatName = () => {
+        const name = set.name;
+        const maxLength = 16;
+
+        if (name.length > maxLength) {
+            return name.slice(0, maxLength - 3) + '...';
+        }
+
+        return name;
+    };
+
     return (
         <article className={styles.set_card}>
             <div className={styles.article_wrapper}>
@@ -25,7 +36,7 @@ export default function SetCard(props: { set: any }) {
                 </figure>
                 <div className={styles.article_body}>
                     <Link href={`/set/${set.id}`} className={styles.link_decoration}><h2 onClick={() => {
-                    }}>{set.name}</h2></Link>
+                    }}>{formatName()}</h2></Link>
                     <p>Created by {set.ownerName}</p>
                 </div>
                 <div className={styles.card_footer}>

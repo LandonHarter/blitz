@@ -11,6 +11,9 @@
     transform-origin: center;
     transition: all 0.4s ease-in-out;
     overflow: hidden;
+    margin: 10px;
+
+    width: 400px;
 }
 
 .set_card h2 {
@@ -115,4 +118,13 @@
 
 .link_decoration {
     text-decoration: none;
+}
+
+@media screen and (max-width: 840px) {
+
+    .set_card {
+        width: calc(100vw - 88px);
+        gap: 0px;
+    }
+
 }
