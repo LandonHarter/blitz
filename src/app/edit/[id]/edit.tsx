@@ -78,7 +78,6 @@ export default function EditContent() {
             const setSnapshot = await getDoc(setRef);
 
             if (!setSnapshot.exists()) {
-                alert('Set does not exist');
                 router.push('/');
                 return;
             }
@@ -315,7 +314,7 @@ export default function EditContent() {
         await updateDoc(questionRef, {
             questions: questions,
             numQuestions: questions.length,
-            updatedAt: serverTimestamp(),
+            updatedAt: Timestamp.now(),
             name: tempSet.name,
             description: tempSet.description,
             scramble: tempSet.scramble || false,
