@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createGame } from '@/backend/live/game';
 import { useState } from 'react';
+import MobileContext from '@/context/mobile';
 
 export default function SetCard(props: { set: any }) {
     const set = props.set;
@@ -17,9 +18,11 @@ export default function SetCard(props: { set: any }) {
     const [liked, setLiked] = useState((currentUser.likedSets || []).includes(set.id));
     const [finishedLiking, setFinishedLiking] = useState(true);
 
+    const mobile = useContext(MobileContext);
+
     const formatName = () => {
         const name = set.name;
-        const maxLength = 16;
+        const maxLength = 20;
 
         if (name.length > maxLength) {
             return name.slice(0, maxLength - 3) + '...';
@@ -36,7 +39,7 @@ export default function SetCard(props: { set: any }) {
                 </figure>
                 <div className={styles.article_body}>
                     <Link href={`/set/${set.id}`} className={styles.link_decoration}><h2 onClick={() => {
-                    }}>{formatName()}</h2></Link>
+                    }}>{set.name}</h2></Link>
                     <p>Created by {set.ownerName}</p>
                 </div>
                 <div className={styles.card_footer}>

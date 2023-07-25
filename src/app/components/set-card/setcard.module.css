@@ -23,6 +23,10 @@
     color: var(--title-color);
     cursor: pointer;
     transition: color 0.3s ease-out;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .set_card p {
