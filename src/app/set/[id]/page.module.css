@@ -199,6 +199,15 @@
     gap: 10px;
 }
 
+.flashcard_answer_container {
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .option {
     width: calc(100% - 20px);
     padding: 30px 0;
