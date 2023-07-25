@@ -142,6 +142,11 @@
     color: var(--title-color);
     cursor: pointer;
     transition: color 0.3s ease-out;
+
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .set_card p {

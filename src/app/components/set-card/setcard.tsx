@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createGame } from '@/backend/live/game';
 import { useState } from 'react';
-import MobileContext from '@/context/mobile';
 
 export default function SetCard(props: { set: any }) {
     const set = props.set;
@@ -17,19 +16,6 @@ export default function SetCard(props: { set: any }) {
     const [numLikes, setNumLikes] = useState(set.likes || 0);
     const [liked, setLiked] = useState((currentUser.likedSets || []).includes(set.id));
     const [finishedLiking, setFinishedLiking] = useState(true);
-
-    const mobile = useContext(MobileContext);
-
-    const formatName = () => {
-        const name = set.name;
-        const maxLength = 20;
-
-        if (name.length > maxLength) {
-            return name.slice(0, maxLength - 3) + '...';
-        }
-
-        return name;
-    };
 
     return (
         <article className={styles.set_card}>

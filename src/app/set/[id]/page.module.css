@@ -50,6 +50,9 @@
     margin-top: 20px;
     color: var(--text-color);
     font-family: 'SF Pro Display';
+
+    width: 100%;
+    overflow: hidden;
 }
 
 .set_description {
