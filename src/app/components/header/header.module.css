@@ -473,6 +473,8 @@ input:checked+.toggle .star6 {
     width: calc(100% - var(--left-padding));
     height: 80px;
 
+    color: var(--text-color);
+
     border-bottom: 1px solid var(--bg-darker);
     display: flex;
     align-items: center;
