@@ -19,7 +19,7 @@
 }
 
 .big_title {
-    width: 50%;
+    width: 75%;
     font-size: 52px;
     font-family: 'SF Pro Display';
     font-weight: 600;
@@ -66,7 +66,7 @@
 @media screen and (max-width: 1250px) {
 
     .big_title {
-        width: 80%;
+        width: 90%;
     }
 
     .terms {
