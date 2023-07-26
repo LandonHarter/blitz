@@ -1,0 +1,13 @@
+https://blitzedu.vercel.app/
+https://blitzedu.vercel.app/ai
+https://blitzedu.vercel.app/ai/summarizer
+https://blitzedu.vercel.app/ai/worksheets
+https://blitzedu.vercel.app/apply/teacher
+https://blitzedu.vercel.app/apply/teacher/requisites
+https://blitzedu.vercel.app/contact
+https://blitzedu.vercel.app/create
+https://blitzedu.vercel.app/explore/sets
+https://blitzedu.vercel.app/join
+https://blitzedu.vercel.app/privacy
+https://blitzedu.vercel.app/terms
+https://blitzedu.vercel.app/whyus
