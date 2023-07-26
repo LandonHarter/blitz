@@ -25,18 +25,17 @@
 }
 
 .ai_options {
-    width: 80vw;
+    max-width: 80vw;
+    width: fit-content;
     height: fit-content;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
+    grid-gap: 20px;
 }
 
 .ai_card {
     width: 375px;
-    height: 166px;
     padding: 30px;
 
     background-color: var(--bg-dark);
@@ -44,8 +43,6 @@
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: 0.15s ease-in-out;
-
-    margin: 20px;
 
     text-decoration: none;
 }
@@ -80,4 +77,6 @@
     font-weight: 400;
     color: var(--text-color-light);
     margin-top: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
