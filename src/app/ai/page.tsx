@@ -2,6 +2,7 @@ import Image from 'next/image';
 import styles from './page.module.css';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import Footer from '@/components/footer/footer';
 
 export const metadata: Metadata = {
     title: "AI Tools • Blitz",
@@ -33,6 +34,7 @@ export default function AIPage() {
 
     return (
         <div className={styles.page_container}>
+            <div className={'bg_scrolling'} />
             <h1 className={styles.title}>AI Tools</h1>
             <div className={styles.tick} />
 
@@ -50,6 +52,10 @@ export default function AIPage() {
                     link='/ai/worksheets'
                 />
             </div>
+
+            <div style={{ marginBottom: 150 }} />
+
+            <Footer />
         </div>
     );
 }
