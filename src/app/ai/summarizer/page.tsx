@@ -11,7 +11,7 @@ export const metadata: Metadata = {
         "twitter:image": "https://blitzedu.vercel.app/icon.png",
         "twitter:title": "Summarizer • Blitz",
         "twitter:description": "Get a short summary of any short written passages. Request short, long, detailed, or simple summaries and finish with an extended view.",
-        "twitter:card": "summary_large_image",
+        "twitter:card": "app",
     }
 };
 

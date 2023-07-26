@@ -11,7 +11,7 @@ export const metadata: Metadata = {
         'twitter:image': 'https://blitzedu.vercel.app/icon.png',
         'twitter:title': 'Teacher Application • Blitz',
         'twitter:description': 'Apply to become a verified teacher on Blitz and gain new benefits!',
-        'twitter:card': 'summary_large_image',
+        'twitter:card': 'app',
     }
 };
 

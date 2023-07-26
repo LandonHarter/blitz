@@ -12,7 +12,7 @@ export const metadata: Metadata = {
         'twitter:image': 'https://blitzedu.vercel.app/icon.png',
         'twitter:title': 'Terms of Service • Blitz',
         'twitter:description': 'Terms of Service for Blitz.',
-        'twitter:card': 'summary_large_image',
+        'twitter:card': 'app',
     }
 };
 

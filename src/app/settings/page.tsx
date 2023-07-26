@@ -11,7 +11,7 @@ export const metadata: Metadata = {
         'twitter:image': 'https://blitzedu.vercel.app/icon.png',
         'twitter:title': 'Settings • Blitz',
         'twitter:description': 'Change your settings to your preference on Blitz.',
-        'twitter:card': 'summary_large_image',
+        'twitter:card': 'app',
     }
 };
 

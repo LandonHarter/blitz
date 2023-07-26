@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     'twitter:image': 'https://blitzedu.vercel.app/icon.png',
     'twitter:title': 'Blitz',
     'twitter:description': 'Use new tools and games to make studying fun.',
-    'twitter:card': 'summary_large_image',
+    'twitter:card': 'app',
     'google-site-verification': 'j43ORVaA7qz_sFFceLHCzyeJeH0qgqhOwPy_5DmBAfU'
   }
 };

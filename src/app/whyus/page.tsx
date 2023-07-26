@@ -11,7 +11,7 @@ export const metadata: Metadata = {
         'twitter:image': 'https://blitzedu.vercel.app/icon.png',
         'twitter:title': 'Why Us • Blitz',
         'twitter:description': 'Why should you use Blitz?',
-        'twitter:card': 'summary_large_image',
+        'twitter:card': 'app',
     }
 };
 

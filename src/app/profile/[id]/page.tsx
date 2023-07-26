@@ -17,7 +17,7 @@ export async function generateMetadata({ params, seachParams }: any): Promise<Me
         title: `${user.name} • Blitz`,
         description: `View ${user.name}'s profile on Blitz!`,
         other: {
-            'twitter:card': 'summary_large_image',
+            'twitter:card': 'app',
             'twitter:image': user.pfp,
             'twitter:site': '@blitzedu',
             'twitter:title': user.name,

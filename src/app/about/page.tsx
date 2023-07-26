@@ -11,7 +11,7 @@ export const metadata: Metadata = {
         "twitter:image": "https://blitzedu.vercel.app/icon.png",
         "twitter:title": "About Us • Blitz",
         "twitter:description": "Blitz is a collection of free tools to boost study productivity, in and out of the classroom.",
-        "twitter:card": "summary_large_image",
+        "twitter:card": "app",
     }
 };
 
