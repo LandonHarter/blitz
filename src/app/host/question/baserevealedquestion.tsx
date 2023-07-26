@@ -1,6 +1,6 @@
 'use client'
 
-import { Question } from '@/backend/live/set';
+import { Question } from '@/backend/set';
 import { motion } from 'framer-motion';
 import styles from './basequestion.module.css';
 

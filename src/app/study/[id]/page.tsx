@@ -1,4 +1,4 @@
-import { getSet } from "@/backend/live/set";
+import { getSet } from "@/backend/set";
 import StudyContent from "./study";
 import { Metadata } from "next";
 

@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import styles from './setcard.module.css';
 import UserContext from '@/context/usercontext';
 import { HeartSVG } from '@/svg';
-import { likeSet, unlikeSet } from '@/backend/live/set';
+import { likeSet, unlikeSet } from '@/backend/set';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createGame } from '@/backend/live/game';

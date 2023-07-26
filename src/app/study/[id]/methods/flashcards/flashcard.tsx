@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import StudyMethodContainer from "../studymethod";
-import { QuestionType } from "@/backend/live/set";
+import { QuestionType } from "@/backend/set";
 import Flashcard from "./card";
 import styles from './flashcard.module.css';
 

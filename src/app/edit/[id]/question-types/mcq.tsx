@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion';
-import { Question } from '@/backend/live/set';
+import { Question } from '@/backend/set';
 
 import styles from './mcq.module.css';
 import questionStyles from './basestyles.module.css';

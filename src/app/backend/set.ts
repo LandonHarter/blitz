@@ -1,7 +1,7 @@
-import { arrayUnion, collection, doc, increment, updateDoc, getDoc, arrayRemove } from "firebase/firestore";
-import { User } from "../firebase/user";
-import generateId from "../id";
-import { firestore } from "../firebase/init";
+import { arrayUnion, collection, doc, increment, updateDoc, getDoc, arrayRemove, serverTimestamp, setDoc, Timestamp } from "firebase/firestore";
+import { User } from "./firebase/user";
+import generateId from "./id";
+import { firestore } from "./firebase/init";
 
 export interface Set {
     id: string;
@@ -227,4 +227,45 @@ export const getSet = async (setId: string) => {
     cachedSets[setId] = setObj;
 
     return setObj;
+};
+
+export const duplicateSet = async (setId: string, currentUser: User, updateUserData: () => Promise<void>) => {
+    const setData = await getSet(setId);
+    if (!setData) return null;
+
+    const newSetRef = doc(collection(firestore, 'sets'));
+    const userRef = doc(collection(firestore, 'users'), currentUser.uid);
+
+    await setDoc(newSetRef, {
+        id: newSetRef.id,
+        name: setData.name,
+        questions: setData.questions,
+        numQuestions: setData.numQuestions,
+        settings: {},
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+        owner: currentUser.uid,
+        ownerName: currentUser.name,
+        public: true,
+        likes: 0,
+        image: setData.image,
+        description: setData.description
+    });
+
+    await updateDoc(userRef, {
+        sets: arrayUnion({
+            id: newSetRef.id,
+            name: setData.name,
+            description: setData.description,
+            image: setData.image,
+            updatedAt: Timestamp.now(),
+        })
+    });
+
+    await updateDoc(doc(collection(firestore, 'site'), 'metrics'), {
+        numSets: increment(1)
+    });
+
+    await updateUserData();
+    return newSetRef.id;
 };

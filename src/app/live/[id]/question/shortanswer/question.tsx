@@ -1,6 +1,6 @@
 'use client'
 
-import { Question } from '@/backend/live/set';
+import { Question } from '@/backend/set';
 import { useContext, useState } from 'react';
 
 import styles from './question.module.css';

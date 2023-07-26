@@ -6,7 +6,7 @@ import styles from './page.module.css';
 import { useRouter, usePathname } from 'next/navigation';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
-import { Question, QuestionType, Set, getSet, likeSet, unlikeSet } from '@/backend/live/set';
+import { Question, QuestionType, Set, duplicateSet, getSet, likeSet, unlikeSet } from '@/backend/set';
 import Loading from '@/components/loading/loading';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,8 +17,11 @@ import Popup from '@/components/popup/popup';
 import { AnimatePresence, motion } from 'framer-motion';
 import OptionDropdown from './mcq';
 import ShortAnswerDropdown from './sa';
-import { HeartSVG } from '@/svg';
+import { HeartSVG, ThreeDotsSVG } from '@/svg';
 import FlashcardAnswerDropdown from './flashcard';
+import DarkModeContext from '@/context/darkmode';
+import AnimationDiv from '@/animation/AnimationDiv';
+import { dropdown } from '@/animation/animation';
 
 export default function SetContent() {
     const id = usePathname().split('/')[2];
@@ -30,7 +33,10 @@ export default function SetContent() {
     const [loading, setLoading] = useState(true);
     const [questionsOpen, setQuestionsOpen] = useState<boolean[]>([]);
 
+    const [threeDots, setThreeDots] = useState(false);
+
     const { currentUser, signedIn, updateUserData } = useContext(UserContext);
+    const { get: darkMode } = useContext(DarkModeContext);
 
     const [error, setError] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
@@ -89,32 +95,80 @@ export default function SetContent() {
                 <p className={styles.set_description}>{set.description}</p>
 
                 <div className={styles.set_stats}>
-                    <div onClick={() => {
-                        if (!signedIn) {
-                            setError('You must be signed in to like a set.');
-                            setErrorOpen(true);
-                            return;
-                        }
+                    <div>
+                        <div onClick={() => {
+                            if (!signedIn) {
+                                setError('You must be signed in to like a set.');
+                                setErrorOpen(true);
+                                return;
+                            }
 
-                        if (isLiked) {
-                            setIsLiked(false);
-                            const newSet = { ...set };
-                            newSet.likes--;
-                            setSet(newSet);
+                            if (isLiked) {
+                                setIsLiked(false);
+                                const newSet = { ...set };
+                                newSet.likes--;
+                                setSet(newSet);
 
-                            unlikeSet(set.id, currentUser, updateUserData);
-                        } else {
-                            setIsLiked(true);
-                            const newSet = { ...set };
-                            newSet.likes++;
-                            setSet(newSet);
+                                unlikeSet(set.id, currentUser, updateUserData);
+                            } else {
+                                setIsLiked(true);
+                                const newSet = { ...set };
+                                newSet.likes++;
+                                setSet(newSet);
 
-                            likeSet(set.id, currentUser, updateUserData);
-                        }
-                    }}>
-                        <HeartSVG className={`${styles.like_icon} ${isLiked && styles.like_icon_liked}`} />
+                                likeSet(set.id, currentUser, updateUserData);
+                            }
+                        }}>
+                            <HeartSVG className={`${styles.like_icon} ${isLiked && styles.like_icon_liked}`} />
+                        </div>
+                        <p className={styles.like_count}>{set.likes} Like{set.likes !== 1 && 's'}</p>
                     </div>
-                    <p className={styles.like_count}>{set.likes} Like{set.likes !== 1 && 's'}</p>
+                    <div className={styles.dots_container}>
+                        <ThreeDotsSVG className={styles.dots} onClick={() => {
+                            setThreeDots(!threeDots);
+                        }} />
+
+
+                        <div style={{ position: 'relative' }}>
+                            <AnimatePresence mode='wait'>
+
+                                {threeDots &&
+                                    <AnimationDiv className={styles.dots_popup} animation={{
+                                        initial: {
+                                            transformOrigin: 'top',
+                                            scaleY: 0.6,
+                                            opacity: 0
+                                        },
+                                        animate: {
+                                            transformOrigin: 'top',
+                                            scaleY: 1,
+                                            opacity: 1
+                                        },
+                                        exit: {
+                                            transformOrigin: 'top',
+                                            scaleY: 0.6,
+                                            opacity: 0
+                                        }
+                                    }} duration={0.1}>
+                                        <div className={styles.dots_popup_option} onClick={async () => {
+                                            setThreeDots(false);
+
+                                            const newSet = await duplicateSet(set.id, currentUser, updateUserData);
+                                            if (newSet) {
+                                                router.push(`/set/${newSet}`);
+                                            } else {
+                                                setError('Something went wrong while duplicating the set. Please try again later.');
+                                                setErrorOpen(true);
+                                            }
+                                        }}>
+                                            <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/copy.png`} alt='icon' width={30} height={30} />
+                                            <h1>Clone Set</h1>
+                                        </div>
+                                    </AnimationDiv>
+                                }
+                            </AnimatePresence>
+                        </div>
+                    </div>
                 </div>
                 <Link href={`/profile/${author.uid}`} style={{ width: '100%', textDecoration: 'none' }}>
                     <div className={styles.author_container}>

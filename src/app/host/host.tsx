@@ -2,7 +2,7 @@
 
 import { pushGameEvent, startGame, deleteGame, subscribeToGame, GameEvent, getNumUsersInGame } from '@/backend/live/game';
 import { GameUser } from '@/backend/live/user';
-import { Question, QuestionOption, QuestionType } from '@/backend/live/set';
+import { Question, QuestionOption, QuestionType } from '@/backend/set';
 import { useEffect, useState } from 'react';
 
 import { collection, doc, getDoc } from 'firebase/firestore';

@@ -6,7 +6,7 @@ const { useEffect, useState } = require('react');
 import { useRouter, usePathname } from 'next/navigation';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
-import { getSet } from '@/backend/live/set';
+import { getSet } from '@/backend/set';
 import Loading from '@/components/loading/loading';
 import Popup from '@/components/popup/popup';
 import Image from 'next/image';

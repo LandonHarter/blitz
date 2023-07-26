@@ -1,6 +1,6 @@
 'use  client'
 
-import { Question } from '@/backend/live/set';
+import { Question } from '@/backend/set';
 import styles from './basequestion.module.css';
 
 export default function ClientBaseQuestion(props: { question: Question, children: any }) {

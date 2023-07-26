@@ -1,6 +1,6 @@
 'use client'
 
-import { Question } from '@/backend/live/set';
+import { Question } from '@/backend/set';
 import { useContext, useEffect, useState } from 'react';
 import styles from './question.module.css';
 import { GameEvent, awardPoints, pushGameEvent } from '@/backend/live/game';

@@ -1,6 +1,6 @@
 'use client'
 
-import { Question } from '@/backend/live/set';
+import { Question } from '@/backend/set';
 import styles from './question.module.css';
 import BaseHostRevealedQuestion from '../baserevealedquestion';
 

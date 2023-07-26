@@ -1,7 +1,7 @@
 'use client'
 
 import styles from './page.module.css';
-import { Question } from "@/backend/live/set";
+import { Question } from "@/backend/set";
 
 export default function OptionDropdown(props: { question: Question }) {
     return (

@@ -240,6 +240,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+}
+
+.set_stats div {
+    display: flex;
+    align-items: center;
 }
 
 .like_icon {
@@ -269,6 +275,79 @@
     color: var(--text-color);
     margin-left: 10px;
     transform: translateY(-2px);
+}
+
+.dots_container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.dots {
+    width: 25px;
+    height: 25px;
+
+    padding: 5px;
+
+    border-radius: 100%;
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+.dots:hover {
+    background-color: rgba(var(--text-color-bare), 0.1);
+}
+
+.dots:active {
+    transform: scale(0.9);
+}
+
+.dots_popup {
+    width: fit-content;
+
+    position: absolute;
+    right: -15px;
+    top: 5px;
+
+    padding: 5px;
+    background-color: var(--bg-dark);
+    border-radius: 10px;
+    border: solid 1px var(--primary-color);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+}
+
+.dots_popup_option {
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    justify-content: flex-end;
+
+    border-radius: 10px;
+
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+.dots_popup_option:hover {
+    background-color: rgba(var(--text-color-bare), 0.1);
+}
+
+.dots_popup_option:active {
+    transform: scale(0.975);
+}
+
+.dots_popup_option img {
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.dots_popup_option h1 {
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    margin-right: 20px;
+    font-size: 24px;
+    white-space: nowrap;
 }
 
 @media screen and (max-width: 1250px) {

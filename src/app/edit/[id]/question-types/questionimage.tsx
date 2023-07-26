@@ -1,6 +1,6 @@
 'use client'
 
-import { Question } from "@/backend/live/set";
+import { Question } from "@/backend/set";
 import { Dispatch, SetStateAction, useState } from "react";
 import styles from './questionimage.module.css';
 import FileResizer from "react-image-file-resizer";

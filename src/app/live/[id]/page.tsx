@@ -13,7 +13,7 @@ import { GameEvent, getGameData, leaveGame, subscribeToGame } from "@/backend/li
 import { EventType } from "@/backend/live/events/event";
 import HostDashboard from "../../host/host";
 import MCQuestion from "./question/mcq/question";
-import { Question, QuestionType } from "@/backend/live/set";
+import { Question, QuestionType } from "@/backend/set";
 import Waiting from "./waiting/waiting";
 import NeedSignin from "@/components/require-signin/needsignin";
 import GameLobby from "./lobby/lobby";

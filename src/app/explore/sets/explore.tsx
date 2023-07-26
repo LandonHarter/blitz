@@ -14,7 +14,7 @@ import Link from "next/link";
 import UserContext from "@/context/usercontext";
 import algoliasearch from "algoliasearch/lite";
 import { HeartSVG } from "@/svg";
-import { likeSet, unlikeSet } from "@/backend/live/set";
+import { likeSet, unlikeSet } from "@/backend/set";
 import SetCard from "@/components/set-card/setcard";
 
 export default function ExploreContent() {

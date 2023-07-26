@@ -1,7 +1,7 @@
 'use client'
 
 import styles from './question.module.css';
-import { Question } from '@/backend/live/set';
+import { Question } from '@/backend/set';
 import BaseHostQuestion from '../basequestion';
 
 export default function HostMultipleChoiceQuestion(props: { question: Question, revealAnswer: () => Promise<void> }) {

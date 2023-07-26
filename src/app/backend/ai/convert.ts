@@ -1,5 +1,5 @@
 import generateId from "../id";
-import { Question, QuestionOption, QuestionType } from "../live/set";
+import { Question, QuestionOption, QuestionType } from "../set";
 
 export const parseAi = (response: string, numQuestions: number) => {
     try {

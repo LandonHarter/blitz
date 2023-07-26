@@ -34,6 +34,7 @@
     --secondary-color: #EE609C;
 
     --text-color: #353535;
+    --text-color-bare: 53, 53, 53;
     --text-color-light: #6b6b6b;
 
     --correct-color: #18ca00;
@@ -55,6 +56,7 @@
     --secondary-color: #EE609C;
 
     --text-color: #e2e2e2;
+    --text-color-bare: 226, 226, 226;
     --text-color-light: #a8a8a8;
 
     --correct-color: #18ca00;

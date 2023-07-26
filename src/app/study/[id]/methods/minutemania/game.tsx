@@ -4,7 +4,7 @@ import StudyMethodContainer from "../studymethod";
 import React, { useEffect, useState } from 'react';
 import styles from './game.module.css';
 import Popup from "@/components/popup/popup";
-import { QuestionType } from "@/backend/live/set";
+import { QuestionType } from "@/backend/set";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
