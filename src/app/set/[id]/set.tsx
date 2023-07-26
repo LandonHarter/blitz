@@ -209,16 +209,32 @@ export default function SetContent() {
                             const newQuestionsOpen = [...questionsOpen];
                             newQuestionsOpen[index] = !newQuestionsOpen[index];
                             setQuestionsOpen(newQuestionsOpen);
-                        }}>
+                        }} initial={{ height: 43 }} animate={{ height: questionsOpen[index] ? 'fit-content' : 43 }} transition={{ duration: 0.2 }}>
                             <div className={styles.question_header}>
                                 <h1 className={styles.question_title}>{question.question}</h1>
                             </div>
 
                             <AnimatePresence mode='wait'>
                                 {questionsOpen[index] &&
-                                    <div className={styles.question_content}>
+                                    <AnimationDiv className={styles.question_content} animation={{
+                                        initial: {
+                                            transformOrigin: 'top',
+                                            scaleY: 0,
+                                            opacity: 0
+                                        },
+                                        animate: {
+                                            transformOrigin: 'top',
+                                            scaleY: 1,
+                                            opacity: 1
+                                        },
+                                        exit: {
+                                            transformOrigin: 'top',
+                                            scaleY: 0,
+                                            opacity: 0
+                                        }
+                                    }} duration={0.2}>
                                         {getQuestionUI(question)}
-                                    </div>
+                                    </AnimationDiv>
                                 }
                             </AnimatePresence>
                         </motion.div>
