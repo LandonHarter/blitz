@@ -1,4 +1,0 @@
-User-agent: *
-User-agent: *
-Allow: /
-Sitemap: https://blitzedu.vercel.app/sitemap.txt
