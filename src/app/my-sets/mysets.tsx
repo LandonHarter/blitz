@@ -105,8 +105,13 @@ export default function MySetsContent() {
 
             const likedSets: any = userData.likedSets || {};
             const likedSetsArray: any[] = [];
-            for (const [key, value] of Object.entries(likedSets)) {
-                likedSetsArray.push(value);
+            for (const [key, value] of Object.entries(likedSets) as any[]) {
+                likedSetsArray.push({
+                    id: key,
+                    name: value.name,
+                    description: value.description,
+                    image: value.image
+                });
             }
             setLikedSets(likedSetsArray);
 
@@ -206,7 +211,6 @@ export default function MySetsContent() {
                                 <div className={styles.card_footer}>
                                     <div />
                                     <div>
-                                        <Link href={`/edit/${set.id}`}><button className={styles.edit_button}>Edit</button></Link>
                                         <button onClick={async () => {
                                             if (!signedIn) {
                                                 setError('You must be signed in to host a live game.');
