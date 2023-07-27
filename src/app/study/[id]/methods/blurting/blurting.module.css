@@ -125,11 +125,38 @@
     resize: none;
 }
 
+.blurt_top_row {
+    display: flex;
+    align-items: center;
+}
+
 .blurt_title {
     font-family: 'SF Pro Display';
     font-size: 54px;
     font-weight: 600;
     color: var(--text-color);
+}
+
+.edit_blurt {
+    width: 35px;
+    height: 35px;
+
+    transition: 0.15s ease-in-out;
+
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.edit_blurt path {
+    fill: var(--text-color-light);
+}
+
+.edit_blurt:hover path {
+    fill: var(--text-color);
+}
+
+.edit_blurt:active {
+    transform: scale(0.9);
 }
 
 .blurt_content {
@@ -153,6 +180,8 @@
     font-size: 44px;
     font-weight: 600;
     color: var(--text-color-light);
+    margin-bottom: 15px;
+    text-decoration: underline;
 }
 
 .blurt_h2 {
@@ -160,6 +189,8 @@
     font-size: 40px;
     font-weight: 600;
     color: var(--text-color-light);
+    margin-bottom: 15px;
+    text-decoration: underline;
 }
 
 .blurt_h3 {
@@ -167,6 +198,8 @@
     font-size: 36px;
     font-weight: 600;
     color: var(--text-color-light);
+    margin-bottom: 15px;
+    text-decoration: underline;
 }
 
 .blurt_h4 {
@@ -174,6 +207,8 @@
     font-size: 30px;
     font-weight: 600;
     color: var(--text-color-light);
+    margin-bottom: 15px;
+    text-decoration: underline;
 }
 
 .blurt_li {
