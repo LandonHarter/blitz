@@ -67,6 +67,7 @@ const setUserData = async (credentials: UserCredential) => {
 
     const userRef = doc(collection(firestore, 'users'), user.uid);
     await setDoc(userRef, userObject);
+    await setDoc(doc(collection(firestore, `users/${user.uid}/study`), 'empty'), {});
 
     const userProfileObject: UserProfile = {
         bio: "",

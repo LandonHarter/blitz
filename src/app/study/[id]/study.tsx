@@ -16,6 +16,7 @@ import { AnimatePresence } from 'framer-motion';
 import MinuteManiaStudyMethod from './methods/minutemania/game';
 import StudyTimer from './studytimer';
 import { getStudyData } from '@/backend/firebase/study';
+import BlurtingStudyMethod from './methods/blurting/blurting';
 
 export default function StudyContent() {
     const id = usePathname().split('/')[2];
@@ -24,7 +25,7 @@ export default function StudyContent() {
     const { currentUser, signedIn } = useContext(UserContext)
 
     const [set, setSet] = useState();
-    const [author, setAuthor] = useState();
+    const [author, setAuthor] = useState<any>();
     const [loading, setLoading] = useState(true);
 
     const [error, setError] = useState('');
@@ -44,7 +45,11 @@ export default function StudyContent() {
             case 'minute-mania':
                 return (<MinuteManiaStudyMethod set={set} studyData={studyData.minutemania || {
                     highscore: 0,
-                }} setStudyData={setStudyData} />)
+                }} setStudyData={setStudyData} />);
+            case 'blurting':
+                return (<BlurtingStudyMethod set={set} studyData={studyData.blurting || {
+                    blurts: [],
+                }} setStudyData={setStudyData} />);
             default:
                 return (<></>);
         }
@@ -119,6 +124,9 @@ export default function StudyContent() {
                 <button className={`${styles.study_method} ${studyMethod === 'minute-mania' && styles.study_method_selected}`} onClick={() => {
                     setStudyMethod('minute-mania');
                 }}><Image src='/images/icons/study/minute-mania.png' alt='icon' width={40} height={40} />Minute Mania</button>
+                <button className={`${styles.study_method} ${studyMethod === 'blurting' && styles.study_method_selected}`} onClick={() => {
+                    setStudyMethod('blurting');
+                }}><Image src='/images/icons/study/blurting.png' alt='icon' width={40} height={40} />Blurting</button>
             </div>
 
             <div className={styles.study_method_container}>

@@ -22,7 +22,7 @@ export default function MinuteManiaStudyMethod(props: { set: any, studyData: any
 
     const { currentUser } = useContext(UserContext);
 
-    const gameLength = 10;
+    const gameLength = 60;
     const backgroundColors = ['#C60929', '#0542B9', '#106B03', '#D89E00'];
 
     useEffect(() => {
