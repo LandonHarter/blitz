@@ -11,7 +11,7 @@ export interface User {
     sets: UserSet[];
     createdAt?: Timestamp;
     verified?: boolean;
-    likedSets?: string[];
+    likedSets?: any;
     following?: string[];
 
 }
@@ -35,8 +35,8 @@ export interface UserSet {
 }
 
 const userCache: { [key: string]: User } = {};
-export async function getUserData(userId: string) {
-    if (userCache[userId]) {
+export async function getUserData(userId: string, cache: boolean = true) {
+    if (userCache[userId] && cache) {
         return Promise.resolve(userCache[userId]);
     }
 

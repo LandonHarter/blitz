@@ -51,7 +51,7 @@ export default function ExploreContent() {
                     image: doc.data().image,
                     scramble: doc.data().scramble,
                     public: doc.data().public,
-                    liked: (currentUser.likedSets || []).includes(doc.id)
+                    liked: (currentUser.likedSets || {})[doc.id] || false,
                 });
             });
             setSets(setsArray);
@@ -88,7 +88,7 @@ export default function ExploreContent() {
             if (hit.public) {
                 filteredHits.push({
                     ...hit,
-                    liked: (currentUser.likedSets || []).includes(hit.objectID),
+                    liked: (currentUser.likedSets || {})[hit.objectID] || false,
                 });
             }
         }

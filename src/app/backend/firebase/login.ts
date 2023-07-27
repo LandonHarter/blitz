@@ -59,7 +59,7 @@ const setUserData = async (credentials: UserCredential) => {
         uid: user.uid,
         empty: false,
         sets: [],
-        likedSets: [],
+        likedSets: {},
         createdAt: Timestamp.now(),
         verified: false,
         following: []

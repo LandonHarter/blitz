@@ -73,7 +73,7 @@ export default function SetContent() {
             const authorData = await getDoc(authorRef);
             setAuthor(authorData.data());
 
-            setIsLiked((currentUser.likedSets || []).includes(setData.id));
+            setIsLiked((currentUser.likedSets || {})[setData.id] || false);
 
             setLoading(false);
         })();

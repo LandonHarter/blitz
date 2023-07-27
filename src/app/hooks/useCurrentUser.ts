@@ -19,7 +19,7 @@ export default function useCurrentUser() {
 
     const updateUserData = async () => {
         if (user) {
-            const userData = await getUserData(user.uid);
+            const userData = await getUserData(user.uid, false);
             if (!userData) {
                 setSignedIn(false);
                 setUserLoading(false);

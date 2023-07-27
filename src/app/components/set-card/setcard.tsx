@@ -14,7 +14,7 @@ export default function SetCard(props: { set: any }) {
     const { currentUser, signedIn, updateUserData } = useContext(UserContext);
 
     const [numLikes, setNumLikes] = useState(set.likes || 0);
-    const [liked, setLiked] = useState((currentUser.likedSets || []).includes(set.id));
+    const [liked, setLiked] = useState((currentUser.likedSets || {})[set.id] || false);
     const [finishedLiking, setFinishedLiking] = useState(true);
 
     return (

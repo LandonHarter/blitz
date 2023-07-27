@@ -282,3 +282,11 @@
     stroke: var(--text-color);
     stroke-width: 2px;
 }
+
+.liked_sets {
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    flex-wrap: wrap;
+}

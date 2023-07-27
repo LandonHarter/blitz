@@ -174,8 +174,16 @@ export const likeSet = async (setId: string, currentUser: User, updateUserData: 
     await updateDoc(setReference, {
         likes: increment(1),
     });
+
+    const set = await getSet(setId);
+    const setObj = {
+        name: set.name,
+        description: set.description,
+        image: set.image,
+    };
+    const likedSets = currentUser.likedSets ? { ...currentUser.likedSets, [setId]: setObj } : { [setId]: setObj };
     await updateDoc(userReference, {
-        likedSets: arrayUnion(setId),
+        likedSets: likedSets,
     });
 
     await updateUserData();
@@ -190,8 +198,11 @@ export const unlikeSet = async (setId: string, currentUser: User, updateUserData
     await updateDoc(setReference, {
         likes: increment(-1),
     });
+
+    const likedSets = currentUser.likedSets;
+    delete likedSets[setId];
     await updateDoc(userReference, {
-        likedSets: arrayRemove(setId),
+        likedSets: likedSets,
     });
 
     await updateUserData();
