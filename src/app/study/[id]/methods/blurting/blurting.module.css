@@ -148,6 +148,7 @@
 }
 
 .edit_blurt path {
+    transition: 0.15s ease-in-out;
     fill: var(--text-color-light);
 }
 
@@ -156,6 +157,29 @@
 }
 
 .edit_blurt:active {
+    transform: scale(0.9);
+}
+
+.delete_blurt {
+    width: 35px;
+    height: 35px;
+
+    transition: 0.15s ease-in-out;
+
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.delete_blurt path {
+    transition: 0.15s ease-in-out;
+    stroke: var(--text-color-light);
+}
+
+.delete_blurt:hover path {
+    stroke: red;
+}
+
+.delete_blurt:active {
     transform: scale(0.9);
 }
 

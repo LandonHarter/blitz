@@ -16,7 +16,7 @@ import { StudyMethod, updateStudyData } from "@/backend/firebase/study";
 import UserContext from "@/context/usercontext";
 import RequireSignInStudyMethod from "../needsignin";
 import StudyMethodContainer from "../studymethod";
-import { EditSVG } from "@/svg";
+import { EditSVG, TrashSVG } from "@/svg";
 
 export default function BlurtingStudyMethod(props: { set: any, studyData: any, setStudyData: Dispatch<SetStateAction<any>> }) {
     const [writing, setWriting] = useState(true);
@@ -120,6 +120,25 @@ export default function BlurtingStudyMethod(props: { set: any, studyData: any, s
                                     <EditSVG className={styles.edit_blurt} onClick={() => {
                                         setWriting(true);
                                         setBlurtText(currentBlurt.text);
+                                    }} />
+                                    <TrashSVG className={styles.delete_blurt} onClick={async () => {
+                                        const newBlurts = [...props.studyData.blurts];
+                                        const index = newBlurts.indexOf(currentBlurt);
+                                        newBlurts.splice(index, 1);
+                                        props.setStudyData({
+                                            ...props.studyData,
+                                            blurting: {
+                                                blurts: newBlurts
+                                            }
+                                        });
+
+                                        setWriting(true);
+                                        setBlurtText('');
+                                        setCurrentBlurt(undefined);
+
+                                        await updateStudyData(props.set.id, StudyMethod.Blurting, currentUser.uid, {
+                                            blurts: newBlurts
+                                        });
                                     }} />
                                 </div>
                                 <ReactMarkdown className={styles.blurt_content} components={{
