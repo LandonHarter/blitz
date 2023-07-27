@@ -13,12 +13,16 @@ export default function Flashcard(props: { question: string, answer: string, ind
             '--rotate-z': `${props.index <= 0 ? 0 : Math.pow(-1, props.index) * 2}deg`,
             zIndex: 3 - props.index
         } as React.CSSProperties}>
-            <div className={styles.flashcard_front}>
-                <h1>{props.question}</h1>
-            </div>
-            <div className={styles.flashcard_back}>
-                <h1>{props.answer}</h1>
-            </div>
+            {props.index === 0 &&
+                <>
+                    <div className={styles.flashcard_front}>
+                        <h1>{props.question}</h1>
+                    </div>
+                    <div className={styles.flashcard_back}>
+                        <h1>{props.answer}</h1>
+                    </div>
+                </>
+            }
         </div>
     );
 }

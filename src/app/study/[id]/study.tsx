@@ -2,11 +2,12 @@
 
 import styles from './page.module.css';
 
-const { useEffect, useState } = require('react');
+import { useEffect, useState, useContext } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
 import { getSet } from '@/backend/set';
+import UserContext from '@/context/usercontext';
 import Loading from '@/components/loading/loading';
 import Popup from '@/components/popup/popup';
 import Image from 'next/image';
@@ -14,10 +15,13 @@ import FlashcardStudyMethod from './methods/flashcards/flashcard';
 import { AnimatePresence } from 'framer-motion';
 import MinuteManiaStudyMethod from './methods/minutemania/game';
 import StudyTimer from './studytimer';
+import { getStudyData } from '@/backend/firebase/study';
 
 export default function StudyContent() {
     const id = usePathname().split('/')[2];
     const router = useRouter();
+
+    const { currentUser, signedIn } = useContext(UserContext)
 
     const [set, setSet] = useState();
     const [author, setAuthor] = useState();
@@ -27,6 +31,7 @@ export default function StudyContent() {
     const [errorOpen, setErrorOpen] = useState(false);
 
     const [studyMethod, setStudyMethod] = useState('flashcards');
+    const [studyData, setStudyData] = useState<any>();
 
     const studyTimerLengthSeconds = 25 * 60;
     const [studyTimer, setStudyTimer] = useState(false);
@@ -37,7 +42,9 @@ export default function StudyContent() {
             case 'flashcards':
                 return (<FlashcardStudyMethod set={set} />);
             case 'minute-mania':
-                return (<MinuteManiaStudyMethod set={set} />)
+                return (<MinuteManiaStudyMethod set={set} studyData={studyData.minutemania || {
+                    highscore: 0,
+                }} setStudyData={setStudyData} />)
             default:
                 return (<></>);
         }
@@ -84,6 +91,19 @@ export default function StudyContent() {
 
         startStudyTimer();
     }, []);
+
+    useEffect(() => {
+        if (signedIn) {
+            (async () => {
+                const userStudyData = await getStudyData(id, currentUser.uid);
+                if (userStudyData) {
+                    setStudyData(userStudyData);
+                } else {
+                    setStudyData(undefined);
+                }
+            })();
+        }
+    }, [signedIn]);
 
     if (loading || !set) {
         return <Loading />;

@@ -1,14 +1,16 @@
 'use client'
 
 import StudyMethodContainer from "../studymethod";
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import styles from './game.module.css';
 import Popup from "@/components/popup/popup";
 import { QuestionType } from "@/backend/set";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { StudyMethod, getStudyData, updateStudyData } from "@/backend/firebase/study";
+import UserContext from "@/context/usercontext";
 
-export default function MinuteManiaStudyMethod(props: { set: any }) {
+export default function MinuteManiaStudyMethod(props: { set: any, studyData: any, setStudyData: Dispatch<SetStateAction<any>> }) {
     const [currentQuestion, setCurrentQuestion] = useState<any>();
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [score, setScore] = useState(0);
@@ -18,17 +20,23 @@ export default function MinuteManiaStudyMethod(props: { set: any }) {
     const [correctIndicator, setCorrectIndicator] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
 
-    console.log(props.set);
+    const { currentUser } = useContext(UserContext);
 
-    const gameLength = 60;
+    const gameLength = 10;
     const backgroundColors = ['#C60929', '#0542B9', '#106B03', '#D89E00'];
 
     useEffect(() => {
         (async () => {
             if (gameState === 'endgame') {
-                const highScore = parseInt(localStorage.getItem(`minute-mania-${props.set.id}-highscore`) || '0');
-                if (score > highScore) {
-                    localStorage.setItem(`minute-mania-${props.set.id}-highscore`, score.toString());
+                if (score > props.studyData.highscore) {
+                    await updateStudyData(props.set.id, StudyMethod.MinuteMania, currentUser.uid, { highscore: score });
+                    props.setStudyData({
+                        ...props.studyData,
+                        minutemania: {
+                            ...props.studyData.minutemania,
+                            highscore: score,
+                        }
+                    });
                     setIsHighscore(true);
                 }
             }
