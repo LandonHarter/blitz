@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { StudyMethod, getStudyData, updateStudyData } from "@/backend/firebase/study";
 import UserContext from "@/context/usercontext";
+import RequireSignInStudyMethod from "../needsignin";
 
 export default function MinuteManiaStudyMethod(props: { set: any, studyData: any, setStudyData: Dispatch<SetStateAction<any>> }) {
     const [currentQuestion, setCurrentQuestion] = useState<any>();

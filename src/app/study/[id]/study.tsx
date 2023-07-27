@@ -17,6 +17,7 @@ import MinuteManiaStudyMethod from './methods/minutemania/game';
 import StudyTimer from './studytimer';
 import { getStudyData } from '@/backend/firebase/study';
 import BlurtingStudyMethod from './methods/blurting/blurting';
+import RequireSignInStudyMethod from './methods/needsignin';
 
 export default function StudyContent() {
     const id = usePathname().split('/')[2];
@@ -43,11 +44,15 @@ export default function StudyContent() {
             case 'flashcards':
                 return (<FlashcardStudyMethod set={set} />);
             case 'minute-mania':
-                return (<MinuteManiaStudyMethod set={set} studyData={studyData.minutemania || {
+                if (!signedIn) return <RequireSignInStudyMethod />;
+
+                return (<MinuteManiaStudyMethod set={set} studyData={studyData ? studyData.minutemania : {
                     highscore: 0,
                 }} setStudyData={setStudyData} />);
             case 'blurting':
-                return (<BlurtingStudyMethod set={set} studyData={studyData.blurting || {
+                if (!signedIn) return <RequireSignInStudyMethod />;
+
+                return (<BlurtingStudyMethod set={set} studyData={studyData ? studyData.blurting : {
                     blurts: [],
                 }} setStudyData={setStudyData} />);
             default:
