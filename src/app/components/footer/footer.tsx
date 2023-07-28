@@ -43,7 +43,7 @@ export default function Footer() {
                         <h1>Company</h1>
 
                         <ul className={styles.footer_section_column_list}>
-                            <Link href={'/about'} className={styles.footer_section_column_link}>About</Link>
+                            <Link href={'/about'} className={styles.footer_section_column_link}>About Us</Link>
                             <Link href={'/contact'} className={styles.footer_section_column_link}>Contact</Link>
                             <Link href={'/whyus'} className={styles.footer_section_column_link}>Why Us?</Link>
                             <Link href={'https://dev.to/landonharter'} target="_blank" className={styles.footer_section_column_link}>Development</Link>

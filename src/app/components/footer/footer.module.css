@@ -145,4 +145,12 @@
         align-items: center;
     }
 
+    .footer_copyright {
+        width: 100vw;
+    }
+
+    .footer_copyright a {
+        margin: 0 5px;
+    }
+
 }
