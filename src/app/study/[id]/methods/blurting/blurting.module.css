@@ -9,6 +9,7 @@
 .blurt {
     width: calc(100% - 40px);
     height: calc(100% - 40px);
+    max-height: 110px;
 
     background-color: var(--bg-dark);
     border: solid 1px var(--bg-darker);
@@ -51,6 +52,8 @@
 }
 
 .save_blurt {
+    width: fit-content;
+
     background-color: var(--primary-color);
     border: none;
     border-radius: 10px;
@@ -100,6 +103,9 @@
 .new_blurt_section {
     position: absolute;
     width: 100%;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .selected_blurt_section {
@@ -107,14 +113,85 @@
     width: 100%;
 }
 
+.writing_controls {
+    height: 50px;
+
+    background-color: var(--bg-dark);
+    border: solid 1px var(--bg-darker);
+    border-radius: 10px 10px 0 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 5px;
+    margin-bottom: 5px;
+}
+
+.writing_snippets {
+    display: flex;
+    align-items: center;
+}
+
+.snippet {
+    width: 45px;
+    height: 45px;
+
+    background-color: transparent;
+    transition: 0.15s ease-in-out;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    border: none;
+
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.snippet:hover {
+    background-color: rgba(var(--text-color-bare), 0.075);
+}
+
+.writing_viewing_mode {
+    display: flex;
+    align-items: center;
+}
+
+.view_mode_button {
+    background-color: transparent;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 18px;
+    font-family: 'SF Pro Display';
+    color: var(--text-color-light);
+    transition: 0.15s ease-in-out;
+    cursor: pointer;
+}
+
+.view_mode_button:hover {
+    background-color: rgba(var(--text-color-bare), 0.075);
+}
+
+.view_mode_button:active {
+    transform: scale(0.925);
+}
+
+.view_mode_selected {
+    background-color: var(--primary-color) !important;
+    color: #fff;
+}
+
 .blurt_input {
-    width: 100%;
     min-height: 400px;
 
     background-color: var(--bg-dark);
     color: var(--text-color-light);
     border: solid 1px var(--bg-darker);
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
     outline: none;
 
     padding: 15px;
@@ -123,6 +200,14 @@
     font-size: 28px;
 
     resize: none;
+}
+
+.editor_preview {
+    width: 50%;
+    height: 100%;
+
+    translate: 50vw;
+    transform-origin: right;
 }
 
 .blurt_top_row {
