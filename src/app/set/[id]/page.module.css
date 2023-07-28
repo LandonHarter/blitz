@@ -306,7 +306,7 @@
     width: fit-content;
 
     position: absolute;
-    right: -15px;
+    right: -30px;
     top: 5px;
 
     padding: 5px;
@@ -348,6 +348,105 @@
     margin-right: 20px;
     font-size: 24px;
     white-space: nowrap;
+}
+
+.share_icon {
+    padding: 5px;
+    border-radius: 100%;
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+.share_icon:hover {
+    background-color: rgba(var(--text-color-bare), 0.1);
+}
+
+.share_icon:active {
+    transform: scale(0.9);
+}
+
+.button_share {
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+
+    border-radius: 10px;
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+.button_share:active {
+    transform: scale(0.9);
+}
+
+.button_share img {
+    border-radius: 10px;
+}
+
+.share_buttons {
+    width: 60%;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    margin: 15px 0;
+}
+
+.share_title {
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 60px;
+    margin: 20px 0;
+}
+
+.link_container {
+    background-color: var(--bg-dark);
+    border-radius: 10px;
+    border: solid 1px var(--primary-color);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+
+    width: 60%;
+    overflow-x: hidden;
+
+    display: flex;
+    align-items: center;
+}
+
+.share_link {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    color: var(--text-color);
+    font-family: 'SF Pro Display';
+    font-size: 20px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.copy_button {
+    height: 100%;
+    aspect-ratio: 1/1;
+
+    background-color: transparent;
+    border: none;
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 5px;
+
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 900px) {

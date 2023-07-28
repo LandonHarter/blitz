@@ -41,6 +41,8 @@ export default function SetContent() {
     const [error, setError] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
 
+    const [shareOpen, setShareOpen] = useState(false);
+
     const getQuestionUI = (question: Question) => {
         if (question.type === QuestionType.MultipleChoice || question.type === QuestionType.TrueFalse) {
             return (<OptionDropdown question={question} />);
@@ -124,9 +126,18 @@ export default function SetContent() {
                         <p className={styles.like_count}>{set.likes} Like{set.likes !== 1 && 's'}</p>
                     </div>
                     <div className={styles.dots_container}>
-                        <ThreeDotsSVG className={styles.dots} onClick={() => {
-                            setThreeDots(!threeDots);
-                        }} />
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'center'
+                        }}>
+                            <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/share.png`} alt='share' width={30} height={30}
+                                className={styles.share_icon} onClick={() => {
+                                    setShareOpen(true);
+                                }} />
+                            <ThreeDotsSVG className={styles.dots} onClick={() => {
+                                setThreeDots(!threeDots);
+                            }} />
+                        </div>
 
 
                         <div style={{ position: 'relative' }}>
@@ -241,6 +252,36 @@ export default function SetContent() {
                     );
                 })}
             </div>
+
+            <Popup open={shareOpen} setOpen={setShareOpen} exitButton>
+                <h1 className={styles.share_title}>Share</h1>
+
+                <div className={styles.share_buttons}>
+                    <button onClick={() => {
+                        window.open("https://twitter.com/share?url=" + encodeURIComponent(window.location.href) + "&text=" + `Study ${set.name} on Blitz!`, '_blank');
+                        setShareOpen(false);
+                    }} className={styles.button_share}><Image src='/images/providers/twitter-share.webp' alt='twitter' width={50} height={50} /></button>
+                    <button onClick={() => {
+                        window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`, '_blank');
+                        setShareOpen(false);
+                    }} className={styles.button_share}><Image src='/images/providers/fb-share.webp' alt='twitter' width={50} height={50} /></button>
+                    <button onClick={() => {
+                        window.open(`mailto:?subject=Study ${set.name} on Blitz!&body=${window.location.href}`, '_blank');
+                        setShareOpen(false);
+                    }} className={styles.button_share}><Image src='/images/providers/email-share.webp' alt='twitter' width={50} height={50} /></button>
+                    <button onClick={() => {
+                        window.open(`https://www.reddit.com/submit?url=${window.location.href}&title=${set.name}`, '_blank');
+                        setShareOpen(false);
+                    }} className={styles.button_share}><Image src='/images/providers/reddit-share.webp' alt='twitter' width={50} height={50} /></button>
+                </div>
+                <div className={styles.link_container}>
+                    <input className={styles.share_link} value={window.location.href} />
+                    <button className={styles.copy_button} onClick={() => {
+                        navigator.clipboard.writeText(window.location.href);
+                    }}><Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/copy.png`} alt='' width={25} height={25} /></button>
+                </div>
+                <div style={{ marginBottom: 50 }} />
+            </Popup>
 
             <Popup open={errorOpen} setOpen={setErrorOpen} exitButton>
                 <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom: 25 }} />
