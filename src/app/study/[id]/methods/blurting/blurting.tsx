@@ -18,6 +18,8 @@ import 'cooltipz-css';
 import { EditSVG, TrashSVG } from "@/svg";
 import Image from "next/image";
 import DarkModeContext from "@/context/darkmode";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 export default function BlurtingStudyMethod(props: { set: any, studyData: any, setStudyData: Dispatch<SetStateAction<any>> }) {
     const [writing, setWriting] = useState(true);
@@ -106,6 +108,11 @@ export default function BlurtingStudyMethod(props: { set: any, studyData: any, s
                                             <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/number-list.png`} alt='insert' width={35} height={35} />
                                         </button>
                                         <button onClick={() => {
+                                            insertText('![link name]()', 13);
+                                        }} aria-label='Link' data-cooltipz-dir="top" className={styles.snippet}>
+                                            <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/link.png`} alt='insert' width={35} height={35} />
+                                        </button>
+                                        <button onClick={() => {
                                             insertText('![image alt text]()', 18);
                                         }} aria-label='Image' data-cooltipz-dir="top" className={styles.snippet}>
                                             <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/image.png`} alt='insert' width={35} height={35} />
@@ -123,7 +130,8 @@ export default function BlurtingStudyMethod(props: { set: any, studyData: any, s
                                 </motion.div>
                                 <motion.textarea className={styles.blurt_input} placeholder="Start blurting..." value={blurtText} onChange={(e) => {
                                     setBlurtText(e.target.value);
-                                }} ref={blurtInputRef} initial={{ width: '100%' }} animate={{ width: (blurtViewMode === 'edit' ? '100%' : '50%') }} />
+                                }} ref={blurtInputRef} initial={{ width: '100%' }} animate={{ width: (blurtViewMode === 'edit' ? '100%' : '50%') }}
+                                    spellCheck={false} autoCorrect='off' autoCapitalize="off" autoComplete="off" />
                                 <button className={styles.save_blurt} onClick={async () => {
                                     if (blurtText === '') return;
 
@@ -191,7 +199,21 @@ export default function BlurtingStudyMethod(props: { set: any, studyData: any, s
                                     ol: ({ children }) => <ol className={styles.blurt_ol}>{children}</ol>,
                                     span: ({ children }) => <span className={styles.blurt_span}>{children[0]}</span>,
                                     img: ({ src }) => <><img className={styles.blurt_img} src={src} /><br /></>,
-                                    a: ({ children, href }) => <a className={styles.blurt_a} href={href} target="_blank">{children}</a>
+                                    a: ({ children, href }) => <a className={styles.blurt_a} href={href} target="_blank">{children}</a>,
+                                    code: ({ node, inline, className, children, ...props }) => {
+                                        const match = /language-(\w+)/.exec(className || '')
+                                        return (
+                                            // @ts-ignore
+                                            <SyntaxHighlighter style={oneDark} customStyle={{
+                                                borderRadius: 10,
+                                                border: 'solid 1px var(--bg-darker)',
+                                                backgroundColor: 'var(--bg-dark',
+                                                width: 'calc(100% - 40px)'
+                                            }} language={match ? match[1] : 'ts'} PreTag="div" {...props}>
+                                                {String(children).replace(/\n$/, '')}
+                                            </SyntaxHighlighter>
+                                        );
+                                    },
                                 }} remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>{blurtText}</ReactMarkdown>
                             </motion.div>
                         </div>
@@ -237,7 +259,21 @@ export default function BlurtingStudyMethod(props: { set: any, studyData: any, s
                                 ol: ({ children }) => <ol className={styles.blurt_ol}>{children}</ol>,
                                 span: ({ children }) => <span className={styles.blurt_span}>{children[0]}</span>,
                                 img: ({ src }) => <><img className={styles.blurt_img} src={src} /><br /></>,
-                                a: ({ children, href }) => <a className={styles.blurt_a} href={href} target="_blank">{children}</a>
+                                a: ({ children, href }) => <a className={styles.blurt_a} href={href} target="_blank">{children}</a>,
+                                code: ({ node, inline, className, children, ...props }) => {
+                                    const match = /language-(\w+)/.exec(className || '')
+                                    return (
+                                        // @ts-ignore
+                                        <SyntaxHighlighter style={oneDark} customStyle={{
+                                            borderRadius: 10,
+                                            border: 'solid 1px var(--bg-darker)',
+                                            backgroundColor: 'var(--bg-dark',
+                                            width: 'calc(100% - 40px)'
+                                        }} language={match ? match[1] : 'ts'} PreTag="div" {...props}>
+                                            {String(children).replace(/\n$/, '')}
+                                        </SyntaxHighlighter>
+                                    );
+                                },
                             }} remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>{currentBlurt.text}</ReactMarkdown>
                         </AnimationDiv>
                     }
