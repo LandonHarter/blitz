@@ -43,7 +43,7 @@ export default function BlurtingStudyMethod(props: { set: any, studyData: any, s
         );
     };
 
-    const insertText = (text: string, moveCursor: number = 0) => {
+    const insertText = (text: string, cursorStart: number = 0, cursorEnd: number = 0) => {
         if (!blurtInputRef.current) return;
 
         const selectionStart = blurtInputRef.current.selectionStart;
@@ -52,8 +52,8 @@ export default function BlurtingStudyMethod(props: { set: any, studyData: any, s
 
         const newValue = value.substring(0, selectionStart) + text + value.substring(selectionEnd, value.length);
         blurtInputRef.current.value = newValue;
-        blurtInputRef.current.selectionStart = selectionStart + moveCursor;
-        blurtInputRef.current.selectionEnd = selectionStart + moveCursor;
+        blurtInputRef.current.selectionStart = selectionStart + cursorStart;
+        blurtInputRef.current.selectionEnd = selectionStart + cursorStart + cursorEnd;
         blurtInputRef.current.focus();
 
         setBlurtText(newValue);
@@ -83,17 +83,17 @@ export default function BlurtingStudyMethod(props: { set: any, studyData: any, s
                                 <motion.div className={styles.writing_controls} initial={{ width: 'calc(100% + 20px)' }} animate={{ width: `calc(${(blurtViewMode === 'edit' ? '100%' : '50%')} + 20px)` }}>
                                     <div className={styles.writing_snippets}>
                                         <button onClick={() => {
-                                            insertText('# ', 2);
+                                            insertText('# Heading', 2, 7);
                                         }} aria-label='Heading' data-cooltipz-dir="top" className={styles.snippet}>
                                             <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/heading.png`} alt='insert' width={35} height={35} />
                                         </button>
                                         <button onClick={() => {
-                                            insertText('****', 2);
+                                            insertText('**bold words**', 2, 10);
                                         }} aria-label='Bold' data-cooltipz-dir="top" className={styles.snippet}>
                                             <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/bold.png`} alt='insert' width={35} height={35} />
                                         </button>
                                         <button onClick={() => {
-                                            insertText('**', 1);
+                                            insertText('*italic words*', 1, 12);
                                         }} aria-label='Italic' data-cooltipz-dir="top" className={styles.snippet}>
                                             <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/italic.png`} alt='insert' width={35} height={35} />
                                         </button>
@@ -108,19 +108,24 @@ export default function BlurtingStudyMethod(props: { set: any, studyData: any, s
                                             <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/number-list.png`} alt='insert' width={35} height={35} />
                                         </button>
                                         <button onClick={() => {
-                                            insertText('![link name]()', 13);
+                                            insertText('![Link Text](url)', 13, 3);
                                         }} aria-label='Link' data-cooltipz-dir="top" className={styles.snippet}>
                                             <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/link.png`} alt='insert' width={35} height={35} />
                                         </button>
                                         <button onClick={() => {
-                                            insertText('![image alt text]()', 18);
+                                            insertText('![Image Alternate Text](url)', 24, 3);
                                         }} aria-label='Image' data-cooltipz-dir="top" className={styles.snippet}>
                                             <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/image.png`} alt='insert' width={35} height={35} />
                                         </button>
                                         <button onClick={() => {
-                                            insertText('$$  $$', 3);
+                                            insertText('$ x^2 $', 2, 3);
                                         }} aria-label='Math Expression' data-cooltipz-dir="top" className={styles.snippet}>
                                             <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/math.png`} alt='insert' width={35} height={35} />
+                                        </button>
+                                        <button onClick={() => {
+                                            insertText('```js\nconsole.log("Hello World!");\n ```', 6, 28);
+                                        }} aria-label='Code Snippet' data-cooltipz-dir="top" className={styles.snippet}>
+                                            <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/code.png`} alt='insert' width={35} height={35} />
                                         </button>
                                     </div>
                                     <div className={styles.writing_viewing_mode}>
