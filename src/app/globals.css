@@ -98,6 +98,14 @@ textarea {
     mask: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
 
+.popup_error {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 50px;
+    letter-spacing: 2px;
+    font-size: 2em;
+}
+
 @-webkit-keyframes bg-scrolling-reverse {
     100% {
         background-position: 50px 50px;

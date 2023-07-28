@@ -15,7 +15,7 @@ export default function RootLayoutContent(props: { children: React.ReactNode }) 
     const [width, setWidth] = useState(0);
 
     useEffect(() => {
-        setDarkMode(localStorage.getItem('theme') || 'light');
+        setDarkMode(localStorage.getItem('theme') || 'dark');
 
         window.onresize = () => {
             setWidth(window.innerWidth);

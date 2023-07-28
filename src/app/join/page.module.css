@@ -61,10 +61,3 @@
     transition: 0.1s ease-in-out;
     filter: opacity(0.5);
 }
-
-.popup_error {
-    text-align: center;
-    color: var(--text-color);
-    margin-bottom: 50px;
-    letter-spacing: 2px;
-}

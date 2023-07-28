@@ -274,7 +274,7 @@ export default function CreateContent() {
 
             <Popup open={errorPopup} setOpen={setErrorPopup} exitButton >
                 <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom: 25 }} />
-                <p className={styles.popup_content}>{error}</p>
+                <p className='popup_error'>{error}</p>
             </Popup>
 
             <Popup open={aiPopup} setOpen={setAiPopup} exitButton>

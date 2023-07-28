@@ -140,7 +140,7 @@ export default function StudyContent() {
 
             <Popup open={errorOpen} setOpen={setErrorOpen} exitButton>
                 <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom: 25 }} />
-                <h1 className={styles.popup_error}>{error}</h1>
+                <h1 className='popup_error'>{error}</h1>
             </Popup>
 
             <Popup open={studyTimer} setOpen={setStudyTimer} exitButton={false} closeOnOutsideClick={false}>

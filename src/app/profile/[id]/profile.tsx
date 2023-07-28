@@ -159,7 +159,7 @@ export default function ProfileContent() {
 
             <Popup open={errorOpen} setOpen={setErrorOpen} exitButton>
                 <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom: 25 }} />
-                <p className={styles.popup_error}>{error}</p>
+                <p className='popup_error'>{error}</p>
             </Popup>
         </div>
     );

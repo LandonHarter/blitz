@@ -132,7 +132,7 @@ export default function WorksheetCreatorContent() {
 
             <Popup open={errorOpen} setOpen={setErrorOpen} exitButton>
                 <Image src='/images/icons/error.png' alt='error' width={50} height={50} />
-                <h1>Error generating worksheet</h1>
+                <h1 className='popup_error'>Error generating worksheet</h1>
             </Popup>
         </div>
     );
