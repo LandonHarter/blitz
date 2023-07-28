@@ -211,8 +211,6 @@ export default function BlurtingStudyMethod(props: { set: any, studyData: any, s
                                             // @ts-ignore
                                             <SyntaxHighlighter style={oneDark} customStyle={{
                                                 borderRadius: 10,
-                                                border: 'solid 1px var(--bg-darker)',
-                                                backgroundColor: 'var(--bg-dark',
                                                 width: 'calc(100% - 40px)'
                                             }} language={match ? match[1] : 'ts'} PreTag="div" {...props}>
                                                 {String(children).replace(/\n$/, '')}
@@ -271,8 +269,6 @@ export default function BlurtingStudyMethod(props: { set: any, studyData: any, s
                                         // @ts-ignore
                                         <SyntaxHighlighter style={oneDark} customStyle={{
                                             borderRadius: 10,
-                                            border: 'solid 1px var(--bg-darker)',
-                                            backgroundColor: 'var(--bg-dark',
                                             width: 'calc(100% - 40px)'
                                         }} language={match ? match[1] : 'ts'} PreTag="div" {...props}>
                                             {String(children).replace(/\n$/, '')}
