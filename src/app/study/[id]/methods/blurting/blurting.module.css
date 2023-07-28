@@ -40,6 +40,7 @@
 
 .blurt p {
     text-overflow: ellipsis;
+    white-space: nowrap;
     overflow-x: hidden;
 
     color: var(--text-color-light);
