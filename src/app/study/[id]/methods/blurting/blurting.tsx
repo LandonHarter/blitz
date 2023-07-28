@@ -184,6 +184,8 @@ export default function BlurtingStudyMethod(props: { set: any, studyData: any, s
                                     h2: ({ children }) => <h2 className={styles.blurt_h2}>{children}</h2>,
                                     h3: ({ children }) => <h3 className={styles.blurt_h3}>{children}</h3>,
                                     h4: ({ children }) => <h4 className={styles.blurt_h4}>{children}</h4>,
+                                    h5: ({ children }) => <h5 className={styles.blurt_h5}>{children}</h5>,
+                                    h6: ({ children }) => <h6 className={styles.blurt_h6}>{children}</h6>,
                                     li: ({ children }) => <li className={styles.blurt_li}>{children}</li>,
                                     ul: ({ children }) => <ul className={styles.blurt_ul}>{children}</ul>,
                                     ol: ({ children }) => <ol className={styles.blurt_ol}>{children}</ol>,

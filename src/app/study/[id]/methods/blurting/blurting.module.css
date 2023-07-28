@@ -290,7 +290,7 @@
     font-size: 44px;
     font-weight: 600;
     color: var(--text-color-light);
-    margin-bottom: 15px;
+    margin: 15px 0;
     text-decoration: underline;
 }
 
@@ -299,7 +299,7 @@
     font-size: 40px;
     font-weight: 600;
     color: var(--text-color-light);
-    margin-bottom: 15px;
+    margin: 15px 0;
     text-decoration: underline;
 }
 
@@ -308,7 +308,7 @@
     font-size: 36px;
     font-weight: 600;
     color: var(--text-color-light);
-    margin-bottom: 15px;
+    margin: 15px 0;
     text-decoration: underline;
 }
 
@@ -317,7 +317,25 @@
     font-size: 30px;
     font-weight: 600;
     color: var(--text-color-light);
-    margin-bottom: 15px;
+    margin: 15px 0;
+    text-decoration: underline;
+}
+
+.blurt_h5 {
+    font-family: 'SF Pro Display';
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--text-color-light);
+    margin: 15px 0;
+    text-decoration: underline;
+}
+
+.blurt_h6 {
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-color-light);
+    margin: 15px 0;
     text-decoration: underline;
 }
 
