@@ -20,6 +20,7 @@ export interface Question {
     scramble?: boolean;
     questionLength?: number;
     questionPoints?: number;
+    tags?: string[];
 }
 
 export interface QuestionOption {

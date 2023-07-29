@@ -48,7 +48,7 @@ export default function EditContent() {
         showShifters: boolean,
         showTrash: boolean
     }[]>([]);
-
+    const [tagInput, setTagInput] = useState<string>('');
     const [questionSettings, setQuestionSettings] = useState<{
         open: boolean,
         questionIndex: number
@@ -97,7 +97,7 @@ export default function EditContent() {
                 const questionContent = question.question;
                 const type: QuestionType = QuestionType[question.type as keyof typeof QuestionType];
                 const options = question.options;
-
+                const tags = question.tags || [];
 
                 let questionElement = emptyQuestion;
                 if (type === QuestionType.TrueFalse) {
@@ -119,6 +119,7 @@ export default function EditContent() {
                                 optionData: options[1].optionData || {},
                             },
                         ],
+                        tags: tags,
                     };
                 } else if (type === QuestionType.MultipleChoice) {
                     const options: QuestionOption[] = question.options;
@@ -127,6 +128,7 @@ export default function EditContent() {
                         type: type,
                         question: questionContent,
                         options: options,
+                        tags: tags,
                     };
                 } else if (type === QuestionType.ShortAnswer) {
                     questionElement = {
@@ -141,6 +143,7 @@ export default function EditContent() {
                                 optionData: options[0].optionData || { correctAnswers: [] },
                             }
                         ],
+                        tags: tags,
                     }
                 } else if (type === QuestionType.Flashcard) {
                     questionElement = {
@@ -155,6 +158,7 @@ export default function EditContent() {
                                 optionData: options[0].optionData || { answer: "" },
                             }
                         ],
+                        tags: tags,
                     };
                 } else if (type === QuestionType.Math) {
                     questionElement = {
@@ -169,6 +173,7 @@ export default function EditContent() {
                                 optionData: options[0].optionData || { correctAnswers: [] },
                             }
                         ],
+                        tags: tags,
                     };
                 }
 
@@ -619,6 +624,37 @@ export default function EditContent() {
                             }} min={1} max={99} style={{ width: 70 }} />
                             <p className={styles.toggle_text}>Points</p>
                         </label>
+
+                        <div className={styles.add_tag_container}>
+                            <input className={styles.add_tag} placeholder='Tag name...' value={tagInput} onChange={(e) => {
+                                setTagInput(e.target.value);
+                            }} />
+                            <button onClick={() => {
+                                if (!questions[questionSettings.questionIndex].tags) questions[questionSettings.questionIndex].tags = [];
+                                // @ts-ignore
+                                questions[questionSettings.questionIndex].tags.push(tagInput);
+                                setTagInput('');
+                                setQuestions([...questions]);
+                            }} className={styles.add_tag_button}>Add Tag</button>
+                        </div>
+                        <div className={styles.tags}>
+                            {(questions[questionSettings.questionIndex].tags || []).map((tag: string, index: number) => {
+                                return (
+                                    <motion.div id={tag} key={tag} className={styles.tag} initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
+                                        <h1>{tag}</h1>
+                                        <button onClick={() => {
+                                            const question = questions[questionSettings.questionIndex];
+                                            if (!question.tags) questions[questionSettings.questionIndex].tags = [];
+                                            // @ts-ignore
+                                            question.tags.splice(index, 1);
+                                            console.log(question.tags);
+                                            setQuestions([...questions]);
+                                        }}>×</button>
+                                    </motion.div>
+                                );
+                            })}
+                            {questions[questionSettings.questionIndex].tags?.length === 0 && <h1 className={styles.no_tags}>No tags.</h1>}
+                        </div>
                     </>
                 }
                 <div style={{ marginBottom: 30 }} />
