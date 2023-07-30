@@ -1,0 +1,200 @@
+.hero {
+    width: 100vw;
+    min-height: 80vh;
+    height: fit-content;
+
+    display: flex;
+    align-items: center;
+}
+
+.hero_left {
+    width: 50vw;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero_right {
+    width: 50vw;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.correct_circle {
+    width: 350px;
+    height: 350px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+.correct_circle * {
+    position: absolute;
+}
+
+.correct_ring {
+    stroke-dasharray: 100;
+    transform-origin: center;
+    transform: rotate(-90deg);
+}
+
+.total_pct {
+    font-size: 50px;
+    font-family: 'SF Pro Display';
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.individual_stats {
+    display: flex;
+    align-items: center;
+}
+
+.individual_stat {
+    width: 200px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 10px;
+}
+
+.individual_stat_num {
+    font-size: 50px;
+    font-family: 'SF Pro Display';
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.individual_stat_title {
+    font-size: 30px;
+    font-family: 'SF Pro Display';
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.grade_title {
+    font-size: 90px;
+    font-family: 'SF Pro Display';
+    font-weight: 600;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.grade_title span {
+    background: linear-gradient(45deg, var(--primary-color), #4ba9c8);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    font-family: 'Cubano';
+    font-weight: bold;
+    font-size: 120px;
+}
+
+.struggles_hero {
+    width: 100vw;
+    height: 80vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.struggles_hero_small_title {
+    color: var(--primary-color);
+    font-size: 28px;
+    font-family: 'SF Pro Display';
+    font-weight: 600;
+    margin: 15px 0;
+}
+
+.struggles_hero_title {
+    width: 50vw;
+    text-align: center;
+    color: var(--text-color);
+    font-size: 60px;
+    font-family: 'SF Pro Display';
+    font-weight: 600;
+    margin-bottom: 75px;
+}
+
+.struggles {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 50vw;
+}
+
+.struggle {
+    padding: 20px;
+    background-color: var(--bg-dark);
+    border-radius: 10px;
+    border: solid 1px var(--primary-color);
+
+    display: flex;
+    align-items: center;
+
+    margin: 10px;
+}
+
+.struggle_text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    margin-left: 10px;
+}
+
+.struggle_title {
+    width: 300px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--text-color);
+    font-size: 45px;
+    font-family: 'SF Pro Display';
+    font-weight: 600;
+}
+
+.tag_correct_ring {
+    stroke-dasharray: 100;
+    transform-origin: center;
+    transform: rotate(-90deg);
+    stroke-width: 7px;
+}
+
+.struggle_stat {
+    color: var(--text-color-light);
+    font-size: 22px;
+    font-family: 'SF Pro Display';
+    font-weight: 600;
+}
+
+.tag_correct_circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+.tag_grade {
+    position: absolute;
+    font-family: 'SF Pro Display';
+    font-weight: 600;
+    font-size: 30px;
+}

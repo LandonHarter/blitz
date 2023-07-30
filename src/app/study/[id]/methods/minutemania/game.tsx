@@ -10,6 +10,7 @@ import Image from "next/image";
 import { StudyMethod, getStudyData, updateStudyData } from "@/backend/firebase/study";
 import UserContext from "@/context/usercontext";
 import RequireSignInStudyMethod from "../needsignin";
+import { analyzeStruggles, clearSubmissionData, reportSubmission } from "@/backend/analyze";
 
 export default function MinuteManiaStudyMethod(props: { set: any, studyData: any, setStudyData: Dispatch<SetStateAction<any>> }) {
     const [currentQuestion, setCurrentQuestion] = useState<any>();
@@ -122,6 +123,7 @@ export default function MinuteManiaStudyMethod(props: { set: any, studyData: any
                         <h1 className={styles.pregame_title}>Minute Mania!</h1>
                         <p className={styles.pregame_subtitle}>Answer as many questions as you can in 60 seconds!</p>
                         <button className={styles.start_game_button} onClick={() => {
+                            clearSubmissionData();
                             setGameState('game');
 
                             const newIndex = getNextQuestion(0);
@@ -156,6 +158,8 @@ export default function MinuteManiaStudyMethod(props: { set: any, studyData: any
                                     backgroundColor: backgroundColors[index % backgroundColors.length]
                                 }} onClick={() => {
                                     if (option.correct) {
+                                        reportSubmission(option, currentQuestion.tags, option.correct);
+
                                         setScore(score + 1);
                                         setIsCorrect(true);
 
@@ -165,6 +169,7 @@ export default function MinuteManiaStudyMethod(props: { set: any, studyData: any
                                             setCurrentQuestion(props.set.questions[newIndex]);
                                         }, 150);
                                     } else {
+                                        reportSubmission(option, currentQuestion.tags, option.correct);
                                         setIsCorrect(false);
                                     }
 
@@ -201,6 +206,10 @@ export default function MinuteManiaStudyMethod(props: { set: any, studyData: any
                         <button className={styles.start_game_button} onClick={() => {
                             resetGame();
                         }}>Study Again</button>
+                        <button className={styles.start_game_button} onClick={() => {
+                            window.open(`/analyze?reportData=${JSON.stringify(analyzeStruggles())}&game=minutemania`, '_blank');
+                        }} style={{ marginTop: 15 }}>View Report</button>
+                        <div style={{ marginBottom: 20 }} />
                     </Popup>
                 </>
             }
