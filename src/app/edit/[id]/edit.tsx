@@ -177,6 +177,7 @@ export default function EditContent() {
                     };
                 }
 
+                questionElement.photo = question.photo || null;
                 questionElement.questionLength = question.questionLength || 15;
                 questionElement.questionPoints = question.questionPoints || 100;
 
@@ -631,8 +632,8 @@ export default function EditContent() {
                             }} />
                             <button onClick={() => {
                                 if (!questions[questionSettings.questionIndex].tags) questions[questionSettings.questionIndex].tags = [];
-                                // @ts-ignore
-                                questions[questionSettings.questionIndex].tags.push(tagInput);
+                                if (questions[questionSettings.questionIndex]?.tags?.includes(tagInput)) return;
+                                questions[questionSettings.questionIndex]?.tags?.push(tagInput);
                                 setTagInput('');
                                 setQuestions([...questions]);
                             }} className={styles.add_tag_button}>Add Tag</button>
@@ -645,9 +646,7 @@ export default function EditContent() {
                                         <button onClick={() => {
                                             const question = questions[questionSettings.questionIndex];
                                             if (!question.tags) questions[questionSettings.questionIndex].tags = [];
-                                            // @ts-ignore
-                                            question.tags.splice(index, 1);
-                                            console.log(question.tags);
+                                            question.tags?.splice(index, 1);
                                             setQuestions([...questions]);
                                         }}>×</button>
                                     </motion.div>

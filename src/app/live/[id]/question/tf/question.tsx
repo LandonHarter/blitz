@@ -10,6 +10,7 @@ import { useContext } from 'react';
 import { CorrectAnswerContext } from '../../correctanswercontext';
 import AnswerBanner from '../../answer-banner/banner';
 import ClientBaseQuestion from '../basequestion';
+import { reportSubmission } from '@/backend/analyze';
 
 export default function TFQuestion(props: { question: Question, uid: string, gameId: string, setSubmitted: Function, revealAnswer: boolean }) {
     const question = props.question;
@@ -27,8 +28,10 @@ export default function TFQuestion(props: { question: Question, uid: string, gam
         });
 
         if (question.options[optionIndex].correct) {
-            awardPoints(props.gameId, props.uid, props.question.questionPoints || 100);
+            await awardPoints(props.gameId, props.uid, props.question.questionPoints || 100);
         }
+
+        reportSubmission(props.gameId, question.options[optionIndex].option, question.tags || [], question.options[optionIndex].correct);
 
         props.setSubmitted(true);
     };

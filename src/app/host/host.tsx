@@ -39,7 +39,7 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
 
     const [gameState, setGameState] = useState<string>('pregame');
 
-    const { currentUser, signedIn, userLoading } = useCurrentUser();
+    const { currentUser, signedIn } = useCurrentUser();
     const onGameEvent = async (event: GameEvent) => {
         if (event.eventType === EventType.SubmitAnswer) {
             const newNumAnswers = numAnswers + 1;
@@ -142,12 +142,12 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
 
     const getNextQuestionId = (id: number) => {
         let nextId = id + 1;
+        if (nextId >= questions.length) {
+            return -1;
+        }
+
         while (questions[nextId].type === QuestionType.Flashcard) {
             nextId++;
-
-            if (nextId >= questions.length) {
-                return -1;
-            }
         }
 
         return nextId;
@@ -202,6 +202,7 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
                     scramble: question.scramble || false,
                     questionLength: question.questionLength || 15,
                     questionPoints: question.questionPoints || 100,
+                    tags: question.tags || []
                 });
             }
 
@@ -296,6 +297,7 @@ export default function HostDashboard(props: { gameId: string, setId: string }) 
                     options: questionsArray[nextQuestionIndex].options,
                     photo: questionsArray[nextQuestionIndex].photo,
                     points: questionsArray[nextQuestionIndex].questionPoints,
+                    tags: questionsArray[nextQuestionIndex].tags,
                 },
                 eventId: generateId()
             });

@@ -46,7 +46,8 @@
 
     font-size: 30px;
 
-    border: 1px solid var(--text-color);
+    background-color: var(--bg-dark);
+    border: 1px solid var(--bg-darker);
     border-radius: 10px;
     outline: none;
 

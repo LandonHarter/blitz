@@ -9,6 +9,7 @@ import generateId from '@/backend/id';
 import AnswerBanner from '../../answer-banner/banner';
 import { CorrectAnswerContext } from '../../correctanswercontext';
 import ClientBaseQuestion from '../basequestion';
+import { reportSubmission } from '@/backend/analyze';
 
 export default function MCQuestion(props: { question: Question, uid: string, gameId: string, setSubmitted: Function, revealAnswer: boolean }) {
     const question = props.question;
@@ -30,6 +31,8 @@ export default function MCQuestion(props: { question: Question, uid: string, gam
         if (question.options[optionIndex].correct) {
             await awardPoints(props.gameId, props.uid, props.question.questionPoints || 100);
         }
+
+        reportSubmission(props.gameId, question.options[optionIndex].option, question.tags || [], question.options[optionIndex].correct);
 
         props.setSubmitted(true);
     };

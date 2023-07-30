@@ -10,6 +10,7 @@ import generateId from '@/backend/id';
 import { CorrectAnswerContext } from '../../correctanswercontext';
 import AnswerBanner from '../../answer-banner/banner';
 import ClientBaseQuestion from '../basequestion';
+import { reportSubmission } from '@/backend/analyze';
 
 export default function ShortAnswerQuestion(props: { question: Question, uid: string, gameId: string, setSubmitted: Function, revealAnswer: boolean }) {
     const question = props.question;
@@ -27,14 +28,18 @@ export default function ShortAnswerQuestion(props: { question: Question, uid: st
         });
 
         const correctAnswers: string[] = question.options[0].optionData.correctAnswers;
+        let correct: boolean = false;
         for (let i = 0; i < correctAnswers.length; i++) {
             if (response.toLowerCase().includes(correctAnswers[i].toLowerCase())) {
                 correctAnswer.set(true);
 
                 await awardPoints(props.gameId, props.uid, props.question.questionPoints || 100);
+                correct = true;
                 break;
             }
         }
+
+        reportSubmission(props.gameId, response, question.tags || [], correct);
 
         props.setSubmitted(true);
     };

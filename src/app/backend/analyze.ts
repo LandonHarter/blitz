@@ -12,25 +12,31 @@ export interface Report {
 
 }
 
-const submissionData: {
-    submission: string;
-    tags: string[],
-    correct: boolean;
-}[] = [];
+const sessions: {
+    [name: string]: {
+        submission: string;
+        tags: string[],
+        correct: boolean;
+    }[]
+} = {};
 
-export const reportSubmission = (submission: string, tags: string[], correct: boolean) => {
-    submissionData.push({
+export const createSession = (name: string) => {
+    sessions[name] = [];
+}
+
+export const reportSubmission = (session: string, submission: string, tags: string[], correct: boolean) => {
+    sessions[session].push({
         submission,
         tags,
         correct
     });
 };
 
-export const clearSubmissionData = () => {
-    submissionData.length = 0;
+export const clearSession = (session: string) => {
+    sessions[session].length = 0;
 };
 
-export const analyzeStruggles = (): Report => {
+export const analyzeSession = (session: string): Report => {
     const tagDictionary: {
         [tag: string]: {
             submission: string;
@@ -38,7 +44,7 @@ export const analyzeStruggles = (): Report => {
         }[]
     } = {};
 
-    submissionData.forEach(({ submission, tags, correct }) => {
+    sessions[session].forEach(({ submission, tags, correct }) => {
         tags.forEach(tag => {
             if (!tagDictionary[tag]) {
                 tagDictionary[tag] = [];
@@ -72,7 +78,7 @@ export const analyzeStruggles = (): Report => {
 
     let totalCorrect = 0;
     let totalIncorrect = 0;
-    submissionData.forEach(({ correct }) => {
+    sessions[session].forEach(({ correct }) => {
         if (correct) {
             totalCorrect++;
         } else {
@@ -87,4 +93,8 @@ export const analyzeStruggles = (): Report => {
         correct: totalCorrect,
         incorrect: totalIncorrect
     };
+};
+
+export const getLink = (session: string, gameType: string) => {
+    return `/analyze?reportData=${JSON.stringify(analyzeSession(session))}&game=${gameType}`;
 };

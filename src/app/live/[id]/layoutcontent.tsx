@@ -7,13 +7,10 @@ export default function LiveLayoutContent(props: { children: React.ReactNode }) 
     const [darkMode, setDarkMode] = useState('');
 
     useEffect(() => {
-        setDarkMode(localStorage.getItem('theme') || 'light');
+        const theme = localStorage.getItem('theme') || 'dark';
+        setDarkMode(theme);
+        document.documentElement.setAttribute('data-theme', theme);
     }, []);
-
-    useEffect(() => {
-        document.documentElement.setAttribute('data-theme', darkMode);
-        localStorage.setItem('theme', darkMode);
-    }, [darkMode]);
 
     if (darkMode === '') return;
 
@@ -23,7 +20,7 @@ export default function LiveLayoutContent(props: { children: React.ReactNode }) 
                 setDarkMode(mode ? 'dark' : 'light');
             }
         }}>
-            <div className={darkMode ? 'dark_theme' : ''}>
+            <div className={darkMode === 'dark' ? 'dark_theme' : ''}>
                 {props.children}
             </div>
         </DarkModeContext.Provider>

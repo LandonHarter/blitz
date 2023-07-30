@@ -57,7 +57,7 @@
 }
 
 .accepted_answer h1 {
-    color: var(--bg-dark);
+    color: #fff;
     font-size: 40px;
     font-family: 'SF Pro Display';
 }

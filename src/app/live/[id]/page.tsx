@@ -25,6 +25,7 @@ import TFQuestion from "./question/tf/question";
 import ShortAnswerQuestion from "./question/shortanswer/question";
 import FlashcardQuestion from "./question/flashcard/question";
 import { CorrectAnswerContext } from "./correctanswercontext";
+import { createSession } from "@/backend/analyze";
 
 export default function LiveGamePage() {
     const id = usePathname().split('/')[2];
@@ -56,6 +57,7 @@ export default function LiveGamePage() {
                 options: event.eventData.options,
                 photo: event.eventData.photo,
                 questionPoints: event.eventData.points || 100,
+                tags: event.eventData.tags,
             });
         } else if (event.eventType === EventType.RevealAnswer) {
             setRevealAnswer(true);
@@ -143,6 +145,8 @@ export default function LiveGamePage() {
                 setLoadingData(false);
             }
         })();
+
+        createSession(id);
     }, [currentUser, id, signedIn]);
 
     if (userLoading || loadingData) {

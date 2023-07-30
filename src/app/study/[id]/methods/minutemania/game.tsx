@@ -10,7 +10,8 @@ import Image from "next/image";
 import { StudyMethod, getStudyData, updateStudyData } from "@/backend/firebase/study";
 import UserContext from "@/context/usercontext";
 import RequireSignInStudyMethod from "../needsignin";
-import { analyzeStruggles, clearSubmissionData, reportSubmission } from "@/backend/analyze";
+import { analyzeSession, clearSession, createSession, reportSubmission } from "@/backend/analyze";
+import TrueFalseQuestion from "@/edit/[id]/question-types/tf";
 
 export default function MinuteManiaStudyMethod(props: { set: any, studyData: any, setStudyData: Dispatch<SetStateAction<any>> }) {
     const [currentQuestion, setCurrentQuestion] = useState<any>();
@@ -21,6 +22,8 @@ export default function MinuteManiaStudyMethod(props: { set: any, studyData: any
     const [isHighscore, setIsHighscore] = useState(false);
     const [correctIndicator, setCorrectIndicator] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
+
+    const [sessionId, setSessionId] = useState(`minute-mania-${Math.round(Math.random() * 1000000)}`);
 
     const { currentUser } = useContext(UserContext);
 
@@ -44,6 +47,10 @@ export default function MinuteManiaStudyMethod(props: { set: any, studyData: any
             }
         })();
     }, [gameState, score]);
+
+    useEffect(() => {
+        createSession(sessionId);
+    }, [sessionId]);
 
     const startTimer = async (numSeconds: number) => {
         setTimer(numSeconds);
@@ -90,6 +97,8 @@ export default function MinuteManiaStudyMethod(props: { set: any, studyData: any
         setGameState('pregame');
         setScore(0);
         setIsHighscore(false);
+        setCorrectIndicator(false);
+        setSessionId(`minute-mania-${Math.round(Math.random() * 1000000)}`);
     };
 
     if (props.set.questions.length === 0 || currentQuestionIndex === -1) {
@@ -123,7 +132,6 @@ export default function MinuteManiaStudyMethod(props: { set: any, studyData: any
                         <h1 className={styles.pregame_title}>Minute Mania!</h1>
                         <p className={styles.pregame_subtitle}>Answer as many questions as you can in 60 seconds!</p>
                         <button className={styles.start_game_button} onClick={() => {
-                            clearSubmissionData();
                             setGameState('game');
 
                             const newIndex = getNextQuestion(0);
@@ -158,7 +166,7 @@ export default function MinuteManiaStudyMethod(props: { set: any, studyData: any
                                     backgroundColor: backgroundColors[index % backgroundColors.length]
                                 }} onClick={() => {
                                     if (option.correct) {
-                                        reportSubmission(option, currentQuestion.tags, option.correct);
+                                        reportSubmission(sessionId, option, currentQuestion.tags, option.correct);
 
                                         setScore(score + 1);
                                         setIsCorrect(true);
@@ -169,7 +177,7 @@ export default function MinuteManiaStudyMethod(props: { set: any, studyData: any
                                             setCurrentQuestion(props.set.questions[newIndex]);
                                         }, 150);
                                     } else {
-                                        reportSubmission(option, currentQuestion.tags, option.correct);
+                                        reportSubmission(sessionId, option, currentQuestion.tags, option.correct);
                                         setIsCorrect(false);
                                     }
 
@@ -185,7 +193,8 @@ export default function MinuteManiaStudyMethod(props: { set: any, studyData: any
                     </div>
                 </div>
             }
-            {gameState === 'endgame' &&
+            {
+                gameState === 'endgame' &&
                 <>
                     <div className={styles.question_container}>
                         <div className={styles.question_top}>
@@ -207,12 +216,12 @@ export default function MinuteManiaStudyMethod(props: { set: any, studyData: any
                             resetGame();
                         }}>Study Again</button>
                         <button className={styles.start_game_button} onClick={() => {
-                            window.open(`/analyze?reportData=${JSON.stringify(analyzeStruggles())}&game=minutemania`, '_blank');
+                            window.open(`/analyze?reportData=${JSON.stringify(analyzeSession(sessionId))}&game=minutemania`, '_blank');
                         }} style={{ marginTop: 15 }}>View Report</button>
                         <div style={{ marginBottom: 20 }} />
                     </Popup>
                 </>
             }
-        </StudyMethodContainer>
+        </StudyMethodContainer >
     );
 }
