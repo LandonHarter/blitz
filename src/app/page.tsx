@@ -54,10 +54,13 @@ export default function Home() {
           <Link href='/about'><button className={styles.learn_more}>Learn More</button></Link>
         </div>
       </div>
-      <div className={styles.computer_screen} style={{
-        backgroundImage: `url('/ss${darkMode ? '-dark' : ''}.webp')`,
-      }} />
+
+      <div className={`${styles.device} ${styles.desktop}`}>
+        <Image src={`/ss${darkMode ? '-dark' : ''}.webp`} alt='computer' width={1280} height={720} className={styles.computer_screen} />
+      </div>
+
       <div className={styles.computer_screen_coverup} />
+
       <InViewAnimation className={styles.hero2}>
         <h1 className={styles.hero2_small_title}>Benefits</h1>
         <h1 className={styles.hero2_big_title}>Available tools to boost your study experience</h1>
