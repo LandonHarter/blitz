@@ -6,7 +6,7 @@ import styles from './page.module.css';
 import { useRouter, usePathname } from 'next/navigation';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
-import { Question, QuestionType, Set, duplicateSet, getSet, likeSet, unlikeSet } from '@/backend/set';
+import { Question, QuestionType, duplicateSet, getSet, likeSet, unlikeSet } from '@/backend/set';
 import Loading from '@/components/loading/loading';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,7 +21,7 @@ import { HeartSVG, ThreeDotsSVG } from '@/svg';
 import FlashcardAnswerDropdown from './flashcard';
 import DarkModeContext from '@/context/darkmode';
 import AnimationDiv from '@/animation/AnimationDiv';
-import { dropdown } from '@/animation/animation';
+import 'cooltipz-css';
 
 export default function SetContent() {
     const id = usePathname().split('/')[2];
@@ -130,10 +130,15 @@ export default function SetContent() {
                             display: 'flex',
                             alignItems: 'center'
                         }}>
-                            <Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/share.png`} alt='share' width={30} height={30}
+                            <button style={{
+                                background: 'none',
+                                border: 'none',
+                                outline: 'none',
+                                cursor: 'pointer'
+                            }} aria-label='Share' data-cooltipz-dir="top"><Image src={`/images/icons/${darkMode ? 'dark' : 'light'}/share.png`} alt='share' width={30} height={30}
                                 className={styles.share_icon} onClick={() => {
                                     setShareOpen(true);
-                                }} />
+                                }} /></button>
                             <ThreeDotsSVG className={styles.dots} onClick={() => {
                                 setThreeDots(!threeDots);
                             }} />
@@ -260,19 +265,19 @@ export default function SetContent() {
                     <button onClick={() => {
                         window.open("https://twitter.com/share?url=" + encodeURIComponent(window.location.href) + "&text=" + `Study ${set.name} on Blitz!`, '_blank');
                         setShareOpen(false);
-                    }} className={styles.button_share}><Image src='/images/providers/twitter-share.webp' alt='twitter' width={50} height={50} /></button>
+                    }} className={styles.button_share} aria-label='Twitter' data-cooltipz-dir='top'><Image src='/images/providers/twitter-share.webp' alt='twitter' width={50} height={50} /></button>
                     <button onClick={() => {
                         window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`, '_blank');
                         setShareOpen(false);
-                    }} className={styles.button_share}><Image src='/images/providers/fb-share.webp' alt='twitter' width={50} height={50} /></button>
+                    }} className={styles.button_share} aria-label='Facebook' data-cooltipz-dir='top'><Image src='/images/providers/fb-share.webp' alt='twitter' width={50} height={50} /></button>
                     <button onClick={() => {
                         window.open(`mailto:?subject=Study ${set.name} on Blitz!&body=${window.location.href}`, '_blank');
                         setShareOpen(false);
-                    }} className={styles.button_share}><Image src='/images/providers/email-share.webp' alt='twitter' width={50} height={50} /></button>
+                    }} className={styles.button_share} aria-label='Email' data-cooltipz-dir='top'><Image src='/images/providers/email-share.webp' alt='twitter' width={50} height={50} /></button>
                     <button onClick={() => {
                         window.open(`https://www.reddit.com/submit?url=${window.location.href}&title=${set.name}`, '_blank');
                         setShareOpen(false);
-                    }} className={styles.button_share}><Image src='/images/providers/reddit-share.webp' alt='twitter' width={50} height={50} /></button>
+                    }} className={styles.button_share} aria-label='Reddit' data-cooltipz-dir='top'><Image src='/images/providers/reddit-share.webp' alt='twitter' width={50} height={50} /></button>
                 </div>
                 <div className={styles.link_container}>
                     <input className={styles.share_link} value={window.location.href} />
