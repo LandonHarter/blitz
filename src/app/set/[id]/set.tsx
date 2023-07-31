@@ -12,7 +12,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import BasicReturn from '@/components/basic-return/return';
 import UserContext from '@/context/usercontext';
-import { createGame } from '@/backend/live/game';
+import { createClassicGame } from '@/backend/live/game';
 import Popup from '@/components/popup/popup';
 import { AnimatePresence, motion } from 'framer-motion';
 import OptionDropdown from './mcq';
@@ -27,7 +27,7 @@ export default function SetContent() {
     const id = usePathname().split('/')[2];
     const router = useRouter();
 
-    const [set, setSet] = useState<any>();
+    const [set, setSet] = useState<any>(null);
     const [author, setAuthor] = useState<any>();
     const [isLiked, setIsLiked] = useState<boolean>(false);
     const [loading, setLoading] = useState(true);
@@ -35,7 +35,7 @@ export default function SetContent() {
 
     const [threeDots, setThreeDots] = useState(false);
 
-    const { currentUser, signedIn, updateUserData } = useContext(UserContext);
+    const { currentUser, signedIn, updateUserData, userLoading } = useContext(UserContext);
     const { get: darkMode } = useContext(DarkModeContext);
 
     const [error, setError] = useState('');
@@ -75,11 +75,17 @@ export default function SetContent() {
             const authorData = await getDoc(authorRef);
             setAuthor(authorData.data());
 
-            setIsLiked((currentUser.likedSets || {})[setData.id] || false);
+            if (!userLoading) setIsLiked((currentUser.likedSets || {})[setData.id] || false);
 
             setLoading(false);
         })();
     }, []);
+
+    useEffect(() => {
+        if (set) {
+            setIsLiked((currentUser.likedSets || {})[set.id] || false);
+        }
+    }, [signedIn]);
 
     if (loading || !set) {
         return (<Loading />);
@@ -206,7 +212,7 @@ export default function SetContent() {
                             success,
                             error,
                             gameCode
-                        } = await createGame(currentUser.uid, set.id);
+                        } = await createClassicGame(currentUser.uid, set.id);
 
                         if (success) {
                             router.push(`/host/${gameCode}`);

@@ -7,7 +7,7 @@ import { EventType } from "@backend/live/events/event";
 import { AnalyticsEventType, pushAnalyticsEvent } from "../firebase/analytics";
 import { collection, getDoc, doc, updateDoc, increment } from "firebase/firestore";
 
-export const createGame = async (hostId: string, setId: string) => {
+export const createClassicGame = async (hostId: string, setId: string) => {
     const setData = await getDoc(doc(collection(firestore, 'sets'), setId));
     if (!setData.exists()) {
         return {
@@ -34,6 +34,7 @@ export const createGame = async (hostId: string, setId: string) => {
     await set(gameRef, {
         gameSetId: setId,
         host: hostId,
+        gameType: 'classic',
         started: false,
     });
     await pushAnalyticsEvent({
@@ -89,6 +90,7 @@ export const joinGame = async (gameCode: string, user: User) => {
     return {
         success: true,
         error: '',
+        gameType: gameSnapshot.val().gameType,
     };
 };
 
@@ -147,6 +149,7 @@ export const getGameData = async (gameCode: string) => {
         host: gameData.host,
         setId: gameData.gameSetId,
         numPlayers: usersSnapshot.size,
+        gameType: gameData.gameType
     };
 
     return data;
@@ -244,10 +247,18 @@ export interface GameData {
     host: string;
     setId: string;
     numPlayers: number;
+    gameType: string;
 }
 
 export interface GameEvent {
     eventType: EventType;
     eventData: any;
     eventId: string;
+}
+
+export enum GameType {
+
+    None = 'none',
+    Classic = 'classic',
+
 }

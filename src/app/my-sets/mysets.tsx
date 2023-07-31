@@ -11,7 +11,7 @@ import { firestore } from '@baas/init';
 import Link from 'next/link';
 import UserContext from '@/context/usercontext';
 import { useRouter } from 'next/navigation';
-import { createGame } from '@/backend/live/game';
+import { createClassicGame } from '@/backend/live/game';
 import Popup from '@/components/popup/popup';
 import Image from 'next/image';
 import { getUserData } from '@/backend/firebase/user';
@@ -168,7 +168,7 @@ export default function MySetsContent() {
                                                     success,
                                                     error,
                                                     gameCode
-                                                } = await createGame(currentUser.uid, set.id);
+                                                } = await createClassicGame(currentUser.uid, set.id);
 
                                                 if (success) {
                                                     router.push(`/host/${gameCode}`);
@@ -223,7 +223,7 @@ export default function MySetsContent() {
                                                 success,
                                                 error,
                                                 gameCode
-                                            } = await createGame(currentUser.uid, set.id);
+                                            } = await createClassicGame(currentUser.uid, set.id);
 
                                             if (success) {
                                                 router.push(`/host/${gameCode}`);
@@ -283,7 +283,7 @@ export default function MySetsContent() {
                                                 success,
                                                 error,
                                                 gameCode
-                                            } = await createGame(currentUser.uid, set.id);
+                                            } = await createClassicGame(currentUser.uid, set.id);
 
                                             if (success) {
                                                 router.push(`/host/${gameCode}`);

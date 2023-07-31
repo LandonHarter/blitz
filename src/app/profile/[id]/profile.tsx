@@ -8,7 +8,7 @@ import BasicReturn from '@/components/basic-return/return';
 import Image from 'next/image';
 import { User, UserProfile, followUser, getUserData, getUserProfileData, unfollowUser } from '@/backend/firebase/user';
 import { formatTimestampDate } from '@/backend/util';
-import { createGame } from '@/backend/live/game';
+import { createClassicGame } from '@/backend/live/game';
 import { useRouter } from 'next/navigation';
 import 'cooltipz-css';
 import Link from 'next/link';
@@ -139,7 +139,7 @@ export default function ProfileContent() {
                                                 success,
                                                 error,
                                                 gameCode
-                                            } = await createGame(currentUser.uid, set.id);
+                                            } = await createClassicGame(currentUser.uid, set.id);
 
                                             if (success) {
                                                 router.push(`/host/${gameCode}`);

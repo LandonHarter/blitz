@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 import Loading from "@/components/loading/loading";
 import { query, collection, orderBy, limit, getDocs, where } from "firebase/firestore";
 import { firestore } from "@/backend/firebase/init";
-import { createGame } from "@/backend/live/game";
+import { createClassicGame } from "@/backend/live/game";
 import { useRouter } from "next/navigation";
 import Popup from "@/components/popup/popup";
 import Image from "next/image";

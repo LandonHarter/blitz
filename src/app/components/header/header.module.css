@@ -6,6 +6,10 @@
     background-color: transparent;
 }
 
+.header * {
+    z-index: 100;
+}
+
 .header_nav {
     display: flex;
     justify-content: space-evenly;

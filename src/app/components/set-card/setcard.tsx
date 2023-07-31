@@ -5,8 +5,10 @@ import { HeartSVG } from '@/svg';
 import { likeSet, unlikeSet } from '@/backend/set';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { createGame } from '@/backend/live/game';
+import { createClassicGame } from '@/backend/live/game';
 import { useState } from 'react';
+import Popup from '../popup/popup';
+import Image from 'next/image';
 
 export default function SetCard(props: { set: any }) {
     const set = props.set;
@@ -16,6 +18,9 @@ export default function SetCard(props: { set: any }) {
     const [numLikes, setNumLikes] = useState(set.likes || 0);
     const [liked, setLiked] = useState((currentUser.likedSets || {})[set.id] || false);
     const [finishedLiking, setFinishedLiking] = useState(true);
+
+    const [error, setError] = useState('');
+    const [errorOpen, setErrorOpen] = useState(false);
 
     return (
         <article className={styles.set_card}>
@@ -58,18 +63,23 @@ export default function SetCard(props: { set: any }) {
 
                         const {
                             success,
-                            error,
-                            gameCode
-                        } = await createGame(currentUser.uid, set.id);
+                            gameCode,
+                        } = await createClassicGame(currentUser.uid, set.id);
 
                         if (success) {
                             router.push(`/host/${gameCode}`);
                         } else {
-                            // TODO: set error
+                            setError('There was an error creating the game. Please try again.');
+                            setErrorOpen(true);
                         }
                     }}>Host Live</button>
                 </div>
             </div>
+
+            <Popup open={errorOpen} setOpen={setErrorOpen} exitButton>
+                <Image src='/images/icons/error.png' alt='error' width={60} height={60} style={{ marginBottom: 25 }} />
+                <p className='popup_error'>{error}</p>
+            </Popup>
         </article>
     )
 }

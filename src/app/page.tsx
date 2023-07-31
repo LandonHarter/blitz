@@ -4,7 +4,7 @@ import Footer from '@components/footer/footer';
 import styles from './page.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import SignInContext from './context/signincontext';
 import UserContext from './context/usercontext';
 import Image from 'next/image';
@@ -16,6 +16,16 @@ export default function Home() {
   const signInPopup = useContext(SignInContext);
   const { signedIn } = useContext(UserContext);
   const { get: darkMode } = useContext(DarkModeContext);
+
+  const v2Bg = false;
+  const ParralaxBackgroundStyles = {
+    position: 'absolute',
+    width: '100vw',
+    height: '100vh',
+    backgroundPosition: 'bottom',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat'
+  } as React.CSSProperties;
 
   const Feature = (props: { title: string, subtitle: string, image: string }) => (
     <div className={styles.feature}>
@@ -38,22 +48,44 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <div className='bg_scrolling' />
+      {v2Bg ?
+        <div className={styles.background}>
+          <div style={{
+            ...ParralaxBackgroundStyles,
+            backgroundImage: `url('/images/background/Mountain.jpeg')`,
+          }} />
+        </div> :
+        <div className='bg_scrolling' />
+      }
 
-      <div className={styles.hero1}>
-        <h1 className={styles.title}>Increase study productivity and results</h1>
-        <h1 className={styles.subtitle}>A large collection of <span>FREE</span> study tools through games, proven study techniques, and AI assistance.</h1>
-        <div className={styles.hero1_buttons}>
-          <button className={styles.get_started} onClick={() => {
-            if (signedIn) {
-              router.push('/explore/sets');
-            } else {
-              signInPopup.set(true);
-            }
-          }}>Get Started</button>
-          <Link href='/about'><button className={styles.learn_more}>Learn More</button></Link>
+
+      <div className={styles.hero1} style={{
+        minHeight: v2Bg ? 'calc(100vh - 134px)' : '50vh',
+        marginBottom: v2Bg ? 0 : 50
+      }}>
+        <div className={styles.hero1_content} style={{
+          transform: v2Bg ? 'translateY(-20vh)' : 'translateY(0)'
+        }}>
+          <h1 className={styles.title} style={{
+            color: v2Bg ? '#353535' : 'var(--text-color)'
+          }}>Increase study productivity and results</h1>
+          <h1 className={styles.subtitle} style={{
+            color: v2Bg ? '#353535' : 'var(--text-color-light)'
+          }}>A large collection of <span>FREE</span> study tools through games, proven study techniques, and AI assistance.</h1>
+          <div className={styles.hero1_buttons}>
+            <button className={styles.get_started} onClick={() => {
+              if (signedIn) {
+                router.push('/explore/sets');
+              } else {
+                signInPopup.set(true);
+              }
+            }}>Get Started</button>
+            <Link href='/about'><button className={styles.learn_more}>Learn More</button></Link>
+          </div>
         </div>
       </div>
+
+      {v2Bg && <div className={styles.hero_gradient} />}
 
       <div className={`${styles.device} ${styles.desktop}`}>
         <Image src={`/ss${darkMode ? '-dark' : ''}.webp`} alt='computer' width={1280} height={720} className={styles.computer_screen} />
