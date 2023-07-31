@@ -120,6 +120,7 @@ export const basicMetadata = (options: { title?: string, description?: string, l
         applicationName: 'Blitz',
         verification: {
             google: 'j43ORVaA7qz_sFFceLHCzyeJeH0qgqhOwPy_5DmBAfU',
+            yandex: '48bea197327f1546',
         },
         openGraph: {
             title: options.title || 'Blitz',
