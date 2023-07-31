@@ -1,6 +1,6 @@
 import { User } from "@/backend/firebase/user";
 import { Unsubscribe, get, ref } from "firebase/database";
-import { realtimeDb } from "@/backend/firebase";
+import { realtimeDb } from "@baas/init";
 import { leaveGame } from "@/backend/live/game";
 
 export const initClient = async (gameId: string, currentUser: User) => {
