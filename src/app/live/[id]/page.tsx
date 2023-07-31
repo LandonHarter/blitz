@@ -11,7 +11,6 @@ import styles from './page.module.css';
 import { GameUser } from "@/backend/live/user";
 import { GameEvent, getGameData, leaveGame, subscribeToGame } from "@/backend/live/game";
 import { EventType } from "@/backend/live/events/event";
-import HostDashboard from "../../host/host";
 import MCQuestion from "./question/mcq/question";
 import { Question, QuestionType } from "@/backend/set";
 import Waiting from "./waiting/waiting";
