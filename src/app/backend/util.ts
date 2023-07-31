@@ -135,6 +135,9 @@ export const basicMetadata = (options: { title?: string, description?: string, l
             images: ['https://blitzedu.vercel.app/icon.png'],
             title: options.title || 'Blitz',
             description: options.description || 'An exciting new way to study and learn powered by AI, interactive games, and scientifically proven study methods.',
+        },
+        other: {
+            'msvalidate.01': 'ADA9F1A4C00DBCCA16AD9A81DBB97978',
         }
     };
 };
