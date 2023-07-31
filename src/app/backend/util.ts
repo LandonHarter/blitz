@@ -131,7 +131,7 @@ export const basicMetadata = (options: { title?: string, description?: string, l
         },
         twitter: {
             site: `https://blitzedu.vercel.app${options.localPath || ''}`,
-            card: 'app',
+            card: 'summary_large_image',
             images: ['https://blitzedu.vercel.app/icon.png'],
             title: options.title || 'Blitz',
             description: options.description || 'An exciting new way to study and learn powered by AI, interactive games, and scientifically proven study methods.',
