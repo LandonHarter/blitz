@@ -7,12 +7,16 @@ import UserContext from "./context/usercontext";
 import useCurrentUser from "./hooks/useCurrentUser";
 import DarkModeContext from "./context/darkmode";
 import MobileContext from "./context/mobile";
+import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 export default function RootLayoutContent(props: { children: React.ReactNode }) {
     const [signInPopup, setSignInPopup] = useState(false);
     const { currentUser, signedIn, userLoading, updateUserData } = useCurrentUser();
     const [darkMode, setDarkMode] = useState('');
     const [width, setWidth] = useState(0);
+
+    const pathname = usePathname();
 
     useEffect(() => {
         setDarkMode(localStorage.getItem('theme') || 'dark');
@@ -39,10 +43,18 @@ export default function RootLayoutContent(props: { children: React.ReactNode }) 
                             setDarkMode(mode ? 'dark' : 'light');
                         }
                     }}>
-                        <div className={darkMode ? 'dark_theme' : ''}>
-                            <Header />
-                            {props.children}
-                        </div>
+                        <AnimatePresence mode='wait'>
+                            <motion.div
+                                key={pathname}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{}}
+                                transition={{ duration: 0.75 }}
+                                className={darkMode ? 'dark_theme' : ''}>
+                                <Header />
+                                {props.children}
+                            </motion.div>
+                        </AnimatePresence>
                     </DarkModeContext.Provider>
                 </MobileContext.Provider>
             </UserContext.Provider>
