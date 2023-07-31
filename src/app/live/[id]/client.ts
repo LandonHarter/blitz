@@ -1,7 +1,7 @@
 import { User } from "@/backend/firebase/user";
 import { Unsubscribe, get, ref } from "firebase/database";
 import { realtimeDb } from "@baas/init";
-import { leaveGame } from "@/backend/live/game";
+import { GameType, leaveGame } from "@/backend/live/game";
 
 export const initClient = async (gameId: string, currentUser: User) => {
     const gameRef = ref(realtimeDb, `live-games/${gameId}/users/${currentUser.uid}`);
@@ -19,6 +19,15 @@ export const initClient = async (gameId: string, currentUser: User) => {
         userInGame,
         error: false,
     }
+};
+
+export const getGameType = async (gameId: string) => {
+    const gameRef = ref(realtimeDb, `live-games/${gameId}`);
+    const snapshot = await get(gameRef);
+    const gameTypeString = snapshot.val().gameType;
+
+    if (gameTypeString === 'classic') return GameType.Classic;
+    return GameType.None;
 }
 
 export const unloadCallback = (gameId: string, currentUser: User, unsubscribeEvent: Unsubscribe, unsubscribeNewPlayer: Unsubscribe, unsubscribeLeavePlayer: Unsubscribe) => {
