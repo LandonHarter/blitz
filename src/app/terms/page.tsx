@@ -1,20 +1,13 @@
 import Footer from '@/components/footer/footer';
 import styles from './page.module.css';
 import { Metadata } from 'next';
+import { basicMetadata } from '@/backend/util';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = basicMetadata({
     title: 'Terms of Service • Blitz',
-    description: 'Terms of Service for Blitz.',
-    other: {
-        'og:image': 'https://blitzedu.vercel.app/icon.png',
-        'og:title': 'Terms of Service • Blitz',
-        'og:description': 'Terms of Service for Blitz.',
-        'twitter:image': 'https://blitzedu.vercel.app/icon.png',
-        'twitter:title': 'Terms of Service • Blitz',
-        'twitter:description': 'Terms of Service for Blitz.',
-        'twitter:card': 'app',
-    }
-};
+    description: 'Nobody likes rules, but we must keep Blitz an enjoyable experience for everyone.',
+    localPath: '/terms',
+});
 
 export default function TOSPage() {
     return (

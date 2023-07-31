@@ -1,19 +1,12 @@
 import { Metadata } from "next";
 import ExploreContent from "./explore";
+import { basicMetadata } from "@/backend/util";
 
-export const metadata: Metadata = {
-    title: 'Explore • Blitz',
-    description: 'Discover new and exciting sets on Blitz!',
-    other: {
-        'og:image': 'https://blitzedu.vercel.app/icon.png',
-        'og:title': 'Explore • Blitz',
-        'og:description': 'Discover new and exciting sets on Blitz!',
-        'twitter:image': 'https://blitzedu.vercel.app/icon.png',
-        'twitter:title': 'Explore • Blitz',
-        'twitter:description': 'Discover new and exciting sets on Blitz!',
-        'twitter:card': 'app',
-    }
-};
+export const metadata: Metadata = basicMetadata({
+    title: 'Explore Sets • Blitz',
+    description: 'Explore endless sets created by the Blitz community.',
+    localPath: '/explore/sets',
+});
 
 export default function ExplorePage() {
     return (<ExploreContent />);

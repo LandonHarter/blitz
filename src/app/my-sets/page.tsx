@@ -1,9 +1,12 @@
+import { Metadata } from "next";
 import MySetsContent from "./mysets";
+import { basicMetadata } from "@/backend/util";
 
-export const metadata = {
+export const metadata: Metadata = basicMetadata({
     title: 'My Sets • Blitz',
-    description: 'View and manage your sets on Blitz!',
-};
+    description: 'View your own sets!',
+    localPath: '/my-sets',
+});
 
 export default function MySetsPage() {
     return (<MySetsContent />);

@@ -1,22 +1,9 @@
 import { Metadata } from 'next';
 import './globals.css';
 import RootLayoutContent from './rootlayoutcontent';
+import { basicMetadata } from './backend/util';
 
-export const metadata: Metadata = {
-  title: 'Blitz',
-  description: 'Use new tools and games to make studying fun.',
-  other: {
-    'og:image': 'https://blitzedu.vercel.app/icon.png',
-    'og:title': 'Blitz',
-    'og:description': 'Use new tools and games to make studying fun.',
-    'twitter:image': 'https://blitzedu.vercel.app/icon.png',
-    'twitter:title': 'Blitz',
-    'twitter:description': 'Use new tools and games to make studying fun.',
-    'twitter:card': 'app',
-    'google-site-verification': 'j43ORVaA7qz_sFFceLHCzyeJeH0qgqhOwPy_5DmBAfU'
-  }
-};
-
+export const metadata: Metadata = basicMetadata({});
 export default function RootLayout({
   children,
 }: {

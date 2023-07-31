@@ -1,19 +1,12 @@
 import { Metadata } from "next";
 import SettingsContent from "./settings";
+import { basicMetadata } from "@/backend/util";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = basicMetadata({
     title: 'Settings • Blitz',
-    description: 'Change your settings to your preference on Blitz.',
-    other: {
-        'og:image': 'https://blitzedu.vercel.app/icon.png',
-        'og:title': 'Settings • Blitz',
-        'og:description': 'Change your settings to your preference on Blitz.',
-        'twitter:image': 'https://blitzedu.vercel.app/icon.png',
-        'twitter:title': 'Settings • Blitz',
-        'twitter:description': 'Change your settings to your preference on Blitz.',
-        'twitter:card': 'app',
-    }
-};
+    description: 'Change your Blitz settings.',
+    localPath: '/settings',
+})
 
 export default function SettingsPage() {
     return (<SettingsContent />);

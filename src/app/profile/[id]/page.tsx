@@ -1,6 +1,7 @@
 import { getUserData } from "@/backend/firebase/user";
 import ProfileContent from "./profile";
 import { Metadata } from "next";
+import { basicMetadata } from "@/backend/util";
 
 export async function generateMetadata({ params, seachParams }: any): Promise<Metadata> {
     const id = params.id;
@@ -13,17 +14,11 @@ export async function generateMetadata({ params, seachParams }: any): Promise<Me
         };
     }
 
-    return {
+    return basicMetadata({
         title: `${user.name} • Blitz`,
-        description: `View ${user.name}'s profile on Blitz!`,
-        other: {
-            'twitter:card': 'app',
-            'twitter:image': user.pfp,
-            'twitter:site': '@blitzedu',
-            'twitter:title': user.name,
-            'twitter:description': `View ${user.name}'s profile on Blitz!`,
-        }
-    };
+        description: `View ${user.name}'s profile.`,
+        localPath: `/profile/${id}`,
+    });
 }
 
 export default function ProfilePage() {

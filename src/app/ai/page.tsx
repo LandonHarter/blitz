@@ -3,20 +3,13 @@ import styles from './page.module.css';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import Footer from '@/components/footer/footer';
+import { basicMetadata } from '@/backend/util';
 
-export const metadata: Metadata = {
-    title: "AI Tools • Blitz",
-    description: "A collection of AI tools to boost study productivity, in and out of the classroom.",
-    other: {
-        "og:image": "https://blitzedu.vercel.app/icon.png",
-        "og:title": "AI Tools • Blitz",
-        "og:description": "A collection of AI tools to boost study productivity, in and out of the classroom.",
-        "twitter:image": "https://blitzedu.vercel.app/icon.png",
-        "twitter:title": "AI Tools • Blitz",
-        "twitter:description": "A collection of AI tools to boost study productivity, in and out of the classroom.",
-        "twitter:card": "app",
-    }
-};
+export const metadata: Metadata = basicMetadata({
+    title: 'AI Tools • Blitz',
+    description: 'Utilize our AI tools to boost your learning and study productivity.',
+    localPath: '/ai',
+});
 
 export default function AIPage() {
     const AICard = (props: { title: string, description: string, image: string, link: string }) => {

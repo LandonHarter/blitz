@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import SetContent from "./set";
 import { getSet } from "@/backend/set";
+import { basicMetadata } from "@/backend/util";
 
 export async function generateMetadata({ params, seachParams }: any): Promise<Metadata> {
     const id = params.id;
@@ -13,17 +14,11 @@ export async function generateMetadata({ params, seachParams }: any): Promise<Me
         };
     }
 
-    return {
+    return basicMetadata({
         title: `${setData.name} • Blitz`,
         description: setData.description,
-        other: {
-            'twitter:card': 'summary_large_image',
-            'twitter:image': setData.image,
-            'twitter:site': '@blitzedu',
-            'twitter:title': setData.name,
-            'twitter:description': setData.description,
-        }
-    };
+        localPath: `/set/${id}`,
+    })
 }
 
 export default function SetPage() {

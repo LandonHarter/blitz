@@ -1,19 +1,12 @@
 import { Metadata } from 'next';
 import styles from './page.module.css';
+import { basicMetadata } from '@/backend/util';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = basicMetadata({
     title: 'Teacher Application Requisites • Blitz',
-    description: 'Apply to become a Blitz teacher.',
-    other: {
-        'og:image': 'https://blitzedu.vercel.app/icon.png',
-        'og:title': 'Teacher Application Requisites • Blitz',
-        'og:description': 'Apply to become a Blitz teacher.',
-        'twitter:image': 'https://blitzedu.vercel.app/icon.png',
-        'twitter:title': 'Teacher Application Requisites • Blitz',
-        'twitter:description': 'Apply to become a Blitz teacher.',
-        'twitter:card': 'app',
-    }
-};
+    description: 'View the requisites for applying to become a teacher on Blitz.',
+    localPath: '/apply/teacher/requisites',
+});
 
 export default function ApplyTeacherRequisitesPage() {
     return (

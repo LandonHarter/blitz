@@ -1,19 +1,12 @@
 import { Metadata } from "next";
 import JoinPageContent from "./join";
+import { basicMetadata } from "@/backend/util";
 
-export const metadata: Metadata = {
-    title: "Join Game • Blitz",
-    description: "Join a live Blitz game!",
-    other: {
-        "og:image": "https://blitzedu.vercel.app/icon.png",
-        "og:title": "Join Game • Blitz",
-        "og:description": "Join a live Blitz game!",
-        "twitter:image": "https://blitzedu.vercel.app/icon.png",
-        "twitter:title": "Join Game • Blitz",
-        "twitter:description": "Join a live Blitz game!",
-        "twitter:card": "app",
-    }
-}
+export const metadata: Metadata = basicMetadata({
+    title: 'Join Game • Blitz',
+    description: 'Join and play a live hosted game!',
+    localPath: '/join',
+})
 
 export default function JoinPage() {
     return (<JoinPageContent />);

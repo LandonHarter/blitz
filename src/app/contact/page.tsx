@@ -1,19 +1,12 @@
 import { Metadata } from "next";
 import ContactContent from "./contact";
+import { basicMetadata } from "@/backend/util";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = basicMetadata({
     title: 'Contact Us • Blitz',
-    description: 'Contact the Blitz team for any questions, concerns, or feedback.',
-    other: {
-        'og:image': 'https://blitzedu.vercel.app/icon.png',
-        'og:title': 'Contact Us • Blitz',
-        'og:description': 'Contact the Blitz team for any questions, concerns, or feedback.',
-        'twitter:image': 'https://blitzedu.vercel.app/icon.png',
-        'twitter:title': 'Contact Us • Blitz',
-        'twitter:description': 'Contact the Blitz team for any questions, concerns, or feedback.',
-        'twitter:card': 'app',
-    }
-};
+    description: 'You need help? We got you covered.',
+    localPath: '/contact',
+});
 
 export default function ContactPage() {
     return (<ContactContent />);

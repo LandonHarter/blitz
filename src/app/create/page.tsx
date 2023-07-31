@@ -1,19 +1,12 @@
 import { Metadata } from "next";
 import CreateContent from "./create";
+import { basicMetadata } from "@/backend/util";
 
-export const metadata: Metadata = {
-    title: 'Create • Blitz',
-    description: 'Create a new set on Blitz!',
-    other: {
-        'og:image': 'https://blitzedu.vercel.app/icon.png',
-        'og:title': 'Create • Blitz',
-        'og:description': 'Create a new set on Blitz!',
-        'twitter:image': 'https://blitzedu.vercel.app/icon.png',
-        'twitter:title': 'Create • Blitz',
-        'twitter:description': 'Create a new set on Blitz!',
-        'twitter:card': 'app',
-    }
-}
+export const metadata: Metadata = basicMetadata({
+    title: 'Create New Set • Blitz',
+    description: 'Create a new Blitz set.',
+    localPath: '/create',
+});
 
 export default function CreatePage() {
     return (<CreateContent />);

@@ -1,4 +1,5 @@
 import { Timestamp } from "firebase/firestore";
+import { Metadata } from "next";
 
 export const formatTimestampAgo = (timestamp: Timestamp) => {
     const date = new Date(timestamp.seconds * 1000);
@@ -90,3 +91,50 @@ export const gradeFromScore = (score: number) => {
     if (score >= 60) return 'D-';
     return 'F';
 }
+
+export const basicMetadata = (options: { title?: string, description?: string, localPath?: string, keywords?: string[] }): Metadata => {
+    return {
+        metadataBase: new URL('https://blitzedu.vercel.app'),
+        title: options.title || 'Blitz',
+        description: options.description || 'An exciting new way to study and learn powered by AI, interactive games, and scientifically proven study methods.',
+        authors: [
+            {
+                name: "Landon Harter",
+                url: 'https://landonharter.me'
+            },
+            {
+                name: "BlitzEDU",
+                url: 'https://blitzedu.vercel.app'
+            },
+        ],
+        publisher: 'BlitzEDU',
+        robots: {
+            index: true,
+            follow: true,
+        },
+        keywords: options.keywords ? options.keywords.join(', ') : 'Blitz, education, classroom, study, learning',
+        category: 'Education',
+        classification: 'Education',
+        creator: 'BlitzEDU',
+        icons: 'https://blitzedu.vercel.app/icon.png',
+        applicationName: 'Blitz',
+        verification: {
+            google: 'j43ORVaA7qz_sFFceLHCzyeJeH0qgqhOwPy_5DmBAfU',
+        },
+        openGraph: {
+            title: options.title || 'Blitz',
+            description: options.description || 'An exciting new way to study and learn powered by AI, interactive games, and scientifically proven study methods.',
+            url: `https://blitzedu.vercel.app${options.localPath || ''}`,
+            type: 'website',
+            images: ['https://blitzedu.vercel.app/icon.png'],
+            siteName: 'Blitz',
+        },
+        twitter: {
+            site: `https://blitzedu.vercel.app${options.localPath || ''}`,
+            card: 'app',
+            images: ['https://blitzedu.vercel.app/icon.png'],
+            title: options.title || 'Blitz',
+            description: options.description || 'An exciting new way to study and learn powered by AI, interactive games, and scientifically proven study methods.',
+        }
+    };
+};

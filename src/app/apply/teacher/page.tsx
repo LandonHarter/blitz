@@ -1,19 +1,12 @@
 import { Metadata } from "next";
 import ApplyTeacherContent from "./application";
+import { basicMetadata } from "@/backend/util";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = basicMetadata({
     title: 'Teacher Application • Blitz',
-    description: 'Apply to become a verified teacher on Blitz and gain new benefits!',
-    other: {
-        'og:image': 'https://blitzedu.vercel.app/icon.png',
-        'og:title': 'Teacher Application • Blitz',
-        'og:description': 'Apply to become a verified teacher on Blitz and gain new benefits!',
-        'twitter:image': 'https://blitzedu.vercel.app/icon.png',
-        'twitter:title': 'Teacher Application • Blitz',
-        'twitter:description': 'Apply to become a verified teacher on Blitz and gain new benefits!',
-        'twitter:card': 'app',
-    }
-};
+    description: 'Apply to become a teacher on Blitz and help students learn.',
+    localPath: '/apply/teacher',
+});
 
 export default function TeacherApplyPage() {
     return (<ApplyTeacherContent />);

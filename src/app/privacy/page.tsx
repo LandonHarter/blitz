@@ -1,20 +1,13 @@
 import Footer from '@/components/footer/footer';
 import styles from './page.module.css';
 import { Metadata } from 'next';
+import { basicMetadata } from '@/backend/util';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = basicMetadata({
     title: 'Privacy Policy • Blitz',
-    description: 'Blitz prides itself on being a privacy-first company. We do not sell your data to third parties.',
-    other: {
-        'og:image': 'https://blitzedu.vercel.app/icon.png',
-        'og:title': 'Privacy Policy • Blitz',
-        'og:description': 'Blitz prides itself on being a privacy-first company. We do not sell your data to third parties.',
-        'twitter:image': 'https://blitzedu.vercel.app/icon.png',
-        'twitter:title': 'Privacy Policy • Blitz',
-        'twitter:description': 'Blitz prides itself on being a privacy-first company. We do not sell your data to third parties.',
-        'twitter:card': 'app',
-    }
-};
+    description: 'We care about your privacy. See how your data is handled.',
+    localPath: '/privacy',
+});
 
 export default function PrivacyPage() {
     return (
@@ -22,7 +15,7 @@ export default function PrivacyPage() {
             <div className={styles.privacy_container}>
                 <h1 className={styles.small_title}>Privacy Policy</h1>
                 <h1 className={styles.big_title}>We care about your privacy.</h1>
-                <h3 className={styles.subtitle}>Effective Date: 7/24/2023</h3>
+                <h3 className={styles.subtitle}>Effective Date: 7/31/2023</h3>
 
                 <div className={styles.privacy}>
                     <p>
@@ -48,7 +41,7 @@ export default function PrivacyPage() {
                     <p>
                         How secure is your information?
                         <p className={styles.section_content}>
-                            We implement reasonable security measures to protect your information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
+                            We implement reasonable security measures to protect your information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security. All user authentication, user data, and analytics are hosted and managed by Google.
                         </p>
                     </p>
                     <p>
