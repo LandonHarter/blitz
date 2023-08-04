@@ -36,6 +36,7 @@ export default function CourseContent() {
     const { currentUser, signedIn } = useContext(UserContext);
 
     const [verifiedAccess, setVerifiedAccess] = useState<boolean>(false);
+    const [finishedVerification, setFinishedVerification] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
 
     const introduction = () => {
@@ -105,14 +106,16 @@ export default function CourseContent() {
             const published = course.published;
 
             if (!published && !admin) {
+                setFinishedVerification(true);
                 return;
             }
 
+            setFinishedVerification(true);
             setVerifiedAccess(true);
         })();
     }, [course, currentUser]);
 
-    if (loading || !course) {
+    if (loading || !course || !finishedVerification) {
         return (<Loading />);
     }
 

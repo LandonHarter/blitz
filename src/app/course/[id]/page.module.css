@@ -95,8 +95,10 @@
 }
 
 .course_image {
-    width: 100vw;
-    height: 30vw;
+    --image-width: calc(100vw - var(--sidebar-width));
+    width: var(--image-width);
+    height: calc(var(--image-width) * (3/10));
+    aspect-ratio: 10/3;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
