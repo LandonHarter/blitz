@@ -7,6 +7,9 @@ import { Timestamp, collection, doc, setDoc, updateDoc } from 'firebase/firestor
 import { firestore } from '@/backend/firebase/init';
 import { uploadFile } from '@/backend/firebase/storage';
 import generateId from '@/backend/id';
+import { AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export default function EditCourse(props: { course: Course, setCourse: Dispatch<SetStateAction<Course | null>>, selectedChapter: number, selectedLesson: number, setEditMode: Dispatch<SetStateAction<boolean>> }) {
     const [name, setName] = useState<string>('');
@@ -20,6 +23,14 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
     const [video, setVideo] = useState<string>('');
     const [content, setContent] = useState<string>('');
     const [editingType, setEditingType] = useState<'introduction' | 'chapter' | 'lesson' | null>(null);
+
+    const [showSuccess, setShowSuccess] = useState<boolean>(false);
+    const triggerSuccess = (duration: number) => {
+        setShowSuccess(true);
+        setTimeout(() => {
+            setShowSuccess(false);
+        }, duration * 1000);
+    };
 
     const createChapter = async () => {
         const chapterRef = doc(collection(firestore, `courses/${props.course.id}/chapters`), props.course.chapters.length.toString());
@@ -77,9 +88,11 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
         if (!props.course) return;
         if (props.selectedLesson < 0) {
             await updateIntroduction();
+            triggerSuccess(3);
             return;
         } else if (props.selectedLesson >= props.course.chapters[props.selectedChapter].lessons.length) {
             await udpateChapter();
+            triggerSuccess(3);
             return;
         }
 
@@ -122,6 +135,7 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
         newCourse.chapters[props.selectedChapter].lessons[props.selectedLesson].content = content;
         newCourse.lastUpdated = new Date();
         props.setCourse(newCourse);
+        triggerSuccess(3);
     };
 
     useEffect(() => {
@@ -210,6 +224,13 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
                     setEditingType(null);
                 }}>Stop Editing</button>
             </div>
+
+            <AnimatePresence mode='wait'>
+                {showSuccess && <motion.div initial={{ opacity: 0, right: -400 }} animate={{ opacity: 1, right: 10 }} exit={{ opacity: 0 }} transition={{ duration: 0.45 }} className={styles.save_message}>
+                    <Image src='/images/icons/check.png' alt='check' width={40} height={40} />
+                    <h1>Successfully saved course.</h1>
+                </motion.div>}
+            </AnimatePresence>
         </div>
     );
 }
