@@ -1,0 +1,54 @@
+.container {
+    --container-padding: 10px;
+
+    width: calc(100vw - var(--container-padding) * 2);
+    height: fit-content;
+    padding: 0 var(--container-padding);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-family: 'SF Pro Display';
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.basic_input {
+    width: 400px;
+    height: 50px;
+    padding: 0 10px;
+    margin: 10px 0;
+    border: 1px solid var(--bg-darker);
+    border-radius: 10px;
+    outline: none;
+    background-color: var(--bg-dark);
+    font-size: 25px;
+    transition: 0.15s ease-in-out;
+}
+
+.basic_input:disabled {
+    filter: brightness(0.8);
+    cursor: not-allowed;
+}
+
+.create {
+    margin: 10px 0;
+    width: 200px;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    background-color: var(--primary-color);
+    font-family: 'SF Pro Display';
+    font-size: 30px;
+    transition: 0.15s ease-in-out;
+    cursor: pointer;
+}

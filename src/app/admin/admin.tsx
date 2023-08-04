@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import TeacherApplications from "./application/teacher";
 import styles from './page.module.css';
+import AdminCourseDashboard from "./courses/course";
 
 export default function AdminContent() {
     const router = useRouter();
@@ -26,6 +27,8 @@ export default function AdminContent() {
             }}>Admin</h1>);
         } else if (currentPage === 'applications/teacher') {
             return (<TeacherApplications />);
+        } else if (currentPage === 'courses') {
+            return (<AdminCourseDashboard />);
         }
 
         return (<></>);
@@ -69,6 +72,7 @@ export default function AdminContent() {
             <div className={styles.all_buttons}>
                 <button className={isPageSelected('home')} onClick={() => setCurrentPage('home')}>Home</button>
                 <button className={isPageSelected('applications/teacher')} onClick={() => setCurrentPage('applications/teacher')}>Teacher Applications</button>
+                <button className={isPageSelected('courses')} onClick={() => setCurrentPage('courses')}>Courses</button>
             </div>
             {getCurrentUI()}
         </div>
