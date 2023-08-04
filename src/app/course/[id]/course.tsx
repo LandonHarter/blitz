@@ -157,6 +157,14 @@ export default function CourseContent() {
                             flexDirection: 'column',
                             alignItems: 'flex-start'
                         }}>
+                            {editMode &&
+                                <div className={`${styles.sidebar_lesson} ${styles.add_lesson}`} onClick={() => {
+                                    setSelectedChapter(i);
+                                    setSelectedLesson(chapter.lessons.length);
+                                }}>
+                                    <h2 className={styles.sidebar_lesson_title}>Edit Chapter</h2>
+                                </div>
+                            }
                             {chapter.lessons.map((lesson, j) => (
                                 <div className={`${styles.sidebar_lesson} ${selectedLesson === j && selectedChapter === i && styles.sidebar_selected_lesson}`} key={j} onClick={() => {
                                     setSelectedLesson(j);
@@ -241,7 +249,13 @@ export default function CourseContent() {
             <div className={styles.course}>
                 {
                     editMode ? <EditCourse course={course} setCourse={setCourse} selectedChapter={selectedChapter} selectedLesson={selectedLesson} setEditMode={setEditMode} /> :
-                        (selectedLesson === -1 ? introduction() : <CourseLessonContent lesson={course.chapters[selectedChapter].lessons[selectedLesson]} />)
+                        (selectedLesson === -1
+                            ? introduction()
+                            : (selectedLesson < course.chapters[selectedChapter].lessons.length
+                                ? <CourseLessonContent lesson={course.chapters[selectedChapter].lessons[selectedLesson]} />
+                                : <h1>Chapter page</h1>
+                            )
+                        )
                 }
 
                 {(isAdmin && !editMode) && <button onClick={() => {

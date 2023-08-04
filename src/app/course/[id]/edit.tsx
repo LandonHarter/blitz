@@ -10,6 +10,7 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
     const [name, setName] = useState<string>('');
     const [video, setVideo] = useState<string>('');
     const [content, setContent] = useState<string>('');
+    const [editingType, setEditingType] = useState<'introduction' | 'chapter' | 'lesson' | null>(null);
 
     const createChapter = async () => {
         const chapterRef = doc(collection(firestore, `courses/${props.course.id}/chapters`), props.course.chapters.length.toString());
@@ -36,10 +37,24 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
         props.setCourse(newCourse);
     };
 
+    const udpateChapter = async () => {
+        const chapterRef = doc(collection(firestore, `courses/${props.course.id}/chapters`), props.course.chapters[props.selectedChapter].id);
+        await updateDoc(chapterRef, {
+            name: name
+        });
+
+        const newCourse = { ...props.course };
+        newCourse.chapters[props.selectedChapter].name = name;
+        props.setCourse(newCourse);
+    };
+
     const updateLesson = async () => {
         if (!props.course) return;
         if (props.selectedLesson < 0) {
             await updateIntroduction();
+            return;
+        } else if (props.selectedLesson >= props.course.chapters[props.selectedChapter].lessons.length) {
+            await udpateChapter();
             return;
         }
 
@@ -87,15 +102,27 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
     useEffect(() => {
         if (!props.course) return;
 
-        if (props.selectedLesson > -1) {
-            setName(props.course.chapters[props.selectedChapter].lessons[props.selectedLesson].name);
-            setVideo(props.course.chapters[props.selectedChapter].lessons[props.selectedLesson].video);
-            setContent(props.course.chapters[props.selectedChapter].lessons[props.selectedLesson].content);
+        const isIntroduction = props.selectedLesson < 0;
+        if (isIntroduction) {
+            setName(props.course.name);
+            setVideo('No video available for introduction');
+            setContent(props.course.description);
+            setEditingType('introduction');
             return;
         }
 
-        setName(props.course.name);
-        setContent(props.course.description);
+        const isChapter = props.selectedLesson >= props.course.chapters[props.selectedChapter].lessons.length;
+        if (isChapter) {
+            setName(props.course.chapters[props.selectedChapter].name);
+            setVideo('No video available for chapter');
+            setContent('No content available for chapter');
+            setEditingType('chapter');
+        } else {
+            setName(props.course.chapters[props.selectedChapter].lessons[props.selectedLesson].name);
+            setVideo(props.course.chapters[props.selectedChapter].lessons[props.selectedLesson].video);
+            setContent(props.course.chapters[props.selectedChapter].lessons[props.selectedLesson].content);
+            setEditingType('lesson');
+        }
     }, [props.course, props.selectedChapter, props.selectedLesson]);
 
     return (
@@ -105,17 +132,18 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
             }} />
             <input className={styles.basic_input} placeholder='Lesson video...' value={video} onChange={(e) => {
                 setVideo(e.target.value);
-            }} disabled={props.selectedLesson < 0} />
+            }} disabled={editingType === 'introduction' || editingType === 'chapter'} />
             <textarea className={styles.basic_textarea} placeholder='Lesson content...' value={content} onChange={(e) => {
                 setContent(e.target.value);
-            }} />
+            }} disabled={editingType === 'chapter'} />
 
             <div>
                 <button className={styles.update_button} onClick={async () => {
                     await updateLesson();
-                }}>Update Lesson</button>
+                }}>Update Course</button>
                 <button className={styles.update_button} onClick={() => {
                     props.setEditMode(false);
+                    setEditingType(null);
                 }}>Stop Editing</button>
             </div>
         </div>
