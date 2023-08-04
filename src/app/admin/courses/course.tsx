@@ -23,6 +23,7 @@ export default function AdminCourseDashboard() {
             description: `${courseName} introduction page.`,
             image: 'https://dummyimage.com/900x270/bfbfbf/595959.png',
             lastUpdated: Timestamp.now(),
+            published: false,
         });
 
         const chapter1Ref = doc(collection(courseRef, 'chapters'), '1');

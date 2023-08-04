@@ -11,6 +11,7 @@ export interface Course {
     keywords: string[];
     lastUpdated: Date;
     chapters: CourseChapter[];
+    published?: boolean;
 
 }
 
@@ -80,7 +81,8 @@ export const getCourse = async (id: string) => {
         image: courseData.image,
         keywords: courseData.keywords,
         lastUpdated: courseData.lastUpdated.toDate(),
-        chapters: chapters
+        chapters: chapters,
+        published: courseData.published
     };
     courseCache[id] = course;
 

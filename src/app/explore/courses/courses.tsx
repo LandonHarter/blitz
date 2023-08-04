@@ -6,7 +6,7 @@ import algoliasearch from 'algoliasearch/lite';
 import styles from './page.module.css';
 import Popup from '@/components/popup/popup';
 import Link from 'next/link';
-import { collection, getDocs, limit, query } from 'firebase/firestore';
+import { collection, getDocs, limit, query, where } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
 
 export default function CoursesContent() {
@@ -23,7 +23,7 @@ export default function CoursesContent() {
 
     useEffect(() => {
         (async () => {
-            const coursesQuery = query(collection(firestore, 'courses'), limit(30));
+            const coursesQuery = query(collection(firestore, 'courses'), limit(30), where('published', '==', true));
             const docs = await getDocs(coursesQuery);
 
             const coursesArray: any[] = [];
@@ -65,10 +65,13 @@ export default function CoursesContent() {
         let filteredHits: any[] = [];
         for (let i = 0; i < hits.length; i++) {
             const hit = hits[i];
-            filteredHits.push({
-                ...hit,
-                id: hit.objectID
-            });
+
+            if (hit.published) {
+                filteredHits.push({
+                    ...hit,
+                    id: hit.objectID
+                });
+            }
         }
 
         setCourses(filteredHits);

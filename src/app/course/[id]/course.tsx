@@ -12,6 +12,7 @@ import CourseLessonContent from './lesson';
 import EditCourse from './edit';
 import { Roles, hasRole } from '@/backend/firebase/roles';
 import UserContext from '@/context/usercontext';
+import BasicReturn from '@/components/basic-return/return';
 
 export default function CourseContent() {
     const id = usePathname().split('/')[2];
@@ -34,6 +35,7 @@ export default function CourseContent() {
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const { currentUser, signedIn } = useContext(UserContext);
 
+    const [verifiedAccess, setVerifiedAccess] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
 
     const introduction = () => {
@@ -59,7 +61,6 @@ export default function CourseContent() {
             if (!courseData) return;
 
             setCourse(courseData);
-
             const chaptersData = courseData.chapters.map((chapter: CourseChapter) => {
                 const lessons: { completed: boolean }[] = [];
                 for (let i = 0; i < chapter.lessons.length; i++) {
@@ -91,12 +92,32 @@ export default function CourseContent() {
     useEffect(() => {
         if (!signedIn) return;
         (async () => {
-            setIsAdmin(await hasRole(currentUser.uid, Roles.ADMIN));
+            const admin = await hasRole(currentUser.uid, Roles.ADMIN);
+            setIsAdmin(admin);
         })();
     }, [signedIn]);
 
+    useEffect(() => {
+        (async () => {
+            if (!course || currentUser.empty) return;
+
+            const admin = await hasRole(currentUser.uid, Roles.ADMIN);
+            const published = course.published;
+
+            if (!published && !admin) {
+                return;
+            }
+
+            setVerifiedAccess(true);
+        })();
+    }, [course, currentUser]);
+
     if (loading || !course) {
         return (<Loading />);
+    }
+
+    if (!verifiedAccess) {
+        return (<BasicReturn text="You do not have access to course." returnLink='/explore/courses' />)
     }
 
     return (
