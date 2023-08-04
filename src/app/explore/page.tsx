@@ -31,9 +31,9 @@ export default function ExplorePage() {
                 <div className={styles.tick} />
 
                 <div className={styles.explore_pages}>
-                    <ExploreCard name='Sets' description='A nice short description' image='/images/avatar.webp' link='/explore/sets' />
-                    <ExploreCard name='Courses' description='' image='/images/avatar.webp' link='/explore/courses' />
-                    <ExploreCard name='Users' description='' image='/images/avatar.webp' link='/explore/users' />
+                    <ExploreCard name='Sets' description='Explore countless sets made by the Blitz community' image='/images/icons/explore/sets.webp' link='/explore/sets' />
+                    <ExploreCard name='Courses' description='Learn something new or get help with free courses' image='/images/icons/explore/courses.webp' link='/explore/courses' />
+                    <ExploreCard name='Users' description='Find people in the Blitz community that are just like you' image='/images/icons/explore/community.webp' link='/explore/users' />
                 </div>
             </div>
 
