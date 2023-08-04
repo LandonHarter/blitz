@@ -1,0 +1,88 @@
+.title {
+    font-size: 60px;
+    font-family: 'SF Pro Display';
+    font-weight: 700;
+    color: var(--text-color);
+
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.tick {
+    width: 60px;
+    height: 15px;
+    background-color: var(--secondary-color);
+    border-radius: 30px;
+
+    margin-bottom: 50px;
+}
+
+.explore_pages {
+    width: 100vw;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.explore_card {
+    width: 375px;
+    padding: 30px;
+
+    background-color: var(--bg-dark);
+    border-radius: 30px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: 0.15s ease-in-out;
+    margin: 10px;
+
+    text-decoration: none;
+}
+
+.explore_card:hover {
+    transform: scale(1.025);
+}
+
+.explore_card_top {
+    display: flex;
+    align-items: center;
+}
+
+.explore_card_top img {
+    border-radius: 10px;
+    margin-right: 15px;
+}
+
+.explore_card_top h1 {
+    font-size: 34px;
+    font-family: 'SF Pro Display';
+    font-weight: 700;
+    color: var(--text-color);
+
+    text-decoration: none;
+}
+
+.explore_card p {
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'SF Pro Display';
+    font-weight: 400;
+    color: var(--text-color-light);
+    margin-top: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 970px) {
+
+    .explore_pages {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .explore_card {
+        width: calc(100% - 80px);
+    }
+
+}

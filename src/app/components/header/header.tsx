@@ -52,7 +52,7 @@ export default function Header() {
                             <Link href='/create' className={styles.mobile_nav_link} onClick={() => {
                                 setMobileNavOpen(false);
                             }}>Create</Link>
-                            <Link href='/explore/sets' className={styles.mobile_nav_link} onClick={() => {
+                            <Link href='/explore' className={styles.mobile_nav_link} onClick={() => {
                                 setMobileNavOpen(false);
                             }}>Explore</Link>
                             <Link href='/ai' className={styles.mobile_nav_link} onClick={() => {
@@ -104,7 +104,7 @@ export default function Header() {
                         <div className={styles.nav_links}>
                             <Link href='/join' className={styles.nav_link}>Join</Link>
                             <Link href='/create' className={styles.nav_link}>Create</Link>
-                            <Link href='/explore/sets' className={styles.nav_link}>Explore</Link>
+                            <Link href='/explore' className={styles.nav_link}>Explore</Link>
                             <Link href='/ai' className={styles.nav_link}>
                                 <div className={styles.nav_link_content}><p className={styles.link_text}>AI</p> <div className={styles.badge}><p>Beta</p></div></div>
                             </Link>

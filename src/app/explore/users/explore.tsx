@@ -34,7 +34,10 @@ export default function UsersExploreContent() {
 
             const usersArray: any[] = [];
             docs.forEach(doc => {
-                usersArray.push(doc.data());
+                usersArray.push({
+                    ...doc.data(),
+                    createdAt: doc.data().createdAt.toMillis(),
+                });
             });
             setUsers(usersArray);
 
@@ -104,7 +107,10 @@ export default function UsersExploreContent() {
                                     <div className={styles.user_card}>
                                         <Image src={user.pfp} alt="user pfp" width={64} height={64} className={styles.user_pfp} />
                                         <div className={styles.user_info}>
-                                            <h1 className={styles.user_name}>{user.name}</h1>
+                                            <h1 className={styles.user_name}>
+                                                {user.name}
+                                                {user.verified && <Link href='/apply/teacher'><button className={styles.verified_container} aria-label='Verified Teacher' data-cooltipz-dir="top"><Image src='/images/icons/verified.png' alt='verified' width={30} height={30} className={styles.verified_badge} /></button></Link>}
+                                            </h1>
                                             <p className={styles.user_old}>Joined {formatDate(new Date(user.createdAt))}</p>
                                         </div>
                                     </div>

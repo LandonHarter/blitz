@@ -35,7 +35,7 @@ export default function Footer() {
                         <ul className={styles.footer_section_column_list}>
                             <Link href='/' className={styles.footer_section_column_link}>Home</Link>
                             <Link href='/join' className={styles.footer_section_column_link}>Join</Link>
-                            <Link href='/explore/sets' className={styles.footer_section_column_link}>Explore</Link>
+                            <Link href='/explore' className={styles.footer_section_column_link}>Explore</Link>
                             <Link href='/ai' className={styles.footer_section_column_link}>AI</Link>
                         </ul>
                     </div>

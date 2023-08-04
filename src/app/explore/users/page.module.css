@@ -380,10 +380,27 @@
     color: var(--text-color);
     font-family: 'SF Pro Display';
     font-size: 30px;
+    display: flex;
+    align-items: center;
 }
 
 .user_old {
     color: var(--text-color-light);
     font-family: 'SF Pro Display';
     font-size: 20px;
+}
+
+.verified_container {
+    margin-left: 5px;
+    margin-top: 5px;
+
+    background-color: transparent;
+    border: none;
+}
+
+.verified_badge {
+    border-radius: 100%;
+    user-select: none;
+
+    cursor: pointer;
 }
