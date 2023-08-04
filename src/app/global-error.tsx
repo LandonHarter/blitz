@@ -5,7 +5,7 @@ import "./globals.css";
 import { useEffect } from 'react'
 import { pushAnalyticsEvent, AnalyticsEventType } from './backend/firebase/analytics'
 import BasicReturn from './components/basic-return/return'
- 
+
 export default function GlobalError({
   error,
   reset,
@@ -15,15 +15,15 @@ export default function GlobalError({
 }) {
   useEffect(() => {
     pushAnalyticsEvent({
-        type: AnalyticsEventType.NextError, 
-        data: {
-            name: error.name,
-            message: error.message,
-            stack: error.stack
-        }
+      type: AnalyticsEventType.NextError,
+      data: {
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+      }
     });
-  }, [error])
- 
+  }, [error]);
+
   return (
     <html lang="en">
       <body>

@@ -1,53 +1,39 @@
 'use client'
 
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import algoliasearch from 'algoliasearch/lite';
+import styles from './page.module.css';
+import Popup from '@/components/popup/popup';
+import Link from 'next/link';
+import { collection, getDocs, limit, query } from 'firebase/firestore';
+import { firestore } from '@/backend/firebase/init';
 
-import styles from "./page.module.css";
-import Loading from "@/components/loading/loading";
-import { query, collection, orderBy, limit, getDocs, where } from "firebase/firestore";
-import { firestore } from "@/backend/firebase/init";
-import Popup from "@/components/popup/popup";
-import Image from "next/image";
-import UserContext from "@/context/usercontext";
-import algoliasearch from "algoliasearch/lite";
-import SetCard from "@/components/set-card/setcard";
-
-export default function ExploreContent() {
-    const [sets, setSets] = useState<any[]>([]);
-    const [loadingContent, setLoadingContent] = useState(true);
+export default function CoursesContent() {
+    const [courses, setCourses] = useState<any[]>([]);
 
     const [searchQuery, setSearchQuery] = useState('');
     const [searchClient, setSearchClient] = useState<any>(null);
     const [searchIndex, setSearchIndex] = useState<any>(null);
 
+    const [loadingContent, setLoadingContent] = useState(true);
+
     const [error, setError] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
 
-    const { currentUser, userLoading } = useContext(UserContext);
-
     useEffect(() => {
         (async () => {
-            const setsQuery = query(collection(firestore, 'sets'), limit(30), orderBy('likes', 'desc'), where('public', '==', true));
-            const docs = await getDocs(setsQuery);
+            const coursesQuery = query(collection(firestore, 'courses'), limit(30));
+            const docs = await getDocs(coursesQuery);
 
-            const setsArray: any[] = [];
+            const coursesArray: any[] = [];
             docs.forEach(doc => {
-                setsArray.push({
-                    id: doc.id,
-                    name: doc.data().name,
-                    likes: doc.data().likes,
-                    owner: doc.data().owner,
-                    ownerName: doc.data().ownerName,
-                    numQuestions: doc.data().numQuestions,
-                    createdAt: doc.data().createdAt,
-                    description: doc.data().description,
-                    image: doc.data().image,
-                    scramble: doc.data().scramble,
-                    public: doc.data().public,
-                    liked: (currentUser.likedSets || {})[doc.id] || false,
+                coursesArray.push({
+                    ...doc.data(),
+                    id: doc.id
                 });
             });
-            setSets(setsArray);
+            setCourses(coursesArray);
 
             const algoliaAppId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID;
             const algoliaSearchKey = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY;
@@ -59,13 +45,13 @@ export default function ExploreContent() {
             }
 
             const algoliaClient = algoliasearch(algoliaAppId, algoliaSearchKey);
-            const algoliaIndex = algoliaClient.initIndex('sets');
+            const algoliaIndex = algoliaClient.initIndex('courses');
 
             setSearchClient(algoliaClient);
             setSearchIndex(algoliaIndex);
             setLoadingContent(false);
         })();
-    }, [currentUser]);
+    }, []);
 
     const search = async (query: string) => {
         if (!searchClient || !searchIndex) {
@@ -79,24 +65,17 @@ export default function ExploreContent() {
         for (let i = 0; i < hits.length; i++) {
             const hit = hits[i];
             if (hit.public) {
-                filteredHits.push({
-                    ...hit,
-                    liked: (currentUser.likedSets || {})[hit.objectID] || false,
-                });
+                filteredHits.push(hit);
             }
         }
 
-        setSets(filteredHits);
+        setCourses(filteredHits);
         setLoadingContent(false);
-    }
-
-    if (userLoading) {
-        return (<Loading />);
-    }
+    };
 
     return (
-        <div className={styles.explore}>
-            <h1 className={styles.title}>Explore Sets</h1>
+        <div className={styles.courses_page}>
+            <h1 className={styles.title}>Explore Courses</h1>
 
             <div className={styles.search_container}>
                 <input className={styles.search} placeholder="Search for a set" value={searchQuery} onChange={(e) => {
@@ -109,7 +88,7 @@ export default function ExploreContent() {
                 </button>
             </div>
 
-            <div className={styles.sets}>
+            <div className={styles.courses}>
                 {loadingContent ?
                     <div className={styles.loading_content}>
                         <div className={styles.loader}>
@@ -119,13 +98,29 @@ export default function ExploreContent() {
                         </div>
                         <h1 className={styles.loading_title}>Loading...</h1>
                     </div> : <>
-                        {sets.map((set: any, index) => {
-                            return (<SetCard key={index} set={set} />);
+                        {courses.map((course: any, index) => {
+                            return (
+                                <article className={styles.course_card} key={index}>
+                                    <div className={styles.article_wrapper}>
+                                        <figure style={{ backgroundImage: `url(${course.image})` }}>
+
+                                        </figure>
+                                        <div className={styles.article_body}>
+                                            <Link href={`/course/${course.id}`} className={styles.link_decoration}><h2 onClick={() => {
+                                            }}>{course.name}</h2></Link>
+                                            <p>Written by {course.author}</p>
+                                        </div>
+                                        <div className={styles.card_footer}>
+
+                                        </div>
+                                    </div>
+                                </article>
+                            );
                         })}
 
-                        {(sets.length === 0 && !loadingContent) &&
+                        {(courses.length === 0 && !loadingContent) &&
                             <div className={styles.no_sets}>
-                                <h1>No sets found.</h1>
+                                <h1>No courses found.</h1>
                             </div>
                         }
                     </>

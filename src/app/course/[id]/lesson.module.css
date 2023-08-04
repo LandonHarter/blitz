@@ -1,0 +1,29 @@
+.lesson_container {
+    --lesson-padding: 20px;
+    width: calc(100% - (var(--lesson-padding) * 2));
+    height: fit-content;
+    padding: 10px var(--lesson-padding);
+}
+
+.lesson_title {
+    font-size: 60px;
+    font-weight: 700;
+    font-family: 'SF Pro Display';
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.player_container {
+    margin-bottom: 50px;
+}
+
+.player_container div {
+    --player-width: calc((100vw - 340px) * 0.8);
+    --player-height: calc((360/640) * var(--player-width));
+    width: var(--player-width) !important;
+    height: var(--player-height) !important;
+}
+
+.lesson_article * {
+    color: var(--text-color);
+}

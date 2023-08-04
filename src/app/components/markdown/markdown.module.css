@@ -1,0 +1,99 @@
+.markdown_content {
+    margin: 20px 0;
+}
+
+.markdown_content * {
+    color: var(--text-color-light);
+    font-family: 'SF Pro Display';
+}
+
+.blurt_p {
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.blurt_h1 {
+    font-family: 'SF Pro Display';
+    font-size: 44px;
+    font-weight: 600;
+    margin: 15px 0;
+    text-decoration: underline;
+}
+
+.blurt_h2 {
+    font-family: 'SF Pro Display';
+    font-size: 40px;
+    font-weight: 600;
+    margin: 15px 0;
+    text-decoration: underline;
+}
+
+.blurt_h3 {
+    font-family: 'SF Pro Display';
+    font-size: 36px;
+    font-weight: 600;
+    margin: 15px 0;
+    text-decoration: underline;
+}
+
+.blurt_h4 {
+    font-family: 'SF Pro Display';
+    font-size: 30px;
+    font-weight: 600;
+    margin: 15px 0;
+    text-decoration: underline;
+}
+
+.blurt_h5 {
+    font-family: 'SF Pro Display';
+    font-size: 26px;
+    font-weight: 600;
+    margin: 15px 0;
+    text-decoration: underline;
+}
+
+.blurt_h6 {
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+    font-weight: 600;
+    margin: 15px 0;
+    text-decoration: underline;
+}
+
+.blurt_li {
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.blurt_ul {
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+    font-weight: 400;
+    transform: translateX(24px);
+}
+
+.blurt_ol {
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+    font-weight: 400;
+    transform: translateX(24px);
+}
+
+.blurt_span {
+    font-family: 'SF Pro Display';
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.blurt_img {
+    margin: 30px 0;
+    width: 300px;
+}
+
+.blurt_a {
+    color: var(--primary-color);
+    cursor: pointer;
+    text-decoration: underline;
+}

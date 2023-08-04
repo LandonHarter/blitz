@@ -1,0 +1,255 @@
+.course_page {
+    width: 100vw;
+    height: fit-content;
+    display: flex;
+
+    --sidebar-width: 350px;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    border-right: solid 5px var(--bg-darker);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar_item_selected .sidebar_chapter_title {
+    color: var(--text-color) !important;
+}
+
+.sidebar_selected_lesson .sidebar_lesson_title {
+    color: var(--text-color) !important;
+}
+
+.sidebar_chapter {
+    --side-padding: 10px;
+
+    width: calc(100% - var(--side-padding) * 2);
+    height: fit-content;
+    padding: 10px var(--side-padding);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.sidebar_chapter * {
+    transition: color 0.2s ease-in-out;
+}
+
+.sidebar_chapter_title {
+    font-size: 25px;
+    font-weight: 700;
+    font-family: 'SF Pro Display';
+    color: var(--text-color-light);
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar_lesson {
+    --lesson-padding: 10px;
+
+    width: calc(100% - (var(--lesson-padding) * 2) - 25px);
+    height: 50px;
+    padding: 0 var(--lesson-padding);
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+}
+
+.sidebar_lesson_title {
+    font-size: 25px;
+    font-weight: 400;
+    font-family: 'SF Pro Display';
+    color: var(--text-color-light);
+    margin-left: 10px;
+    cursor: pointer;
+    transition: color 0.15s ease-in-out;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar_lesson_title:hover {
+    color: var(--text-color);
+}
+
+.dropdown_triangle {
+    margin-right: 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    transform-origin: center;
+    transition: transform 0.15s ease-in-out;
+}
+
+.dropdown_triangle_closed {
+    transform: rotate(-90deg);
+}
+
+.course {
+    width: calc(100vw - var(--sidebar-width));
+
+}
+
+.course_image {
+    width: 100vw;
+    height: 30vw;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.course_content {
+    --pad: 1rem;
+    padding: var(--pad);
+    width: calc(100vw - var(--pad) * 2);
+}
+
+.course_title {
+    font-size: 75px;
+    font-weight: 700;
+    font-family: 'SF Pro Display';
+    color: var(--text-color);
+}
+
+.course_author {
+    font-size: 35px;
+    font-weight: 400;
+    font-family: 'SF Pro Display';
+    color: var(--text-color-light);
+
+    margin-bottom: 100px;
+}
+
+.course_description {
+    width: 60%;
+}
+
+.course_description h1 {
+    color: var(--text-color);
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+.cbx {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    transform: scale(0.9);
+}
+
+.cbx span {
+    display: inline-block;
+    vertical-align: middle;
+    transform: translate3d(0, 0, 0);
+}
+
+.cbx span:first-child {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    transform: scale(1);
+    vertical-align: middle;
+    border: 2px solid var(--text-color);
+    transition: all 0.2s ease;
+}
+
+.cbx span:first-child svg {
+    position: absolute;
+    z-index: 1;
+    top: 8px;
+    left: 6px;
+    fill: none;
+    stroke: var(--text-color);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 16px;
+    stroke-dashoffset: 16px;
+    transition: all 0.3s ease;
+    transition-delay: 0.1s;
+    transform: translate3d(0, 0, 0);
+}
+
+.cbx span:first-child:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: var(--correct-color);
+    display: block;
+    transform: scale(0);
+    opacity: 1;
+    border-radius: 50%;
+    transition-delay: 0.2s;
+}
+
+article .cbx:hover span:first-child {
+    border-color: var(--correct-color);
+}
+
+.inp_cbx:checked+.cbx span:first-child {
+    border-color: var(--correct-color);
+    background: var(--correct-color);
+    animation: check 0.6s ease;
+}
+
+.inp_cbx:checked+.cbx span:first-child svg {
+    stroke-dashoffset: 0;
+}
+
+.inp_cbx:checked+.cbx span:first-child:before {
+    transform: scale(2.2);
+    opacity: 0;
+    transition: all 0.6s ease;
+}
+
+.inp_cbx:checked+.cbx span:last-child {
+    color: var(--correct-color);
+    transition: all 0.3s ease;
+}
+
+@keyframes check {
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+.edit_button {
+    width: fit-content;
+    height: fit-content;
+
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 30px;
+    transition: 0.15s ease-in-out;
+    cursor: pointer;
+}
+
+.edit_button:active {
+    transform: scale(0.95);
+}
+
+.add_lesson {
+    border-radius: 10px;
+    background-color: var(--bg-dark);
+}
+
+.add_chapter {
+    border-radius: 10px;
+    background-color: var(--bg-dark);
+}
+
+.add_chapter h2 {
+    font-weight: 400;
+    margin-left: 10px;
+}

@@ -1,0 +1,47 @@
+.edit_course {
+    display: flex;
+    flex-direction: column;
+}
+
+.basic_input {
+    margin: 10px;
+    background-color: var(--bg-dark);
+    border: 1px solid var(--bg-darker);
+    border-radius: 10px;
+    outline: none;
+    padding: 10px;
+    width: 500px;
+    font-size: 30px;
+}
+
+.basic_textarea {
+    margin: 10px;
+    background-color: var(--bg-dark);
+    border: 1px solid var(--bg-darker);
+    border-radius: 10px;
+    outline: none;
+    padding: 10px;
+    width: 80%;
+    font-size: 30px;
+    resize: vertical;
+}
+
+.update_button {
+    width: fit-content;
+    height: fit-content;
+
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 30px;
+    transition: 0.15s ease-in-out;
+    cursor: pointer;
+}
+
+.update_button:active {
+    transform: scale(0.95);
+}
