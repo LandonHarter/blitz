@@ -44,6 +44,13 @@ export const formatTimestampDate = (timestamp: Timestamp) => {
     return month + " " + day + ", " + year;
 };
 
+export const formatDate = (date: Date) => {
+    const month = date.toLocaleString('default', { month: 'long' });
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return month + " " + day + ", " + year;
+};
+
 export const arrayMove = (arr: any[], oldIndex: number, newIndex: number) => {
     if (newIndex >= arr.length) {
         var k = newIndex - arr.length + 1;

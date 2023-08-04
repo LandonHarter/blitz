@@ -49,6 +49,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             lastModified: new Date()
         },
         {
+            url: 'https://blitzedu.vercel.app/explore/users',
+            lastModified: new Date()
+        },
+        {
             url: 'https://blitzedu.vercel.app/join',
             lastModified: new Date()
         },

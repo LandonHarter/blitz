@@ -1,40 +1,42 @@
 'use client'
 
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import algoliasearch from 'algoliasearch/lite';
-import styles from './page.module.css';
-import Popup from '@/components/popup/popup';
-import Link from 'next/link';
-import { collection, getDocs, limit, query } from 'firebase/firestore';
-import { firestore } from '@/backend/firebase/init';
+import React, { useContext, useEffect, useState } from "react";
 
-export default function CoursesContent() {
-    const [courses, setCourses] = useState<any[]>([]);
+import styles from "./page.module.css";
+import Loading from "@/components/loading/loading";
+import { query, collection, orderBy, limit, getDocs, where, Timestamp } from "firebase/firestore";
+import { firestore } from "@/backend/firebase/init";
+import Popup from "@/components/popup/popup";
+import Image from "next/image";
+import UserContext from "@/context/usercontext";
+import algoliasearch from "algoliasearch/lite";
+import SetCard from "@/components/set-card/setcard";
+import { formatDate } from "@/backend/util";
+import Link from "next/link";
+
+export default function UsersExploreContent() {
+    const [users, setUsers] = useState<any[]>([]);
+    const [loadingContent, setLoadingContent] = useState(true);
 
     const [searchQuery, setSearchQuery] = useState('');
     const [searchClient, setSearchClient] = useState<any>(null);
     const [searchIndex, setSearchIndex] = useState<any>(null);
 
-    const [loadingContent, setLoadingContent] = useState(true);
-
     const [error, setError] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
 
+    const { currentUser, userLoading } = useContext(UserContext);
+
     useEffect(() => {
         (async () => {
-            const coursesQuery = query(collection(firestore, 'courses'), limit(30));
-            const docs = await getDocs(coursesQuery);
+            const usersQuery = query(collection(firestore, 'users'), limit(30));
+            const docs = await getDocs(usersQuery);
 
-            const coursesArray: any[] = [];
+            const usersArray: any[] = [];
             docs.forEach(doc => {
-                if (doc.id === 'empty') return;
-                coursesArray.push({
-                    ...doc.data(),
-                    id: doc.id
-                });
+                usersArray.push(doc.data());
             });
-            setCourses(coursesArray);
+            setUsers(usersArray);
 
             const algoliaAppId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID;
             const algoliaSearchKey = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY;
@@ -46,13 +48,13 @@ export default function CoursesContent() {
             }
 
             const algoliaClient = algoliasearch(algoliaAppId, algoliaSearchKey);
-            const algoliaIndex = algoliaClient.initIndex('courses');
+            const algoliaIndex = algoliaClient.initIndex('users');
 
             setSearchClient(algoliaClient);
             setSearchIndex(algoliaIndex);
             setLoadingContent(false);
         })();
-    }, []);
+    }, [currentUser]);
 
     const search = async (query: string) => {
         if (!searchClient || !searchIndex) {
@@ -61,26 +63,20 @@ export default function CoursesContent() {
 
         setLoadingContent(true);
         const { hits } = await searchIndex.search(query);
-
-        let filteredHits: any[] = [];
-        for (let i = 0; i < hits.length; i++) {
-            const hit = hits[i];
-            filteredHits.push({
-                ...hit,
-                id: hit.objectID
-            });
-        }
-
-        setCourses(filteredHits);
+        setUsers(hits);
         setLoadingContent(false);
-    };
+    }
+
+    if (userLoading) {
+        return (<Loading />);
+    }
 
     return (
-        <div className={styles.courses_page}>
-            <h1 className={styles.title}>Explore Courses</h1>
+        <div className={styles.explore}>
+            <h1 className={styles.title}>Explore Users</h1>
 
             <div className={styles.search_container}>
-                <input className={styles.search} placeholder="Search for a set" value={searchQuery} onChange={(e) => {
+                <input className={styles.search} placeholder="Search for a users" value={searchQuery} onChange={(e) => {
                     setSearchQuery(e.target.value);
                 }} />
                 <button className={styles.search_button} onClick={() => {
@@ -90,7 +86,7 @@ export default function CoursesContent() {
                 </button>
             </div>
 
-            <div className={styles.courses}>
+            <div className={styles.users}>
                 {loadingContent ?
                     <div className={styles.loading_content}>
                         <div className={styles.loader}>
@@ -100,29 +96,25 @@ export default function CoursesContent() {
                         </div>
                         <h1 className={styles.loading_title}>Loading...</h1>
                     </div> : <>
-                        {courses.map((course: any, index) => {
+                        {users.map((user: any, index: number) => {
                             return (
-                                <article className={styles.course_card} key={index}>
-                                    <div className={styles.article_wrapper}>
-                                        <figure style={{ backgroundImage: `url(${course.image})` }}>
-
-                                        </figure>
-                                        <div className={styles.article_body}>
-                                            <Link href={`/course/${course.id}`} className={styles.link_decoration}><h2 onClick={() => {
-                                            }}>{course.name}</h2></Link>
-                                            <p>Written by {course.author}</p>
-                                        </div>
-                                        <div className={styles.card_footer}>
-
+                                <Link href={`/profile/${user.uid}`} key={index} style={{
+                                    textDecoration: 'none'
+                                }}>
+                                    <div className={styles.user_card}>
+                                        <Image src={user.pfp} alt="user pfp" width={64} height={64} className={styles.user_pfp} />
+                                        <div className={styles.user_info}>
+                                            <h1 className={styles.user_name}>{user.name}</h1>
+                                            <p className={styles.user_old}>Joined {formatDate(new Date(user.createdAt))}</p>
                                         </div>
                                     </div>
-                                </article>
+                                </Link>
                             );
                         })}
 
-                        {(courses.length === 0 && !loadingContent) &&
-                            <div className={styles.no_sets}>
-                                <h1>No courses found.</h1>
+                        {(users.length === 0 && !loadingContent) &&
+                            <div className={styles.no_users}>
+                                <h1>No users found.</h1>
                             </div>
                         }
                     </>
