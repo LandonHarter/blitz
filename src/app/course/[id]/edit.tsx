@@ -5,9 +5,18 @@ import styles from './edit.module.css';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Timestamp, collection, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
+import { uploadFile } from '@/backend/firebase/storage';
+import generateId from '@/backend/id';
 
 export default function EditCourse(props: { course: Course, setCourse: Dispatch<SetStateAction<Course | null>>, selectedChapter: number, selectedLesson: number, setEditMode: Dispatch<SetStateAction<boolean>> }) {
     const [name, setName] = useState<string>('');
+    const [image, setImage] = useState<{
+        path: string,
+        blob: Blob | null
+    }>({
+        path: '',
+        blob: null
+    });
     const [video, setVideo] = useState<string>('');
     const [content, setContent] = useState<string>('');
     const [editingType, setEditingType] = useState<'introduction' | 'chapter' | 'lesson' | null>(null);
@@ -24,15 +33,31 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
     const updateIntroduction = async () => {
         const course = props.course;
         const courseRef = doc(collection(firestore, 'courses'), course.id);
+
+        let imagePath = image.path;
+        if (image.blob) {
+            imagePath = await uploadFile(image.blob, `course-images/${generateId()}.${image.blob.type.split('/')[1]}`);
+            setImage({
+                path: imagePath,
+                blob: null,
+            });
+        }
+
+        if (imagePath === '') {
+            imagePath = 'https://dummyimage.com/900x270/bfbfbf/595959.png';
+        }
+
         await updateDoc(courseRef, {
             name: name,
             description: content,
+            image: imagePath,
             lastUpdated: Timestamp.now(),
         });
 
         const newCourse = { ...props.course };
         newCourse.name = name;
         newCourse.description = content;
+        newCourse.image = imagePath;
         newCourse.lastUpdated = new Date();
         props.setCourse(newCourse);
     };
@@ -107,7 +132,12 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
             setName(props.course.name);
             setVideo('No video available for introduction');
             setContent(props.course.description);
+            setImage({
+                path: props.course.image,
+                blob: null
+            });
             setEditingType('introduction');
+
             return;
         }
 
@@ -116,11 +146,19 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
             setName(props.course.chapters[props.selectedChapter].name);
             setVideo('No video available for chapter');
             setContent('No content available for chapter');
+            setImage({
+                path: 'No image available for chapter',
+                blob: null
+            });
             setEditingType('chapter');
         } else {
             setName(props.course.chapters[props.selectedChapter].lessons[props.selectedLesson].name);
             setVideo(props.course.chapters[props.selectedChapter].lessons[props.selectedLesson].video);
             setContent(props.course.chapters[props.selectedChapter].lessons[props.selectedLesson].content);
+            setImage({
+                path: 'No image available for lesson',
+                blob: null
+            });
             setEditingType('lesson');
         }
     }, [props.course, props.selectedChapter, props.selectedLesson]);
@@ -130,6 +168,32 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
             <input className={styles.basic_input} placeholder='Lesson name...' value={name} onChange={(e) => {
                 setName(e.target.value);
             }} />
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+            }}>
+                <input className={styles.basic_input} placeholder='Introduction image...' value={image.path} onChange={(e) => {
+                    setImage({
+                        path: e.target.value,
+                        blob: null
+                    });
+                }} disabled={editingType !== 'introduction'} />
+
+                <div>
+                    <input type='file' id='introduction-image-file-input' accept='image/*' style={{
+                        display: 'none'
+                    }} onChange={(e) => {
+                        if (!e.target.files) return;
+                        setImage({
+                            path: e.target.files[0].name,
+                            blob: e.target.files[0]
+                        });
+                    }} />
+                    <label htmlFor='introduction-image-file-input' className={styles.update_button}>
+                        Upload Image
+                    </label>
+                </div>
+            </div>
             <input className={styles.basic_input} placeholder='Lesson video...' value={video} onChange={(e) => {
                 setVideo(e.target.value);
             }} disabled={editingType === 'introduction' || editingType === 'chapter'} />

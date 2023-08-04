@@ -17,6 +17,7 @@
 .basic_input:disabled {
     color: var(--text-color-light);
     filter: brightness(0.8);
+    cursor: not-allowed;
 }
 
 .basic_textarea {
@@ -34,6 +35,7 @@
 .basic_textarea:disabled {
     color: var(--text-color-light);
     filter: brightness(0.8);
+    cursor: not-allowed;
 }
 
 .update_button {
@@ -54,4 +56,9 @@
 
 .update_button:active {
     transform: scale(0.95);
+}
+
+.update_button:disabled {
+    filter: brightness(0.8);
+    cursor: not-allowed;
 }
