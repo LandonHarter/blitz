@@ -28,6 +28,7 @@ export default function CoursesContent() {
 
             const coursesArray: any[] = [];
             docs.forEach(doc => {
+                if (doc.id === 'empty') return;
                 coursesArray.push({
                     ...doc.data(),
                     id: doc.id
