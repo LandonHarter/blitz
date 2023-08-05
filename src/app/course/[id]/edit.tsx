@@ -77,13 +77,19 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
     };
 
     const udpateChapter = async () => {
-        const chapterRef = doc(collection(firestore, `courses/${props.course.id}/chapters`), props.course.chapters[props.selectedChapter].id);
+        let chapterId = props.course.chapters[props.selectedChapter].id;
+        if (chapterId === 'new') {
+            chapterId = await createChapter();
+        }
+
+        const chapterRef = doc(collection(firestore, `courses/${props.course.id}/chapters`), chapterId);
         await updateDoc(chapterRef, {
             name: name
         });
 
         const newCourse = { ...props.course };
         newCourse.chapters[props.selectedChapter].name = name;
+        newCourse.chapters[props.selectedChapter].id = chapterId;
         props.setCourse(newCourse);
     };
 
@@ -109,6 +115,7 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
         if (isNewChapter) {
             chapterId = await createChapter();
         }
+        props.course.chapters[props.selectedChapter].id = chapterId;
 
         const courseRef = doc(collection(firestore, 'courses'), course.id);
 
