@@ -59,7 +59,12 @@ export const getLanguageName = (abbr: string) => {
 };
 
 export const getLanguageIcon = (language: string) => {
-    return `https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/main/icons/${language.toLowerCase()}.svg`
+    let icon = language.toLowerCase();
+    switch (language) {
+        case 'sh': icon = 'powershell';
+    }
+
+    return `https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/main/icons/${icon}.svg`
 };
 
 export const getLanguageFromName = (library: string) => {
