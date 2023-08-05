@@ -1,3 +1,5 @@
+'use client'
+
 import styles from './markdown.module.css';
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -6,11 +8,16 @@ import rehypeKatex from "rehype-katex";
 import 'katex/dist/katex.min.css';
 import 'cooltipz-css';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import React from 'react';
+import { oneDark, oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+import React, { useContext } from 'react';
 import { getLanguageFromName, getLanguageIcon, getLanguageName } from '@/backend/code';
+import DarkModeContext from '@/context/darkmode';
 
 export default function Markdown(props: { text: string, className?: string }) {
+    const { get: darkMode } = useContext(DarkModeContext);
+    const lightModeTheme = oneLight;
+    const darkModeTheme = oneDark;
+
     return (
         <ReactMarkdown className={`${styles.markdown_content} ${props.className ?? ''}`} components={{
             p: ({ children }) => <p className={styles.blurt_p}>{children}</p>,
@@ -34,7 +41,7 @@ export default function Markdown(props: { text: string, className?: string }) {
                 const Highlighter = () => {
                     return (
                         // @ts-ignore
-                        <SyntaxHighlighter style={oneDark} customStyle={{
+                        <SyntaxHighlighter style={darkMode ? darkModeTheme : lightModeTheme} customStyle={{
                             width: 'calc(100% - 40px)',
                             backgroundColor: 'var(--bg-dark)',
                             border: 'solid 3px var(--bg-darker)',
