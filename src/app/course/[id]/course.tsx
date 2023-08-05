@@ -161,9 +161,6 @@ export default function CourseContent() {
                             const newChaptersData = [...chaptersData];
                             newChaptersData[i].open = !newChaptersData[i].open;
                             setChaptersData(newChaptersData);
-
-                            console.log(i);
-
                             setSelectedChapter(i);
                             setSelectedLesson(0);
                         }}>

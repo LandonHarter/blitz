@@ -3,7 +3,7 @@
 import { Course } from '@/backend/course/course';
 import styles from './edit.module.css';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Timestamp, collection, doc, setDoc, updateDoc } from 'firebase/firestore';
+import { Timestamp, collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
 import { uploadFile } from '@/backend/firebase/storage';
 import generateId from '@/backend/id';
@@ -102,7 +102,10 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
         const course = props.course;
 
         let chapterId = course.chapters[props.selectedChapter].id;
-        const isNewChapter = chapterId === 'new';
+
+        const chapterRef = doc(collection(firestore, 'courses'), chapterId);
+        const chapterSnapshot = await getDoc(chapterRef);
+        const isNewChapter = !chapterSnapshot.exists();
         if (isNewChapter) {
             chapterId = await createChapter();
         }
