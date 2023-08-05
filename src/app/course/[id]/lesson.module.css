@@ -24,6 +24,6 @@
     height: var(--player-height) !important;
 }
 
-.markdown_text * {
+.markdown_text h1 h2 h3 h4 h5 h6 span {
     color: var(--text-color) !important;
 }
