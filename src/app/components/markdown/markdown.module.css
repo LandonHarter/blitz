@@ -91,3 +91,44 @@
     cursor: pointer;
     text-decoration: underline;
 }
+
+.code_container * {
+    background-color: var(--bg-dark);
+    margin-top: 0 !important;
+}
+
+.language {
+    width: fit-content;
+    height: fit-content;
+
+    --language-padding-x: 15px;
+    --language-padding-y: 3px;
+    padding: var(--language-padding-y) var(--language-padding-x);
+    padding-top: 10px;
+
+    background-color: var(--bg-dark);
+    --border-styles: 3px solid var(--bg-darker);
+    border-left: var(--border-styles);
+    border-right: var(--border-styles);
+    border-top: var(--border-styles);
+    border-radius: 10px 10px 0 0;
+}
+
+.language h1 {
+    margin: 0 !important;
+}
+
+.language_icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    fill: var(--text-color-light);
+}
+
+.border_cover {
+    width: calc(100% + var(--language-padding-x) * 2);
+    height: 3px;
+
+    transform: translateX(calc(-1 * var(--language-padding-x))) translateY(calc(3px + var(--language-padding-y)));
+    background-color: var(--bg-dark);
+}
