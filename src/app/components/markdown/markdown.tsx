@@ -37,6 +37,7 @@ export default function Markdown(props: { text: string, className?: string }) {
                     </SyntaxHighlighter>
                 );
             },
+            br: () => <><br /><br /></>,
         }} remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>{props.text}</ReactMarkdown>
     );
 }
