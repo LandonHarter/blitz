@@ -10,6 +10,7 @@ import generateId from '@/backend/id';
 import { AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { it } from 'node:test';
 
 export default function EditCourse(props: { course: Course, setCourse: Dispatch<SetStateAction<Course | null>>, selectedChapter: number, selectedLesson: number, setEditMode: Dispatch<SetStateAction<boolean>> }) {
     const [name, setName] = useState<string>('');
@@ -22,6 +23,8 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
     });
     const [video, setVideo] = useState<string>('');
     const [content, setContent] = useState<string>('');
+    const [set, setSet] = useState<string>('');
+
     const [editingType, setEditingType] = useState<'introduction' | 'chapter' | 'lesson' | null>(null);
 
     const [showSuccess, setShowSuccess] = useState<boolean>(false);
@@ -119,13 +122,15 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
             await setDoc(lessonRef, {
                 name: name,
                 video: video,
-                content: content
+                content: content,
+                set: set
             });
         } else {
             await updateDoc(lessonRef, {
                 name: name,
                 video: video,
-                content: content
+                content: content,
+                set: set
             });
         }
 
@@ -133,6 +138,7 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
         newCourse.chapters[props.selectedChapter].lessons[props.selectedLesson].name = name;
         newCourse.chapters[props.selectedChapter].lessons[props.selectedLesson].video = video;
         newCourse.chapters[props.selectedChapter].lessons[props.selectedLesson].content = content;
+        newCourse.chapters[props.selectedChapter].lessons[props.selectedLesson].set = set;
         newCourse.lastUpdated = new Date();
         props.setCourse(newCourse);
         triggerSuccess(3);
@@ -146,6 +152,7 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
             setName(props.course.name);
             setVideo('No video available for introduction');
             setContent(props.course.description);
+            setSet('No set available for introduction');
             setImage({
                 path: props.course.image,
                 blob: null
@@ -160,6 +167,7 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
             setName(props.course.chapters[props.selectedChapter].name);
             setVideo('No video available for chapter');
             setContent('No content available for chapter');
+            setSet('No set available for chapter');
             setImage({
                 path: 'No image available for chapter',
                 blob: null
@@ -169,6 +177,7 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
             setName(props.course.chapters[props.selectedChapter].lessons[props.selectedLesson].name);
             setVideo(props.course.chapters[props.selectedChapter].lessons[props.selectedLesson].video);
             setContent(props.course.chapters[props.selectedChapter].lessons[props.selectedLesson].content);
+            setSet(props.course.chapters[props.selectedChapter].lessons[props.selectedLesson].set || '');
             setImage({
                 path: 'No image available for lesson',
                 blob: null
@@ -211,6 +220,9 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
             <input className={styles.basic_input} placeholder='Lesson video...' value={video} onChange={(e) => {
                 setVideo(e.target.value);
             }} disabled={editingType === 'introduction' || editingType === 'chapter'} />
+            <input className={styles.basic_input} placeholder='Lesson set...' value={set} onChange={(e) => {
+                setSet(e.target.value);
+            }} disabled={editingType !== 'lesson'} />
             <textarea className={styles.basic_textarea} placeholder='Lesson content...' value={content} onChange={(e) => {
                 setContent(e.target.value);
             }} disabled={editingType === 'chapter'} />

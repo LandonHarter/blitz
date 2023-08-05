@@ -29,6 +29,7 @@ export interface CourseLesson {
     name: string;
     video: string;
     content: string;
+    set?: string;
 
 }
 
@@ -62,7 +63,8 @@ export const getCourse = async (id: string) => {
                 id: lessonsSnapshot.docs[j].id,
                 name: lessonsData[j].name,
                 video: lessonsData[j].video,
-                content: lessonsData[j].content
+                content: lessonsData[j].content,
+                set: lessonsData[j].set
             });
         }
 

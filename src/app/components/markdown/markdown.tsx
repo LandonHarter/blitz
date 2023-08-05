@@ -30,7 +30,6 @@ export default function Markdown(props: { text: string, className?: string }) {
                 const match = /language-(\w+)/.exec(className || '');
                 const matchFinal = match ? match[1] : 'txt';
                 const languageName = getLanguageName(matchFinal);
-                console.log(getLanguageFromName(languageName.toLowerCase()));
 
                 const Highlighter = () => {
                     return (
