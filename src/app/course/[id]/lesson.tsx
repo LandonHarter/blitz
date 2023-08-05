@@ -19,7 +19,7 @@ export default function CourseLessonContent(props: { lesson: CourseLesson }) {
             <article className={styles.lesson_article} style={{
                 marginTop: props.lesson.video === '' ? 50 : 0
             }}>
-                <Markdown text={props.lesson.content} />
+                <Markdown text={props.lesson.content} className={styles.markdown_text} />
             </article>
         </div>
     );

@@ -24,6 +24,6 @@
     height: var(--player-height) !important;
 }
 
-.lesson_article * {
+.markdown_text * {
     color: var(--text-color);
 }

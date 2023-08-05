@@ -15,50 +15,44 @@
 
 .blurt_h1 {
     font-family: 'SF Pro Display';
-    font-size: 44px;
+    font-size: 48px;
     font-weight: 600;
     margin: 15px 0;
-    text-decoration: underline;
 }
 
 .blurt_h2 {
     font-family: 'SF Pro Display';
-    font-size: 40px;
+    font-size: 44px;
     font-weight: 600;
     margin: 15px 0;
-    text-decoration: underline;
 }
 
 .blurt_h3 {
     font-family: 'SF Pro Display';
-    font-size: 36px;
+    font-size: 40px;
     font-weight: 600;
     margin: 15px 0;
-    text-decoration: underline;
 }
 
 .blurt_h4 {
     font-family: 'SF Pro Display';
-    font-size: 30px;
+    font-size: 35px;
     font-weight: 600;
     margin: 15px 0;
-    text-decoration: underline;
 }
 
 .blurt_h5 {
     font-family: 'SF Pro Display';
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 600;
     margin: 15px 0;
-    text-decoration: underline;
 }
 
 .blurt_h6 {
     font-family: 'SF Pro Display';
-    font-size: 24px;
+    font-size: 25px;
     font-weight: 600;
     margin: 15px 0;
-    text-decoration: underline;
 }
 
 .blurt_li {
