@@ -36,6 +36,7 @@
     --text-color: #353535;
     --text-color-bare: 53, 53, 53;
     --text-color-light: #6b6b6b;
+    --text-color-light-bare: 107, 107, 107;
 
     --correct-color: #18ca00;
     --scrolling-bg-image: url("/images/bg/scrolling/light.png");
@@ -58,6 +59,7 @@
     --text-color: #e2e2e2;
     --text-color-bare: 226, 226, 226;
     --text-color-light: #a8a8a8;
+    --text-color-light-bare: 168, 168, 168;
 
     --correct-color: #18ca00;
     --scrolling-bg-image: url("/images/bg/scrolling/dark.png");

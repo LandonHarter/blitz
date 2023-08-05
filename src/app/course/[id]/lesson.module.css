@@ -13,6 +13,12 @@
     margin-bottom: 20px;
 }
 
+.dashed_divider {
+    width: 100%;
+    height: 4px;
+    border-top: dashed 10px rgba(var(--text-color-light-bare), 0.3);
+}
+
 .player_container {
     margin-bottom: 50px;
 }
@@ -24,6 +30,42 @@
     height: var(--player-height) !important;
 }
 
-.markdown_text h1 h2 h3 h4 h5 h6 span {
+.markdown_text p {
+    line-height: 1.5;
+}
+
+.markdown_text h1 {
     color: var(--text-color) !important;
+    margin-bottom: 20px !important;
+    margin-top: 60px !important;
+}
+
+.markdown_text h2 {
+    color: var(--text-color) !important;
+}
+
+.markdown_text h3 {
+    color: var(--text-color) !important;
+}
+
+.markdown_text h4 {
+    color: var(--text-color) !important;
+}
+
+.markdown_text h5 {
+    color: var(--text-color) !important;
+}
+
+.markdown_text h6 {
+    color: var(--text-color) !important;
+}
+
+/* only apply styles to span if it is a direct child of .markdown_text if it is wrapped in anything dont apply styles */
+.markdown_text p>span {
+    color: var(--text-color) !important;
+
+    padding: 10px 15px;
+    background-color: var(--bg-dark);
+    border: solid 1px var(--bg-darker);
+    border-radius: 10px;
 }

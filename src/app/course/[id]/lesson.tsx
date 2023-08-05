@@ -9,11 +9,15 @@ export default function CourseLessonContent(props: { lesson: CourseLesson }) {
     return (
         <div className={styles.lesson_container}>
             <h1 className={styles.lesson_title}>{props.lesson.name}</h1>
+            <div className={styles.dashed_divider} />
 
             {props.lesson.video !== '' &&
-                <div className={styles.player_container}>
-                    <ReactPlayer url={props.lesson.video} controls />
-                </div>
+                <>
+                    <div className={styles.player_container}>
+                        <ReactPlayer url={props.lesson.video} controls />
+                    </div>
+                    <div className={styles.dashed_divider} />
+                </>
             }
 
             <article className={styles.lesson_article} style={{
