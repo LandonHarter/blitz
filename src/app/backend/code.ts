@@ -34,6 +34,25 @@ export const getLanguageName = (abbr: string) => {
         case 'ps1xml': return 'PowerShell';
         case 'psrc': return 'PowerShell';
         case 'swift': return 'Swift';
+        case 'react': return 'React';
+        case 'vue': return 'Vue';
+        case 'angular': return 'Angular';
+        case 'svelte': return 'Svelte';
+        case 'django': return 'Django';
+        case 'flask': return 'Flask';
+        case 'express': return 'Express';
+        case 'laravel': return 'Laravel';
+        case 'spring': return 'Spring';
+        case 'rails': return 'Rails';
+        case 'symfony': return 'Symfony';
+        case 'phoenix': return 'Phoenix';
+        case 'gatsby': return 'Gatsby';
+        case 'next': return 'Next.js';
+        case 'nuxt': return 'Nuxt.js';
+        case 'hugo': return 'Hugo';
+        case 'jekyll': return 'Jekyll';
+        case 'eleventy': return 'Eleventy';
+        case 'storybook': return 'Storybook';
     }
 
     return abbr;
@@ -42,3 +61,29 @@ export const getLanguageName = (abbr: string) => {
 export const getLanguageIcon = (language: string) => {
     return `https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/main/icons/${language.toLowerCase()}.svg`
 };
+
+export const getLanguageFromName = (library: string) => {
+    switch (library) {
+        case 'react': return 'tsx';
+        case 'vue': return 'vue';
+        case 'angular': return 'ts';
+        case 'svelte': return 'html';
+        case 'django': return 'py';
+        case 'flask': return 'py';
+        case 'express': return 'ts';
+        case 'laravel': return 'php';
+        case 'spring': return 'java';
+        case 'rails': return 'rb';
+        case 'symfony': return 'php';
+        case 'phoenix': return 'ex';
+        case 'gatsby': return 'ts';
+        case 'next': return 'tsx';
+        case 'nuxt': return 'ts';
+        case 'hugo': return 'go';
+        case 'jekyll': return 'rb';
+        case 'eleventy': return 'ts';
+        case 'storybook': return 'ts';
+    }
+
+    return library;
+}

@@ -8,7 +8,7 @@ import 'cooltipz-css';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import React from 'react';
-import { getLanguageIcon, getLanguageName } from '@/backend/code';
+import { getLanguageFromName, getLanguageIcon, getLanguageName } from '@/backend/code';
 
 export default function Markdown(props: { text: string, className?: string }) {
     return (
@@ -28,7 +28,9 @@ export default function Markdown(props: { text: string, className?: string }) {
             a: ({ children, href }) => <a className={styles.blurt_a} href={href} target="_blank">{children}</a>,
             code: ({ node, inline, className, children, ...props }) => {
                 const match = /language-(\w+)/.exec(className || '');
-                const languageName = getLanguageName(match ? match[1] : 'txt');
+                const matchFinal = match ? match[1] : 'txt';
+                const languageName = getLanguageName(matchFinal);
+                console.log(getLanguageFromName(languageName.toLowerCase()));
 
                 const Highlighter = () => {
                     return (
@@ -38,7 +40,7 @@ export default function Markdown(props: { text: string, className?: string }) {
                             backgroundColor: 'var(--bg-dark)',
                             border: 'solid 3px var(--bg-darker)',
                             borderRadius: '0px !important'
-                        }} language={match ? match[1] : ''} PreTag="div" {...props}>
+                        }} language={getLanguageFromName(matchFinal)} PreTag="div" {...props}>
                             {String(children).replace(/\n$/, '')}
                         </SyntaxHighlighter>
                     );
@@ -54,7 +56,7 @@ export default function Markdown(props: { text: string, className?: string }) {
                                 display: 'flex',
                                 alignItems: 'center',
                             }}>
-                                <img src={getLanguageIcon(languageName)} className={styles.language_icon} />
+                                <img src={getLanguageIcon(matchFinal)} className={styles.language_icon} />
                                 <h2>{languageName}</h2>
                             </div>
                             <div className={styles.border_cover} />
