@@ -109,7 +109,7 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
 
         let chapterId = course.chapters[props.selectedChapter].id;
 
-        const chapterRef = doc(collection(firestore, 'courses'), chapterId);
+        const chapterRef = doc(collection(firestore, `courses/${props.course.id}/chapters`), chapterId);
         const chapterSnapshot = await getDoc(chapterRef);
         const isNewChapter = !chapterSnapshot.exists();
         if (isNewChapter) {

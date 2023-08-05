@@ -42,10 +42,10 @@ export default function Markdown(props: { text: string, className?: string }) {
                     return (
                         // @ts-ignore
                         <SyntaxHighlighter style={darkMode ? darkModeTheme : lightModeTheme} customStyle={{
-                            width: 'calc(100% - 40px)',
+                            width: 'calc(100% - 80px)',
                             backgroundColor: 'var(--bg-dark)',
                             border: 'solid 3px var(--bg-darker)',
-                            borderRadius: '0px !important'
+                            borderRadius: '0px !important',
                         }} language={getLanguageFromName(matchFinal)} PreTag="div" {...props}>
                             {String(children).replace(/\n$/, '')}
                         </SyntaxHighlighter>

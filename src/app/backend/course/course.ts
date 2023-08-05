@@ -69,7 +69,7 @@ export const getCourse = async (id: string) => {
         }
 
         chapters.push({
-            id: chaptersSnapshot.docs[i].id,
+            id: `${i + 1}`,
             name: chaptersData[i].name,
             lessons: lessons
         });
