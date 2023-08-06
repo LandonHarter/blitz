@@ -46,7 +46,7 @@ export default function Markdown(props: { text: string, className?: string }) {
                             backgroundColor: 'var(--bg-dark)',
                             border: 'solid 3px var(--bg-darker)',
                             borderRadius: '0px !important',
-                        }} language={getLanguageFromName(matchFinal, languageName)} PreTag="div" {...props}>
+                        }} language={getLanguageFromName(matchFinal)} PreTag="div" {...props}>
                             {String(children).replace(/\n$/, '')}
                         </SyntaxHighlighter>
                     );
@@ -62,7 +62,7 @@ export default function Markdown(props: { text: string, className?: string }) {
                                 display: 'flex',
                                 alignItems: 'center',
                             }}>
-                                <img src={getLanguageIcon(matchFinal)} className={styles.language_icon} />
+                                <img src={getLanguageIcon(matchFinal, languageName)} className={styles.language_icon} />
                                 <h2>{languageName}</h2>
                             </div>
                             <div className={styles.border_cover} />
