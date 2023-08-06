@@ -58,9 +58,9 @@ export const getLanguageName = (abbr: string) => {
     return abbr;
 };
 
-export const getLanguageIcon = (language: string) => {
+export const getLanguageIcon = (abbr: string, language: string) => {
     let icon = language.toLowerCase();
-    switch (language) {
+    switch (abbr) {
         case 'sh': icon = 'powershell';
     }
 
