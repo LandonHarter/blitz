@@ -55,7 +55,7 @@ export default function Markdown(props: { text: string, className?: string }) {
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        marginTop: 30
+                        margin: "30px 0"
                     }}>
                         <div className={styles.language}>
                             <div style={{
