@@ -354,6 +354,7 @@
     color: var(--title-color);
     cursor: pointer;
     transition: color 0.3s ease-out;
+    font-family: 'SF Pro Display';
 
     white-space: nowrap;
     overflow: hidden;
@@ -367,7 +368,7 @@
 .article_wrapper figure {
     margin: 0;
     padding: 0;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 10 / 3;
     overflow: hidden;
 
     max-width: 100%;

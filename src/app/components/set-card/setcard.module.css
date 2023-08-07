@@ -23,6 +23,7 @@
     color: var(--title-color);
     cursor: pointer;
     transition: color 0.3s ease-out;
+    font-family: 'SF Pro Display';
 
     white-space: nowrap;
     overflow: hidden;
