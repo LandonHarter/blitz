@@ -50,6 +50,10 @@
     margin-top: 20px;
     color: var(--text-color);
     font-family: 'SF Pro Display';
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     width: 100%;
     overflow: hidden;
