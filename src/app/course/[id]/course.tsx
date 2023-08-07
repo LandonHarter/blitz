@@ -195,6 +195,8 @@ export default function CourseContent() {
                                 <div className={`${styles.sidebar_lesson} ${selectedLesson === j && selectedChapter === i && styles.sidebar_selected_lesson}`} key={j} onClick={() => {
                                     setSelectedLesson(j);
                                     setSelectedChapter(i);
+                                }} style={{
+                                    pointerEvents: chaptersData[i].open ? 'all' : 'none'
                                 }}>
                                     <input className={styles.inp_cbx} id={`completed-chapter-${i}-lesson-${j}`} type="checkbox" style={{ display: 'none' }} checked={chaptersData[i].lessons[j].completed} onChange={(e) => {
                                         const newChaptersData = [...chaptersData];
