@@ -20,6 +20,7 @@
 
 .sidebar_selected_lesson .sidebar_lesson_title {
     color: var(--text-color) !important;
+    font-weight: bold;
 }
 
 .sidebar_chapter {
