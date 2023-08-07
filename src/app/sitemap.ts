@@ -73,6 +73,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const sitemapData = (await getDoc(doc(collection(firestore, 'site'), 'sitemap'))).data();
     const sets = sitemapData?.sets;
     const users = sitemapData?.users;
+    const courses = sitemapData?.courses;
 
     sets.forEach((set: any) => {
         routes.push({
@@ -84,6 +85,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     users.forEach((user: any) => {
         routes.push({
             url: `https://blitzedu.vercel.app/profile/${user}`,
+            lastModified: new Date()
+        });
+    });
+
+    courses.forEach((course: any) => {
+        routes.push({
+            url: `https://blitzedu.vercel.app/course/${course}`,
             lastModified: new Date()
         });
     });

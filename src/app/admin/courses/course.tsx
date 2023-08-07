@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import styles from './course.module.css';
-import { Timestamp, collection, doc, setDoc } from 'firebase/firestore';
+import { Timestamp, arrayUnion, collection, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { firestore } from '@/backend/firebase/init';
 import { useRouter } from 'next/navigation';
 
@@ -36,6 +36,11 @@ export default function AdminCourseDashboard() {
             name: 'Lesson 1',
             video: '',
             content: 'Lesson 1 content.',
+        });
+
+        const siteDataRef = doc(collection(firestore, 'site'), 'sitemap');
+        await updateDoc(siteDataRef, {
+            courses: arrayUnion(courseId),
         });
 
         return courseId;
