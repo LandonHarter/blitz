@@ -100,7 +100,10 @@ export default function CourseContent() {
 
     useEffect(() => {
         (async () => {
-            if (!course || currentUser.empty) return;
+            if (!course || currentUser.empty) {
+                setFinishedVerification(true);
+                return;
+            }
 
             const admin = await hasRole(currentUser.uid, Roles.ADMIN);
             const published = course.published;
