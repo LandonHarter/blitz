@@ -235,7 +235,7 @@ export default function EditCourse(props: { course: Course, setCourse: Dispatch<
             }} disabled={editingType !== 'lesson'} />
             <textarea className={styles.basic_textarea} placeholder='Lesson content...' value={content} onChange={(e) => {
                 setContent(e.target.value);
-            }} disabled={editingType === 'chapter'} />
+            }} disabled={editingType === 'chapter'} autoComplete='off' autoCapitalize='off' autoCorrect='off' spellCheck='off' />
 
             <div>
                 <button className={styles.update_button} onClick={async () => {
