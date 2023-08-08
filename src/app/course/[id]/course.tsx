@@ -221,9 +221,6 @@ export default function CourseContent() {
                 return;
             }
 
-
-
-
             const published = course.published;
             if (currentUser.empty && published) {
                 setFinishedVerification(true);
@@ -248,7 +245,7 @@ export default function CourseContent() {
     }, [course, currentUser]);
 
     useEffect(() => {
-        if (!signedIn || !course) return;
+        if (!course) return;
 
         const nextLessonAvail = getNextLesson();
         if (nextLessonAvail.nextLesson !== -1) {
