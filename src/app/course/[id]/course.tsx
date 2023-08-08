@@ -216,13 +216,26 @@ export default function CourseContent() {
 
     useEffect(() => {
         (async () => {
-            if (!course || currentUser.empty) {
+            if (!course) {
                 setFinishedVerification(true);
                 return;
             }
 
-            const admin = await hasRole(currentUser.uid, Roles.ADMIN);
+
+
+
             const published = course.published;
+            if (currentUser.empty && published) {
+                setFinishedVerification(true);
+                setVerifiedAccess(true);
+                return;
+            } else if (currentUser.empty && !published) {
+                setFinishedVerification(true);
+                setVerifiedAccess(false);
+                return;
+            }
+
+            const admin = await hasRole(currentUser.uid, Roles.ADMIN);
 
             if (admin || published) {
                 setFinishedVerification(true);
