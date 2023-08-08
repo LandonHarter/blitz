@@ -224,13 +224,13 @@ export default function CourseContent() {
             const admin = await hasRole(currentUser.uid, Roles.ADMIN);
             const published = course.published;
 
-            if (!published && !admin) {
+            if (admin || published) {
                 setFinishedVerification(true);
-                return;
+                setVerifiedAccess(true);
+            } else {
+                setFinishedVerification(true);
+                setVerifiedAccess(false);
             }
-
-            setFinishedVerification(true);
-            setVerifiedAccess(true);
         })();
     }, [course, currentUser]);
 
