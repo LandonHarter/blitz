@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import styles from './page.module.css';
 import { motion } from 'framer-motion';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Markdown from '@/components/markdown/markdown';
 import { Course, CourseChapter, getCourse } from '@/backend/course/course';
 import { set } from 'firebase/database';
@@ -39,6 +39,11 @@ export default function CourseContent() {
     const [finishedVerification, setFinishedVerification] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
 
+    const [previousLessonName, setPreviousLessonName] = useState<string>('Previous Lesson');
+    const [nextLessonName, setNextLessonName] = useState<string>('Next Lesson');
+
+    const topOfLesson = useRef<HTMLDivElement>(null);
+
     const introduction = () => {
         if (!course) return (<></>);
         return (
@@ -54,6 +59,117 @@ export default function CourseContent() {
                 </div>
             </>
         );
+    }
+
+    const getNextLesson = () => {
+        if (!course) return {
+            nextChapter: 0,
+            nextLesson: 0
+        }
+
+        let nextChapter = selectedChapter;
+        let nextLesson = selectedLesson + 1;
+
+        if (selectedLesson === -1) {
+            nextChapter = 0;
+            nextLesson = 0;
+            return {
+                nextChapter,
+                nextLesson
+            }
+        }
+
+        const numChapters = chaptersData.length - 1;
+        const numLessons = chaptersData[selectedChapter].lessons.length;
+
+        if (nextLesson === numLessons) {
+            nextChapter++;
+            nextLesson = 0;
+
+            if (nextChapter === numChapters) {
+                nextChapter = -1;
+                nextLesson = -1;
+            }
+        }
+
+        return {
+            nextChapter,
+            nextLesson
+        };
+    }
+
+    const getPreviousLesson = () => {
+        if (!course) return {
+            previousChapter: 0,
+            previousLesson: 0
+        }
+
+        let previousChapter = selectedChapter;
+        let previousLesson = selectedLesson - 1;
+
+        if (selectedLesson === -1) {
+            previousChapter = -1;
+            previousLesson = -1;
+            return {
+                previousChapter,
+                previousLesson
+            }
+        }
+
+        if (previousLesson === -1) {
+            previousChapter--;
+            if (previousChapter === -1) {
+                previousChapter = -2;
+                previousLesson = -1;
+            } else {
+                previousLesson = chaptersData[previousChapter].lessons.length - 1;
+            }
+        }
+
+        return {
+            previousChapter,
+            previousLesson
+        };
+    }
+
+    const nextLesson = () => {
+        if (isLastLesson() || !course) return;
+
+        const next = getNextLesson();
+        setSelectedChapter(next.nextChapter);
+        setSelectedLesson(next.nextLesson);
+
+        if (next.nextLesson === -1) return;
+        const newChaptersData = [...chaptersData];
+        newChaptersData[next.nextChapter].open = true;
+        setChaptersData(newChaptersData);
+    }
+
+    const previousLesson = () => {
+        if (selectedLesson === -1 || !course) return;
+
+        const previous = getPreviousLesson();
+        if (previous.previousChapter === -2) {
+            setSelectedChapter(-1);
+            setSelectedLesson(-1);
+            return;
+        }
+
+        setSelectedChapter(previous.previousChapter);
+        setSelectedLesson(previous.previousLesson);
+
+        if (previous.previousLesson === -1) return;
+        const newChaptersData = [...chaptersData];
+        newChaptersData[previous.previousChapter].open = true;
+        setChaptersData(newChaptersData);
+    }
+
+    const isLastLesson = () => {
+        if (!course || selectedLesson === -1) return false;
+
+        const numChapters = chaptersData.length;
+        const numLessons = chaptersData[selectedChapter].lessons.length;
+        return selectedChapter === numChapters - 1 && selectedLesson === numLessons - 1;
     }
 
     useEffect(() => {
@@ -117,6 +233,26 @@ export default function CourseContent() {
             setVerifiedAccess(true);
         })();
     }, [course, currentUser]);
+
+    useEffect(() => {
+        if (!signedIn || !course) return;
+
+        const nextLessonAvail = getNextLesson();
+        if (nextLessonAvail.nextLesson !== -1) {
+            setNextLessonName(course.chapters[nextLessonAvail.nextChapter].lessons[nextLessonAvail.nextLesson].name);
+        } else {
+            setNextLessonName('')
+        }
+
+        const previousLessonAvail = getPreviousLesson();
+        if (previousLessonAvail.previousLesson !== -1) {
+            setPreviousLessonName(course.chapters[previousLessonAvail.previousChapter].lessons[previousLessonAvail.previousLesson].name);
+        } else if (previousLessonAvail.previousChapter !== -2) {
+            setPreviousLessonName('')
+        } else {
+            setPreviousLessonName('Introduction')
+        }
+    }, [selectedChapter, selectedLesson]);
 
     if (loading || !course || !finishedVerification) {
         return (<Loading />);
@@ -275,6 +411,12 @@ export default function CourseContent() {
                 }
             </div>
             <div className={styles.course}>
+                <div ref={topOfLesson} style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: 0
+                }} />
                 {
                     editMode ? <EditCourse course={course} setCourse={setCourse} selectedChapter={selectedChapter} selectedLesson={selectedLesson} setEditMode={setEditMode} /> :
                         (selectedLesson === -1
@@ -285,6 +427,27 @@ export default function CourseContent() {
                             )
                         )
                 }
+
+                <div className={styles.navigator}>
+                    {previousLessonName !== '' ?
+                        <div className={styles.navigator_container}>
+                            <button className={styles.navigator_button} onClick={() => {
+                                previousLesson();
+                                topOfLesson?.current?.scrollIntoView({ behavior: 'smooth' });
+                            }}><p>←</p></button>
+                            <h1 className={styles.navigator_title}>{previousLessonName}</h1>
+                        </div> : <div />
+                    }
+                    {nextLessonName !== '' ?
+                        <div className={styles.navigator_container}>
+                            <h1 className={styles.navigator_title}>{nextLessonName}</h1>
+                            <button className={styles.navigator_button} onClick={() => {
+                                nextLesson();
+                                topOfLesson?.current?.scrollIntoView({ behavior: 'smooth' });
+                            }}><p>→</p></button>
+                        </div> : <div />
+                    }
+                </div>
 
                 {(isAdmin && !editMode) && <button onClick={() => {
                     setEditMode(true);

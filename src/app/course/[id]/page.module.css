@@ -256,3 +256,57 @@ article .cbx:hover span:first-child {
     font-weight: 400;
     margin-left: 10px;
 }
+
+.navigator {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigator_container {
+    display: flex;
+    align-items: center;
+    margin-right: 60px;
+    margin-left: 20px;
+}
+
+.navigator_title {
+    font-size: 30px;
+    font-weight: 400;
+    font-family: 'SF Pro Display';
+    color: var(--text-color);
+    margin: 0 15px;
+    transition: color 0.15s ease-in-out;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.navigator_button {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background-color: var(--bg-dark);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.15s ease-in-out;
+}
+
+.navigator_button:hover {
+    background-color: var(--bg-darker);
+}
+
+.navigator_button:active {
+    transform: scale(0.95);
+}
+
+.navigator_button p {
+    font-size: 30px;
+    font-weight: 900;
+    transform: translateY(-3px);
+    color: var(--text-color);
+}
